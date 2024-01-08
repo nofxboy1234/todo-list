@@ -16,12 +16,14 @@ import printMe from './print.js';
 
 import { createTodosController } from './controllers/todosController.js';
 
-const todoController = createTodosController();
+const todosController = createTodosController();
 const checkList = { 'Fill water bowl': false, 'Fill food bowl': false };
-const todo = todoController.create(
+const todo = todosController.create(
   'Feed the dogs',
   'Make sure the dogs are happy!',
   '2024-01-31',
   'high',
   checkList
 );
+todo.save();
+console.log(todo.isComplete());

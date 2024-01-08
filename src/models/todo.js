@@ -4,7 +4,7 @@ const createTodo = (title, description, dueDate, priority, checkList) => {
   };
 
   const save = () => {
-    console.log(`Save ${title} to local storage`);
+    console.log(`Save '${title}' to local storage`);
   };
 
   return {
