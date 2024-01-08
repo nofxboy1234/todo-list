@@ -1,4 +1,4 @@
-import { createTodo } from '../models/todo.js';
+import { buildTodo, createTodo } from '../models/todo.js';
 import { render } from '../renderers/todoRenderer.js';
 
 // new
@@ -13,12 +13,17 @@ const createTodosController = () => {
 
   let todo;
 
+  const build = () => {
+    todo = buildTodo();
+    render('new', todo)
+  };
+
   const create = (title, description, dueDate, priority, checkList) => {
     todo = createTodo(title, description, dueDate, priority, checkList);
 
     if (todo.save()) {
       console.log('Todo was successfully created');
-      console.log(`Show '${todo.title}'`);
+      render('show', todo)
     } else {
       console.log('Todo failed to save');
     }
@@ -31,7 +36,7 @@ const createTodosController = () => {
     render('edit', todo);
   };
 
-  return { create, edit, todo };
+  return { build, create, edit, todo };
 };
 
 export { createTodosController };

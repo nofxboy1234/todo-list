@@ -18,7 +18,8 @@ import { createTodosController } from './controllers/todosController.js';
 
 const todosController = createTodosController();
 const checkList = { 'Fill water bowl': false, 'Fill food bowl': false };
-const todo = todosController.create(
+let todo = todosController.build();
+todo = todosController.create(
   'Feed the dogs',
   'Make sure the dogs are happy!',
   '2024-01-31',
