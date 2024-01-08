@@ -16,6 +16,8 @@ import printMe from './print.js';
 
 import { createTodosController } from './controllers/todosController.js';
 
+console.log('\n');
+
 const todosController = createTodosController();
 const checkList = { 'Fill water bowl': false, 'Fill food bowl': false };
 let todo = todosController.build();
@@ -26,4 +28,5 @@ todo = todosController.create(
   'high',
   checkList
 );
+console.log('\n');
 todosController.edit(todo);
