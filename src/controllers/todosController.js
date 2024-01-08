@@ -1,17 +1,18 @@
+import { createTodo } from '../models/todo.js';
+
 // new
-const createTodoController = () => {
+const createTodosController = () => {
   // create
   // edit
   // update
   // destroy
   // index
   // show
-  const create = (todoParams) => {
-    // const todo = Todo.create(todoParams);
-    console.log(todoParams);
+  const create = (title, description, dueDate, priority, checkList) => {
+    return createTodo(title, description, dueDate, priority, checkList);
   };
 
   return { create };
 };
 
-export { createTodoController };
+export { createTodosController };

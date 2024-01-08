@@ -14,10 +14,14 @@ import json from './data.json5';
 
 import printMe from './print.js';
 
-import { createTodoController } from './controllers/todosController.js';
+import { createTodosController } from './controllers/todosController.js';
 
-const todoController = createTodoController();
-todoController.create({
-  title: 'Feed the dogs',
-  description: 'Make sure the dogs are happy!',
-});
+const todoController = createTodosController();
+const checkList = { 'Fill water bowl': false, 'Fill food bowl': false };
+const todo = todoController.create(
+  'Feed the dogs',
+  'Make sure the dogs are happy!',
+  '2024-01-31',
+  'high',
+  checkList
+);
