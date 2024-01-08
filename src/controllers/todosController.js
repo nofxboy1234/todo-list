@@ -13,19 +13,20 @@ const createTodosController = () => {
 
   let todo;
 
+  // new
   const build = () => {
     todo = buildTodo();
-    render('new', todo)
+    render('new', todo);
   };
 
   const create = (title, description, dueDate, priority, checkList) => {
     todo = createTodo(title, description, dueDate, priority, checkList);
 
     if (todo.save()) {
-      console.log('Todo was successfully created');
-      render('show', todo)
+      console.log(`'${todo.title}' was successfully created`);
+      render('show', todo);
     } else {
-      console.log('Todo failed to save');
+      console.log(`'${todo.title}' failed to save`);
     }
 
     return todo;
@@ -36,7 +37,34 @@ const createTodosController = () => {
     render('edit', todo);
   };
 
-  return { build, create, edit, todo };
+  const update = (title, description, dueDate, priority, checkList) => {
+    if (todo.update(title, description, dueDate, priority, checkList)) {
+      console.log(`'${todo.title}' was successfully updated`);
+      render('show', todo);
+    } else {
+      console.log(`'${todo.title}' failed to update`);
+    }
+
+    return todo;
+  };
+
+  const destroy = (todoToDestroy) => {
+    todoToDestroy.destroy();
+    // Remove todo from the DOM
+    console.log(`'${todo.title}' was successfully destroyed`);
+  };
+
+  const show = (todoToShow) => {
+    render('show', todoToShow);
+  };
+
+  const index = () => {
+    // Get all todos from array/local storage
+    const todos = [];
+    render('index', todos);
+  };
+
+  return { todo, build, create, edit, update, destroy, show, index };
 };
 
 export { createTodosController };

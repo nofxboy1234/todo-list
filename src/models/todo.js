@@ -18,6 +18,15 @@ const createTodo = (title, description, dueDate, priority, checkList) => {
     return true;
   };
 
+  const update = () => {
+    console.log(`Update '${title}' in local storage`);
+    return true;
+  };
+
+  const destroy = () => {
+    console.log(`Remove '${title}' from local storage`);
+  };
+
   return {
     title,
     description,
@@ -26,6 +35,8 @@ const createTodo = (title, description, dueDate, priority, checkList) => {
     checkList,
     isComplete,
     save,
+    update,
+    destroy,
   };
 };
 
