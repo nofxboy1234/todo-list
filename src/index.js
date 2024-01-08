@@ -25,5 +25,4 @@ const todo = todosController.create(
   'high',
   checkList
 );
-todo.save();
-console.log(todo.isComplete());
+todosController.edit(todo);
