@@ -14,7 +14,7 @@ import json from './data.json5';
 
 import printMe from './print.js';
 
-import { createTodoController } from './todosController.js';
+import { createTodoController } from './controllers/todosController.js';
 
 const todoController = createTodoController();
 todoController.create({
