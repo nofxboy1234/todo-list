@@ -1,1 +1,0 @@
-{"version":3,"file":"index.css","mappings":"AAAA,WACE,kBAAqB,CACrB,iCACF,CAEA,OACE,SAAU,CACV,kBACF","sources":["webpack://webpack-template/./src/style.css"],"sourcesContent":["@font-face {\n  font-family: 'MyFont';\n  src: url('./HussarBold-7mRE.otf');\n}\n\n.hello {\n  color: red;\n  font-family: 'MyFont';\n}\n"],"names":[],"sourceRoot":""}
