@@ -1,16 +1,7 @@
 import { buildTodo, createTodo } from '../models/todo.js';
 import { render } from '../renderers/todoRenderer.js';
 
-// new
 const createTodosController = () => {
-  // new
-  // create
-  // edit
-  // update
-  // destroy
-  // index
-  // show
-
   let todo;
 
   // new
@@ -59,7 +50,7 @@ const createTodosController = () => {
   };
 
   const index = () => {
-    // Get all todos from array/local storage
+    console.log('Get all todos from array/local storage')
     const todos = [];
     render('index', todos);
   };
