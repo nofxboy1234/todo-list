@@ -1,5 +1,8 @@
+const todos = [];
+
+function hello() {}
+
 const Todo = {
-  todos: [],
   new: function (title, description, dueDate, priority, checkList, project) {
     return {
       title,
@@ -26,8 +29,16 @@ const Todo = {
   },
   all: function () {
     console.log('Get all todo objects from Todo / local storage');
-    return this.todos;
+    // const todos = 'dylan';
+    hello();
+    return todos;
   },
+  allAgain: () => {
+    console.log('Get all todo objects from Todo / local storage');
+    // const todos = 'dylan';
+    hello();
+    return todos;
+  }
 };
 
 export { Todo };

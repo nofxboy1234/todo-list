@@ -3,6 +3,8 @@ import { Todo } from '../models/todo.js';
 const TodosController = {
   new: function () {
     this.todo = Todo.new();
+    Todo.all();
+    Todo.allAgain();
   },
 };
 

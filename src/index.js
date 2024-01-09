@@ -12,7 +12,6 @@ todosController.new();
 // };
 // hey();
 
-
 // const checkList = { 'Fill water bowl': false, 'Fill food bowl': false };
 // let todo = todosController.build();
 // todo = todosController.create(
