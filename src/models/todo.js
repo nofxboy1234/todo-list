@@ -1,13 +1,3 @@
-const buildTodo = (title, description, dueDate, priority, checkList) => {
-  return {
-    title,
-    description,
-    dueDate,
-    priority,
-    checkList,
-  };
-};
-
 const createTodo = (title, description, dueDate, priority, checkList) => {
   const isComplete = () => {
     return false;
@@ -40,4 +30,4 @@ const createTodo = (title, description, dueDate, priority, checkList) => {
   };
 };
 
-export { buildTodo, createTodo };
+export { createTodo };

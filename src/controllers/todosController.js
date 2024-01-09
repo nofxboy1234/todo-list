@@ -1,4 +1,4 @@
-import { buildTodo, createTodo } from '../models/todo.js';
+import { createTodo } from '../models/todo.js';
 import { render } from '../renderers/todoRenderer.js';
 
 const createTodosController = () => {
@@ -6,7 +6,7 @@ const createTodosController = () => {
 
   // new
   const build = () => {
-    todo = buildTodo();
+    todo = createTodo();
     render('new', todo);
   };
 
