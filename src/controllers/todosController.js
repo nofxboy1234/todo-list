@@ -15,7 +15,7 @@ const createTodosController = () => {
 
     if (todo.save()) {
       console.log(`'${todo.title}' was successfully created`);
-      render('show', todo);
+      render('index', todo);
     } else {
       console.log(`'${todo.title}' failed to save`);
     }
@@ -31,7 +31,7 @@ const createTodosController = () => {
   const update = (title, description, dueDate, priority, checkList) => {
     if (todo.update(title, description, dueDate, priority, checkList)) {
       console.log(`'${todo.title}' was successfully updated`);
-      render('show', todo);
+      render('index', todo);
     } else {
       console.log(`'${todo.title}' failed to update`);
     }
@@ -43,6 +43,7 @@ const createTodosController = () => {
     todoToDestroy.destroy();
     // Remove todo from the DOM
     console.log(`'${todo.title}' was successfully destroyed`);
+    render('index', todoToDestroy)
   };
 
   const show = (todoToShow) => {
