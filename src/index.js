@@ -1,5 +1,4 @@
 import { createTodosController } from './controllers/todosController.js';
-import { createProjectsController } from './controllers/projectsController.js';
 import './style.css';
 
 console.log('\n');
@@ -36,15 +35,3 @@ todosController.update(
 console.log('\n');
 
 todosController.destroy(todo);
-
-console.log('\n');
-
-const projectsController = createProjectsController();
-let project = projectsController.build();
-project = projectsController.create('Home');
-
-console.log('\n');
-
-projectsController.index();
-
-console.log('\n');
