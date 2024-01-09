@@ -54,7 +54,9 @@ const createTodosController = () => {
     checkList,
     project
   ) => {
-    if (todo.update(title, description, dueDate, priority, checkList)) {
+    if (
+      todo.update(title, description, dueDate, priority, checkList, project)
+    ) {
       console.log(`'${todo.title}' was successfully updated`);
       renderIndexView(todos);
     } else {
@@ -79,7 +81,7 @@ const createTodosController = () => {
     renderIndexView(todos);
   };
 
-  return { build, create, edit, update, destroy, show, index };
+  return { todos, build, create, edit, update, destroy, show, index };
 };
 
 export { createTodosController };
