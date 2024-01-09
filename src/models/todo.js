@@ -1,23 +1,6 @@
 const Todo = {
-  new: (title, description, dueDate, priority, checkList, project) => {
-    const isComplete = () => {
-      return false;
-    };
-
-    const save = () => {
-      console.log(`Save '${title}' to local storage`);
-      return true;
-    };
-
-    const update = () => {
-      console.log(`Update '${title}' in local storage`);
-      return true;
-    };
-
-    const destroy = () => {
-      console.log(`Remove '${title}' from local storage`);
-    };
-
+  todos: [],
+  new: function (title, description, dueDate, priority, checkList, project) {
     return {
       title,
       description,
@@ -25,11 +8,25 @@ const Todo = {
       priority,
       checkList,
       project,
-      isComplete,
-      save,
-      update,
-      destroy,
+      isComplete: function () {
+        return false;
+      },
+      save: function () {
+        console.log(`Save '${title}' to local storage`);
+        return true;
+      },
+      update: function () {
+        console.log(`Update '${title}' in local storage`);
+        return true;
+      },
+      destroy: function () {
+        console.log(`Remove '${title}' from local storage`);
+      },
     };
+  },
+  all: function () {
+    console.log('Get all todo objects from Todo / local storage');
+    return this.todos;
   },
 };
 
