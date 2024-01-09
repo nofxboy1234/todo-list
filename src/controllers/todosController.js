@@ -1,21 +1,39 @@
 import { createTodo } from '../models/todo.js';
-import { render } from '../renderers/todoRenderer.js';
+import { render as renderNewView } from '../views/todos/new.js';
+import { render as renderEditView } from '../views/todos/edit.js';
+import { render as renderShowView } from '../views/todos/show.js';
+import { render as renderIndexView } from '../views/todos/index.js';
 
 const createTodosController = () => {
   let todo;
+  let todos = [];
 
   // new
   const build = () => {
     todo = createTodo();
-    render('new', todo);
+    renderNewView(todo);
   };
 
-  const create = (title, description, dueDate, priority, checkList, project) => {
-    todo = createTodo(title, description, dueDate, priority, checkList, project);
+  const create = (
+    title,
+    description,
+    dueDate,
+    priority,
+    checkList,
+    project
+  ) => {
+    todo = createTodo(
+      title,
+      description,
+      dueDate,
+      priority,
+      checkList,
+      project
+    );
 
     if (todo.save()) {
       console.log(`'${todo.title}' was successfully created`);
-      render('index', todo);
+      renderIndexView(todos);
     } else {
       console.log(`'${todo.title}' failed to save`);
     }
@@ -25,13 +43,20 @@ const createTodosController = () => {
 
   const edit = (todoToEdit) => {
     todo = todoToEdit;
-    render('edit', todo);
+    renderEditView(todo);
   };
 
-  const update = (title, description, dueDate, priority, checkList, project) => {
+  const update = (
+    title,
+    description,
+    dueDate,
+    priority,
+    checkList,
+    project
+  ) => {
     if (todo.update(title, description, dueDate, priority, checkList)) {
       console.log(`'${todo.title}' was successfully updated`);
-      render('index', todo);
+      renderIndexView(todos);
     } else {
       console.log(`'${todo.title}' failed to update`);
     }
@@ -43,20 +68,18 @@ const createTodosController = () => {
     todoToDestroy.destroy();
     // Remove todo from the DOM
     console.log(`'${todo.title}' was successfully destroyed`);
-    render('index', todoToDestroy)
+    renderIndexView(todos);
   };
 
   const show = (todoToShow) => {
-    render('show', todoToShow);
+    renderShowView(todoToShow);
   };
 
   const index = () => {
-    console.log('Get all todos from array/local storage')
-    const todos = [];
-    render('index', todos);
+    renderIndexView(todos);
   };
 
-  return { todo, build, create, edit, update, destroy, show, index };
+  return { build, create, edit, update, destroy, show, index };
 };
 
 export { createTodosController };
