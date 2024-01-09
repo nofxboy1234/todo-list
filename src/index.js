@@ -11,7 +11,8 @@ todo = todosController.create(
   'Make sure the dogs are happy!',
   '2024-01-31',
   'high',
-  checkList
+  checkList,
+  'Home'
 );
 
 console.log('\n');
@@ -27,7 +28,8 @@ todosController.update(
   'Make sure the dogs and cats are happy!',
   '2024-01-31',
   'high',
-  checkList
+  checkList,
+  'Home'
 );
 
 console.log('\n');

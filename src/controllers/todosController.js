@@ -10,8 +10,8 @@ const createTodosController = () => {
     render('new', todo);
   };
 
-  const create = (title, description, dueDate, priority, checkList) => {
-    todo = createTodo(title, description, dueDate, priority, checkList);
+  const create = (title, description, dueDate, priority, checkList, project) => {
+    todo = createTodo(title, description, dueDate, priority, checkList, project);
 
     if (todo.save()) {
       console.log(`'${todo.title}' was successfully created`);
@@ -28,7 +28,7 @@ const createTodosController = () => {
     render('edit', todo);
   };
 
-  const update = (title, description, dueDate, priority, checkList) => {
+  const update = (title, description, dueDate, priority, checkList, project) => {
     if (todo.update(title, description, dueDate, priority, checkList)) {
       console.log(`'${todo.title}' was successfully updated`);
       render('index', todo);

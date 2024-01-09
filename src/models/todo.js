@@ -1,4 +1,4 @@
-const createTodo = (title, description, dueDate, priority, checkList) => {
+const createTodo = (title, description, dueDate, priority, checkList, project) => {
   const isComplete = () => {
     return false;
   };
@@ -23,6 +23,7 @@ const createTodo = (title, description, dueDate, priority, checkList) => {
     dueDate,
     priority,
     checkList,
+    project,
     isComplete,
     save,
     update,
