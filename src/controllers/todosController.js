@@ -1,41 +1,33 @@
 import { Todo } from '../models/todo.js';
 
 let todo;
+let todos;
 
 const TodosController = {
   new: function () {
     todo = Todo.new();
+    console.log('Render new view');
+  },
+  create: function (title, description, dueDate, priority, checkList, project) {
+    todo = Todo.new(title, description, dueDate, priority, checkList, project);
+
+    if (todo.save()) {
+      console.log(`'${todo.title}' was successfully created`);
+      // console.log('Render index view');
+      this.index();
+    } else {
+      console.log(`'${todo.title}' failed to save`);
+    }
+  },
+  index: function () {
+    todos = Todo.all();
+    console.log('\nindex view:');
+    console.log(todos);
+    console.log('\n');
   },
 };
 
 export { TodosController };
-
-//   const create = (
-//     title,
-//     description,
-//     dueDate,
-//     priority,
-//     checkList,
-//     project
-//   ) => {
-// import Todo
-//       title,
-//       description,
-//       dueDate,
-//       priority,
-//       checkList,
-//       project
-//     );
-
-//     if (todo.save()) {
-//       console.log(`'${todo.title}' was successfully created`);
-//       renderIndexView(todos);
-//     } else {
-//       console.log(`'${todo.title}' failed to save`);
-//     }
-
-//     return todo;
-//   };
 
 //   const edit = (todoToEdit) => {
 //     todo = todoToEdit;

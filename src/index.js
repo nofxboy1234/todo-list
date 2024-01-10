@@ -3,14 +3,18 @@ import './style.css';
 
 const todosController = TodosController;
 todosController.new();
+console.log('Fill in new view form');
 
-// const dylan = 'dylan';
-// function hey() {
-//   console.log(this.dylan);
-// };
-// hey();
+const checkList = { 'Fill water bowl': false, 'Fill food bowl': false };
+todosController.create(
+  'Feed the dogs',
+  'Make sure the dogs are happy!',
+  '2024-01-31',
+  'High',
+  checkList,
+  'Home'
+);
 
-// const checkList = { 'Fill water bowl': false, 'Fill food bowl': false };
 // let todo = todosController.build();
 // todo = todosController.create(
 //   'Feed the dogs',

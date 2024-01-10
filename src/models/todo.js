@@ -14,6 +14,7 @@ const Todo = {
       },
       save: function () {
         console.log(`Save '${title}' to local storage`);
+        todos.push(this);
         return true;
       },
       update: function () {
@@ -26,7 +27,7 @@ const Todo = {
     };
   },
   all: function () {
-    console.log('Get all todo objects from Todo / local storage');
+    console.log('Get all todo objects from todo.js / local storage');
     // const todos = 'dylan';
     return todos;
   },
