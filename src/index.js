@@ -2,9 +2,9 @@ import { TodosController } from './controllers/todosController.js';
 import './style.css';
 
 const todosController = TodosController;
+
 todosController.new();
 console.log('Fill in new view form');
-
 const checkList = { 'Fill water bowl': false, 'Fill food bowl': false };
 todosController.create(
   'Feed the dogs',
@@ -12,6 +12,20 @@ todosController.create(
   '2024-01-31',
   'High',
   checkList,
+  'Home'
+);
+
+console.log('\n');
+
+todosController.new();
+console.log('Fill in new view form');
+const checkList2 = { 'Fill water bowl': false, 'Fill food bowl': false };
+todosController.create(
+  'Feed the cats',
+  'Make sure the cats are happy!',
+  '2024-01-30',
+  'Medium',
+  checkList2,
   'Home'
 );
 
