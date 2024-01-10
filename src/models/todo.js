@@ -52,6 +52,8 @@ const Todo = {
       },
       destroy: function () {
         console.log(`Remove '${title}' from local storage`);
+        const removeIndex = todos.indexOf(this);
+        todos.splice(removeIndex, 1);
       },
     };
   },

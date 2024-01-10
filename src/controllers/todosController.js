@@ -62,6 +62,11 @@ const TodosController = {
       this.edit(id);
     }
   },
+  destroy: function (id) {
+    setTodo(id);
+    todo.destroy();
+    this.index();
+  },
 };
 
 export { TodosController };

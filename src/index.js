@@ -26,6 +26,7 @@ todosController.update(
   checkList,
   'Home'
 );
+todosController.destroy(Todo.last().id);
 
 // let todo = todosController.build();
 // todo = todosController.create(
