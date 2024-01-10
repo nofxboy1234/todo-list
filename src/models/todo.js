@@ -31,8 +31,23 @@ const Todo = {
         todos.push(this);
         return true;
       },
-      update: function () {
+      update: function (
+        title,
+        description,
+        dueDate,
+        priority,
+        checkList,
+        project
+      ) {
         console.log(`Update '${title}' in local storage`);
+        Object.assign(this, {
+          title,
+          description,
+          dueDate,
+          priority,
+          checkList,
+          project,
+        });
         return true;
       },
       destroy: function () {

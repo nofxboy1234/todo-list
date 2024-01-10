@@ -8,7 +8,9 @@ const setTodo = (id) => (todo = Todo.find(id));
 const TodosController = {
   new: function () {
     todo = Todo.new();
-    console.log('Render new view');
+    console.log('\nnew view:');
+    console.log(todo);
+    console.log('\n');
   },
   create: function (title, description, dueDate, priority, checkList, project) {
     todo = Todo.new(title, description, dueDate, priority, checkList, project);
@@ -19,6 +21,7 @@ const TodosController = {
       this.index();
     } else {
       console.log(`'${todo.title}' failed to save`);
+      this.new();
     }
   },
   index: function () {
@@ -33,49 +36,32 @@ const TodosController = {
     console.log(todo);
     console.log('\n');
   },
+  edit: function (id) {
+    setTodo(id);
+    console.log('\nedit view:');
+    console.log(todo);
+    console.log('\n');
+  },
+  update: function (
+    id,
+    title,
+    description,
+    dueDate,
+    priority,
+    checkList,
+    project
+  ) {
+    setTodo(id);
+    if (
+      todo.update(title, description, dueDate, priority, checkList, project)
+    ) {
+      console.log(`'${todo.title}' was successfully updated`);
+      this.index();
+    } else {
+      console.log(`'${todo.title}' failed to update`);
+      this.edit(id);
+    }
+  },
 };
 
 export { TodosController };
-
-//   const edit = (todoToEdit) => {
-//     todo = todoToEdit;
-//     renderEditView(todo);
-//   };
-
-//   const update = (
-//     title,
-//     description,
-//     dueDate,
-//     priority,
-//     checkList,
-//     project
-//   ) => {
-//     if (
-//       todo.update(title, description, dueDate, priority, checkList, project)
-//     ) {
-//       console.log(`'${todo.title}' was successfully updated`);
-//       renderIndexView(todos);
-//     } else {
-//       console.log(`'${todo.title}' failed to update`);
-//     }
-
-//     return todo;
-//   };
-
-//   const destroy = (todoToDestroy) => {
-//     todoToDestroy.destroy();
-//     // Remove todo from the DOM
-//     console.log(`'${todo.title}' was successfully destroyed`);
-//     renderIndexView(todos);
-//   };
-
-//   const show = (todoToShow) => {
-//     renderShowView(todoToShow);
-//   };
-
-//   const index = () => {
-//     renderIndexView(todos);
-//   };
-
-//   return { todos, build, create, edit, update, destroy, show, index };
-// };

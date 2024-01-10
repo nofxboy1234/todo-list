@@ -16,22 +16,16 @@ todosController.create(
   'Home'
 );
 todosController.show(Todo.last().id);
-
-console.log('\n');
-
-todosController.new();
-console.log('Fill in new view form');
-const checkList2 = { 'Fill water bowl': false, 'Fill food bowl': false };
-todosController.create(
-  'Feed the cats',
-  'Make sure the cats are happy!',
-  '2024-01-30',
-  'Medium',
-  checkList2,
+todosController.edit(Todo.last().id);
+todosController.update(
+  Todo.last().id,
+  'Feed the dogs urgently!',
+  'Make sure the dogs are very happy!',
+  '2024-01-28',
+  'High',
+  checkList,
   'Home'
 );
-todosController.show(Todo.last().id);
-
 
 // let todo = todosController.build();
 // todo = todosController.create(
