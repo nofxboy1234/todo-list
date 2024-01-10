@@ -1,8 +1,6 @@
 import { TodosController } from './controllers/todosController.js';
 import './style.css';
 
-console.log('\n');
-
 const todosController = TodosController;
 todosController.new();
 

@@ -1,12 +1,14 @@
 import { Todo } from '../models/todo.js';
 
+let todo;
+
 const TodosController = {
   new: function () {
-    this.todo = Todo.new();
-    Todo.all();
-    Todo.allAgain();
+    todo = Todo.new();
   },
 };
+
+export { TodosController };
 
 //   const create = (
 //     title,
@@ -77,5 +79,3 @@ const TodosController = {
 
 //   return { todos, build, create, edit, update, destroy, show, index };
 // };
-
-export { TodosController };
