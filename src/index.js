@@ -1,4 +1,5 @@
 import { TodosController } from './controllers/todosController.js';
+import { Todo } from './models/todo.js';
 import './style.css';
 
 const todosController = TodosController;
@@ -14,6 +15,7 @@ todosController.create(
   checkList,
   'Home'
 );
+todosController.show(Todo.last().id);
 
 console.log('\n');
 
@@ -28,6 +30,8 @@ todosController.create(
   checkList2,
   'Home'
 );
+todosController.show(Todo.last().id);
+
 
 // let todo = todosController.build();
 // todo = todosController.create(

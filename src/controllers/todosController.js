@@ -3,6 +3,8 @@ import { Todo } from '../models/todo.js';
 let todo;
 let todos;
 
+const setTodo = (id) => (todo = Todo.find(id));
+
 const TodosController = {
   new: function () {
     todo = Todo.new();
@@ -23,6 +25,12 @@ const TodosController = {
     todos = Todo.all();
     console.log('\nindex view:');
     console.log(todos);
+    console.log('\n');
+  },
+  show: function (id) {
+    setTodo(id);
+    console.log('\nshow view:');
+    console.log(todo);
     console.log('\n');
   },
 };
