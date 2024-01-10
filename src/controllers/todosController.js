@@ -17,7 +17,6 @@ const TodosController = {
 
     if (todo.save()) {
       console.log(`'${todo.title}' was successfully created`);
-      // console.log('Render index view');
       this.index();
     } else {
       console.log(`'${todo.title}' failed to save`);

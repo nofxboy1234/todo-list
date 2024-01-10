@@ -59,7 +59,6 @@ const Todo = {
   },
   all: function () {
     console.log('Get all todo objects from todo.js / local storage');
-    // const todos = 'dylan';
     return todos;
   },
   find: function (id) {
