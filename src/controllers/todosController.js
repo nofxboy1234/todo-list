@@ -1,4 +1,5 @@
 import { Todo } from '../models/todo.js';
+import { render } from '../views/todos/show.js';
 
 let todo;
 let todos;
@@ -31,9 +32,7 @@ const TodosController = {
   },
   show: function (id) {
     setTodo(id);
-    console.log('\nshow view:');
-    console.log(todo);
-    console.log('\n');
+    render(todo);
   },
   edit: function (id) {
     setTodo(id);
