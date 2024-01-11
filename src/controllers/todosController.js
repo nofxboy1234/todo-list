@@ -1,6 +1,7 @@
 import { Todo } from '../models/todo.js';
 import { render as renderShow } from '../views/todos/show.js';
 import { render as renderIndex } from '../views/todos/index.js';
+import { render as renderNew } from '../views/todos/new.js';
 
 let todo;
 let todos;
@@ -10,9 +11,7 @@ const setTodo = (id) => (todo = Todo.find(id));
 const TodosController = {
   new: function () {
     todo = Todo.new();
-    console.log('\nnew view:');
-    console.log(todo);
-    console.log('\n');
+    renderNew(todo);
   },
   create: function (title, description, dueDate, priority, checkList, project) {
     todo = Todo.new(title, description, dueDate, priority, checkList, project);

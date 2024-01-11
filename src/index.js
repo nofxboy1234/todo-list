@@ -5,24 +5,25 @@ import './style.css';
 const todosController = TodosController;
 
 todosController.new();
-const checkList = { 'Fill water bowl': false, 'Fill food bowl': false };
-todosController.create(
-  'Feed the dogs',
-  'Make sure the dogs are happy!',
-  '2024-01-31',
-  'High',
-  checkList,
-  'Home'
-);
 
-const checkList2 = { 'Fill water bowl': false, 'Fill food bowl': false };
-todosController.create(
-  'Feed the cat',
-  'Make sure the cats are happy!',
-  '2024-01-30',
-  'Medium',
-  checkList2,
-  'Home'
-);
+// const checkList = { 'Fill water bowl': false, 'Fill food bowl': false };
+// todosController.create(
+//   'Feed the dogs',
+//   'Make sure the dogs are happy!',
+//   '2024-01-31',
+//   'High',
+//   checkList,
+//   'Home'
+// );
+
+// const checkList2 = { 'Fill water bowl': false, 'Fill food bowl': false };
+// todosController.create(
+//   'Feed the cat',
+//   'Make sure the cats are happy!',
+//   '2024-01-30',
+//   'Medium',
+//   checkList2,
+//   'Home'
+// );
 
 // todosController.show(Todo.last().id);
