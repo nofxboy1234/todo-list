@@ -1,5 +1,6 @@
 import { Todo } from '../models/todo.js';
-import { render } from '../views/todos/show.js';
+import { render as renderShow } from '../views/todos/show.js';
+import { render as renderIndex } from '../views/todos/index.js';
 
 let todo;
 let todos;
@@ -26,13 +27,11 @@ const TodosController = {
   },
   index: function () {
     todos = Todo.all();
-    console.log('\nindex view:');
-    console.log(todos);
-    console.log('\n');
+    renderIndex(todos);
   },
   show: function (id) {
     setTodo(id);
-    render(todo);
+    renderShow(todo);
   },
   edit: function (id) {
     setTodo(id);

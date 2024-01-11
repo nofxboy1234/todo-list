@@ -1,5 +1,5 @@
 const todoPartial = (todo) => {
-  const todoDiv = document.createElement('div');
+  const todoDiv = document.createElement('p');
 
   const titleDiv = document.createElement('div');
   titleDiv.textContent = todo.title;
