@@ -2,6 +2,7 @@ import { Todo } from '../models/todo.js';
 import { render as renderShow } from '../views/todos/show.js';
 import { render as renderIndex } from '../views/todos/index.js';
 import { render as renderNew } from '../views/todos/new.js';
+import { render as renderEdit } from '../views/todos/edit.js';
 
 let todo;
 let todos;
@@ -34,9 +35,7 @@ const TodosController = {
   },
   edit: function (id) {
     setTodo(id);
-    console.log('\nedit view:');
-    console.log(todo);
-    console.log('\n');
+    renderEdit(todo);
   },
   update: function (
     id,
