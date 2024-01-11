@@ -3,13 +3,27 @@ const createLayout = () => {
   flexContainer.classList.add('flex-container');
   document.body.appendChild(flexContainer);
 
-  const flexItem1 = document.createElement('div');
-  flexItem1.classList.add('flex-item', 'flex-item-left');
-  flexContainer.appendChild(flexItem1);
+  const flexItemLeft = document.createElement('div');
+  flexItemLeft.classList.add('flex-item', 'flex-item-left');
+  flexContainer.appendChild(flexItemLeft);
 
-  const flexItem2 = document.createElement('div');
-  flexItem2.classList.add('flex-item', 'flex-item-right');
-  flexContainer.appendChild(flexItem2);
+  const flexItemRight = document.createElement('div');
+  flexItemRight.classList.add('flex-item', 'flex-item-right');
+  flexContainer.appendChild(flexItemRight);
+
+  const menuContainer = document.createElement('div');
+  menuContainer.classList.add('menu-container');
+  flexItemLeft.appendChild(menuContainer);
+
+  const headingItem = document.createElement('div');
+  headingItem.classList.add('heading');
+  headingItem.textContent = 'TODO LIST';
+  menuContainer.appendChild(headingItem);
+
+  const newTodoButton = document.createElement('button');
+  newTodoButton.classList.add('new-todo-button');
+  newTodoButton.textContent = 'New List';
+  menuContainer.appendChild(newTodoButton);
 };
 
 export { createLayout };
