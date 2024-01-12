@@ -12,17 +12,14 @@
 }
 
 .flex-item-left {
+  display: flex;
+  flex-direction: column;
+
   width: 200px;
-  /* flex: 1; */
 }
 
 .flex-item-right {
   flex: 4;
-}
-
-.menu-container {
-  display: flex;
-  flex-direction: column;
 }
 
 .heading {

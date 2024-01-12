@@ -11,19 +11,15 @@ const createLayout = () => {
   flexItemRight.classList.add('flex-item', 'flex-item-right');
   flexContainer.appendChild(flexItemRight);
 
-  const menuContainer = document.createElement('div');
-  menuContainer.classList.add('menu-container');
-  flexItemLeft.appendChild(menuContainer);
-
   const headingItem = document.createElement('div');
   headingItem.classList.add('heading');
   headingItem.textContent = 'TODO LIST';
-  menuContainer.appendChild(headingItem);
+  flexItemLeft.appendChild(headingItem);
 
   const newTodoButton = document.createElement('button');
   newTodoButton.classList.add('new-todo-button');
   newTodoButton.textContent = 'New List';
-  menuContainer.appendChild(newTodoButton);
+  flexItemLeft.appendChild(newTodoButton);
 };
 
 export { createLayout };
