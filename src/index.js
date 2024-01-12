@@ -1,9 +1,5 @@
-import { TodosController } from './controllers/todosController.js';
-import { Todo } from './models/todo.js';
 import { createLayout } from './views/layouts/application.js';
 import './style.css';
-
-const todosController = TodosController;
 
 createLayout();
 

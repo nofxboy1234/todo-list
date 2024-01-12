@@ -1,11 +1,8 @@
-import { todoPartial } from './_todo';
+import { formPartial } from './_form';
+import { flexItemRight } from '../layouts/application';
 
 const render = (todo) => {
-  const headerDiv = document.createElement('h1');
-  headerDiv.textContent = 'New Todo';
-  document.body.appendChild(headerDiv);
-
-  document.body.appendChild(todoPartial(todo));
+  flexItemRight.appendChild(formPartial(todo));
 };
 
 export { render };
