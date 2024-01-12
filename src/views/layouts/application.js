@@ -20,6 +20,10 @@ const createLayout = () => {
   newTodoButton.classList.add('new-todo-button');
   newTodoButton.textContent = 'New List';
   flexItemLeft.appendChild(newTodoButton);
+
+  const newTodoForm = document.createElement('div');
+  newTodoForm.classList.add('new-todo-form');
+  flexItemRight.appendChild(newTodoForm);
 };
 
 export { createLayout };
