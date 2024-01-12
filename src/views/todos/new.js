@@ -1,8 +1,8 @@
 import { formPartial } from './_form';
-import { flexItemRight } from '../layouts/application';
+import { contentContainer } from '../layouts/application';
 
 const render = (todo) => {
-  flexItemRight.appendChild(formPartial(todo));
+  contentContainer.appendChild(formPartial(todo));
 };
 
 export { render };
