@@ -73,6 +73,30 @@ const formPartial = (todo) => {
   priorityDiv.appendChild(prioritySelect);
   todoForm.appendChild(priorityDiv);
 
+  const projectDiv = document.createElement('div');
+  const projectLabel = document.createElement('label');
+  projectLabel.textContent = 'project:';
+  projectLabel.htmlFor = 'projectID';
+  projectDiv.appendChild(projectLabel);
+  const projectSelect = document.createElement('select');
+  projectSelect.id = 'projectID';
+  projectSelect.name = 'project';
+  const projectOption1 = document.createElement('option');
+  projectOption1.value = 'project1';
+  projectOption1.text = 'project1';
+  projectSelect.add(projectOption1);
+  const projectOption2 = document.createElement('option');
+  projectOption2.value = 'project2';
+  projectOption2.text = 'project2';
+  projectSelect.add(projectOption2);
+  const projectOption3 = document.createElement('option');
+  projectOption3.value = 'project3';
+  projectOption3.text = 'project3';
+  projectSelect.add(projectOption3);
+  projectDiv.appendChild(projectSelect);
+  todoForm.appendChild(projectDiv);
+
+  
   const submitDiv = document.createElement('div');
   const submitButton = document.createElement('button');
   submitButton.type = 'submit';
@@ -89,9 +113,6 @@ const formPartial = (todo) => {
 
   // todoForm.appendChild(checkListDiv);
 
-  // const projectDiv = document.createElement('div');
-  // projectDiv.textContent = todo.project;
-  // todoForm.appendChild(projectDiv);
 
   return todoForm;
 };
