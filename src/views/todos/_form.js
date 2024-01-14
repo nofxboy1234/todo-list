@@ -38,21 +38,24 @@ const formPartial = (todo) => {
   descriptionDiv.appendChild(descriptionInput);
   todoForm.appendChild(descriptionDiv);
 
+  const dueDateDiv = document.createElement('div');
+  const dueDateLabel = document.createElement('label');
+  dueDateLabel.textContent = 'due date:';
+  dueDateLabel.htmlFor = 'dueDateID';
+  dueDateDiv.appendChild(dueDateLabel);
+  const dueDateInput = document.createElement('input');
+  dueDateInput.type = 'date';
+  dueDateInput.id = 'dueDateID';
+  dueDateInput.name = 'dueDate';
+  dueDateDiv.appendChild(dueDateInput);
+  todoForm.appendChild(dueDateDiv);
+
   const submitDiv = document.createElement('div');
   const submitButton = document.createElement('button');
   submitButton.type = 'submit';
   submitButton.textContent = 'Submit';
   submitDiv.appendChild(submitButton);
   todoForm.appendChild(submitDiv);
-
-  // const descriptionDiv = document.createElement('div');
-  // const descriptionTextArea = document.createElement('textarea');
-  // descriptionTextArea.value = todo.description;
-  // todoForm.appendChild(descriptionTextArea);
-
-  // const dueDateDiv = document.createElement('div');
-  // dueDateDiv.textContent = todo.dueDate;
-  // todoForm.appendChild(dueDateDiv);
 
   // const priorityDiv = document.createElement('div');
   // priorityDiv.textContent = todo.priority;
