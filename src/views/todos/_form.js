@@ -1,10 +1,10 @@
-const formPartial = (todo) => {
+const formPartial = (todo, todosController) => {
   if (!todo.id) {
     todo.title = 'blank';
     todo.description = 'blank';
     todo.dueDate = 'blank';
     todo.priority = 'blank';
-    todo.checkList = { eat: false, sleep: false, drink: true };
+    todo.checkList = { eat: false, sleep: true };
     todo.project = 'blank';
   }
 
@@ -130,16 +130,31 @@ const formPartial = (todo) => {
   projectDiv.appendChild(projectDataList);
   todoForm.appendChild(projectDiv);
 
-  const submitData = (event) => {
-    console.log('submit data');
-    // event.preventDefault();
+  const createTodo = (event) => {
+    event.preventDefault();
+
+    const title = titleInput.value;
+    const description = descriptionInput.value;
+    const dueDate = dueDateInput.value;
+    const priority = prioritySelect.value;
+    const checkList = todo.checkList;
+    const project = projectInput.value;
+
+    todosController.create(
+      title,
+      description,
+      dueDate,
+      priority,
+      checkList,
+      project
+    );
   };
 
   const submitDiv = document.createElement('div');
   const submitButton = document.createElement('button');
   submitButton.type = 'submit';
   submitButton.textContent = 'Submit';
-  submitButton.addEventListener('click', submitData);
+  submitButton.addEventListener('click', createTodo);
   submitDiv.appendChild(submitButton);
   todoForm.appendChild(submitDiv);
 

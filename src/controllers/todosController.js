@@ -12,7 +12,7 @@ const setTodo = (id) => (todo = Todo.find(id));
 const TodosController = {
   new: function () {
     todo = Todo.new();
-    renderNew(todo);
+    renderNew(todo, this);
   },
   create: function (title, description, dueDate, priority, checkList, project) {
     todo = Todo.new(title, description, dueDate, priority, checkList, project);
