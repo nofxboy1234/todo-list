@@ -1,8 +1,7 @@
-import { TodosController } from '../../controllers/todosController.js';
-const todosController = TodosController;
+import { router } from '../../router.js';
 
 const newTodo = () => {
-  todosController.new();
+  router.redirectTo('/todos/new')
 };
 
 const flexContainer = document.createElement('div');

@@ -1,8 +1,8 @@
 import { formPartial } from './_form';
 import { contentContainer } from '../layouts/application';
 
-const render = (todo, todosController) => {
-  contentContainer.appendChild(formPartial(todo, todosController));
+const render = (todo) => {
+  contentContainer.appendChild(formPartial(todo));
 };
 
 export { render };

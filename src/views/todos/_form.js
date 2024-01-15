@@ -1,4 +1,6 @@
-const formPartial = (todo, todosController) => {
+import { router } from '../../router';
+
+const formPartial = (todo) => {
   if (!todo.id) {
     todo.title = 'blank';
     todo.description = 'blank';
@@ -140,7 +142,8 @@ const formPartial = (todo, todosController) => {
     const checkList = todo.checkList;
     const project = projectInput.value;
 
-    todosController.create(
+    router.redirectTo(
+      '/todos/create',
       title,
       description,
       dueDate,

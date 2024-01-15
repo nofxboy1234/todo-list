@@ -4,15 +4,19 @@ import { render as renderIndex } from '../views/todos/index.js';
 import { render as renderNew } from '../views/todos/new.js';
 import { render as renderEdit } from '../views/todos/edit.js';
 
+import { router } from '../router.js';
+
 let todo;
 let todos;
 
 const setTodo = (id) => (todo = Todo.find(id));
 
+const redirectTo = (path) => router.redirectTo(path);
+
 const TodosController = {
   new: function () {
     todo = Todo.new();
-    renderNew(todo, this);
+    renderNew(todo);
   },
   create: function (title, description, dueDate, priority, checkList, project) {
     todo = Todo.new(title, description, dueDate, priority, checkList, project);
