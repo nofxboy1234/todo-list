@@ -3,7 +3,7 @@ import { router } from '../../router.js';
 const redirectTo = (path, ...params) => router.redirectTo(path, ...params);
 
 const newTodo = () => {
-  redirectTo('/todos/new')
+  redirectTo('/todos/new');
 };
 
 const flexContainer = document.createElement('div');
@@ -30,6 +30,8 @@ const createLayout = () => {
   menuContainer.appendChild(newTodoButton);
 
   newTodoButton.addEventListener('click', newTodo);
+
+  redirectTo('/todos');
 };
 
 export { createLayout, menuContainer, contentContainer };
