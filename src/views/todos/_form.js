@@ -130,10 +130,16 @@ const formPartial = (todo) => {
   projectDiv.appendChild(projectDataList);
   todoForm.appendChild(projectDiv);
 
+  const submitData = (event) => {
+    console.log('submit data');
+    // event.preventDefault();
+  };
+
   const submitDiv = document.createElement('div');
   const submitButton = document.createElement('button');
   submitButton.type = 'submit';
   submitButton.textContent = 'Submit';
+  submitButton.addEventListener('click', submitData);
   submitDiv.appendChild(submitButton);
   todoForm.appendChild(submitDiv);
 
