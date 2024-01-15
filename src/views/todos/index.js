@@ -1,7 +1,10 @@
 import { todoPartial } from './_todo';
+import { contentContainer } from '../layouts/application';
+import { clearContent } from '../domCommon';
 
 const render = (todos) => {
-  todos.forEach((todo) => document.body.appendChild(todoPartial(todo)));
+  clearContent();
+  todos.forEach((todo) => contentContainer.appendChild(todoPartial(todo)));
 };
 
 export { render };
