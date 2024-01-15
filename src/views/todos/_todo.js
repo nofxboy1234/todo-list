@@ -1,13 +1,4 @@
 const todoPartial = (todo) => {
-  if (!todo.id) {
-    todo.title = 'blank';
-    todo.description = 'blank';
-    todo.dueDate = 'blank';
-    todo.priority = 'blank';
-    todo.checkList = 'blank';
-    todo.project = 'blank';
-  }
-
   const todoDiv = document.createElement('p');
 
   const titleDiv = document.createElement('div');

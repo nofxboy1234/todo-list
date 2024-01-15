@@ -4,7 +4,7 @@ const formPartial = (todo) => {
     todo.description = 'blank';
     todo.dueDate = 'blank';
     todo.priority = 'blank';
-    todo.checkList = 'blank';
+    todo.checkList = { eat: false, sleep: false, drink: true };
     todo.project = 'blank';
   }
 
@@ -73,6 +73,34 @@ const formPartial = (todo) => {
   priorityDiv.appendChild(prioritySelect);
   todoForm.appendChild(priorityDiv);
 
+  const checkListDiv = document.createElement('div');
+
+  const checkListLabelDiv = document.createElement('div');
+  checkListLabelDiv.textContent = 'checklist:';
+  checkListDiv.appendChild(checkListLabelDiv);
+
+  for (const [key, value] of Object.entries(todo.checkList)) {
+    const checkListPair = document.createElement('div');
+    const checkBoxLabel = document.createElement('label');
+    checkBoxLabel.textContent = key;
+    checkBoxLabel.htmlFor = `checklist-${key}`;
+    checkListDiv.appendChild(checkBoxLabel);
+    checkListPair.appendChild(checkBoxLabel);
+
+    const checkListCheckbox = document.createElement('input');
+    checkListCheckbox.type = 'checkbox';
+    checkListCheckbox.id = `checklist-${key}`;
+    checkListCheckbox.name = 'checkList';
+    checkListCheckbox.value = key;
+    checkListCheckbox.checked = value;
+    checkListPair.appendChild(checkListCheckbox);
+
+    // checkListCheckbox.textContent = `- ${key}: ${value}`;
+    checkListDiv.appendChild(checkListPair);
+  }
+
+  todoForm.appendChild(checkListDiv);
+
   const projectDiv = document.createElement('div');
   const projectLabel = document.createElement('label');
   projectLabel.textContent = 'project:';
@@ -85,10 +113,8 @@ const formPartial = (todo) => {
   projectInput.id = 'projectID';
   projectInput.name = 'project';
   projectDiv.appendChild(projectInput);
-
   const projectDataList = document.createElement('datalist');
   projectDataList.id = 'projectsID';
-
   const projectOption1 = document.createElement('option');
   projectOption1.value = 'project1';
   projectOption1.text = 'project1';
@@ -101,7 +127,6 @@ const formPartial = (todo) => {
   projectOption3.value = 'project3';
   projectOption3.text = 'project3';
   projectDataList.appendChild(projectOption3);
-
   projectDiv.appendChild(projectDataList);
   todoForm.appendChild(projectDiv);
 
@@ -111,15 +136,6 @@ const formPartial = (todo) => {
   submitButton.textContent = 'Submit';
   submitDiv.appendChild(submitButton);
   todoForm.appendChild(submitDiv);
-
-  // const checkListDiv = document.createElement('div');
-  // for (const [key, value] of Object.entries(todo.checkList)) {
-  //   const checkListEntryDiv = document.createElement('div');
-  //   checkListEntryDiv.textContent = `- ${key}: ${value}`;
-  //   checkListDiv.appendChild(checkListEntryDiv);
-  // }
-
-  // todoForm.appendChild(checkListDiv);
 
   return todoForm;
 };
