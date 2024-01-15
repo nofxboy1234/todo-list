@@ -11,7 +11,7 @@ let todos;
 
 const setTodo = (id) => (todo = Todo.find(id));
 
-const redirectTo = (path) => router.redirectTo(path);
+const redirectTo = (path, ...params) => router.redirectTo(path, ...params);
 
 const TodosController = {
   new: function () {
@@ -23,10 +23,10 @@ const TodosController = {
 
     if (todo.save()) {
       console.log(`'${todo.title}' was successfully created`);
-      this.index();
+      redirectTo('/todos');
     } else {
       console.log(`'${todo.title}' failed to save`);
-      this.new();
+      redirectTo('/todos/new');
     }
   },
   index: function () {

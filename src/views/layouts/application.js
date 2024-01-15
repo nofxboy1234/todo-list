@@ -1,7 +1,9 @@
 import { router } from '../../router.js';
 
+const redirectTo = (path, ...params) => router.redirectTo(path, ...params);
+
 const newTodo = () => {
-  router.redirectTo('/todos/new')
+  redirectTo('/todos/new')
 };
 
 const flexContainer = document.createElement('div');

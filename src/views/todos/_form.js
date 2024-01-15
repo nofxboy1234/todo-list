@@ -1,5 +1,7 @@
 import { router } from '../../router';
 
+const redirectTo = (path, ...params) => router.redirectTo(path, ...params);
+
 const formPartial = (todo) => {
   if (!todo.id) {
     todo.title = 'blank';
@@ -142,7 +144,7 @@ const formPartial = (todo) => {
     const checkList = todo.checkList;
     const project = projectInput.value;
 
-    router.redirectTo(
+    redirectTo(
       '/todos/create',
       title,
       description,

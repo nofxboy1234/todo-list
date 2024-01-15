@@ -9,7 +9,9 @@ const router = {
         break;
       case '/todos/create':
         todosController.create(...params);
-
+        break;
+      case '/todos':
+        todosController.index();
         break;
       default:
         break;
