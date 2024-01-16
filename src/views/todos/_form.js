@@ -59,15 +59,13 @@ const formPartial = (todo) => {
   todoForm.appendChild(descriptionDiv);
 
   const dueDateDiv = document.createElement('div');
-  const dueDateLabel = document.createElement('label');
-  dueDateLabel.textContent = 'due date:';
-  dueDateLabel.htmlFor = 'dueDateID';
-  dueDateDiv.appendChild(dueDateLabel);
-  const dueDateInput = document.createElement('input');
-  dueDateInput.type = 'date';
-  dueDateInput.id = 'dueDateID';
-  dueDateInput.name = 'dueDate';
-  dueDateInput.value = todo.dueDate;
+  dueDateDiv.appendChild(createLabel('due date:', 'dueDateID'));
+  const dueDateInput = createInput(
+    'date',
+    'dueDateID',
+    'dueDate',
+    todo.dueDate
+  );
   dueDateDiv.appendChild(dueDateInput);
   todoForm.appendChild(dueDateDiv);
 
