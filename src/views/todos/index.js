@@ -14,6 +14,11 @@ const render = (todos) => {
       redirectTo('/todos', todo.id);
     };
 
+    const destroyTodo = () => {
+      console.log('destroy');
+      // redirectTo('/todos', todo.id, 'DELETE');
+    };
+
     const titleDiv = document.createElement('div');
     titleDiv.textContent = todo.title;
     titleDiv.addEventListener('click', showTodo);
@@ -22,6 +27,11 @@ const render = (todos) => {
     const dueDateDiv = document.createElement('div');
     dueDateDiv.textContent = todo.dueDate;
     todoDiv.appendChild(dueDateDiv);
+
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = 'DELETE';
+    deleteButton.addEventListener('click', destroyTodo);
+    todoDiv.appendChild(deleteButton);
 
     contentContainer.appendChild(todoDiv);
   });
