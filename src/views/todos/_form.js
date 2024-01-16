@@ -5,12 +5,12 @@ const redirectTo = (path, ...params) => router.redirectTo(path, ...params);
 
 const formPartial = (todo) => {
   if (!todo.id) {
-    todo.title = 'blank';
-    todo.description = 'blank';
-    todo.dueDate = 'blank';
-    todo.priority = 'blank';
+    todo.title = '';
+    todo.description = '';
+    todo.dueDate = '';
+    todo.priority = 'low';
     todo.checkList = { eat: false, sleep: true };
-    todo.project = 'blank';
+    todo.project = '';
   }
 
   const todoForm = document.createElement('form');
@@ -86,24 +86,26 @@ const formPartial = (todo) => {
   checkListLabelDiv.textContent = 'checklist:';
   checkListDiv.appendChild(checkListLabelDiv);
 
-  for (const [key, value] of Object.entries(todo.checkList)) {
-    const checkListPair = document.createElement('div');
-    const checkBoxLabel = document.createElement('label');
-    checkBoxLabel.textContent = key;
-    checkBoxLabel.htmlFor = `checklist-${key}`;
-    checkListDiv.appendChild(checkBoxLabel);
-    checkListPair.appendChild(checkBoxLabel);
+  if (todo.checkList) {
+    for (const [key, value] of Object.entries(todo.checkList)) {
+      const checkListPair = document.createElement('div');
+      const checkBoxLabel = document.createElement('label');
+      checkBoxLabel.textContent = key;
+      checkBoxLabel.htmlFor = `checklist-${key}`;
+      checkListDiv.appendChild(checkBoxLabel);
+      checkListPair.appendChild(checkBoxLabel);
 
-    const checkListCheckbox = document.createElement('input');
-    checkListCheckbox.type = 'checkbox';
-    checkListCheckbox.id = `checklist-${key}`;
-    checkListCheckbox.name = 'checkList';
-    checkListCheckbox.value = key;
-    checkListCheckbox.checked = value;
-    checkListPair.appendChild(checkListCheckbox);
+      const checkListCheckbox = document.createElement('input');
+      checkListCheckbox.type = 'checkbox';
+      checkListCheckbox.id = `checklist-${key}`;
+      checkListCheckbox.name = 'checkList';
+      checkListCheckbox.value = key;
+      checkListCheckbox.checked = value;
+      checkListPair.appendChild(checkListCheckbox);
 
-    // checkListCheckbox.textContent = `- ${key}: ${value}`;
-    checkListDiv.appendChild(checkListPair);
+      // checkListCheckbox.textContent = `- ${key}: ${value}`;
+      checkListDiv.appendChild(checkListPair);
+    }
   }
 
   todoForm.appendChild(checkListDiv);
