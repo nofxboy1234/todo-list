@@ -3,6 +3,30 @@ import { Todo } from '../../models/todo';
 
 const redirectTo = (path, ...params) => router.redirectTo(path, ...params);
 
+const createLabel = (text, forID) => {
+  const label = document.createElement('label');
+  label.textContent = text;
+  label.htmlFor = forID;
+  return label;
+};
+
+const createInput = (type, id, name, value) => {
+  const input = document.createElement('input');
+  input.type = type;
+  input.id = id;
+  input.name = name;
+  input.value = value;
+  return input;
+};
+
+const createTextArea = (id, name, value) => {
+  const textArea = document.createElement('textarea');
+  textArea.id = id;
+  textArea.name = name;
+  textArea.value = value;
+  return textArea;
+};
+
 const formPartial = (todo) => {
   if (!todo.id) {
     todo.title = '';
@@ -19,28 +43,19 @@ const formPartial = (todo) => {
   // todoForm.method = 'post';
 
   const titleDiv = document.createElement('div');
-  const titleLabel = document.createElement('label');
-  titleLabel.textContent = 'title:';
-  titleLabel.htmlFor = 'titleID';
-  titleDiv.appendChild(titleLabel);
-  const titleInput = document.createElement('input');
-  titleInput.type = 'text';
-  titleInput.id = 'titleID';
-  titleInput.name = 'title';
-  titleInput.value = todo.title;
+  titleDiv.appendChild(createLabel('title:', 'titleID'));
+  const titleInput = createInput('text', 'titleID', 'title', todo.title);
   titleDiv.appendChild(titleInput);
   todoForm.appendChild(titleDiv);
 
   const descriptionDiv = document.createElement('div');
-  const descriptionLabel = document.createElement('label');
-  descriptionLabel.textContent = 'description:';
-  descriptionLabel.htmlFor = 'descriptionID';
-  descriptionDiv.appendChild(descriptionLabel);
-  const descriptionInput = document.createElement('textarea');
-  descriptionInput.id = 'descriptionID';
-  descriptionInput.name = 'description';
-  descriptionInput.value = todo.description;
-  descriptionDiv.appendChild(descriptionInput);
+  descriptionDiv.appendChild(createLabel('description:', 'descriptionID'));
+  const descriptionTextArea = createTextArea(
+    'descriptionID',
+    'description',
+    todo.description
+  );
+  descriptionDiv.appendChild(descriptionTextArea);
   todoForm.appendChild(descriptionDiv);
 
   const dueDateDiv = document.createElement('div');
@@ -143,7 +158,7 @@ const formPartial = (todo) => {
     event.preventDefault();
 
     const title = titleInput.value;
-    const description = descriptionInput.value;
+    const description = descriptionTextArea.value;
     const dueDate = dueDateInput.value;
     const priority = prioritySelect.value;
     const checkList = todo.checkList;
@@ -164,7 +179,7 @@ const formPartial = (todo) => {
     event.preventDefault();
 
     const title = titleInput.value;
-    const description = descriptionInput.value;
+    const description = descriptionTextArea.value;
     const dueDate = dueDateInput.value;
     const priority = prioritySelect.value;
     const checkList = todo.checkList;
