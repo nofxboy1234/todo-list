@@ -61,48 +61,27 @@ const createButton = (type, text) => {
 };
 
 const formPartial = (todo) => {
+  const todoCommonData = () => {
+    return [
+      titleInput.value,
+      descriptionTextArea.value,
+      dueDateInput.value,
+      prioritySelect.value,
+      todo.checkList,
+      projectInput.value,
+    ];
+  };
+
   const createTodo = (event) => {
     event.preventDefault();
-
-    const title = titleInput.value;
-    const description = descriptionTextArea.value;
-    const dueDate = dueDateInput.value;
-    const priority = prioritySelect.value;
-    const checkList = todo.checkList;
-    const project = projectInput.value;
-
-    redirectTo(
-      '/todos/create',
-      title,
-      description,
-      dueDate,
-      priority,
-      checkList,
-      project
-    );
+    const commonData = todoCommonData();
+    redirectTo('/todos/create', ...commonData);
   };
 
   const updateTodo = (event) => {
     event.preventDefault();
-
-    const title = titleInput.value;
-    const description = descriptionTextArea.value;
-    const dueDate = dueDateInput.value;
-    const priority = prioritySelect.value;
-    const checkList = todo.checkList;
-    const project = projectInput.value;
-
-    redirectTo(
-      '/todos',
-      todo.id,
-      title,
-      description,
-      dueDate,
-      priority,
-      checkList,
-      project,
-      'UPDATE'
-    );
+    const commonData = todoCommonData();
+    redirectTo('/todos', todo.id, ...commonData, 'UPDATE');
   };
 
   const cancel = () => {
