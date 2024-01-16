@@ -1,4 +1,5 @@
 import { router } from '../../router';
+import { Todo } from '../../models/todo';
 
 const redirectTo = (path, ...params) => router.redirectTo(path, ...params);
 
@@ -155,11 +156,40 @@ const formPartial = (todo) => {
     );
   };
 
+  const updateTodo = (event) => {
+    event.preventDefault();
+
+    const title = titleInput.value;
+    const description = descriptionInput.value;
+    const dueDate = dueDateInput.value;
+    const priority = prioritySelect.value;
+    const checkList = todo.checkList;
+    const project = projectInput.value;
+
+    redirectTo(
+      '/todos',
+      todo.id,
+      title,
+      description,
+      dueDate,
+      priority,
+      checkList,
+      project,
+      'UPDATE'
+    );
+  };
+
   const submitDiv = document.createElement('div');
   const submitButton = document.createElement('button');
   submitButton.type = 'submit';
   submitButton.textContent = 'Submit';
-  submitButton.addEventListener('click', createTodo);
+
+  if (Todo.find(todo.id)) {
+    submitButton.addEventListener('click', updateTodo);
+  } else {
+    submitButton.addEventListener('click', createTodo);
+  }
+
   submitDiv.appendChild(submitButton);
   todoForm.appendChild(submitDiv);
 

@@ -1,11 +1,10 @@
-import { todoPartial } from './_todo';
+import { formPartial } from './_form';
+import { contentContainer } from '../layouts/application';
+import { clearContent } from '../domCommon';
 
 const render = (todo) => {
-  const headerDiv = document.createElement('h1');
-  headerDiv.textContent = 'Edit Todo';
-  document.body.appendChild(headerDiv);
-
-  document.body.appendChild(todoPartial(todo));
+  clearContent();
+  contentContainer.appendChild(formPartial(todo));
 };
 
 export { render };

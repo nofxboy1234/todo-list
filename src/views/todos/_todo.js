@@ -3,8 +3,6 @@ import { router } from '../../router';
 const redirectTo = (path, ...params) => router.redirectTo(path, ...params);
 
 const todoPartial = (todo) => {
-  // if (!todo) return;
-
   const todoDiv = document.createElement('p');
 
   const titleDiv = document.createElement('div');
@@ -41,10 +39,20 @@ const todoPartial = (todo) => {
     redirectTo('/todos', todo.id, 'DELETE');
   };
 
+  const editTodo = () => {
+    // console.log('destroy');
+    redirectTo('/todos/edit', todo.id);
+  };
+
   const deleteButton = document.createElement('button');
   deleteButton.textContent = 'DELETE';
   deleteButton.addEventListener('click', destroyTodo);
   todoDiv.appendChild(deleteButton);
+
+  const updateButton = document.createElement('button');
+  updateButton.textContent = 'EDIT';
+  updateButton.addEventListener('click', editTodo);
+  todoDiv.appendChild(updateButton);
 
   return todoDiv;
 };

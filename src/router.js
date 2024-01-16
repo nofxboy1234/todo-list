@@ -10,13 +10,20 @@ const router = {
       case '/todos/create':
         todosController.create(...params);
         break;
+      case '/todos/edit':
+        const id = params[0];
+        todosController.edit(id);
+        break;
       case '/todos':
         if (params.length > 0) {
-          if (params[1] === 'DELETE') {
-            const id = params[0];
+          const id = params[0];
+          const lastIndex = params.length - 1;
+          if (params[lastIndex] === 'DELETE') {
             todosController.destroy(id);
+          } else if (params[lastIndex] === 'UPDATE') {
+            todosController.update(id, ...params.slice(1, lastIndex));
           } else {
-            todosController.show(...params);
+            todosController.show(id);
           }
         } else {
           todosController.index();

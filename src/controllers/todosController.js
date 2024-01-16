@@ -55,7 +55,7 @@ const TodosController = {
       todo.update(title, description, dueDate, priority, checkList, project)
     ) {
       console.log(`'${todo.title}' was successfully updated`);
-      this.index();
+      redirectTo('/todos');
     } else {
       console.log(`'${todo.title}' failed to update`);
       this.edit(id);
