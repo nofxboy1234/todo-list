@@ -27,6 +27,23 @@ const createTextArea = (id, name, value) => {
   return textArea;
 };
 
+const createOption = (value, text) => {
+  const option = document.createElement('option');
+  option.value = value;
+  option.text = text;
+  return option;
+};
+
+const createSelect = (id, name, options) => {
+  const select = document.createElement('select');
+  select.id = id;
+  select.name = name;
+  options.forEach((option) => {
+    select.add(createOption(option, option));
+  });
+  return select;
+};
+
 const formPartial = (todo) => {
   if (!todo.id) {
     todo.title = '';
@@ -70,25 +87,9 @@ const formPartial = (todo) => {
   todoForm.appendChild(dueDateDiv);
 
   const priorityDiv = document.createElement('div');
-  const priorityLabel = document.createElement('label');
-  priorityLabel.textContent = 'priority:';
-  priorityLabel.htmlFor = 'priorityID';
-  priorityDiv.appendChild(priorityLabel);
-  const prioritySelect = document.createElement('select');
-  prioritySelect.id = 'priorityID';
-  prioritySelect.name = 'priority';
-  const lowOption = document.createElement('option');
-  lowOption.value = 'low';
-  lowOption.text = 'low';
-  prioritySelect.add(lowOption);
-  const mediumOption = document.createElement('option');
-  mediumOption.value = 'medium';
-  mediumOption.text = 'medium';
-  prioritySelect.add(mediumOption);
-  const highOption = document.createElement('option');
-  highOption.value = 'high';
-  highOption.text = 'high';
-  prioritySelect.add(highOption);
+  priorityDiv.appendChild(createLabel('priority:', 'priorityID'));
+  const options = ['low', 'medium', 'high'];
+  const prioritySelect = createSelect('priorityID', 'priority', options);
   prioritySelect.value = todo.priority;
   priorityDiv.appendChild(prioritySelect);
   todoForm.appendChild(priorityDiv);
