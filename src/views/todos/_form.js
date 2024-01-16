@@ -12,6 +12,17 @@ import {
 const redirectTo = (path, ...params) => router.redirectTo(path, ...params);
 
 const formPartial = (todo) => {
+  const todoInitialData = () => {
+    return {
+      title: '',
+      description: '',
+      dueDate: '',
+      priority: 'high',
+      checkList: { a: true, b: true },
+      project: '',
+    };
+  };
+
   const todoCommonData = () => {
     return [
       titleInput.value,
@@ -40,12 +51,7 @@ const formPartial = (todo) => {
   };
 
   if (!todo.id) {
-    todo.title = '';
-    todo.description = '';
-    todo.dueDate = '';
-    todo.priority = 'low';
-    todo.checkList = { a: true, b: false };
-    todo.project = '';
+    Object.assign(todo, todoInitialData());
   }
 
   const todoForm = document.createElement('form');
