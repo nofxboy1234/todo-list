@@ -103,7 +103,6 @@ const formPartial = (todo) => {
       checkListCheckbox.checked = value;
       checkListPair.appendChild(checkListCheckbox);
 
-      // checkListCheckbox.textContent = `- ${key}: ${value}`;
       checkListDiv.appendChild(checkListPair);
     }
   }
@@ -187,13 +186,6 @@ const formPartial = (todo) => {
   const cancel = () => {
     redirectTo('/todos');
   };
-
-  // const resetDiv = document.createElement('div');
-  // const resetButton = document.createElement('button');
-  // resetButton.type = 'reset';
-  // resetButton.textContent = 'Reset';
-  // resetDiv.appendChild(resetButton);
-  // todoForm.appendChild(resetDiv);
 
   const cancelDiv = document.createElement('div');
   const cancelButton = document.createElement('button');
