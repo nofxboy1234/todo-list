@@ -9,7 +9,7 @@ const formPartial = (todo) => {
     todo.description = '';
     todo.dueDate = '';
     todo.priority = 'low';
-    todo.checkList = { eat: false, sleep: true };
+    todo.checkList = {};
     todo.project = '';
   }
 
