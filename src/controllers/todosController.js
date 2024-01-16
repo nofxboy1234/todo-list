@@ -3,15 +3,12 @@ import { render as renderShow } from '../views/todos/show.js';
 import { render as renderIndex } from '../views/todos/index.js';
 import { render as renderNew } from '../views/todos/new.js';
 import { render as renderEdit } from '../views/todos/edit.js';
-
-import { router } from '../router.js';
+import { redirectTo } from '../helpers.js';
 
 let todo;
 let todos;
 
 const setTodo = (id) => (todo = Todo.find(id));
-
-const redirectTo = (path, ...params) => router.redirectTo(path, ...params);
 
 const TodosController = {
   new: function () {

@@ -1,9 +1,6 @@
 import { contentContainer } from '../layouts/application';
 import { clearContent } from '../helpers';
-
-import { router } from '../../router';
-
-const redirectTo = (path, ...params) => router.redirectTo(path, ...params);
+import { redirectTo } from '../../helpers';
 
 const render = (todos) => {
   clearContent();

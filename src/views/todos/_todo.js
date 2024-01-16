@@ -1,6 +1,4 @@
-import { router } from '../../router';
-
-const redirectTo = (path, ...params) => router.redirectTo(path, ...params);
+import { redirectTo } from "../../helpers";
 
 const todoPartial = (todo) => {
   const todoDiv = document.createElement('p');

@@ -1,6 +1,4 @@
-import { router } from '../../router.js';
-
-const redirectTo = (path, ...params) => router.redirectTo(path, ...params);
+import { redirectTo } from '../../helpers';
 
 const newTodo = () => {
   redirectTo('/todos/new');

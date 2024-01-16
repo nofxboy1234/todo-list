@@ -1,4 +1,3 @@
-import { router } from '../../router';
 import { Todo } from '../../models/todo';
 import {
   createLabel,
@@ -8,8 +7,7 @@ import {
   createDataList,
   createButton,
 } from '../helpers';
-
-const redirectTo = (path, ...params) => router.redirectTo(path, ...params);
+import { redirectTo } from '../../helpers';
 
 const formPartial = (todo) => {
   const todoInitialData = () => {
