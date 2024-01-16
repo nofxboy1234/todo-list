@@ -1,6 +1,6 @@
 import { formPartial } from './_form';
 import { contentContainer } from '../layouts/application';
-import { clearContent } from '../domCommon';
+import { clearContent } from '../helpers';
 
 const render = (todo) => {
   clearContent();

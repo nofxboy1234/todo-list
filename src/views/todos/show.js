@@ -1,5 +1,5 @@
 import { contentContainer } from '../layouts/application';
-import { clearContent } from '../domCommon';
+import { clearContent } from '../helpers';
 import { todoPartial } from './_todo';
 import { router } from '../../router';
 

@@ -1,5 +1,5 @@
 import { contentContainer } from '../layouts/application';
-import { clearContent } from '../domCommon';
+import { clearContent } from '../helpers';
 
 import { router } from '../../router';
 
