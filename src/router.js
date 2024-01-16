@@ -11,7 +11,11 @@ const router = {
         todosController.create(...params);
         break;
       case '/todos':
-        todosController.index();
+        if (params.length > 0) {
+          todosController.show(...params);
+        } else {
+          todosController.index();
+        }
         break;
       default:
         break;

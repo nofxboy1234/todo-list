@@ -1,4 +1,6 @@
 const todoPartial = (todo) => {
+  // if (!todo) return;
+
   const todoDiv = document.createElement('p');
 
   const titleDiv = document.createElement('div');
