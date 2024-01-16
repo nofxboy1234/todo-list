@@ -12,7 +12,12 @@ const router = {
         break;
       case '/todos':
         if (params.length > 0) {
-          todosController.show(...params);
+          if (params[1] === 'DELETE') {
+            const id = params[0];
+            todosController.destroy(id);
+          } else {
+            todosController.show(...params);
+          }
         } else {
           todosController.index();
         }

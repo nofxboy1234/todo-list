@@ -15,8 +15,8 @@ const render = (todos) => {
     };
 
     const destroyTodo = () => {
-      console.log('destroy');
-      // redirectTo('/todos', todo.id, 'DELETE');
+      // console.log('destroy');
+      redirectTo('/todos', todo.id, 'DELETE');
     };
 
     const titleDiv = document.createElement('div');

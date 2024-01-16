@@ -64,7 +64,7 @@ const TodosController = {
   destroy: function (id) {
     setTodo(id);
     todo.destroy();
-    this.index();
+    redirectTo('/todos');
   },
 };
 
