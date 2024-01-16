@@ -52,6 +52,7 @@ const formPartial = (todo) => {
   dueDateInput.type = 'date';
   dueDateInput.id = 'dueDateID';
   dueDateInput.name = 'dueDate';
+  dueDateInput.value = todo.dueDate;
   dueDateDiv.appendChild(dueDateInput);
   todoForm.appendChild(dueDateDiv);
 
@@ -75,6 +76,7 @@ const formPartial = (todo) => {
   highOption.value = 'high';
   highOption.text = 'high';
   prioritySelect.add(highOption);
+  prioritySelect.value = todo.priority;
   priorityDiv.appendChild(prioritySelect);
   todoForm.appendChild(priorityDiv);
 
@@ -117,6 +119,7 @@ const formPartial = (todo) => {
   projectInput.setAttribute('list', 'projectsID');
   projectInput.id = 'projectID';
   projectInput.name = 'project';
+  projectInput.value = todo.project;
   projectDiv.appendChild(projectInput);
   const projectDataList = document.createElement('datalist');
   projectDataList.id = 'projectsID';
