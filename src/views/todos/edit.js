@@ -5,6 +5,7 @@ import { clearContent } from '../domCommon';
 const render = (todo) => {
   clearContent();
   contentContainer.appendChild(formPartial(todo));
+  document.getElementById('titleID').focus();
 };
 
 export { render };
