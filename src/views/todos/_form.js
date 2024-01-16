@@ -44,6 +44,15 @@ const createSelect = (id, name, options) => {
   return select;
 };
 
+const createDataList = (id, options) => {
+  const dataList = document.createElement('datalist');
+  dataList.id = id;
+  options.forEach((option) => {
+    dataList.appendChild(createOption(option, option));
+  });
+  return dataList;
+};
+
 const formPartial = (todo) => {
   if (!todo.id) {
     todo.title = '';
@@ -88,18 +97,16 @@ const formPartial = (todo) => {
 
   const priorityDiv = document.createElement('div');
   priorityDiv.appendChild(createLabel('priority:', 'priorityID'));
-  const options = ['low', 'medium', 'high'];
+  let options = ['low', 'medium', 'high'];
   const prioritySelect = createSelect('priorityID', 'priority', options);
   prioritySelect.value = todo.priority;
   priorityDiv.appendChild(prioritySelect);
   todoForm.appendChild(priorityDiv);
 
   const checkListDiv = document.createElement('div');
-
   const checkListLabelDiv = document.createElement('div');
   checkListLabelDiv.textContent = 'checklist:';
   checkListDiv.appendChild(checkListLabelDiv);
-
   if (todo.checkList) {
     for (const [key, value] of Object.entries(todo.checkList)) {
       const checkListPair = document.createElement('div');
@@ -107,45 +114,29 @@ const formPartial = (todo) => {
       const checkListCheckbox = createInput(
         'checkbox',
         `checklist-${key}`,
-        'checkList'
+        'checkList',
+        key
       );
-      checkListCheckbox.value = key;
       checkListCheckbox.checked = value;
       checkListPair.appendChild(checkListCheckbox);
 
       checkListDiv.appendChild(checkListPair);
     }
   }
-
   todoForm.appendChild(checkListDiv);
 
   const projectDiv = document.createElement('div');
-  const projectLabel = document.createElement('label');
-  projectLabel.textContent = 'project:';
-  projectLabel.htmlFor = 'projectID';
-  projectDiv.appendChild(projectLabel);
-
-  const projectInput = document.createElement('input');
-  projectInput.type = 'text';
+  projectDiv.appendChild(createLabel('project:', 'projectID'));
+  const projectInput = createInput(
+    'text',
+    'projectID',
+    'project',
+    todo.project
+  );
   projectInput.setAttribute('list', 'projectsID');
-  projectInput.id = 'projectID';
-  projectInput.name = 'project';
-  projectInput.value = todo.project;
   projectDiv.appendChild(projectInput);
-  const projectDataList = document.createElement('datalist');
-  projectDataList.id = 'projectsID';
-  const projectOption1 = document.createElement('option');
-  projectOption1.value = 'project1';
-  projectOption1.text = 'project1';
-  projectDataList.appendChild(projectOption1);
-  const projectOption2 = document.createElement('option');
-  projectOption2.value = 'project2';
-  projectOption2.text = 'project2';
-  projectDataList.appendChild(projectOption2);
-  const projectOption3 = document.createElement('option');
-  projectOption3.value = 'project3';
-  projectOption3.text = 'project3';
-  projectDataList.appendChild(projectOption3);
+  options = ['project1', 'project2', 'project3'];
+  const projectDataList = createDataList('projectsID', options);
   projectDiv.appendChild(projectDataList);
   todoForm.appendChild(projectDiv);
 
