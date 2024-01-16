@@ -184,6 +184,25 @@ const formPartial = (todo) => {
     );
   };
 
+  const cancel = () => {
+    redirectTo('/todos');
+  };
+
+  // const resetDiv = document.createElement('div');
+  // const resetButton = document.createElement('button');
+  // resetButton.type = 'reset';
+  // resetButton.textContent = 'Reset';
+  // resetDiv.appendChild(resetButton);
+  // todoForm.appendChild(resetDiv);
+
+  const cancelDiv = document.createElement('div');
+  const cancelButton = document.createElement('button');
+  cancelButton.type = 'cancel';
+  cancelButton.textContent = 'Cancel';
+  cancelButton.addEventListener('click', cancel);
+  cancelDiv.appendChild(cancelButton);
+  todoForm.appendChild(cancelDiv);
+
   const submitDiv = document.createElement('div');
   const submitButton = document.createElement('button');
   submitButton.type = 'submit';
