@@ -54,6 +54,54 @@ const createDataList = (id, options) => {
 };
 
 const formPartial = (todo) => {
+  const createTodo = (event) => {
+    event.preventDefault();
+
+    const title = titleInput.value;
+    const description = descriptionTextArea.value;
+    const dueDate = dueDateInput.value;
+    const priority = prioritySelect.value;
+    const checkList = todo.checkList;
+    const project = projectInput.value;
+
+    redirectTo(
+      '/todos/create',
+      title,
+      description,
+      dueDate,
+      priority,
+      checkList,
+      project
+    );
+  };
+
+  const updateTodo = (event) => {
+    event.preventDefault();
+
+    const title = titleInput.value;
+    const description = descriptionTextArea.value;
+    const dueDate = dueDateInput.value;
+    const priority = prioritySelect.value;
+    const checkList = todo.checkList;
+    const project = projectInput.value;
+
+    redirectTo(
+      '/todos',
+      todo.id,
+      title,
+      description,
+      dueDate,
+      priority,
+      checkList,
+      project,
+      'UPDATE'
+    );
+  };
+
+  const cancel = () => {
+    redirectTo('/todos');
+  };
+
   if (!todo.id) {
     todo.title = '';
     todo.description = '';
@@ -139,54 +187,6 @@ const formPartial = (todo) => {
   const projectDataList = createDataList('projectsID', options);
   projectDiv.appendChild(projectDataList);
   todoForm.appendChild(projectDiv);
-
-  const createTodo = (event) => {
-    event.preventDefault();
-
-    const title = titleInput.value;
-    const description = descriptionTextArea.value;
-    const dueDate = dueDateInput.value;
-    const priority = prioritySelect.value;
-    const checkList = todo.checkList;
-    const project = projectInput.value;
-
-    redirectTo(
-      '/todos/create',
-      title,
-      description,
-      dueDate,
-      priority,
-      checkList,
-      project
-    );
-  };
-
-  const updateTodo = (event) => {
-    event.preventDefault();
-
-    const title = titleInput.value;
-    const description = descriptionTextArea.value;
-    const dueDate = dueDateInput.value;
-    const priority = prioritySelect.value;
-    const checkList = todo.checkList;
-    const project = projectInput.value;
-
-    redirectTo(
-      '/todos',
-      todo.id,
-      title,
-      description,
-      dueDate,
-      priority,
-      checkList,
-      project,
-      'UPDATE'
-    );
-  };
-
-  const cancel = () => {
-    redirectTo('/todos');
-  };
 
   const cancelDiv = document.createElement('div');
   const cancelButton = document.createElement('button');
