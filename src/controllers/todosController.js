@@ -58,7 +58,7 @@ const TodosController = {
       redirectTo('/todos');
     } else {
       console.log(`'${todo.title}' failed to update`);
-      this.edit(id);
+      redirectTo('/todos/edit', todo.id);
     }
   },
   destroy: function (id) {
