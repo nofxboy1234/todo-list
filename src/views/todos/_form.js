@@ -53,6 +53,13 @@ const createDataList = (id, options) => {
   return dataList;
 };
 
+const createButton = (type, text) => {
+  const button = document.createElement('button');
+  button.type = type;
+  button.textContent = text;
+  return button;
+};
+
 const formPartial = (todo) => {
   const createTodo = (event) => {
     event.preventDefault();
@@ -189,24 +196,18 @@ const formPartial = (todo) => {
   todoForm.appendChild(projectDiv);
 
   const cancelDiv = document.createElement('div');
-  const cancelButton = document.createElement('button');
-  cancelButton.type = 'cancel';
-  cancelButton.textContent = 'Cancel';
+  const cancelButton = createButton('button', 'Cancel');
   cancelButton.addEventListener('click', cancel);
   cancelDiv.appendChild(cancelButton);
   todoForm.appendChild(cancelDiv);
 
   const submitDiv = document.createElement('div');
-  const submitButton = document.createElement('button');
-  submitButton.type = 'submit';
-  submitButton.textContent = 'Submit';
-
+  const submitButton = createButton('submit', 'Submit');
   if (Todo.find(todo.id)) {
     submitButton.addEventListener('click', updateTodo);
   } else {
     submitButton.addEventListener('click', createTodo);
   }
-
   submitDiv.appendChild(submitButton);
   todoForm.appendChild(submitDiv);
 
