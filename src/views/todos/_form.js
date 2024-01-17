@@ -108,6 +108,23 @@ const createProject = (todo) => {
   return [projectDiv, projectInput];
 };
 
+const createCancel = () => {
+  const cancelDiv = document.createElement('div');
+  const cancelButton = createButton('button', 'Cancel');
+  cancelButton.addEventListener('click', cancel);
+  cancelDiv.appendChild(cancelButton);
+
+  return [cancelDiv];
+};
+
+const createSubmit = () => {
+  const submitDiv = document.createElement('div');
+  const submitButton = createButton('submit', 'Submit');
+  submitDiv.appendChild(submitButton);
+
+  return [submitDiv, submitButton];
+};
+
 const formPartial = (todo) => {
   const todoCommonData = () => {
     return [
@@ -159,20 +176,15 @@ const formPartial = (todo) => {
   const [projectDiv, projectInput] = createProject(todo);
   todoForm.appendChild(projectDiv);
 
-  const cancelDiv = document.createElement('div');
-  const cancelButton = createButton('button', 'Cancel');
-  cancelButton.addEventListener('click', cancel);
-  cancelDiv.appendChild(cancelButton);
+  const [cancelDiv] = createCancel();
   todoForm.appendChild(cancelDiv);
 
-  const submitDiv = document.createElement('div');
-  const submitButton = createButton('submit', 'Submit');
+  const [submitDiv, submitButton] = createSubmit();
   if (Todo.find(todo.id)) {
     submitButton.addEventListener('click', updateTodo);
   } else {
     submitButton.addEventListener('click', createTodo);
   }
-  submitDiv.appendChild(submitButton);
   todoForm.appendChild(submitDiv);
 
   return todoForm;
