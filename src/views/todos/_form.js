@@ -24,6 +24,14 @@ const cancel = () => {
   redirectTo('/todos');
 };
 
+const createTitle = (todo) => {
+  const titleDiv = document.createElement('div');
+  titleDiv.appendChild(createLabel('title:', 'titleID'));
+  const titleInput = createInput('text', 'titleID', 'title', todo.title);
+  titleDiv.appendChild(titleInput);
+  return [titleDiv, titleInput];
+};
+
 const formPartial = (todo) => {
   const todoCommonData = () => {
     return [
@@ -57,10 +65,7 @@ const formPartial = (todo) => {
   // todoForm.action = 'todos/new';
   // todoForm.method = 'post';
 
-  const titleDiv = document.createElement('div');
-  titleDiv.appendChild(createLabel('title:', 'titleID'));
-  const titleInput = createInput('text', 'titleID', 'title', todo.title);
-  titleDiv.appendChild(titleInput);
+  const [titleDiv, titleInput] = createTitle(todo);
   todoForm.appendChild(titleDiv);
 
   const descriptionDiv = document.createElement('div');
