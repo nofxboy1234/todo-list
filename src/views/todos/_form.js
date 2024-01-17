@@ -32,6 +32,82 @@ const createTitle = (todo) => {
   return [titleDiv, titleInput];
 };
 
+const createDescription = (todo) => {
+  const descriptionDiv = document.createElement('div');
+  descriptionDiv.appendChild(createLabel('description:', 'descriptionID'));
+  const descriptionTextArea = createTextArea(
+    'descriptionID',
+    'description',
+    todo.description
+  );
+  descriptionDiv.appendChild(descriptionTextArea);
+  return [descriptionDiv, descriptionTextArea];
+};
+
+const createDueDate = (todo) => {
+  const dueDateDiv = document.createElement('div');
+  dueDateDiv.appendChild(createLabel('due date:', 'dueDateID'));
+  const dueDateInput = createInput(
+    'date',
+    'dueDateID',
+    'dueDate',
+    todo.dueDate
+  );
+  dueDateDiv.appendChild(dueDateInput);
+  return [dueDateDiv, dueDateInput];
+};
+
+const createPriority = (todo) => {
+  const priorityDiv = document.createElement('div');
+  priorityDiv.appendChild(createLabel('priority:', 'priorityID'));
+  const options = ['low', 'medium', 'high'];
+  const prioritySelect = createSelect('priorityID', 'priority', options);
+  prioritySelect.value = todo.priority;
+  priorityDiv.appendChild(prioritySelect);
+  return [priorityDiv, prioritySelect];
+};
+
+const createChecklist = (todo) => {
+  const checkListDiv = document.createElement('div');
+  const checkListLabelDiv = document.createElement('div');
+  checkListLabelDiv.textContent = 'checklist:';
+  checkListDiv.appendChild(checkListLabelDiv);
+  if (todo.checkList) {
+    for (const [key, value] of Object.entries(todo.checkList)) {
+      const checkListPair = document.createElement('div');
+      checkListPair.appendChild(createLabel(key, `checklist-${key}`));
+      const checkListCheckbox = createInput(
+        'checkbox',
+        `checklist-${key}`,
+        'checkList',
+        key
+      );
+      checkListCheckbox.checked = value;
+      checkListPair.appendChild(checkListCheckbox);
+
+      checkListDiv.appendChild(checkListPair);
+    }
+  }
+  return [checkListDiv];
+};
+
+const createProject = (todo) => {
+  const projectDiv = document.createElement('div');
+  projectDiv.appendChild(createLabel('project:', 'projectID'));
+  const projectInput = createInput(
+    'text',
+    'projectID',
+    'project',
+    todo.project
+  );
+  projectInput.setAttribute('list', 'projectsID');
+  projectDiv.appendChild(projectInput);
+  const options = ['project1', 'project2', 'project3'];
+  const projectDataList = createDataList('projectsID', options);
+  projectDiv.appendChild(projectDataList);
+  return [projectDiv, projectInput];
+};
+
 const formPartial = (todo) => {
   const todoCommonData = () => {
     return [
@@ -68,70 +144,19 @@ const formPartial = (todo) => {
   const [titleDiv, titleInput] = createTitle(todo);
   todoForm.appendChild(titleDiv);
 
-  const descriptionDiv = document.createElement('div');
-  descriptionDiv.appendChild(createLabel('description:', 'descriptionID'));
-  const descriptionTextArea = createTextArea(
-    'descriptionID',
-    'description',
-    todo.description
-  );
-  descriptionDiv.appendChild(descriptionTextArea);
+  const [descriptionDiv, descriptionTextArea] = createDescription(todo);
   todoForm.appendChild(descriptionDiv);
 
-  const dueDateDiv = document.createElement('div');
-  dueDateDiv.appendChild(createLabel('due date:', 'dueDateID'));
-  const dueDateInput = createInput(
-    'date',
-    'dueDateID',
-    'dueDate',
-    todo.dueDate
-  );
-  dueDateDiv.appendChild(dueDateInput);
+  const [dueDateDiv, dueDateInput] = createDueDate(todo);
   todoForm.appendChild(dueDateDiv);
 
-  const priorityDiv = document.createElement('div');
-  priorityDiv.appendChild(createLabel('priority:', 'priorityID'));
-  let options = ['low', 'medium', 'high'];
-  const prioritySelect = createSelect('priorityID', 'priority', options);
-  prioritySelect.value = todo.priority;
-  priorityDiv.appendChild(prioritySelect);
+  const [priorityDiv, prioritySelect] = createPriority(todo);
   todoForm.appendChild(priorityDiv);
 
-  const checkListDiv = document.createElement('div');
-  const checkListLabelDiv = document.createElement('div');
-  checkListLabelDiv.textContent = 'checklist:';
-  checkListDiv.appendChild(checkListLabelDiv);
-  if (todo.checkList) {
-    for (const [key, value] of Object.entries(todo.checkList)) {
-      const checkListPair = document.createElement('div');
-      checkListPair.appendChild(createLabel(key, `checklist-${key}`));
-      const checkListCheckbox = createInput(
-        'checkbox',
-        `checklist-${key}`,
-        'checkList',
-        key
-      );
-      checkListCheckbox.checked = value;
-      checkListPair.appendChild(checkListCheckbox);
-
-      checkListDiv.appendChild(checkListPair);
-    }
-  }
+  const [checkListDiv] = createChecklist(todo);
   todoForm.appendChild(checkListDiv);
 
-  const projectDiv = document.createElement('div');
-  projectDiv.appendChild(createLabel('project:', 'projectID'));
-  const projectInput = createInput(
-    'text',
-    'projectID',
-    'project',
-    todo.project
-  );
-  projectInput.setAttribute('list', 'projectsID');
-  projectDiv.appendChild(projectInput);
-  options = ['project1', 'project2', 'project3'];
-  const projectDataList = createDataList('projectsID', options);
-  projectDiv.appendChild(projectDataList);
+  const [projectDiv, projectInput] = createProject(todo);
   todoForm.appendChild(projectDiv);
 
   const cancelDiv = document.createElement('div');
