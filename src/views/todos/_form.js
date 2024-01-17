@@ -9,18 +9,22 @@ import {
 } from '../helpers';
 import { redirectTo } from '../../helpers';
 
-const formPartial = (todo) => {
-  const todoInitialData = () => {
-    return {
-      title: '',
-      description: '',
-      dueDate: '',
-      priority: 'high',
-      checkList: { a: true, b: true },
-      project: '',
-    };
+const todoInitialData = () => {
+  return {
+    title: '',
+    description: '',
+    dueDate: '',
+    priority: 'high',
+    checkList: { a: true, b: true },
+    project: '',
   };
+};
 
+const cancel = () => {
+  redirectTo('/todos');
+};
+
+const formPartial = (todo) => {
   const todoCommonData = () => {
     return [
       titleInput.value,
@@ -42,10 +46,6 @@ const formPartial = (todo) => {
     event.preventDefault();
     const commonData = todoCommonData();
     redirectTo('/todos', todo.id, ...commonData, 'UPDATE');
-  };
-
-  const cancel = () => {
-    redirectTo('/todos');
   };
 
   if (!todo.id) {
