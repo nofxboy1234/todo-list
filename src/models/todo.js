@@ -14,14 +14,14 @@ const nextID = () => {
 };
 
 const Todo = {
-  new: function (title, description, dueDate, priority, checkList, project) {
+  new: function (title, description, dueDate, priority, checkList, projectID) {
     return {
       title,
       description,
       dueDate,
       priority,
       checkList,
-      project,
+      projectID,
       isComplete: function () {
         return false;
       },
@@ -37,7 +37,7 @@ const Todo = {
         dueDate,
         priority,
         checkList,
-        project
+        projectID
       ) {
         console.log(`Update '${title}' in local storage`);
         Object.assign(this, {
@@ -46,7 +46,7 @@ const Todo = {
           dueDate,
           priority,
           checkList,
-          project,
+          projectID,
         });
         return true;
       },
