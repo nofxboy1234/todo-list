@@ -11,22 +11,48 @@ const router = {
         todosController.create(...params);
         break;
       case '/todos/edit':
-        const id = params[0];
-        todosController.edit(id);
+        const todoID = params[0];
+        todosController.edit(todoID);
         break;
       case '/todos':
         if (params.length > 0) {
-          const id = params[0];
+          const todoID = params[0];
           const lastIndex = params.length - 1;
           if (params[lastIndex] === 'DELETE') {
-            todosController.destroy(id);
+            todosController.destroy(todoID);
           } else if (params[lastIndex] === 'UPDATE') {
-            todosController.update(id, ...params.slice(1, lastIndex));
+            todosController.update(todoID, ...params.slice(1, lastIndex));
           } else {
-            todosController.show(id);
+            todosController.show(todoID);
           }
         } else {
           todosController.index();
+        }
+        break;
+
+      case '/projects/new':
+        projectsController.new();
+        break;
+      case '/projects/create':
+        projectsController.create(...params);
+        break;
+      case '/projects/edit':
+        const projectID = params[0];
+        projectsController.edit(projectID);
+        break;
+      case '/projects':
+        if (params.length > 0) {
+          const projectID = params[0];
+          const lastIndex = params.length - 1;
+          if (params[lastIndex] === 'DELETE') {
+            projectsController.destroy(projectID);
+          } else if (params[lastIndex] === 'UPDATE') {
+            projectsController.update(projectID, ...params.slice(1, lastIndex));
+          } else {
+            projectsController.show(projectID);
+          }
+        } else {
+          projectsController.index();
         }
         break;
       default:
