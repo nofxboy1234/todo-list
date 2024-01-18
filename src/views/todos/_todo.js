@@ -1,23 +1,24 @@
-import { redirectTo } from "../../helpers";
+import { redirectTo } from '../../helpers';
+import { createButton } from '../helpers';
 
 const todoPartial = (todo) => {
-  const todoDiv = document.createElement('p');
+  const todoParagraph = document.createElement('p');
 
   const titleDiv = document.createElement('div');
   titleDiv.textContent = todo.title;
-  todoDiv.appendChild(titleDiv);
+  todoParagraph.appendChild(titleDiv);
 
   const descriptionDiv = document.createElement('div');
   descriptionDiv.textContent = todo.description;
-  todoDiv.appendChild(descriptionDiv);
+  todoParagraph.appendChild(descriptionDiv);
 
   const dueDateDiv = document.createElement('div');
   dueDateDiv.textContent = todo.dueDate;
-  todoDiv.appendChild(dueDateDiv);
+  todoParagraph.appendChild(dueDateDiv);
 
   const priorityDiv = document.createElement('div');
   priorityDiv.textContent = todo.priority;
-  todoDiv.appendChild(priorityDiv);
+  todoParagraph.appendChild(priorityDiv);
 
   const checkListDiv = document.createElement('div');
   for (const [key, value] of Object.entries(todo.checkList)) {
@@ -26,11 +27,11 @@ const todoPartial = (todo) => {
     checkListDiv.appendChild(checkListEntryDiv);
   }
 
-  todoDiv.appendChild(checkListDiv);
+  todoParagraph.appendChild(checkListDiv);
 
   const projectDiv = document.createElement('div');
   projectDiv.textContent = todo.project;
-  todoDiv.appendChild(projectDiv);
+  todoParagraph.appendChild(projectDiv);
 
   const destroyTodo = () => {
     // console.log('destroy');
@@ -42,17 +43,15 @@ const todoPartial = (todo) => {
     redirectTo('/todos/edit', todo.id);
   };
 
-  const deleteButton = document.createElement('button');
-  deleteButton.textContent = 'DELETE';
+  const deleteButton = createButton('button', 'DELETE');
   deleteButton.addEventListener('click', destroyTodo);
-  todoDiv.appendChild(deleteButton);
+  todoParagraph.appendChild(deleteButton);
 
-  const updateButton = document.createElement('button');
-  updateButton.textContent = 'EDIT';
+  const updateButton = createButton('button', 'EDIT')
   updateButton.addEventListener('click', editTodo);
-  todoDiv.appendChild(updateButton);
+  todoParagraph.appendChild(updateButton);
 
-  return todoDiv;
+  return todoParagraph;
 };
 
 export { todoPartial };
