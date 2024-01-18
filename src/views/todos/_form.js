@@ -97,7 +97,7 @@ const createProjectFormElement = (todo) => {
   const options = Project.all().map((element) => element.name);
   // const options = ['low', 'medium', 'high'];
   const projectSelect = createSelect('projectID', 'project', options);
-  projectSelect.value = todo.project;
+  projectSelect.value = todo.projectID;
   projectDiv.appendChild(projectSelect);
 
   const newProjectButton = createButton('button', 'NEW');
