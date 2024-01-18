@@ -17,7 +17,7 @@ const createLabel = (text, forID) => {
 const createInput = (type, id, name, value) => {
   const input = document.createElement('input');
   input.type = type;
-  input.id = id;
+  if (id) input.id = id;
   input.name = name;
   input.value = value;
   return input;
@@ -72,5 +72,5 @@ export {
   createOption,
   createSelect,
   createDataList,
-  createButton
+  createButton,
 };

@@ -15,7 +15,7 @@ const todoInitialData = () => {
     description: '',
     dueDate: '',
     priority: 'high',
-    checkList: { a: true, b: true },
+    checkList: { 'fill water bowl': false, 'fill food bowl': false },
     project: '',
   };
 };
@@ -69,24 +69,20 @@ const createPriority = (todo) => {
 
 const createChecklist = (todo) => {
   const checkListDiv = document.createElement('div');
+
   const checkListLabelDiv = document.createElement('div');
   checkListLabelDiv.textContent = 'checklist:';
   checkListDiv.appendChild(checkListLabelDiv);
-  if (todo.checkList) {
-    for (const [key, value] of Object.entries(todo.checkList)) {
-      const checkListPair = document.createElement('div');
-      checkListPair.appendChild(createLabel(key, `checklist-${key}`));
-      const checkListCheckbox = createInput(
-        'checkbox',
-        `checklist-${key}`,
-        'checkList',
-        key
-      );
-      checkListCheckbox.checked = value;
-      checkListPair.appendChild(checkListCheckbox);
 
-      checkListDiv.appendChild(checkListPair);
-    }
+  // { 'fill water bowl': false, 'fill food bowl': false };
+  for (const [key, value] of Object.entries(todo.checkList)) {
+    const taskPair = document.createElement('div');
+    taskPair.appendChild(createLabel(key, `checklist-${key}`));
+    const taskCheckbox = createInput('checkbox', undefined, 'task', key);
+    taskCheckbox.checked = value;
+    taskPair.appendChild(taskCheckbox);
+
+    checkListDiv.appendChild(taskPair);
   }
   return [checkListDiv];
 };
@@ -132,9 +128,18 @@ const formPartial = (todo) => {
       descriptionTextArea.value,
       dueDateInput.value,
       prioritySelect.value,
-      todo.checkList,
+      getChecklist(),
       projectInput.value,
     ];
+  };
+
+  const getChecklist = () => {
+    const taskCheckboxes = document.getElementsByName('task');
+    const checklist = {};
+    taskCheckboxes.forEach((checkbox) => {
+      checklist[checkbox.value] = checkbox.checked;
+    });
+    return checklist;
   };
 
   const createTodo = (event) => {
