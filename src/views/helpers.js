@@ -43,7 +43,7 @@ const createSelect = (id, name, options) => {
   select.id = id;
   select.name = name;
   options.forEach((option) => {
-    select.add(createOption(option, option));
+    select.add(createOption(option.value, option.text));
   });
   return select;
 };

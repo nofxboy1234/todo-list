@@ -64,7 +64,11 @@ const createDueDateFormElement = (todo) => {
 const createPriorityFormElement = (todo) => {
   const priorityDiv = document.createElement('div');
   priorityDiv.appendChild(createLabel('priority:', 'priorityID'));
-  const options = ['low', 'medium', 'high'];
+  const options = [
+    { value: 'low', text: 'low' },
+    { value: 'medium', text: 'medium' },
+    { value: 'high', text: 'high' },
+  ];
   const prioritySelect = createSelect('priorityID', 'priority', options);
   prioritySelect.value = todo.priority;
   priorityDiv.appendChild(prioritySelect);
@@ -94,8 +98,11 @@ const createChecklistFormElement = (todo) => {
 const createProjectFormElement = (todo) => {
   const projectDiv = document.createElement('div');
   projectDiv.appendChild(createLabel('project:', 'projectID'));
-  const options = Project.all().map((element) => element.name);
-  // const options = ['low', 'medium', 'high'];
+  const options = Project.all().map((project) => ({
+    value: project.id,
+    text: project.name,
+  }));
+
   const projectSelect = createSelect('projectID', 'project', options);
   projectSelect.value = todo.projectID;
   projectDiv.appendChild(projectSelect);
