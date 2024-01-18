@@ -1,8 +1,8 @@
-import { Project } from '../models/todo.js';
-import { render as renderShow } from '../views/todos/show.js';
-import { render as renderIndex } from '../views/todos/index.js';
-import { render as renderNew } from '../views/todos/new.js';
-import { render as renderEdit } from '../views/todos/edit.js';
+import { Project } from '../models/project.js';
+import { render as renderShow } from '../views/projects/show.js';
+import { render as renderIndex } from '../views/projects/index.js';
+import { render as renderNew } from '../views/projects/new.js';
+import { render as renderEdit } from '../views/projects/edit.js';
 import { redirectTo } from '../helpers.js';
 
 let project;
@@ -53,7 +53,7 @@ const ProjectsController = {
   destroy: function (id) {
     setProject(id);
     project.destroy();
-    redirectTo('/todos');
+    redirectTo('/projects');
   },
 };
 
