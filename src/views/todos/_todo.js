@@ -34,13 +34,15 @@ const todoPartial = (todo) => {
   todoParagraph.appendChild(projectDiv);
 
   const destroyTodo = () => {
-    // console.log('destroy');
     redirectTo('/todos', todo.id, 'DELETE');
   };
 
   const editTodo = () => {
-    // console.log('destroy');
     redirectTo('/todos/edit', todo.id);
+  };
+
+  const closeTodo = () => {
+    redirectTo('/todos');
   };
 
   const deleteButton = createButton('button', 'DELETE');
@@ -50,6 +52,11 @@ const todoPartial = (todo) => {
   const updateButton = createButton('button', 'EDIT')
   updateButton.addEventListener('click', editTodo);
   todoParagraph.appendChild(updateButton);
+
+  const closeButton = createButton('button', 'CLOSE')
+  closeButton.addEventListener('click', closeTodo);
+  todoParagraph.appendChild(closeButton);
+
 
   return todoParagraph;
 };
