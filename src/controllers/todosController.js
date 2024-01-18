@@ -15,8 +15,8 @@ const TodosController = {
     todo = Todo.new();
     renderNew(todo);
   },
-  create: function (title, description, dueDate, priority, checkList, project) {
-    todo = Todo.new(title, description, dueDate, priority, checkList, project);
+  create: function (title, description, dueDate, priority, checkList, projectID) {
+    todo = Todo.new(title, description, dueDate, priority, checkList, projectID);
 
     if (todo.save()) {
       console.log(`'${todo.title}' was successfully created`);
@@ -45,11 +45,11 @@ const TodosController = {
     dueDate,
     priority,
     checkList,
-    project
+    projectID
   ) {
     setTodo(id);
     if (
-      todo.update(title, description, dueDate, priority, checkList, project)
+      todo.update(title, description, dueDate, priority, checkList, projectID)
     ) {
       console.log(`'${todo.title}' was successfully updated`);
       redirectTo('/todos');
