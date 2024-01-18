@@ -4,10 +4,10 @@ import {
   createInput,
   createTextArea,
   createSelect,
-  createDataList,
   createButton,
 } from '../helpers';
 import { redirectTo } from '../../helpers';
+import { Project } from '../../models/project';
 
 const todoInitialData = () => {
   return {
@@ -24,7 +24,11 @@ const cancel = () => {
   redirectTo('/todos');
 };
 
-const createTitle = (todo) => {
+const newProject = () => {
+  redirectTo('/projects/new');
+};
+
+const createTitleFormElement = (todo) => {
   const titleDiv = document.createElement('div');
   titleDiv.appendChild(createLabel('title:', 'titleID'));
   const titleInput = createInput('text', 'titleID', 'title', todo.title);
@@ -32,7 +36,7 @@ const createTitle = (todo) => {
   return [titleDiv, titleInput];
 };
 
-const createDescription = (todo) => {
+const createDescriptionFormElement = (todo) => {
   const descriptionDiv = document.createElement('div');
   descriptionDiv.appendChild(createLabel('description:', 'descriptionID'));
   const descriptionTextArea = createTextArea(
@@ -44,7 +48,7 @@ const createDescription = (todo) => {
   return [descriptionDiv, descriptionTextArea];
 };
 
-const createDueDate = (todo) => {
+const createDueDateFormElement = (todo) => {
   const dueDateDiv = document.createElement('div');
   dueDateDiv.appendChild(createLabel('due date:', 'dueDateID'));
   const dueDateInput = createInput(
@@ -57,7 +61,7 @@ const createDueDate = (todo) => {
   return [dueDateDiv, dueDateInput];
 };
 
-const createPriority = (todo) => {
+const createPriorityFormElement = (todo) => {
   const priorityDiv = document.createElement('div');
   priorityDiv.appendChild(createLabel('priority:', 'priorityID'));
   const options = ['low', 'medium', 'high'];
@@ -67,7 +71,7 @@ const createPriority = (todo) => {
   return [priorityDiv, prioritySelect];
 };
 
-const createChecklist = (todo) => {
+const createChecklistFormElement = (todo) => {
   const checkListDiv = document.createElement('div');
 
   const checkListLabelDiv = document.createElement('div');
@@ -87,24 +91,23 @@ const createChecklist = (todo) => {
   return [checkListDiv];
 };
 
-const createProject = (todo) => {
+const createProjectFormElement = (todo) => {
   const projectDiv = document.createElement('div');
   projectDiv.appendChild(createLabel('project:', 'projectID'));
-  const projectInput = createInput(
-    'text',
-    'projectID',
-    'project',
-    todo.project
-  );
-  projectInput.setAttribute('list', 'projectsID');
-  projectDiv.appendChild(projectInput);
-  const options = ['project1', 'project2', 'project3'];
-  const projectDataList = createDataList('projectsID', options);
-  projectDiv.appendChild(projectDataList);
-  return [projectDiv, projectInput];
+  const options = Project.all().map((element) => element.name);
+  // const options = ['low', 'medium', 'high'];
+  const projectSelect = createSelect('projectID', 'project', options);
+  projectSelect.value = todo.project;
+  projectDiv.appendChild(projectSelect);
+
+  const newProjectButton = createButton('button', 'NEW');
+  newProjectButton.addEventListener('click', newProject);
+  projectDiv.appendChild(newProjectButton);
+
+  return [projectDiv, projectSelect];
 };
 
-const createCancel = () => {
+const createCancelButton = () => {
   const cancelDiv = document.createElement('div');
   const cancelButton = createButton('button', 'Cancel');
   cancelButton.addEventListener('click', cancel);
@@ -113,7 +116,7 @@ const createCancel = () => {
   return [cancelDiv];
 };
 
-const createSubmit = (exists) => {
+const createSubmitButton = (exists) => {
   const submitDiv = document.createElement('div');
 
   let buttonText;
@@ -173,28 +176,29 @@ const formPartial = (todo) => {
   // todoForm.action = 'todos/new';
   // todoForm.method = 'post';
 
-  const [titleDiv, titleInput] = createTitle(todo);
+  const [titleDiv, titleInput] = createTitleFormElement(todo);
   todoForm.appendChild(titleDiv);
 
-  const [descriptionDiv, descriptionTextArea] = createDescription(todo);
+  const [descriptionDiv, descriptionTextArea] =
+    createDescriptionFormElement(todo);
   todoForm.appendChild(descriptionDiv);
 
-  const [dueDateDiv, dueDateInput] = createDueDate(todo);
+  const [dueDateDiv, dueDateInput] = createDueDateFormElement(todo);
   todoForm.appendChild(dueDateDiv);
 
-  const [priorityDiv, prioritySelect] = createPriority(todo);
+  const [priorityDiv, prioritySelect] = createPriorityFormElement(todo);
   todoForm.appendChild(priorityDiv);
 
-  const [checkListDiv] = createChecklist(todo);
+  const [checkListDiv] = createChecklistFormElement(todo);
   todoForm.appendChild(checkListDiv);
 
-  const [projectDiv, projectInput] = createProject(todo);
+  const [projectDiv, projectInput] = createProjectFormElement(todo);
   todoForm.appendChild(projectDiv);
 
-  const [cancelDiv] = createCancel();
+  const [cancelDiv] = createCancelButton();
   todoForm.appendChild(cancelDiv);
 
-  const [submitDiv, submitButton] = createSubmit(exists);
+  const [submitDiv, submitButton] = createSubmitButton(exists);
   if (exists) {
     submitButton.addEventListener('click', updateTodo);
   } else {

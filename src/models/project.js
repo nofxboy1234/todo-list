@@ -19,19 +19,19 @@ const Project = {
       name,
       save: function () {
         this.id = nextID();
-        console.log(`Save '${title}' to local storage`);
+        console.log(`Save '${name}' to local storage`);
         projects.push(this);
         return true;
       },
-      update: function (title) {
-        console.log(`Update '${title}' in local storage`);
+      update: function (name) {
+        console.log(`Update '${name}' in local storage`);
         Object.assign(this, {
-          title,
+          name,
         });
         return true;
       },
       destroy: function () {
-        console.log(`Remove '${title}' from local storage`);
+        console.log(`Remove '${name}' from local storage`);
         const removeIndex = projects.indexOf(this);
         projects.splice(removeIndex, 1);
       },
