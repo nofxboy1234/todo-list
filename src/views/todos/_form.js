@@ -113,15 +113,25 @@ const createCancel = () => {
   return [cancelDiv];
 };
 
-const createSubmit = () => {
+const createSubmit = (exists) => {
   const submitDiv = document.createElement('div');
-  const submitButton = createButton('submit', 'Submit');
+
+  let buttonText;
+  if (exists) {
+    buttonText = 'UPDATE';
+  } else {
+    buttonText = 'CREATE';
+  }
+
+  const submitButton = createButton('submit', buttonText);
   submitDiv.appendChild(submitButton);
 
   return [submitDiv, submitButton];
 };
 
 const formPartial = (todo) => {
+  const exists = Todo.find(todo.id);
+
   const todoCommonData = () => {
     return [
       titleInput.value,
@@ -184,8 +194,8 @@ const formPartial = (todo) => {
   const [cancelDiv] = createCancel();
   todoForm.appendChild(cancelDiv);
 
-  const [submitDiv, submitButton] = createSubmit();
-  if (Todo.find(todo.id)) {
+  const [submitDiv, submitButton] = createSubmit(exists);
+  if (exists) {
     submitButton.addEventListener('click', updateTodo);
   } else {
     submitButton.addEventListener('click', createTodo);
