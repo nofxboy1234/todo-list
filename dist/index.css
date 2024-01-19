@@ -1,2 +1,0 @@
-@font-face{font-family:MyFont;src:url(8de93134966716391996.otf)}.flex-container{display:flex}.flex-item{border:2px solid #00ff0d}.flex-item-left{width:200px}.flex-item-left,.flex-item-right{display:flex;flex-direction:column}.flex-item-right{align-items:center;flex:4;justify-content:center}.heading{height:100px}.new-todo-button{height:40px;width:200px}.new-todo-form{border:2px solid red;height:360px;margin:50px;width:640px}
-/*# sourceMappingURL=index.css.map*/

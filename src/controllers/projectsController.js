@@ -1,9 +1,8 @@
-import { Project } from '../models/project.js';
-import { render as renderShow } from '../views/projects/show.js';
-import { render as renderIndex } from '../views/projects/index.js';
-import { render as renderNew } from '../views/projects/new.js';
-import { render as renderEdit } from '../views/projects/edit.js';
-import { redirectTo } from '../helpers.js';
+import { Project } from '../models/project';
+import { redirectTo } from '../helpers';
+
+import { render as renderNew } from '../views/projects/new';
+import { render } from './renderer';
 
 let project;
 let projects;
@@ -13,16 +12,18 @@ const setProject = (id) => (project = Project.find(id));
 const ProjectsController = {
   new: function () {
     project = Project.new();
+    // render('new');
     renderNew(project);
   },
   create: function (name) {
     project = Project.new(name);
 
     if (project.save()) {
-      console.log(`'${project.title}' was successfully created`);
-      redirectTo('/projects');
+      console.log(`'${project.name}' was successfully created`);
+      render('todos/new');
+      // redirectTo('/projects');
     } else {
-      console.log(`'${project.title}' failed to save`);
+      console.log(`'${project.name}' failed to save`);
       redirectTo('/projects/new');
     }
   },

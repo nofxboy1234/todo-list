@@ -1,4 +1,4 @@
-import { createLayout } from './views/layouts/application.js';
+import { createLayout } from './views/layouts/application';
 import './style.css';
 
 createLayout();

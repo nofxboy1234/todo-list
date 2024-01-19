@@ -1,9 +1,10 @@
-import { Todo } from '../models/todo.js';
-import { render as renderShow } from '../views/todos/show.js';
-import { render as renderIndex } from '../views/todos/index.js';
-import { render as renderNew } from '../views/todos/new.js';
-import { render as renderEdit } from '../views/todos/edit.js';
-import { redirectTo } from '../helpers.js';
+import { Todo } from '../models/todo';
+import { redirectTo } from '../helpers';
+
+// import { render as renderNew } from '../views/todos/new';
+import { render as renderIndex } from '../views/todos/index';
+
+import { render } from './renderer';
 
 let todo;
 let todos;
@@ -13,10 +14,26 @@ const setTodo = (id) => (todo = Todo.find(id));
 const TodosController = {
   new: function () {
     todo = Todo.new();
-    renderNew(todo);
+    render('todos/new');
+    // renderNew(todo);
+
   },
-  create: function (title, description, dueDate, priority, checkList, projectID) {
-    todo = Todo.new(title, description, dueDate, priority, checkList, projectID);
+  create: function (
+    title,
+    description,
+    dueDate,
+    priority,
+    checkList,
+    projectID
+  ) {
+    todo = Todo.new(
+      title,
+      description,
+      dueDate,
+      priority,
+      checkList,
+      projectID
+    );
 
     if (todo.save()) {
       console.log(`'${todo.title}' was successfully created`);
@@ -63,6 +80,9 @@ const TodosController = {
     todo.destroy();
     redirectTo('/todos');
   },
+  getTodo: function () {
+    return todo;
+  }
 };
 
 export { TodosController };

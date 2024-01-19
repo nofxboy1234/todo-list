@@ -14,16 +14,15 @@ const createLabel = (text, forID) => {
   return label;
 };
 
-const createInput = (type, id, name, value) => {
+const createInput = (type, id, name) => {
   const input = document.createElement('input');
   input.type = type;
   if (id) input.id = id;
   input.name = name;
-  input.value = value;
   return input;
 };
 
-const createTextArea = (id, name, value) => {
+const createTextArea = (id, name) => {
   const textArea = document.createElement('textarea');
   textArea.id = id;
   textArea.name = name;
@@ -57,10 +56,11 @@ const createDataList = (id, options) => {
   return dataList;
 };
 
-const createButton = (type, text) => {
+const createButton = (type, text, id) => {
   const button = document.createElement('button');
   button.type = type;
   button.textContent = text;
+  button.id = id;
   return button;
 };
 
