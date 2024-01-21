@@ -1,3 +1,5 @@
+import { Project } from './project';
+
 const todos = [];
 
 const lastID = () => {
@@ -58,6 +60,9 @@ const Todo = {
       destroy: function () {
         const removeIndex = todos.indexOf(this);
         todos.splice(removeIndex, 1);
+      },
+      project: function () {
+        return Project.find(this.projectID);
       },
     };
   },

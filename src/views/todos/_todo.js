@@ -30,7 +30,8 @@ const todoPartial = (todo) => {
   todoParagraph.appendChild(checkListDiv);
 
   const projectDiv = document.createElement('div');
-  projectDiv.textContent = todo.projectID;
+
+  projectDiv.textContent = todo.project().name;
   todoParagraph.appendChild(projectDiv);
 
   const destroyTodo = () => {
