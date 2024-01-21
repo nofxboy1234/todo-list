@@ -89,7 +89,7 @@ const form = (todo) => {
     dueDate.input.value = todo.dueDate;
     priority.input.value = todo.priority;
     checkList.data = {};
-    project.input.value = todo.project;
+    project.input.value = todo.projectID;
   };
 
   const setupEventListeners = () => {
