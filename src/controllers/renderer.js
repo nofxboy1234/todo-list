@@ -1,5 +1,5 @@
-// import { render as renderShow } from '../views/todos/show';
-// import { render as renderIndex } from '../views/todos/index';
+import { render as renderShowTodo } from '../views/todos/show';
+import { render as renderIndexTodo } from '../views/todos/index';
 import { render as renderNewTodo } from '../views/todos/new';
 // import { render as renderEdit } from '../views/todos/edit';
 
@@ -15,13 +15,24 @@ import { TodosController as todosController } from './todosController';
 
 const render = (path) => {
   if (path.includes('/')) {
+    let todo;
+    let todos;
     switch (path) {
       case 'todos/new':
-        console.log('render todos/new');
         clearContent();
-        const todo = todosController.getTodo();
+        todo = todosController.getTodo();
         contentContainer.appendChild(renderNewTodo(todo));
         document.getElementById('titleID').focus();
+        break;
+      case 'todos/index':
+        clearContent();
+        todos = todosController.getTodos();
+        contentContainer.appendChild(renderIndexTodo(todos));
+        break;
+      case 'todos/show':
+        clearContent();
+        todo = todosController.getTodo();
+        contentContainer.appendChild(renderShowTodo(todo));
         break;
 
       default:

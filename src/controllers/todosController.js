@@ -1,9 +1,6 @@
 import { Todo } from '../models/todo';
 import { redirectTo } from '../helpers';
 
-// import { render as renderNew } from '../views/todos/new';
-import { render as renderIndex } from '../views/todos/index';
-
 import { render } from './renderer';
 
 let todo;
@@ -36,20 +33,18 @@ const TodosController = {
     );
 
     if (todo.save()) {
-      console.log(`'${todo.title}' was successfully created`);
       redirectTo('/todos');
     } else {
-      console.log(`'${todo.title}' failed to save`);
       redirectTo('/todos/new');
     }
   },
   index: function () {
     todos = Todo.all();
-    renderIndex(todos);
+    render('todos/index');
   },
   show: function (id) {
     setTodo(id);
-    renderShow(todo);
+    render('todos/show')
   },
   edit: function (id) {
     setTodo(id);
@@ -68,10 +63,8 @@ const TodosController = {
     if (
       todo.update(title, description, dueDate, priority, checkList, projectID)
     ) {
-      console.log(`'${todo.title}' was successfully updated`);
       redirectTo('/todos');
     } else {
-      console.log(`'${todo.title}' failed to update`);
       redirectTo('/todos/edit', todo.id);
     }
   },
@@ -82,6 +75,9 @@ const TodosController = {
   },
   getTodo: function () {
     return todo;
+  },
+  getTodos: function () {
+    return todos
   }
 };
 

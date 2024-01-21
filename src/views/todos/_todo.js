@@ -30,7 +30,7 @@ const todoPartial = (todo) => {
   todoParagraph.appendChild(checkListDiv);
 
   const projectDiv = document.createElement('div');
-  projectDiv.textContent = todo.project;
+  projectDiv.textContent = todo.projectID;
   todoParagraph.appendChild(projectDiv);
 
   const destroyTodo = () => {
@@ -45,18 +45,17 @@ const todoPartial = (todo) => {
     redirectTo('/todos');
   };
 
-  const deleteButton = createButton('button', 'DELETE');
+  const deleteButton = createButton('button', 'DELETE', 'deleteButtonID');
   deleteButton.addEventListener('click', destroyTodo);
   todoParagraph.appendChild(deleteButton);
 
-  const updateButton = createButton('button', 'EDIT')
+  const updateButton = createButton('button', 'EDIT', 'editButtonID');
   updateButton.addEventListener('click', editTodo);
   todoParagraph.appendChild(updateButton);
 
-  const closeButton = createButton('button', 'CLOSE')
+  const closeButton = createButton('button', 'CLOSE', 'closeButtonID');
   closeButton.addEventListener('click', closeTodo);
   todoParagraph.appendChild(closeButton);
-
 
   return todoParagraph;
 };

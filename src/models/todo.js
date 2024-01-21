@@ -14,7 +14,14 @@ const nextID = () => {
 };
 
 const Todo = {
-  new: function (title, description, dueDate, priority, checkList, projectID) {
+  new: function (
+    title = '',
+    description = '',
+    dueDate = '',
+    priority = 'medium',
+    checkList = {},
+    projectID = undefined
+  ) {
     return {
       title,
       description,
@@ -27,7 +34,6 @@ const Todo = {
       },
       save: function () {
         this.id = nextID();
-        console.log(`Save '${title}' to local storage`);
         todos.push(this);
         return true;
       },
@@ -39,7 +45,6 @@ const Todo = {
         checkList,
         projectID
       ) {
-        console.log(`Update '${title}' in local storage`);
         Object.assign(this, {
           title,
           description,
@@ -51,14 +56,12 @@ const Todo = {
         return true;
       },
       destroy: function () {
-        console.log(`Remove '${title}' from local storage`);
         const removeIndex = todos.indexOf(this);
         todos.splice(removeIndex, 1);
       },
     };
   },
   all: function () {
-    console.log('Get all todo objects from todo.js / local storage');
     return todos;
   },
   find: function (id) {

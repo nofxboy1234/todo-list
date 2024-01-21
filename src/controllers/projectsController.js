@@ -19,11 +19,9 @@ const ProjectsController = {
     project = Project.new(name);
 
     if (project.save()) {
-      console.log(`'${project.name}' was successfully created`);
       render('todos/new');
       // redirectTo('/projects');
     } else {
-      console.log(`'${project.name}' failed to save`);
       redirectTo('/projects/new');
     }
   },
@@ -44,10 +42,8 @@ const ProjectsController = {
     if (
       project.update(name)
     ) {
-      console.log(`'${project.title}' was successfully updated`);
       redirectTo('/projects');
     } else {
-      console.log(`'${project.title}' failed to update`);
       redirectTo('/projects/edit', project.id);
     }
   },

@@ -8,214 +8,201 @@ import {
 import { redirectTo } from '../../helpers';
 import { Project } from '../../models/project';
 
-const cancel = () => {
-  redirectTo('/todos');
-};
+const form = (todo) => {
+  const exists = todo.id ? true : false;
 
-const currentUI = () => {
-  return {
-    title: document.getElementById('titleID'),
-    description: document.getElementById('descriptionID'),
-    dueDate: document.getElementById('dueDateID'),
-    priority: document.getElementById('priorityID'),
-    checkList: getChecklist(),
-    project: document.getElementById('projectID'),
-    newProjectButton: document.getElementById('newProjectButtonID'),
-    cancelButton: document.getElementById('cancelButtonID'),
-    submitButton: document.getElementById('submitButtonID'),
+  const cancelForm = () => {
+    redirectTo('/todos');
   };
-};
 
-const currentData = () => {
-  return {
-    title: currentUI().title.value,
-    description: currentUI().description.value,
-    dueDate: currentUI().dueDate.value,
-    priority: currentUI().priority.value,
-    checkList: getChecklist(),
-    project: currentUI().project.value,
+  const newProject = () => {
+    saveState();
+    redirectTo('/projects/new');
   };
-};
 
-const saveState = () => {
-  Object.assign(todo, currentData());
-};
+  const createTodo = (event) => {
+    event.preventDefault();
+    redirectTo('/todos/create', ...currentDataValues());
+  };
 
-const newProject = () => {
-  saveState();
-  redirectTo('/projects/new');
-};
+  const updateTodo = (event) => {
+    event.preventDefault();
+    redirectTo('/todos', todo.id, ...currentDataValues(), 'UPDATE');
+  };
 
-const title = () => {
-  const titleDiv = document.createElement('div');
-  titleDiv.appendChild(createLabel('title:', 'titleID'));
-  const titleInput = createInput('text', 'titleID', 'title');
-  titleDiv.appendChild(titleInput);
-  return titleDiv;
-};
+  const currentData = () => {
+    return {
+      title: title.input.value,
+      description: description.input.value,
+      dueDate: dueDate.input.value,
+      priority: priority.input.value,
+      checkList: getChecklist(),
+      project: project.input.value,
+    };
+  };
 
-const description = () => {
-  const descriptionDiv = document.createElement('div');
-  descriptionDiv.appendChild(createLabel('description:', 'descriptionID'));
-  const descriptionTextArea = createTextArea('descriptionID', 'description');
-  descriptionDiv.appendChild(descriptionTextArea);
-  return descriptionDiv;
-};
+  const currentDataValues = () => {
+    return Object.values(currentData());
+  };
 
-const dueDate = () => {
-  const dueDateDiv = document.createElement('div');
-  dueDateDiv.appendChild(createLabel('due date:', 'dueDateID'));
-  const dueDateInput = createInput('date', 'dueDateID', 'dueDate');
-  dueDateDiv.appendChild(dueDateInput);
-  return dueDateDiv;
-};
+  const saveState = () => {
+    Object.assign(todo, currentData());
+  };
 
-const priority = () => {
-  const priorityDiv = document.createElement('div');
-  priorityDiv.appendChild(createLabel('priority:', 'priorityID'));
-  const options = [
-    { value: 'low', text: 'low' },
-    { value: 'medium', text: 'medium' },
-    { value: 'high', text: 'high' },
-  ];
-  const prioritySelect = createSelect('priorityID', 'priority', options);
-  priorityDiv.appendChild(prioritySelect);
-  return priorityDiv;
-};
-
-const checkList = () => {
-  const checkListDiv = document.createElement('div');
-
-  const checkListLabelDiv = document.createElement('div');
-  checkListLabelDiv.textContent = 'checklist:';
-  checkListDiv.appendChild(checkListLabelDiv);
-
-  // { 'fill water bowl': false, 'fill food bowl': false };
-  if (todo.checkList) {
-    const keys = Object.keys(todo.checkList);
-    keys.forEach((key) => {
-      const taskPair = document.createElement('div');
-      const id = `task-${keys.indexOf(key)}`;
-      taskPair.appendChild(createLabel(key, id));
-      const taskCheckbox = createInput('checkbox', id, 'task');
-      taskPair.appendChild(taskCheckbox);
-  
-      checkListDiv.appendChild(taskPair);
+  const getChecklist = () => {
+    const taskCheckboxes = document.getElementsByName('task');
+    const checklist = {};
+    taskCheckboxes.forEach((checkbox) => {
+      checklist[checkbox.value] = checkbox.checked;
     });
-  }
-  return checkListDiv;
-};
+    return checklist;
+  };
 
-const project = () => {
-  const projectDiv = document.createElement('div');
-  projectDiv.appendChild(createLabel('project:', 'projectID'));
-  const options = Project.all().map((project) => ({
-    value: project.id,
-    text: project.name,
-  }));
+  const submitButtonCallback = () => {
+    if (exists) {
+      return updateTodo;
+    } else {
+      return createTodo;
+    }
+  };
 
-  const projectSelect = createSelect('projectID', 'project', options);
-  projectDiv.appendChild(projectSelect);
+  const setupUI = () => {
+    const todoForm = document.createElement('form');
+    todoForm.classList.add('new-todo-form');
 
-  const newProjectButton = createButton('button', 'NEW', 'newProjectButtonID');
-  projectDiv.appendChild(newProjectButton);
+    todoForm.appendChild(title.div);
+    todoForm.appendChild(description.div);
+    todoForm.appendChild(dueDate.div);
+    todoForm.appendChild(priority.div);
+    todoForm.appendChild(checkList.div);
+    todoForm.appendChild(project.div);
+    todoForm.appendChild(cancel.div);
+    todoForm.appendChild(submit.div);
 
-  return projectDiv;
-};
+    return todoForm;
+  };
 
-const cancelButton = () => {
-  const cancelDiv = document.createElement('div');
-  const cancelButton = createButton('button', 'Cancel', 'cancelButtonID');
-  cancelDiv.appendChild(cancelButton);
+  const setupData = () => {
+    // set values on ui elements
+    title.input.value = todo.title;
+    description.input.value = todo.description;
+    dueDate.input.value = todo.dueDate;
+    priority.input.value = todo.priority;
+    checkList.data = {};
+    project.input.value = todo.project;
+  };
 
-  return cancelDiv;
-};
+  const setupEventListeners = () => {
+    submit.button.addEventListener('click', submitButtonCallback());
+    project.button.addEventListener('click', newProject);
+    cancel.button.addEventListener('click', cancelForm);
+  };
 
-const submitButton = () => {
-  const submitDiv = document.createElement('div');
+  const title = (() => {
+    const div = document.createElement('div');
+    div.appendChild(createLabel('title:', 'titleID'));
+    const input = createInput('text', 'titleID', 'title');
+    div.appendChild(input);
 
-  let buttonText;
-  if (exists) {
-    buttonText = 'UPDATE';
-  } else {
-    buttonText = 'CREATE';
-  }
+    return { div, input };
+  })();
 
-  const submitButton = createButton('submit', buttonText, 'submitButtonID');
-  submitDiv.appendChild(submitButton);
+  const description = (() => {
+    const div = document.createElement('div');
+    div.appendChild(createLabel('description:', 'descriptionID'));
+    const input = createTextArea('descriptionID', 'description');
+    div.appendChild(input);
 
-  return submitDiv;
-};
+    return { div, input };
+  })();
 
-const getChecklist = () => {
-  const taskCheckboxes = document.getElementsByName('task');
-  const checklist = {};
-  taskCheckboxes.forEach((checkbox) => {
-    checklist[checkbox.value] = checkbox.checked;
-  });
-  return checklist;
-};
+  const dueDate = (() => {
+    const div = document.createElement('div');
+    div.appendChild(createLabel('due date:', 'dueDateID'));
+    const input = createInput('date', 'dueDateID', 'dueDate');
+    div.appendChild(input);
 
-const currentDataValues = () => {
-  return Object.values(currentData());
-};
+    return { div, input };
+  })();
 
-const createTodo = (event) => {
-  event.preventDefault();
-  redirectTo('/todos/create', ...currentDataValues());
-};
+  const priority = (() => {
+    const div = document.createElement('div');
+    div.appendChild(createLabel('priority:', 'priorityID'));
+    const options = [
+      { value: 'low', text: 'low' },
+      { value: 'medium', text: 'medium' },
+      { value: 'high', text: 'high' },
+    ];
+    const input = createSelect('priorityID', 'priority', options);
+    div.appendChild(input);
 
-const updateTodo = (event) => {
-  event.preventDefault();
-  redirectTo('/todos', todo.id, ...currentDataValues(), 'UPDATE');
-};
+    return { div, input };
+  })();
 
-const setupUI = () => {
-  const todoForm = document.createElement('form');
-  todoForm.classList.add('new-todo-form');
+  const checkList = (() => {
+    const div = document.createElement('div');
 
-  todoForm.appendChild(title());
-  todoForm.appendChild(description());
-  todoForm.appendChild(dueDate());
-  todoForm.appendChild(priority());
-  todoForm.appendChild(checkList());
-  todoForm.appendChild(project());
-  todoForm.appendChild(cancelButton());
-  todoForm.appendChild(submitButton());
+    const checkListLabelDiv = document.createElement('div');
+    checkListLabelDiv.textContent = 'checklist:';
+    div.appendChild(checkListLabelDiv);
 
-  return todoForm;
-};
+    // { 'fill water bowl': false, 'fill food bowl': false };
+    if (todo.checkList) {
+      const keys = Object.keys(todo.checkList);
+      keys.forEach((key) => {
+        const taskPair = document.createElement('div');
+        const id = `task-${keys.indexOf(key)}`;
+        taskPair.appendChild(createLabel(key, id));
+        const taskCheckbox = createInput('checkbox', id, 'task');
+        taskPair.appendChild(taskCheckbox);
 
-const setupData = () => {
-  // set values on ui elements
-  currentUI().title.value = todo.title;
-  currentUI().description.value = todo.description;
-  currentUI().dueDate.value = todo.dueDate;
-  currentUI().priority.value = todo.priority;
-  currentUI().checkList = todo.checkList;
-  currentUI().project.value = todo.project;
-};
+        div.appendChild(taskPair);
+      });
+    }
+    return { div };
+  })();
 
-const submitButtonCallback = () => {
-  if (exists) {
-    return updateTodo;
-  } else {
-    return createTodo;
-  }
-};
+  const project = (() => {
+    const div = document.createElement('div');
+    div.appendChild(createLabel('project:', 'projectID'));
+    const options = Project.all().map((project) => ({
+      value: project.id,
+      text: project.name,
+    }));
 
-const setupEventListeners = () => {
-  currentUI().submitButton.addEventListener('click', submitButtonCallback());
-  currentUI().newProjectButton.addEventListener('click', newProject);
-  currentUI().cancelButton.addEventListener('click', cancel);
-};
+    const input = createSelect('projectID', 'project', options);
+    div.appendChild(input);
 
-let todo;
-let exists;
+    const button = createButton('button', 'NEW', 'newProjectButtonID');
+    div.appendChild(button);
 
-const form = (formTodo) => {
-  todo = formTodo;
-  exists = todo.id ? true : false;
+    return { div, input, button };
+  })();
+
+  const cancel = (() => {
+    const div = document.createElement('div');
+    const button = createButton('button', 'Cancel', 'cancelButtonID');
+    div.appendChild(button);
+
+    return { div, button };
+  })();
+
+  const submit = (() => {
+    const div = document.createElement('div');
+
+    let buttonText;
+    if (exists) {
+      buttonText = 'UPDATE';
+    } else {
+      buttonText = 'CREATE';
+    }
+
+    const button = createButton('submit', buttonText, 'submitButtonID');
+    div.appendChild(button);
+
+    return { div, button };
+  })();
+
   const todoForm = setupUI();
   setupData();
   setupEventListeners();

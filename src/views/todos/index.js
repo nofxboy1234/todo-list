@@ -1,12 +1,9 @@
-import { contentContainer } from '../layouts/application';
-import { clearContent, createButton } from '../helpers';
+import { createButton } from '../helpers';
 import { redirectTo } from '../../helpers';
 
 const render = (todos) => {
-  clearContent();
+  const todoParagraph = document.createElement('p');
   todos.forEach((todo) => {
-    const todoParagraph = document.createElement('p');
-
     const showTodo = () => {
       redirectTo('/todos', todo.id);
     };
@@ -24,12 +21,12 @@ const render = (todos) => {
     dueDateDiv.textContent = todo.dueDate;
     todoParagraph.appendChild(dueDateDiv);
 
-    const deleteButton = createButton('button', 'DELETE');
+    const deleteButton = createButton('button', 'DELETE', 'deleteButtonID');
     deleteButton.addEventListener('click', destroyTodo);
     todoParagraph.appendChild(deleteButton);
-
-    contentContainer.appendChild(todoParagraph);
   });
+
+  return todoParagraph;
 };
 
 export { render };

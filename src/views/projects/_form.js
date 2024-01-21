@@ -26,7 +26,7 @@ const createName = (project) => {
 
 const createCancel = () => {
   const cancelDiv = document.createElement('div');
-  const cancelButton = createButton('button', 'Cancel');
+  const cancelButton = createButton('button', 'Cancel', 'cancelButtonID');
   cancelButton.addEventListener('click', cancel);
   cancelDiv.appendChild(cancelButton);
 
@@ -43,7 +43,7 @@ const createSubmit = (exists) => {
     buttonText = 'CREATE';
   }
 
-  const submitButton = createButton('submit', buttonText);
+  const submitButton = createButton('submit', buttonText, 'createButtonID');
   submitDiv.appendChild(submitButton);
 
   return [submitDiv, submitButton];

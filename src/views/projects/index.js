@@ -20,7 +20,7 @@ const render = (projects) => {
     nameDiv.addEventListener('click', showProject);
     projectParagraph.appendChild(nameDiv);
 
-    const deleteButton = createButton('button', 'DELETE');
+    const deleteButton = createButton('button', 'DELETE', 'deleteButtonID');
     deleteButton.addEventListener('click', destroyProject);
     projectParagraph.appendChild(deleteButton);
 
