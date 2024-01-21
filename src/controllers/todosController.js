@@ -47,7 +47,7 @@ const TodosController = {
   },
   edit: function (id) {
     setTodo(id);
-    renderEdit(todo);
+    render('todos/edit')
   },
   update: function (
     id,

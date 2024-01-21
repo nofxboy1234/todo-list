@@ -1,7 +1,7 @@
 import { render as showTodo } from '../views/todos/show';
 import { render as indexTodo } from '../views/todos/index';
 import { render as newTodo } from '../views/todos/new';
-// import { render as renderEdit } from '../views/todos/edit';
+import { render as editTodo } from '../views/todos/edit';
 
 // import { render as renderShow } from '../views/projects/show';
 // import { render as renderIndex } from '../views/projects/index';
@@ -33,6 +33,11 @@ const render = (path) => {
         clearContent();
         todo = todosController.getTodo();
         contentContainer.appendChild(showTodo(todo));
+        break;
+      case 'todos/edit':
+        clearContent();
+        todo = todosController.getTodo();
+        contentContainer.appendChild(editTodo(todo));
         break;
 
       default:
