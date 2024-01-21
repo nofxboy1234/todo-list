@@ -1,5 +1,5 @@
 import { createButton } from '../helpers';
-import { redirectTo } from '../../helpers';
+import { redirectTo } from '../../router';
 
 const render = (todos) => {
   const todoParagraph = document.createElement('p');

@@ -1,6 +1,5 @@
 import { Todo } from '../models/todo';
-import { redirectTo } from '../helpers';
-
+import { redirectTo } from '../router';
 import { render } from './renderer';
 
 let todo;

@@ -5,7 +5,7 @@ import {
   createSelect,
   createButton,
 } from '../helpers';
-import { redirectTo } from '../../helpers';
+import { redirectTo } from '../../router';
 import { Project } from '../../models/project';
 
 const form = (todo) => {

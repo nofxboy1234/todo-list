@@ -4,7 +4,7 @@ import {
   createInput,
   createButton,
 } from '../helpers';
-import { redirectTo } from '../../helpers';
+import { redirectTo } from '../../router';
 
 const projectInitialData = () => {
   return {

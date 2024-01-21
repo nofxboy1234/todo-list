@@ -1,5 +1,4 @@
-import { redirectTo } from '../../helpers';
-
+import { redirectTo } from '../../router';
 const newTodo = () => {
   redirectTo('/todos/new');
 };

@@ -1,4 +1,4 @@
-import { redirectTo } from '../../helpers';
+import { redirectTo } from '../../router';
 import { createButton } from '../helpers';
 
 const todoPartial = (todo) => {
