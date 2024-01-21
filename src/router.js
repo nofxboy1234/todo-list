@@ -1,7 +1,5 @@
-import { TodosController } from './controllers/todosController';
-import { ProjectsController } from './controllers/projectsController';
-const todosController = TodosController;
-const projectsController = ProjectsController;
+import { TodosController as todosController } from './controllers/todosController';
+import { ProjectsController as projectsController } from './controllers/projectsController';
 
 const router = {
   redirectTo: function (path, ...params) {

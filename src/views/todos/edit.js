@@ -1,11 +1,7 @@
-import { formPartial } from './_form';
-import { contentContainer } from '../layouts/application';
-import { clearContent } from '../helpers';
+import { form } from './_form';
 
-const render = (todo) => {
-  clearContent();
-  contentContainer.appendChild(formPartial(todo));
-  document.getElementById('titleID').focus();
-};
+const render = () => {
+  return form;
+}
 
 export { render };

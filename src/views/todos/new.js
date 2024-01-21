@@ -1,7 +1,7 @@
-import { formPartial } from './_form';
+import { form } from './_form';
 
-const newRender = (todo) => {
-  return formPartial(todo);
+const render = (todo) => {
+  return form(todo);
 }
 
-export { newRender };
+export { render };

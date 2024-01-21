@@ -1,4 +1,3 @@
-import { Todo } from '../../models/todo';
 import {
   createLabel,
   createInput,
@@ -39,7 +38,7 @@ const currentData = () => {
 };
 
 const saveState = () => {
-  Object.assign(formData, currentData());
+  Object.assign(todo, currentData());
 };
 
 const newProject = () => {
@@ -84,7 +83,7 @@ const priority = () => {
   return priorityDiv;
 };
 
-const checkList = (todo) => {
+const checkList = () => {
   const checkListDiv = document.createElement('div');
 
   const checkListLabelDiv = document.createElement('div');
@@ -92,16 +91,18 @@ const checkList = (todo) => {
   checkListDiv.appendChild(checkListLabelDiv);
 
   // { 'fill water bowl': false, 'fill food bowl': false };
-  const keys = Object.keys(todo.checkList);
-  keys.forEach((key) => {
-    const taskPair = document.createElement('div');
-    const id = `task-${keys.indexOf(key)}`
-    taskPair.appendChild(createLabel(key, id));
-    const taskCheckbox = createInput('checkbox', id, 'task');
-    taskPair.appendChild(taskCheckbox);
-
-    checkListDiv.appendChild(taskPair);
-  });
+  if (todo.checkList) {
+    const keys = Object.keys(todo.checkList);
+    keys.forEach((key) => {
+      const taskPair = document.createElement('div');
+      const id = `task-${keys.indexOf(key)}`;
+      taskPair.appendChild(createLabel(key, id));
+      const taskCheckbox = createInput('checkbox', id, 'task');
+      taskPair.appendChild(taskCheckbox);
+  
+      checkListDiv.appendChild(taskPair);
+    });
+  }
   return checkListDiv;
 };
 
@@ -130,7 +131,7 @@ const cancelButton = () => {
   return cancelDiv;
 };
 
-const submitButton = (exists) => {
+const submitButton = () => {
   const submitDiv = document.createElement('div');
 
   let buttonText;
@@ -155,16 +156,18 @@ const getChecklist = () => {
   return checklist;
 };
 
+const currentDataValues = () => {
+  return Object.values(currentData());
+};
+
 const createTodo = (event) => {
   event.preventDefault();
-  const commonData = Object.values(currentData());
-  redirectTo('/todos/create', ...commonData);
+  redirectTo('/todos/create', ...currentDataValues());
 };
 
 const updateTodo = (event) => {
   event.preventDefault();
-  const commonData = Object.values(currentData());
-  redirectTo('/todos', formData.id, ...commonData, 'UPDATE');
+  redirectTo('/todos', todo.id, ...currentDataValues(), 'UPDATE');
 };
 
 const setupUI = () => {
@@ -175,45 +178,49 @@ const setupUI = () => {
   todoForm.appendChild(description());
   todoForm.appendChild(dueDate());
   todoForm.appendChild(priority());
-  todoForm.appendChild(checkList(formData));
+  todoForm.appendChild(checkList());
   todoForm.appendChild(project());
   todoForm.appendChild(cancelButton());
-
-  const exists = Todo.find(formData.id);
-  todoForm.appendChild(submitButton(exists));
+  todoForm.appendChild(submitButton());
 
   return todoForm;
 };
 
 const setupData = () => {
-  if (formData) {
-    // set values on ui elements
+  // set values on ui elements
+  currentUI().title.value = todo.title;
+  currentUI().description.value = todo.description;
+  currentUI().dueDate.value = todo.dueDate;
+  currentUI().priority.value = todo.priority;
+  currentUI().checkList = todo.checkList;
+  currentUI().project.value = todo.project;
+};
+
+const submitButtonCallback = () => {
+  if (exists) {
+    return updateTodo;
+  } else {
+    return createTodo;
   }
 };
 
-const setupEventListeners = (exists) => {
-  const submitButton = currentUI().submitButton;
-  if (exists) {
-    submitButton.addEventListener('click', updateTodo);
-  } else {
-    submitButton.addEventListener('click', createTodo);
-  }
+const setupEventListeners = () => {
+  currentUI().submitButton.addEventListener('click', submitButtonCallback());
   currentUI().newProjectButton.addEventListener('click', newProject);
   currentUI().cancelButton.addEventListener('click', cancel);
 };
 
-let formData;
+let todo;
+let exists;
 
-const formPartial = (todo) => {
-  if (todo) {
-    formData = todo;
-  }
-
+const form = (formTodo) => {
+  todo = formTodo;
+  exists = todo.id ? true : false;
   const todoForm = setupUI();
   setupData();
-  setupEventListeners(exists);
+  setupEventListeners();
 
   return todoForm;
 };
 
-export { formPartial };
+export { form };

@@ -26,7 +26,6 @@ const createTextArea = (id, name) => {
   const textArea = document.createElement('textarea');
   textArea.id = id;
   textArea.name = name;
-  textArea.value = value;
   return textArea;
 };
 
