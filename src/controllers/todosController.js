@@ -8,18 +8,25 @@ let todos;
 
 const setTodo = () => (todo = Todo.find(params.id));
 const todoParams = () => {
-  params
+  return params
     .require('todo')
-    .permit('title', 'description', 'dueDate', 'priority', 'checkList');
+    .permit(
+      'title',
+      'description',
+      'dueDate',
+      'priority',
+      'checkList',
+      'projectID'
+    );
 };
 
 const TodosController = {
   new: function () {
-    todo = Todo.new(params);
+    todo = Todo.new(todoParams());
     render('todos/new');
   },
   create: function () {
-    todo = Todo.new(params);
+    todo = Todo.new(todoParams());
 
     if (todo.save()) {
       redirectTo('/todos');
@@ -32,24 +39,24 @@ const TodosController = {
     render('todos/index');
   },
   show: function () {
-    setTodo(params);
+    setTodo();
     render('todos/show');
   },
   edit: function () {
-    setTodo(params);
+    setTodo();
     render('todos/edit');
   },
   update: function () {
-    setTodo(params);
+    setTodo();
 
-    if (todo.update(params)) {
+    if (todo.update(todoParams())) {
       redirectTo('/todos');
     } else {
       redirectTo('/todos/edit', todo);
     }
   },
   destroy: function () {
-    setTodo(params);
+    setTodo();
     todo.destroy();
     redirectTo('/todos');
   },
