@@ -1,11 +1,7 @@
 import { Project } from './project';
-import { lastID } from './applicationRecord';
+import { nextID } from './applicationRecord';
 
 const todos = [];
-
-const nextID = () => {
-  return lastID(Todo) + 1;
-};
 
 const Todo = {
   new: function (
@@ -27,7 +23,7 @@ const Todo = {
         return false;
       },
       save: function () {
-        this.id = nextID();
+        this.id = nextID(Todo);
         todos.push(this);
         return true;
       },

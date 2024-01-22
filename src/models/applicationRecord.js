@@ -7,4 +7,8 @@ const lastID = (modelClass) => {
   }
 };
 
-export { lastID };
+const nextID = (modelClass) => {
+  return lastID(modelClass) + 1;
+};
+
+export { nextID };

@@ -1,18 +1,14 @@
 import { Todo } from './todo';
-import { lastID } from './applicationRecord';
+import { nextID } from './applicationRecord';
 
 const projects = [];
-
-const nextID = () => {
-  return lastID(Project) + 1;
-};
 
 const Project = {
   new: function (name) {
     return {
       name,
       save: function () {
-        this.id = nextID();
+        this.id = nextID(Project);
         projects.push(this);
         return true;
       },
