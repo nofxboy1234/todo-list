@@ -36,9 +36,6 @@ const createModel = () => {
           const removeIndex = modelInstances().indexOf(this);
           modelInstances().splice(removeIndex, 1);
         },
-        todos: function () {
-          return Todo.all.filter((todo) => todo.projectID === this.id);
-        },
       };
     },
     all: function () {
