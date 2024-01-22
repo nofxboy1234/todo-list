@@ -1,14 +1,59 @@
-const lastID = (modelClass) => {
-  const model = modelClass.last();
-  if (model) {
-    return model.id;
-  } else {
-    return 0;
-  }
+const createModel = () => {
+  const lastID = () => {
+    const modelInstance = Model.last();
+    if (modelInstance) {
+      return modelInstance.id;
+    } else {
+      return 0;
+    }
+  };
+
+  const nextID = () => {
+    return lastID() + 1;
+  };
+
+  const Model = {
+    modelInstances: [],
+    new: function (...params) {
+      const modelInstances = () => {
+        return this.modelInstances;
+      };
+      return {
+        ...params,
+        save: function () {
+          this.id = nextID(createModel);
+          modelInstances().push(this);
+          return true;
+        },
+        update: function (...params) {
+          Object.assign(this, {
+            ...params,
+          });
+          return true;
+        },
+        destroy: function () {
+          const removeIndex = modelInstances().indexOf(this);
+          modelInstances().splice(removeIndex, 1);
+        },
+        todos: function () {
+          return Todo.all.filter((todo) => todo.projectID === this.id);
+        },
+      };
+    },
+    all: function () {
+      return this.modelInstances;
+    },
+    find: function (id) {
+      return this.modelInstances.find(
+        (modelInstance) => modelInstance.id === id
+      );
+    },
+    last: function () {
+      return this.modelInstances.at(-1);
+    },
+  };
+
+  return Model;
 };
 
-const nextID = (modelClass) => {
-  return lastID(modelClass) + 1;
-};
-
-export { nextID };
+export { createModel };
