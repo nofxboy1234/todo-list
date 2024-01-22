@@ -37,7 +37,7 @@ const form = (todo) => {
       dueDate: dueDate.input.value,
       priority: priority.input.value,
       checkList: getChecklist(),
-      project: Number(project.input.value),
+      projectID: Number(project.input.value),
     };
   };
 
