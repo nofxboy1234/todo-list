@@ -1,23 +1,24 @@
 const createModel = () => {
-  const lastID = () => {
-    const modelInstance = Model.last();
-    if (modelInstance) {
-      return modelInstance.id;
-    } else {
-      return 0;
-    }
-  };
-
-  const nextID = () => {
-    return lastID() + 1;
-  };
-
   const Model = {
     modelInstances: [],
     new: function (...params) {
       const modelInstances = () => {
         return this.modelInstances;
       };
+
+      const lastID = () => {
+        const modelInstance = this.last();
+        if (modelInstance) {
+          return modelInstance.id;
+        } else {
+          return 0;
+        }
+      };
+
+      const nextID = () => {
+        return lastID() + 1;
+      };
+
       return {
         ...params,
         save: function () {
