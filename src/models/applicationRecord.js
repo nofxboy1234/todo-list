@@ -26,10 +26,8 @@ const createModel = (todoInstanceProperties) => {
           modelInstances().push(this);
           return true;
         },
-        update: function (...params) {
-          Object.assign(this, {
-            ...params,
-          });
+        update: function (params) {
+          Object.assign(this, params);
           return true;
         },
         destroy: function () {

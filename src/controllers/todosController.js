@@ -67,8 +67,18 @@ const TodosController = {
     projectID
   ) {
     setTodo(id);
+
+    const updateValues = {
+      title,
+      description,
+      dueDate,
+      priority,
+      checkList,
+      projectID,
+    };
+
     if (
-      todo.update(title, description, dueDate, priority, checkList, projectID)
+      todo.update(updateValues)
     ) {
       redirectTo('/todos');
     } else {
