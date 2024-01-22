@@ -1,3 +1,5 @@
+import { Todo } from './todo';
+
 const projects = [];
 
 const lastID = () => {
@@ -31,6 +33,9 @@ const Project = {
       destroy: function () {
         const removeIndex = projects.indexOf(this);
         projects.splice(removeIndex, 1);
+      },
+      todos: function () {
+        return Todo.all.filter((todo) => todo.projectID === this.id);
       },
     };
   },
