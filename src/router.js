@@ -1,53 +1,52 @@
 import { TodosController as todosController } from './controllers/todosController';
 import { ProjectsController as projectsController } from './controllers/projectsController';
 
-const redirectTo = (path, ...params) => {
+const redirectTo = (path, params) => {
   switch (path) {
     case '/todos/new':
       todosController.new();
       break;
     case '/todos/create':
-      todosController.create(...params);
+      todosController.create(params);
       break;
     case '/todos/edit':
-      const todoID = params[0];
-      todosController.edit(todoID);
+      todosController.edit(params);
       break;
     case '/todos':
-      if (params.length > 0) {
-        const todoID = params[0];
-        const lastIndex = params.length - 1;
-        if (params[lastIndex] === 'DELETE') {
-          todosController.destroy(todoID);
-        } else if (params[lastIndex] === 'UPDATE') {
-          todosController.update(todoID, ...params.slice(1, lastIndex));
+      if (params && params.id) {
+        if (params.operation === 'DELETE') {
+          delete params.operation;
+          todosController.destroy(params);
+        } else if (params.operation === 'UPDATE') {
+          delete params.operation;
+          todosController.update(params);
         } else {
-          todosController.show(todoID);
+          todosController.show(params);
         }
       } else {
         todosController.index();
       }
       break;
+
     case '/projects/new':
       projectsController.new();
       break;
     case '/projects/create':
-      projectsController.create(...params);
+      projectsController.create(params);
       break;
     case '/projects/edit':
-      const projectID = params[0];
-      projectsController.edit(projectID);
+      projectsController.edit(params);
       break;
     case '/projects':
-      if (params.length > 0) {
-        const projectID = params[0];
-        const lastIndex = params.length - 1;
-        if (params[lastIndex] === 'DELETE') {
-          projectsController.destroy(projectID);
-        } else if (params[lastIndex] === 'UPDATE') {
-          projectsController.update(projectID, ...params.slice(1, lastIndex));
+      if (params && params.id) {
+        if (params.operation === 'DELETE') {
+          delete params.operation;
+          projectsController.destroy(params);
+        } else if (params.operation === 'UPDATE') {
+          delete params.operation;
+          projectsController.update(params);
         } else {
-          projectsController.show(projectID);
+          projectsController.show(params);
         }
       } else {
         projectsController.index();

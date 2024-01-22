@@ -1,43 +1,25 @@
 import { Todo } from '../models/todo';
 import { redirectTo } from '../router';
 import { render } from './renderer';
+import { params } from './todoParameters';
 
 let todo;
 let todos;
 
-const setTodo = (id) => (todo = Todo.find(id));
+const setTodo = () => (todo = Todo.find(params.id));
+const todoParams = () => {
+  params
+    .require('todo')
+    .permit('title', 'description', 'dueDate', 'priority', 'checkList');
+};
 
 const TodosController = {
   new: function () {
-    const defaultValues = {
-      title: '',
-      description: '',
-      dueDate: '',
-      priority: 'high',
-      checkList: {},
-      projectID: undefined,
-    };
-    todo = Todo.new(defaultValues);
-    
+    todo = Todo.new(params);
     render('todos/new');
   },
-  create: function (
-    title,
-    description,
-    dueDate,
-    priority,
-    checkList,
-    projectID
-  ) {
-    const createValues = {
-      title,
-      description,
-      dueDate,
-      priority,
-      checkList,
-      projectID,
-    };
-    todo = Todo.new(createValues);
+  create: function () {
+    todo = Todo.new(params);
 
     if (todo.save()) {
       redirectTo('/todos');
@@ -49,44 +31,25 @@ const TodosController = {
     todos = Todo.all();
     render('todos/index');
   },
-  show: function (id) {
-    setTodo(id);
+  show: function () {
+    setTodo(params);
     render('todos/show');
   },
-  edit: function (id) {
-    setTodo(id);
+  edit: function () {
+    setTodo(params);
     render('todos/edit');
   },
-  update: function (
-    id,
-    title,
-    description,
-    dueDate,
-    priority,
-    checkList,
-    projectID
-  ) {
-    setTodo(id);
+  update: function () {
+    setTodo(params);
 
-    const updateValues = {
-      title,
-      description,
-      dueDate,
-      priority,
-      checkList,
-      projectID,
-    };
-
-    if (
-      todo.update(updateValues)
-    ) {
+    if (todo.update(params)) {
       redirectTo('/todos');
     } else {
-      redirectTo('/todos/edit', todo.id);
+      redirectTo('/todos/edit', todo);
     }
   },
-  destroy: function (id) {
-    setTodo(id);
+  destroy: function () {
+    setTodo(params);
     todo.destroy();
     redirectTo('/todos');
   },

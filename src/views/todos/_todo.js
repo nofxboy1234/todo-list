@@ -39,7 +39,7 @@ const todoPartial = (todo) => {
   };
 
   const editTodo = () => {
-    redirectTo('/todos/edit', todo.id);
+    redirectTo('/todos/edit', todo);
   };
 
   const closeTodo = () => {

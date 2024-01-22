@@ -22,16 +22,17 @@ const form = (todo) => {
 
   const createTodo = (event) => {
     event.preventDefault();
-    redirectTo('/todos/create', ...currentDataValues());
+    redirectTo('/todos/create', currentData());
   };
 
   const updateTodo = (event) => {
     event.preventDefault();
-    redirectTo('/todos', todo.id, ...currentDataValues(), 'UPDATE');
+    redirectTo('/todos', Object.assign(currentData(), { operation: 'UPDATE' }));
   };
 
   const currentData = () => {
     return {
+      id: todo.id,
       title: title.input.value,
       description: description.input.value,
       dueDate: dueDate.input.value,
@@ -39,10 +40,6 @@ const form = (todo) => {
       checkList: getChecklist(),
       projectID: Number(project.input.value),
     };
-  };
-
-  const currentDataValues = () => {
-    return Object.values(currentData());
   };
 
   const saveState = () => {
