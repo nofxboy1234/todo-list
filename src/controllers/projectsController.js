@@ -11,12 +11,17 @@ const setProject = (id) => (project = Project.find(id));
 
 const ProjectsController = {
   new: function () {
-    project = Project.new();
-    // render('new');
+    const defaultValues = {
+      name: '',
+    };
+    project = Project.new(defaultValues);
     renderNew(project);
   },
   create: function (name) {
-    project = Project.new(name);
+    const createValues = {
+      name,
+    };
+    project = Project.new(createValues);
 
     if (project.save()) {
       render('todos/new');
@@ -37,11 +42,9 @@ const ProjectsController = {
     setProject(id);
     renderEdit(project);
   },
-  update: function (name) {
+  update: function (id, name) {
     setProject(id);
-    if (
-      project.update(name)
-    ) {
+    if (project.update(name)) {
       redirectTo('/projects');
     } else {
       redirectTo('/projects/edit', project.id);

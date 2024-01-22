@@ -1,7 +1,7 @@
-const createModel = () => {
+const createModel = (todoInstanceProperties) => {
   const Model = {
     modelInstances: [],
-    new: function (...params) {
+    new: function (params) {
       const modelInstances = () => {
         return this.modelInstances;
       };
@@ -19,7 +19,7 @@ const createModel = () => {
         return lastID() + 1;
       };
 
-      return {
+      const instance = {
         ...params,
         save: function () {
           this.id = nextID(createModel);
@@ -37,6 +37,9 @@ const createModel = () => {
           modelInstances().splice(removeIndex, 1);
         },
       };
+      Object.assign(instance, todoInstanceProperties);
+
+      return instance;
     },
     all: function () {
       return this.modelInstances;

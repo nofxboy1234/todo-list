@@ -9,10 +9,17 @@ const setTodo = (id) => (todo = Todo.find(id));
 
 const TodosController = {
   new: function () {
-    todo = Todo.new();
+    const defaultValues = {
+      title: '',
+      description: '',
+      dueDate: '',
+      priority: 'high',
+      checkList: {},
+      projectID: undefined,
+    };
+    todo = Todo.new(defaultValues);
+    
     render('todos/new');
-    // renderNew(todo);
-
   },
   create: function (
     title,
@@ -22,14 +29,15 @@ const TodosController = {
     checkList,
     projectID
   ) {
-    todo = Todo.new(
+    const createValues = {
       title,
       description,
       dueDate,
       priority,
       checkList,
-      projectID
-    );
+      projectID,
+    };
+    todo = Todo.new(createValues);
 
     if (todo.save()) {
       redirectTo('/todos');
@@ -43,11 +51,11 @@ const TodosController = {
   },
   show: function (id) {
     setTodo(id);
-    render('todos/show')
+    render('todos/show');
   },
   edit: function (id) {
     setTodo(id);
-    render('todos/edit')
+    render('todos/edit');
   },
   update: function (
     id,
@@ -76,8 +84,8 @@ const TodosController = {
     return todo;
   },
   getTodos: function () {
-    return todos
-  }
+    return todos;
+  },
 };
 
 export { TodosController };

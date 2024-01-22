@@ -1,12 +1,19 @@
 import { Project } from './project';
 import { createModel as Model } from './applicationRecord';
 
-const Todo = Object.create(Model());
-const TodoExtension = {
+const instanceProperties = {
   project: function () {
     return Project.find(this.projectID);
   },
 };
-Object.assign(Todo, TodoExtension);
+
+const Todo = Object.create(Model(instanceProperties));
+
+const staticProperties = {
+  hello: function () {
+    console.log('hello');
+  },
+};
+Object.assign(Todo, staticProperties);
 
 export { Todo };

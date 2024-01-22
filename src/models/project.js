@@ -1,12 +1,15 @@
 import { Todo } from './todo';
 import { createModel as Model } from './applicationRecord';
 
-const Project = Object.create(Model());
-const ProjectExtension = {
+const instanceProperties = {
   todos: function () {
     return Todo.all.filter((todo) => todo.projectID === this.id);
   },
 };
-Object.assign(Project, ProjectExtension);
+
+const Project = Object.create(Model(instanceProperties));
+
+const staticProperties = {};
+Object.assign(Project, staticProperties);
 
 export { Project };
