@@ -1,18 +1,10 @@
 import { Project } from './project';
+import { lastID } from './applicationRecord';
 
 const todos = [];
 
-const lastID = () => {
-  const todo = Todo.last();
-  if (todo) {
-    return todo.id;
-  } else {
-    return 0;
-  }
-};
-
 const nextID = () => {
-  return lastID() + 1;
+  return lastID(Todo) + 1;
 };
 
 const Todo = {
