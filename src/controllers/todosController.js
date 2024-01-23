@@ -31,7 +31,7 @@ const TodosController = {
     if (todo.save()) {
       redirectTo('/todos');
     } else {
-      redirectTo('/todos/new');
+      render('todos/new');
     }
   },
   index: function () {
@@ -52,7 +52,7 @@ const TodosController = {
     if (todo.update(todoParams())) {
       redirectTo('/todos');
     } else {
-      redirectTo('/todos/edit', todo);
+      render('todos/edit');
     }
   },
   destroy: function () {
@@ -60,12 +60,6 @@ const TodosController = {
     todo.destroy();
     redirectTo('/todos');
   },
-  getTodo: function () {
-    return todo;
-  },
-  getTodos: function () {
-    return todos;
-  },
 };
 
-export { TodosController };
+export { TodosController, todo, todos };

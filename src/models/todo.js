@@ -7,7 +7,8 @@ const instanceProperties = {
   },
 };
 
-const Todo = Object.create(Model(instanceProperties));
+// const Todo = Object.create(Model(instanceProperties));
+const Todo = Object.assign({}, Model(instanceProperties));
 
 const staticProperties = {
   hello: function () {

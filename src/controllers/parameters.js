@@ -12,7 +12,7 @@ const createParameters = (instanceProperties) => {
       const instance = {
         ...instanceParams(),
         require: function (requiredParam) {
-          if (params[requiredParam]) {
+          if (Object.keys(params).includes(requiredParam)) {
             return this;
           } else {
             console.log('Missing required parameter');

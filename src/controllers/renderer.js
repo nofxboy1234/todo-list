@@ -11,32 +11,26 @@ import { render as editTodo } from '../views/todos/edit';
 import { contentContainer } from '../views/layouts/application';
 import { clearContent } from '../views/helpers';
 
-import { TodosController as todosController } from './todosController';
+import { TodosController as todosController, todo, todos } from './todosController';
 
 const render = (path) => {
   if (path.includes('/')) {
-    let todo;
-    let todos;
     switch (path) {
       case 'todos/new':
         clearContent();
-        todo = todosController.getTodo();
         contentContainer.appendChild(newTodo(todo));
         document.getElementById('titleID').focus();
         break;
       case 'todos/index':
         clearContent();
-        todos = todosController.getTodos();
         contentContainer.appendChild(indexTodo(todos));
         break;
       case 'todos/show':
         clearContent();
-        todo = todosController.getTodo();
         contentContainer.appendChild(showTodo(todo));
         break;
       case 'todos/edit':
         clearContent();
-        todo = todosController.getTodo();
         contentContainer.appendChild(editTodo(todo));
         break;
 
