@@ -7,6 +7,7 @@ import {
 } from '../helpers';
 import { redirectTo } from '../../router';
 import { Project } from '../../models/project';
+import { params } from '../../controllers/todoParameters';
 
 const form = (todo) => {
   const exists = todo.id ? true : false;
@@ -16,18 +17,20 @@ const form = (todo) => {
   };
 
   const newProject = () => {
-    saveState();
+    saveStateToParams();
     redirectTo('/projects/new');
   };
 
   const createTodo = (event) => {
     event.preventDefault();
-    redirectTo('/todos/create', currentData());
+    saveStateToParams();
+    redirectTo('/todos', 'POST');
   };
 
   const updateTodo = (event) => {
     event.preventDefault();
-    redirectTo('/todos', Object.assign(currentData(), { operation: 'UPDATE' }));
+    saveStateToParams();
+    redirectTo('/todos', 'PATCH');
   };
 
   const currentData = () => {
@@ -42,8 +45,9 @@ const form = (todo) => {
     };
   };
 
-  const saveState = () => {
-    Object.assign(todo, currentData());
+  const saveStateToParams = () => {
+    params.merge(currentData());
+    // Object.assign(todo, currentData());
   };
 
   const getChecklist = () => {

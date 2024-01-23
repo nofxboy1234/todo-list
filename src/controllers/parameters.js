@@ -26,6 +26,9 @@ const createParameters = (instanceProperties) => {
           });
           return this;
         },
+        merge: function (params) {
+          Object.assign(this, params);
+        },
       };
       Object.assign(instance, instanceProperties);
 

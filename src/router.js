@@ -1,60 +1,38 @@
 import { TodosController as todosController } from './controllers/todosController';
 import { ProjectsController as projectsController } from './controllers/projectsController';
+import { params as todoParams } from './controllers/todoParameters';
 
-const redirectTo = (path, params) => {
-  switch (path) {
-    case '/todos/new':
-      todosController.new();
-      break;
-    case '/todos/create':
-      todosController.create(params);
-      break;
-    case '/todos/edit':
-      todosController.edit(params);
-      break;
-    case '/todos':
-      if (params && params.id) {
-        if (params.operation === 'DELETE') {
-          delete params.operation;
-          todosController.destroy(params);
-        } else if (params.operation === 'UPDATE') {
-          delete params.operation;
-          todosController.update(params);
-        } else {
-          todosController.show(params);
-        }
-      } else {
-        todosController.index();
-      }
-      break;
+const createRouter = (instanceProperties = {}, staticProperties = {}) => {
+  const Router = {
+    new: function (resourceSingular, resourcePlural) {
+      const resourcePluralPath = () => {
+        return `${resourcePlural}Path`;
+      };
 
-    case '/projects/new':
-      projectsController.new();
-      break;
-    case '/projects/create':
-      projectsController.create(params);
-      break;
-    case '/projects/edit':
-      projectsController.edit(params);
-      break;
-    case '/projects':
-      if (params && params.id) {
-        if (params.operation === 'DELETE') {
-          delete params.operation;
-          projectsController.destroy(params);
-        } else if (params.operation === 'UPDATE') {
-          delete params.operation;
-          projectsController.update(params);
-        } else {
-          projectsController.show(params);
-        }
-      } else {
-        projectsController.index();
-      }
-      break;
-    default:
-      break;
-  }
+      const instance = {
+        redirectTo: function (path, method) {
+          switch (path) {
+            case resourcePluralPath() || this[resourcePluralPath()]:
+              if (method === 'GET') todosController.index();
+              if (method === 'POST') todosController.create();
+              break;
+            default:
+              break;
+          }
+        },
+      };
+      Object.defineProperty(instance, `${resourcePlural}Path`, {
+        value: `/${resourcePlural}`,
+      });
+      Object.assign(instance, instanceProperties);
+      return instance;
+    },
+  };
+  Object.assign(Router, staticProperties);
+  return Router;
 };
 
-export { redirectTo };
+export { createRouter };
+
+// const Router = createRouter;
+// const router = Router.new('todo', 'todos');
