@@ -10,10 +10,6 @@ const router = Router().new('todo', 'todos');
 const redirectTo = router.redirectTo;
 
 const todosPath = router.todosPath;
-const newTodoPath = router.newTodoPath;
-const editTodoPath = router.editTodoPath;
-const todoPath = router.todoPath;
-const rootPath = router.rootPath;
 
 const setTodo = () => (todo = Todo.find(params.id));
 const todoParams = () => {
