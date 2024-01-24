@@ -6,7 +6,7 @@ import { createRouter as Router } from '../router';
 let todo;
 let todos;
 
-const router = Router().new();
+const router = Router().new('todos');
 const redirectTo = router.redirectTo;
 
 const setTodo = () => (todo = Todo.find(params.id));
