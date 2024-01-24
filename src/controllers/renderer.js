@@ -3,11 +3,6 @@ import { render as indexTodo } from '../views/todos/index';
 import { render as newTodo } from '../views/todos/new';
 import { render as editTodo } from '../views/todos/edit';
 
-// import { render as renderShow } from '../views/projects/show';
-// import { render as renderIndex } from '../views/projects/index';
-// import { render as renderNew } from '../views/projects/new';
-// import { render as renderEdit } from '../views/projects/edit';
-
 import { contentContainer } from '../views/layouts/application';
 import { clearContent } from '../views/helpers';
 

@@ -8,7 +8,12 @@ let todos;
 
 const router = Router().new('todo', 'todos');
 const redirectTo = router.redirectTo;
+
 const todosPath = router.todosPath;
+const newTodoPath = router.newTodoPath;
+const editTodoPath = router.editTodoPath;
+const todoPath = router.todoPath;
+const rootPath = router.rootPath;
 
 const setTodo = () => (todo = Todo.find(params.id));
 const todoParams = () => {
@@ -34,7 +39,7 @@ const TodosController = {
 
     if (todo.save()) {
       redirectTo(todosPath(), 'GET');
-      // redirectTo('/todos');
+      // redirectTo('/todos', 'GET');
     } else {
       render('todos/new');
     }
@@ -55,7 +60,7 @@ const TodosController = {
     setTodo();
 
     if (todo.update(todoParams())) {
-      redirectTo('/todos');
+      redirectTo(todosPath(), 'GET');
     } else {
       render('todos/edit');
     }
@@ -63,7 +68,7 @@ const TodosController = {
   destroy: function () {
     setTodo();
     todo.destroy();
-    redirectTo('/todos');
+    redirectTo(todosPath(), 'GET');
   },
 };
 
