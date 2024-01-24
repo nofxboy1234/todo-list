@@ -6,8 +6,9 @@ import { createRouter as Router } from '../router';
 let todo;
 let todos;
 
-const router = Router().new('todos');
+const router = Router().new('todo', 'todos');
 const redirectTo = router.redirectTo;
+const todosPath = router.todosPath;
 
 const setTodo = () => (todo = Todo.find(params.id));
 const todoParams = () => {
@@ -32,7 +33,7 @@ const TodosController = {
     todo = Todo.new(todoParams());
 
     if (todo.save()) {
-      redirectTo('todosPath');
+      redirectTo(todosPath(), 'GET');
       // redirectTo('/todos');
     } else {
       render('todos/new');
