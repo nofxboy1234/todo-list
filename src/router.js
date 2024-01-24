@@ -35,27 +35,27 @@ const createRouter = (instanceProperties = {}, staticProperties = {}) => {
           switch (resolvedPath) {
             // todosPath, /todos
             case `/${resourcePlural}`:
-              if (method === 'GET') controllers['resourcePlural'].index();
-              if (method === 'POST') controllers['resourcePlural'].create();
+              if (method === 'GET') controllers[resourcePlural].index();
+              if (method === 'POST') controllers[resourcePlural].create();
               break;
             // newTodoPath, /todos/new
             case `/${resourcePlural}/new`:
-              if (method === 'GET') controllers['resourcePlural'].new();
+              if (method === 'GET') controllers[resourcePlural].new();
               break;
             // editTodoPath, /todos/:id/edit
             case `/${resourcePlural}/${resource.id}/edit`:
-              if (method === 'GET') controllers['resourcePlural'].edit();
+              if (method === 'GET') controllers[resourcePlural].edit();
               break;
             // todoPath, /todos/:id
             case `/${resourcePlural}/${resource.id}`:
-              if (method === 'GET') controllers['resourcePlural'].show();
-              if (method === 'PATCH') controllers['resourcePlural'].update();
-              if (method === 'PUT') controllers['resourcePlural'].update();
-              if (method === 'DELETE') controllers['resourcePlural'].destroy();
+              if (method === 'GET') controllers[resourcePlural].show();
+              if (method === 'PATCH') controllers[resourcePlural].update();
+              if (method === 'PUT') controllers[resourcePlural].update();
+              if (method === 'DELETE') controllers[resourcePlural].destroy();
               break;
             // rootPath, /
             case '/':
-              if (method === 'GET') controllers['resourcePlural'].index();
+              if (method === 'GET') controllers[resourcePlural].index();
               break;
             default:
               break;
