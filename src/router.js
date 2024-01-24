@@ -1,6 +1,5 @@
 import { TodosController as todosController } from './controllers/todosController';
 import { ProjectsController as projectsController } from './controllers/projectsController';
-import { params as todoParams } from './controllers/todoParameters';
 
 //     Prefix Verb   URI Pattern                 Controller#Action
 //     kittens GET    /kittens(.:format)          kittens#index
@@ -13,80 +12,112 @@ import { params as todoParams } from './controllers/todoParameters';
 //             DELETE /kittens/:id(.:format)      kittens#destroy
 //        root GET    /                           kittens#index
 
+// const routes = { todosPath: { path: () => `/${resourcePlural}`, controller } };
+const routes = {};
+
+// const pathHelpers = Object.keys(routes);
+
 const createRouter = (instanceProperties = {}, staticProperties = {}) => {
-  const addPathHelpers = (resourceSingular, resourcePlural, instance) => {
-
-    const entries = new Map([
-      [`${resourcePlural}Path`, () => `/${resourcePlural}`],
-      [
-        `new${resourceSingular.toUpperCase()}Path`,
-        () => `/${resourcePlural}/new`,
-      ],
-      [
-        `edit${resourceSingular}Path`,
-        (resource) => `/${resourcePlural}/${resource.id}/edit`,
-      ],
-      [
-        `${resourceSingular}Path`,
-        (resource) => `/${resourcePlural}/${resource.id}`,
-      ],
-      ['rootPath', () => '/'],
-    ]);
-
-    const pathHelpers = Object.fromEntries(entries);
-    Object.assign(instance, pathHelpers);
-  };
-
   const Router = {
-    new: function (resourceSingular, resourcePlural) {
-      const resourcePluralPath = () => {
-        return `${resourcePlural}Path`;
-      };
-
-      const newResourceSingularPath = () => {
-        return `new${resourceSingular.toUpperCase()}Path`;
-      };
-
-      const editResourceSingularPath = () => {
-        return `edit${resourceSingular}Path`;
-      };
-
-      const resourceSingularPath = () => {
-        return `${resourceSingular}Path`;
-      };
-
-      const rootPath = () => {
-        return '/';
-      };
-
+    new: function () {
       const instance = {
         redirectTo: function (path, method) {
+          const resourcePluralPath = () => {
+            return `${resourcePlural}Path`;
+          };
+
+          const newResourceSingularPath = () => {
+            return `new${resourceSingular.toUpperCase()}Path`;
+          };
+
+          const editResourceSingularPath = () => {
+            return `edit${resourceSingular}Path`;
+          };
+
+          const resourceSingularPath = () => {
+            return `${resourceSingular}Path`;
+          };
+
+          const rootPath = () => {
+            return '/';
+          };
+
+          const resolvedPath = routes[path];
           switch (path) {
-            case resourcePluralPath() || this[resourcePluralPath()]:
-              if (method === 'GET') todosController.index();
-              if (method === 'POST') todosController.create();
+            case routes.resourcePluralPath || routes.resourcePluralPath.path():
+              if (method === 'GET') controller.index();
+              if (method === 'POST') controller.create();
               break;
             case newResourceSingularPath() || this[newResourceSingularPath()]:
-              if (method === 'GET') todosController.new();
+              if (method === 'GET') controller.new();
               break;
             case editResourceSingularPath() || this[editResourceSingularPath()]:
-              if (method === 'GET') todosController.edit();
+              if (method === 'GET') controller.edit();
               break;
             case resourceSingularPath() || this[resourceSingularPath()]:
-              if (method === 'GET') todosController.show();
-              if (method === 'PATCH') todosController.update();
-              if (method === 'PUT') todosController.update();
-              if (method === 'DELETE') todosController.destroy();
+              if (method === 'GET') controller.show();
+              if (method === 'PATCH') controller.update();
+              if (method === 'PUT') controller.update();
+              if (method === 'DELETE') controller.destroy();
               break;
             case rootPath() || this[rootPath()]:
-              if (method === 'GET') todosController.index();
+              if (method === 'GET') controller.index();
               break;
             default:
               break;
           }
         },
+        createRoutes: function (resourceSingular, resourcePlural, controller) {
+          const entries = new Map([
+            [
+              `${resourcePlural}Path`,
+              {
+                path: function () {
+                  return `/${resourcePlural}`;
+                },
+                controller,
+              },
+            ],
+            [
+              `new${resourceSingular.toUpperCase()}Path`,
+              {
+                path: function () {
+                  return `/${resourcePlural}/new`;
+                },
+                controller,
+              },
+            ],
+            [
+              `edit${resourceSingular}Path`,
+              {
+                path: function (resource) {
+                  return `/${resourcePlural}/${resource.id}/edit`;
+                },
+                controller,
+              },
+            ],
+            [
+              `${resourceSingular}Path`,
+              {
+                path: function (resource) {
+                  return `/${resourcePlural}/${resource.id}`;
+                },
+              },
+              controller,
+            ],
+            [
+              'rootPath',
+              {
+                path: function () {
+                  return '/';
+                },
+                controller,
+              },
+            ],
+          ]);
+          Object.assign(routes, Object.fromEntries(entries));
+        },
       };
-      addPathHelpers(resourceSingular, resourcePlural, instance);
       Object.assign(instance, instanceProperties);
       return instance;
     },
@@ -95,4 +126,11 @@ const createRouter = (instanceProperties = {}, staticProperties = {}) => {
   return Router;
 };
 
-export { createRouter };
+const Router = createRouter();
+const router = Router.new();
+router.createRoutes('todo', 'todos', todosController);
+router.createRoutes('project', 'projects', projectsController);
+
+const redirectTo = router.redirectTo;
+
+export { redirectTo, routes };
