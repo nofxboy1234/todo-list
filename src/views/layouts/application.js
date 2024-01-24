@@ -1,6 +1,14 @@
-import { redirectTo } from '../../router';
+import { redirectTo as todoRedirectTo } from '../../router';
+import { createRouter as Router } from '../../router';
+
+const todosRouter = Router().new('todo', 'todos');
+const todoRedirectTo = todosRouter.redirectTo;
+
+const todosPath = todosRouter.todosPath;
+const newTodoPath = todosRouter.newTodoPath;
+
 const newTodo = () => {
-  redirectTo('/todos/new');
+  todoRedirectTo(newTodoPath, 'GET');
 };
 
 const createFlexContainer = (...classList) => {
@@ -33,7 +41,7 @@ const createLayout = () => {
 
   newTodoButton.addEventListener('click', newTodo);
 
-  redirectTo('/todos');
+  todoRedirectTo(todosPath(), 'GET');
 };
 
 export { createLayout, menuContainer, contentContainer };
