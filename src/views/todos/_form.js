@@ -5,32 +5,35 @@ import {
   createSelect,
   createButton,
 } from '../helpers';
-import { redirectTo } from '../../router';
 import { Project } from '../../models/project';
-import { params } from '../../controllers/todoParameters';
+
+import { redirectTo, routes } from '../../router';
+
+const todosPath = routes.todosPath;
+const newTodoPath = routes.newTodoPath;
+const editTodoPath = routes.editTodoPath;
+const todoPath = routes.todoPath;
+const rootPath = routes.rootPath;
 
 const form = (todo) => {
   const exists = todo.id ? true : false;
 
   const cancelForm = () => {
-    redirectTo('/todos');
+    redirectTo('GET', todosPath);
   };
 
   const newProject = () => {
-    saveStateToParams();
-    redirectTo('/projects/new');
+    redirectTo('GET', newTodoPath);
   };
 
   const createTodo = (event) => {
     event.preventDefault();
-    saveStateToParams();
-    redirectTo('/todos', 'POST');
+    redirectTo('POST', todosPath, currentData());
   };
 
   const updateTodo = (event) => {
     event.preventDefault();
-    saveStateToParams();
-    redirectTo('/todos', 'PATCH');
+    redirectTo('PATCH', todoPath, currentData());
   };
 
   const currentData = () => {
@@ -43,11 +46,6 @@ const form = (todo) => {
       checkList: getChecklist(),
       projectID: Number(project.input.value),
     };
-  };
-
-  const saveStateToParams = () => {
-    params.merge(currentData());
-    // Object.assign(todo, currentData());
   };
 
   const getChecklist = () => {

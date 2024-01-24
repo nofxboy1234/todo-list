@@ -1,6 +1,6 @@
 import { TodosController as todosController } from './controllers/todosController';
 import { ProjectsController as projectsController } from './controllers/projectsController';
-
+import { params } from './controllers/todoParameters';
 //     Prefix Verb   URI Pattern                 Controller#Action
 //     kittens GET    /kittens(.:format)          kittens#index
 //             POST   /kittens(.:format)          kittens#create
@@ -23,7 +23,8 @@ const createRouter = (instanceProperties = {}, staticProperties = {}) => {
   const Router = {
     new: function () {
       const instance = {
-        redirectTo: function (path, resource, method) {
+        redirectTo: function (method, path, resource = {}) {
+          params.merge(data);
           let resolvedPath;
           if (Object.hasOwn(routes, path)) {
             const functionStringName = path.name;

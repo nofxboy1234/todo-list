@@ -1,5 +1,11 @@
-import { redirectTo } from '../../router';
 import { createButton } from '../helpers';
+import { redirectTo, routes } from '../../router';
+
+const todosPath = routes.todosPath;
+const newTodoPath = routes.newTodoPath;
+const editTodoPath = routes.editTodoPath;
+const todoPath = routes.todoPath;
+const rootPath = routes.rootPath;
 
 const todoPartial = (todo) => {
   const todoParagraph = document.createElement('p');
@@ -35,15 +41,15 @@ const todoPartial = (todo) => {
   todoParagraph.appendChild(projectDiv);
 
   const destroyTodo = () => {
-    redirectTo('/todos', todo.id, 'DELETE');
+    redirectTo('DELETE', todoPath, todo);
   };
 
   const editTodo = () => {
-    redirectTo('/todos/edit', todo);
+    redirectTo('GET', editTodo, todo);
   };
 
   const closeTodo = () => {
-    redirectTo('/todos');
+    redirectTo('GET', todosPath);
   };
 
   const deleteButton = createButton('button', 'DELETE', 'deleteButtonID');

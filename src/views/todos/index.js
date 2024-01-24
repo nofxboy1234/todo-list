@@ -1,15 +1,21 @@
 import { createButton } from '../helpers';
-import { redirectTo } from '../../router';
+import { redirectTo, routes } from '../../router';
+
+const todosPath = routes.todosPath;
+const newTodoPath = routes.newTodoPath;
+const editTodoPath = routes.editTodoPath;
+const todoPath = routes.todoPath;
+const rootPath = routes.rootPath;
 
 const render = (todos) => {
   const todoParagraph = document.createElement('p');
   todos.forEach((todo) => {
     const showTodo = () => {
-      redirectTo('/todos', todo.id);
+      redirectTo('GET', todoPath, todo);
     };
 
     const destroyTodo = () => {
-      redirectTo('/todos', todo.id, 'DELETE');
+      redirectTo('DELETE', todoPath, todo);
     };
 
     const titleDiv = document.createElement('div');

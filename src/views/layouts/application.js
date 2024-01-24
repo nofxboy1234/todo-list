@@ -1,6 +1,10 @@
 import { redirectTo, routes } from '../../router';
 
+const todosPath = routes.todosPath;
 const newTodoPath = routes.newTodoPath;
+const editTodoPath = routes.editTodoPath;
+const todoPath = routes.todoPath;
+const rootPath = routes.rootPath;
 
 const newTodo = () => {
   redirectTo(newTodoPath, 'GET');
@@ -37,7 +41,7 @@ const createLayout = () => {
 
   newTodoButton.addEventListener('click', newTodo);
 
-  redirectTo(todosPath(), 'GET');
+  redirectTo(todosPath, 'GET');
 };
 
 export { createLayout, menuContainer, contentContainer };

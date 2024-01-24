@@ -1,15 +1,16 @@
 import { Todo } from '../models/todo';
 import { render } from './renderer';
 import { params } from './todoParameters';
-import { createRouter as Router } from '../router';
+import { redirectTo, routes } from '../router';
+
+const todosPath = routes.todosPath;
+const newTodoPath = routes.newTodoPath;
+const editTodoPath = routes.editTodoPath;
+const todoPath = routes.todoPath;
+const rootPath = routes.rootPath;
 
 let todo;
 let todos;
-
-const router = Router().new('todo', 'todos');
-const redirectTo = router.redirectTo;
-
-const todosPath = router.todosPath;
 
 const setTodo = () => (todo = Todo.find(params.id));
 const todoParams = () => {
@@ -34,8 +35,7 @@ const TodosController = {
     todo = Todo.new(todoParams());
 
     if (todo.save()) {
-      redirectTo(todosPath(), 'GET');
-      // redirectTo('/todos', 'GET');
+      redirectTo('GET', todosPath);
     } else {
       render('todos/new');
     }
@@ -56,7 +56,7 @@ const TodosController = {
     setTodo();
 
     if (todo.update(todoParams())) {
-      redirectTo(todosPath(), 'GET');
+      redirectTo('GET', todosPath);
     } else {
       render('todos/edit');
     }
@@ -64,7 +64,7 @@ const TodosController = {
   destroy: function () {
     setTodo();
     todo.destroy();
-    redirectTo(todosPath(), 'GET');
+    redirectTo('GET', todosPath);
   },
 };
 
