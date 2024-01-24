@@ -3,8 +3,22 @@ import { ProjectsController as projectsController } from './controllers/projects
 import { params as todoParams } from './controllers/todoParameters';
 
 const createRouter = (instanceProperties = {}, staticProperties = {}) => {
+  const addPathHelpers = (resourcePlural, instance) => {
+    // Object.defineProperty(instance, `${resourcePlural}Path`, {
+    //   value: `/${resourcePlural}`,
+    // });
+
+    const entries = new Map([
+      [`${resourcePlural}Path`, `/${resourcePlural}`],
+      [],
+    ]);
+
+    const pathHelpers = Object.fromEntries(entries);
+    Object.assign(instance, pathHelpers)
+  };
+
   const Router = {
-    new: function (resourceSingular, resourcePlural) {
+    new: function (resourcePlural) {
       const resourcePluralPath = () => {
         return `${resourcePlural}Path`;
       };
@@ -21,9 +35,7 @@ const createRouter = (instanceProperties = {}, staticProperties = {}) => {
           }
         },
       };
-      Object.defineProperty(instance, `${resourcePlural}Path`, {
-        value: `/${resourcePlural}`,
-      });
+      addPathHelpers(resourcePlural, instance);
       Object.assign(instance, instanceProperties);
       return instance;
     },
@@ -35,4 +47,4 @@ const createRouter = (instanceProperties = {}, staticProperties = {}) => {
 export { createRouter };
 
 // const Router = createRouter;
-// const router = Router.new('todo', 'todos');
+// const router = Router.new('todos');

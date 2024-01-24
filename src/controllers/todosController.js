@@ -1,10 +1,13 @@
 import { Todo } from '../models/todo';
-import { redirectTo } from '../router';
 import { render } from './renderer';
 import { params } from './todoParameters';
+import { createRouter as Router } from '../router';
 
 let todo;
 let todos;
+
+const router = Router().new();
+const redirectTo = router.redirectTo;
 
 const setTodo = () => (todo = Todo.find(params.id));
 const todoParams = () => {
@@ -29,7 +32,8 @@ const TodosController = {
     todo = Todo.new(todoParams());
 
     if (todo.save()) {
-      redirectTo('/todos');
+      redirectTo('todosPath');
+      // redirectTo('/todos');
     } else {
       render('todos/new');
     }
