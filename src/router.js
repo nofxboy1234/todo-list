@@ -14,12 +14,16 @@ import { ProjectsController as projectsController } from './controllers/projects
 
 const routes = {};
 
+const controllers = {
+  todos: todosController,
+  projects: projectsController,
+};
+
 const createRouter = (instanceProperties = {}, staticProperties = {}) => {
   const Router = {
     new: function () {
       const instance = {
-        redirectTo: function (path, method) {
-
+        redirectTo: function (path, resource, method) {
           let resolvedPath;
           if (Object.hasOwn(routes, path)) {
             const functionStringName = path.name;
@@ -31,33 +35,33 @@ const createRouter = (instanceProperties = {}, staticProperties = {}) => {
           switch (resolvedPath) {
             // todosPath, /todos
             case `/${resourcePlural}`:
-              if (method === 'GET') controller.index();
-              if (method === 'POST') controller.create();
+              if (method === 'GET') controllers['resourcePlural'].index();
+              if (method === 'POST') controllers['resourcePlural'].create();
               break;
             // newTodoPath, /todos/new
             case `/${resourcePlural}/new`:
-              if (method === 'GET') controller.new();
+              if (method === 'GET') controllers['resourcePlural'].new();
               break;
             // editTodoPath, /todos/:id/edit
             case `/${resourcePlural}/${resource.id}/edit`:
-              if (method === 'GET') controller.edit();
+              if (method === 'GET') controllers['resourcePlural'].edit();
               break;
             // todoPath, /todos/:id
             case `/${resourcePlural}/${resource.id}`:
-              if (method === 'GET') controller.show();
-              if (method === 'PATCH') controller.update();
-              if (method === 'PUT') controller.update();
-              if (method === 'DELETE') controller.destroy();
+              if (method === 'GET') controllers['resourcePlural'].show();
+              if (method === 'PATCH') controllers['resourcePlural'].update();
+              if (method === 'PUT') controllers['resourcePlural'].update();
+              if (method === 'DELETE') controllers['resourcePlural'].destroy();
               break;
             // rootPath, /
             case '/':
-              if (method === 'GET') controller.index();
+              if (method === 'GET') controllers['resourcePlural'].index();
               break;
             default:
               break;
           }
         },
-        createRoutes: function (resourceSingular, resourcePlural, controller) {
+        createRoutes: function (resourceSingular, resourcePlural) {
           const entries = new Map([
             [
               `${resourcePlural}Path`,
@@ -65,7 +69,6 @@ const createRouter = (instanceProperties = {}, staticProperties = {}) => {
                 route: function () {
                   return `/${resourcePlural}`;
                 },
-                controller,
               },
             ],
             [
@@ -74,7 +77,6 @@ const createRouter = (instanceProperties = {}, staticProperties = {}) => {
                 route: function () {
                   return `/${resourcePlural}/new`;
                 },
-                controller,
               },
             ],
             [
@@ -83,7 +85,6 @@ const createRouter = (instanceProperties = {}, staticProperties = {}) => {
                 route: function (resource) {
                   return `/${resourcePlural}/${resource.id}/edit`;
                 },
-                controller,
               },
             ],
             [
@@ -93,7 +94,6 @@ const createRouter = (instanceProperties = {}, staticProperties = {}) => {
                   return `/${resourcePlural}/${resource.id}`;
                 },
               },
-              controller,
             ],
             [
               'rootPath',
@@ -101,7 +101,6 @@ const createRouter = (instanceProperties = {}, staticProperties = {}) => {
                 route: function () {
                   return '/';
                 },
-                controller,
               },
             ],
           ]);
@@ -118,8 +117,8 @@ const createRouter = (instanceProperties = {}, staticProperties = {}) => {
 
 const Router = createRouter();
 const router = Router.new();
-router.createRoutes('todo', 'todos', todosController);
-router.createRoutes('project', 'projects', projectsController);
+router.createRoutes('todo', 'todos');
+router.createRoutes('project', 'projects');
 
 const redirectTo = router.redirectTo;
 
