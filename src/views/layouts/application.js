@@ -4,6 +4,7 @@ const newTodoPath = routes.newTodoPath;
 
 const newTodo = () => {
   redirectTo(newTodoPath, 'GET');
+  redirectTo('/todos/new', 'GET');
 };
 
 const createFlexContainer = (...classList) => {
