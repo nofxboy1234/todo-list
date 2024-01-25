@@ -35,7 +35,7 @@ const createParameters = (instanceProperties) => {
         },
         reset: function () {
           this.clear();
-          Object.assign(this, instanceParams());
+          Object.assign(this[instanceKey()], instanceParams());
         },
       };
       Object.assign(instance, instanceProperties);

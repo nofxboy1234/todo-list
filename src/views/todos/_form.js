@@ -16,8 +16,8 @@ import {
   rootPath,
 } from '../../router';
 
-const form = (todo) => {
-  const exists = todo.id ? true : false;
+const form = (data) => {
+  const exists = data.id ? true : false;
 
   const cancelForm = () => {
     redirectTo('GET', todosPath);
@@ -39,7 +39,7 @@ const form = (todo) => {
 
   const currentData = () => {
     return {
-      id: todo.id,
+      id: data.id,
       todo: {
         title: title.input.value,
         description: description.input.value,
@@ -86,12 +86,12 @@ const form = (todo) => {
 
   const setupData = () => {
     // set values on ui elements
-    title.input.value = todo.title;
-    description.input.value = todo.description;
-    dueDate.input.value = todo.dueDate;
-    priority.input.value = todo.priority;
+    title.input.value = data.todo.title;
+    description.input.value = data.todo.description;
+    dueDate.input.value = data.todo.dueDate;
+    priority.input.value = data.todo.priority;
     checkList.data = {};
-    project.input.value = todo.projectID;
+    project.input.value = data.todo.projectID;
   };
 
   const setupEventListeners = () => {
@@ -149,8 +149,8 @@ const form = (todo) => {
     div.appendChild(checkListLabelDiv);
 
     // { 'fill water bowl': false, 'fill food bowl': false };
-    if (todo.checkList) {
-      const keys = Object.keys(todo.checkList);
+    if (data.checkList) {
+      const keys = Object.keys(data.checkList);
       keys.forEach((key) => {
         const taskPair = document.createElement('div');
         const id = `task-${keys.indexOf(key)}`;
