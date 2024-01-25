@@ -7,13 +7,14 @@ import {
 } from '../helpers';
 import { Project } from '../../models/project';
 
-import { redirectTo, routes } from '../../router';
-
-const todosPath = routes.todosPath;
-const newTodoPath = routes.newTodoPath;
-const editTodoPath = routes.editTodoPath;
-const todoPath = routes.todoPath;
-const rootPath = routes.rootPath;
+import {
+  redirectTo,
+  todosPath,
+  newTodoPath,
+  editTodoPath,
+  todoPath,
+  rootPath,
+} from '../../router';
 
 const form = (todo) => {
   const exists = todo.id ? true : false;
@@ -22,9 +23,9 @@ const form = (todo) => {
     redirectTo('GET', todosPath);
   };
 
-  const newProject = () => {
-    redirectTo('GET', newTodoPath);
-  };
+  // const newProject = () => {
+  //   redirectTo('GET', newTodoPath);
+  // };
 
   const createTodo = (event) => {
     event.preventDefault();
@@ -39,12 +40,14 @@ const form = (todo) => {
   const currentData = () => {
     return {
       id: todo.id,
-      title: title.input.value,
-      description: description.input.value,
-      dueDate: dueDate.input.value,
-      priority: priority.input.value,
-      checkList: getChecklist(),
-      projectID: Number(project.input.value),
+      todo: {
+        title: title.input.value,
+        description: description.input.value,
+        dueDate: dueDate.input.value,
+        priority: priority.input.value,
+        checkList: getChecklist(),
+        projectID: Number(project.input.value),
+      },
     };
   };
 
@@ -93,7 +96,7 @@ const form = (todo) => {
 
   const setupEventListeners = () => {
     submit.button.addEventListener('click', submitButtonCallback());
-    project.button.addEventListener('click', newProject);
+    // project.button.addEventListener('click', newProject);
     cancel.button.addEventListener('click', cancelForm);
   };
 

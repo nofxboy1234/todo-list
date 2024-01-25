@@ -1,13 +1,14 @@
 import { Todo } from '../models/todo';
 import { render } from './renderer';
 import { params } from './todoParameters';
-import { redirectTo, routes } from '../router';
-
-const todosPath = routes.todosPath;
-const newTodoPath = routes.newTodoPath;
-const editTodoPath = routes.editTodoPath;
-const todoPath = routes.todoPath;
-const rootPath = routes.rootPath;
+import {
+  redirectTo,
+  todosPath,
+  newTodoPath,
+  editTodoPath,
+  todoPath,
+  rootPath,
+} from '../router';
 
 let todo;
 let todos;

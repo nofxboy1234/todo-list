@@ -1,9 +1,9 @@
 const createModel = (instanceProperties) => {
   const Model = {
-    modelInstances: [],
+    instances: [],
     new: function (params) {
-      const modelInstances = () => {
-        return this.modelInstances;
+      const getInstances = () => {
+        return this.instances;
       };
 
       const lastID = () => {
@@ -23,7 +23,7 @@ const createModel = (instanceProperties) => {
         ...params,
         save: function () {
           this.id = nextID();
-          modelInstances().push(this);
+          getInstances().push(this);
           return true;
         },
         update: function (params) {
@@ -31,8 +31,8 @@ const createModel = (instanceProperties) => {
           return true;
         },
         destroy: function () {
-          const removeIndex = modelInstances().indexOf(this);
-          modelInstances().splice(removeIndex, 1);
+          const removeIndex = getInstances().indexOf(this);
+          getInstances().splice(removeIndex, 1);
         },
       };
       Object.assign(instance, instanceProperties);
@@ -40,15 +40,15 @@ const createModel = (instanceProperties) => {
       return instance;
     },
     all: function () {
-      return this.modelInstances;
+      return this.instances;
     },
     find: function (id) {
-      return this.modelInstances.find(
+      return this.instances.find(
         (modelInstance) => modelInstance.id === id
       );
     },
     last: function () {
-      return this.modelInstances.at(-1);
+      return this.instances.at(-1);
     },
   };
 

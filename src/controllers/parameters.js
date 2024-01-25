@@ -26,13 +26,17 @@ const createParameters = (instanceProperties) => {
           });
           return this;
         },
+        clear: function () {
+          this[instanceKey()] = {};
+        },
         merge: function (params) {
-          this.clear();
+          // this.clear();
           Object.assign(this, params);
         },
-        // clear: function () {
-        //   this[instanceKey()] = {};
-        // },
+        reset: function () {
+          this.clear();
+          Object.assign(this, instanceParams());
+        },
       };
       Object.assign(instance, instanceProperties);
 

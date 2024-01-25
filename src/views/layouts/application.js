@@ -1,13 +1,14 @@
-import { redirectTo, routes } from '../../router';
-
-const todosPath = routes.todosPath;
-const newTodoPath = routes.newTodoPath;
-const editTodoPath = routes.editTodoPath;
-const todoPath = routes.todoPath;
-const rootPath = routes.rootPath;
+import {
+  redirectTo,
+  todosPath,
+  newTodoPath,
+  editTodoPath,
+  todoPath,
+  rootPath,
+} from '../../router';
 
 const newTodo = () => {
-  redirectTo(newTodoPath, 'GET');
+  redirectTo('GET', newTodoPath);
   // redirectTo('/todos/new', 'GET');
 };
 
@@ -41,7 +42,7 @@ const createLayout = () => {
 
   newTodoButton.addEventListener('click', newTodo);
 
-  redirectTo(todosPath, 'GET');
+  redirectTo('GET', todosPath);
 };
 
 export { createLayout, menuContainer, contentContainer };

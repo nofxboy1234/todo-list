@@ -1,11 +1,12 @@
 import { createButton } from '../helpers';
-import { redirectTo, routes } from '../../router';
-
-const todosPath = routes.todosPath;
-const newTodoPath = routes.newTodoPath;
-const editTodoPath = routes.editTodoPath;
-const todoPath = routes.todoPath;
-const rootPath = routes.rootPath;
+import {
+  redirectTo,
+  todosPath,
+  newTodoPath,
+  editTodoPath,
+  todoPath,
+  rootPath,
+} from '../../router';
 
 const render = (todos) => {
   const todoParagraph = document.createElement('p');

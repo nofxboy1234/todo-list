@@ -22,41 +22,72 @@ const controllers = {
 const createRouter = (instanceProperties = {}, staticProperties = {}) => {
   const Router = {
     new: function () {
+      const isPathHelper = (path) => {
+        Object.hasOwn(routes, path)
+      }
+
       const instance = {
-        redirectTo: function (method, path, resource = {}) {
-          params.merge(data);
+        redirectTo: function (method, path, data = {}) {
+          params.clear();
+
           let resolvedPath;
-          if (Object.hasOwn(routes, path)) {
+          if (isPathHelper(path)) {
             const functionStringName = path.name;
             resolvedPath = routes[functionStringName].route();
           } else {
             resolvedPath = path;
           }
           const resourcePlural = resolvedPath.split('/').at(1);
+
           switch (resolvedPath) {
             // todosPath, /todos
             case `/${resourcePlural}`:
-              if (method === 'GET') controllers[resourcePlural].index();
-              if (method === 'POST') controllers[resourcePlural].create();
+              if (method === 'GET') {
+                controllers[resourcePlural].index();
+              }
+              if (method === 'POST') {
+                params.merge(data);
+                controllers[resourcePlural].create();
+              }
               break;
             // newTodoPath, /todos/new
             case `/${resourcePlural}/new`:
-              if (method === 'GET') controllers[resourcePlural].new();
+              if (method === 'GET') {
+                params.reset();
+                controllers[resourcePlural].new();
+              }
               break;
             // editTodoPath, /todos/:id/edit
-            case `/${resourcePlural}/${resource.id}/edit`:
-              if (method === 'GET') controllers[resourcePlural].edit();
+            case `/${resourcePlural}/${data.id}/edit`:
+              if (method === 'GET') {
+                params.merge({ id: data.id });
+                controllers[resourcePlural].edit();
+              }
               break;
             // todoPath, /todos/:id
-            case `/${resourcePlural}/${resource.id}`:
-              if (method === 'GET') controllers[resourcePlural].show();
-              if (method === 'PATCH') controllers[resourcePlural].update();
-              if (method === 'PUT') controllers[resourcePlural].update();
-              if (method === 'DELETE') controllers[resourcePlural].destroy();
+            case `/${resourcePlural}/${data.id}`:
+              if (method === 'GET') {
+                params.merge({ id: data.id });
+                controllers[resourcePlural].show();
+              }
+              if (method === 'PATCH') {
+                params.merge(data);
+                controllers[resourcePlural].update();
+              }
+              if (method === 'PUT') {
+                params.merge(data);
+                controllers[resourcePlural].update();
+              }
+              if (method === 'DELETE') {
+                params.merge({ id: data.id });
+                controllers[resourcePlural].destroy();
+              }
               break;
             // rootPath, /
             case '/':
-              if (method === 'GET') controllers[resourcePlural].index();
+              if (method === 'GET') {
+                controllers[resourcePlural].index();
+              }
               break;
             default:
               break;
@@ -121,6 +152,12 @@ const router = Router.new();
 router.createRoutes('todo', 'todos');
 router.createRoutes('project', 'projects');
 
+const todosPath = routes.todosPath;
+const newTodoPath = routes.newTodoPath;
+const editTodoPath = routes.editTodoPath;
+const todoPath = routes.todoPath;
+const rootPath = routes.rootPath;
+
 const redirectTo = router.redirectTo;
 
-export { redirectTo, routes };
+export { redirectTo, todosPath, newTodoPath, editTodoPath, todoPath, rootPath };
