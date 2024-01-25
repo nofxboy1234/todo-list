@@ -1,6 +1,7 @@
 import { TodosController as todosController } from './controllers/todosController';
 import { ProjectsController as projectsController } from './controllers/projectsController';
 import { params } from './controllers/todoParameters';
+
 //     Prefix Verb   URI Pattern                 Controller#Action
 //     kittens GET    /kittens(.:format)          kittens#index
 //             POST   /kittens(.:format)          kittens#create
@@ -23,17 +24,21 @@ const createRouter = (instanceProperties = {}, staticProperties = {}) => {
   const Router = {
     new: function () {
       const isPathHelper = (path) => {
-        Object.hasOwn(routes, path)
-      }
+        return Object.values(routes).includes(path);
+      };
+
+      const capitalize = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+      };
 
       const instance = {
         redirectTo: function (method, path, data = {}) {
+          const tmp = params;
           params.clear();
 
           let resolvedPath;
           if (isPathHelper(path)) {
-            const functionStringName = path.name;
-            resolvedPath = routes[functionStringName].route();
+            resolvedPath = path();
           } else {
             resolvedPath = path;
           }
@@ -97,42 +102,32 @@ const createRouter = (instanceProperties = {}, staticProperties = {}) => {
           const entries = new Map([
             [
               `${resourcePlural}Path`,
-              {
-                route: function () {
-                  return `/${resourcePlural}`;
-                },
+              function () {
+                return `/${resourcePlural}`;
               },
             ],
             [
-              `new${resourceSingular.toUpperCase()}Path`,
-              {
-                route: function () {
-                  return `/${resourcePlural}/new`;
-                },
+              `new${capitalize(resourceSingular)}Path`,
+              function () {
+                return `/${resourcePlural}/new`;
               },
             ],
             [
-              `edit${resourceSingular}Path`,
-              {
-                route: function (resource) {
-                  return `/${resourcePlural}/${resource.id}/edit`;
-                },
+              `edit${capitalize(resourceSingular)}Path`,
+              function (resource) {
+                return `/${resourcePlural}/${resource.id}/edit`;
               },
             ],
             [
               `${resourceSingular}Path`,
-              {
-                route: function (resource) {
-                  return `/${resourcePlural}/${resource.id}`;
-                },
+              function (resource) {
+                return `/${resourcePlural}/${resource.id}`;
               },
             ],
             [
               'rootPath',
-              {
-                route: function () {
-                  return '/';
-                },
+              function () {
+                return '/';
               },
             ],
           ]);

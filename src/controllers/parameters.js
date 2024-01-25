@@ -10,7 +10,7 @@ const createParameters = (instanceProperties) => {
       };
 
       const instance = {
-        ...instanceParams(),
+        ...params,
         require: function (requiredParam) {
           if (Object.keys(params).includes(requiredParam)) {
             return this;
