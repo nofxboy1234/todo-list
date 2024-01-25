@@ -38,7 +38,7 @@ const createRouter = (instanceProperties = {}, staticProperties = {}) => {
 
           let resolvedPath;
           if (isPathHelper(path)) {
-            resolvedPath = path();
+            resolvedPath = path(data);
           } else {
             resolvedPath = path;
           }

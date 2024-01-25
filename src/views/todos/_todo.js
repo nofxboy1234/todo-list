@@ -8,27 +8,27 @@ import {
   rootPath,
 } from '../../router';
 
-const todoPartial = (todo) => {
+const todoPartial = (data) => {
   const todoParagraph = document.createElement('p');
 
   const titleDiv = document.createElement('div');
-  titleDiv.textContent = todo.title;
+  titleDiv.textContent = data.todo.title;
   todoParagraph.appendChild(titleDiv);
 
   const descriptionDiv = document.createElement('div');
-  descriptionDiv.textContent = todo.description;
+  descriptionDiv.textContent = data.todo.description;
   todoParagraph.appendChild(descriptionDiv);
 
   const dueDateDiv = document.createElement('div');
-  dueDateDiv.textContent = todo.dueDate;
+  dueDateDiv.textContent = data.todo.dueDate;
   todoParagraph.appendChild(dueDateDiv);
 
   const priorityDiv = document.createElement('div');
-  priorityDiv.textContent = todo.priority;
+  priorityDiv.textContent = data.todo.priority;
   todoParagraph.appendChild(priorityDiv);
 
   const checkListDiv = document.createElement('div');
-  for (const [key, value] of Object.entries(todo.checkList)) {
+  for (const [key, value] of Object.entries(data.todo.checkList)) {
     const checkListEntryDiv = document.createElement('div');
     checkListEntryDiv.textContent = `- ${key}: ${value}`;
     checkListDiv.appendChild(checkListEntryDiv);
@@ -38,15 +38,15 @@ const todoPartial = (todo) => {
 
   const projectDiv = document.createElement('div');
 
-  projectDiv.textContent = todo.project().name;
+  projectDiv.textContent = data.project().name;
   todoParagraph.appendChild(projectDiv);
 
   const destroyTodo = () => {
-    redirectTo('DELETE', todoPath, todo);
+    redirectTo('DELETE', todoPath, data);
   };
 
   const editTodo = () => {
-    redirectTo('GET', editTodoPath, todo);
+    redirectTo('GET', editTodoPath, data);
   };
 
   const closeTodo = () => {

@@ -10,22 +10,22 @@ import {
 
 const render = (todos) => {
   const todoParagraph = document.createElement('p');
-  todos.forEach((todo) => {
+  todos.forEach((data) => {
     const showTodo = () => {
-      redirectTo('GET', todoPath, todo);
+      redirectTo('GET', todoPath, data);
     };
 
     const destroyTodo = () => {
-      redirectTo('DELETE', todoPath, todo);
+      redirectTo('DELETE', todoPath, data);
     };
 
     const titleDiv = document.createElement('div');
-    titleDiv.textContent = todo.title;
+    titleDiv.textContent = data.todo.title;
     titleDiv.addEventListener('click', showTodo);
     todoParagraph.appendChild(titleDiv);
 
     const dueDateDiv = document.createElement('div');
-    dueDateDiv.textContent = todo.dueDate;
+    dueDateDiv.textContent = data.todo.dueDate;
     todoParagraph.appendChild(dueDateDiv);
 
     const deleteButton = createButton('button', 'DELETE', 'deleteButtonID');
