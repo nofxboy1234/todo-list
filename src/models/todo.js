@@ -3,7 +3,7 @@ import { createModel as Model } from './applicationRecord';
 
 const instanceProperties = {
   project: function () {
-    return Project.find(this.projectID);
+    return Project.find(this.projectID) || { name: 'no project' };
   },
 };
 

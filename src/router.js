@@ -145,7 +145,7 @@ const createRouter = (instanceProperties = {}, staticProperties = {}) => {
 const Router = createRouter();
 const router = Router.new();
 router.createRoutes('todo', 'todos');
-router.createRoutes('project', 'projects');
+// router.createRoutes('project', 'projects');
 
 const todosPath = routes.todosPath;
 const newTodoPath = routes.newTodoPath;

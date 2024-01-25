@@ -27,6 +27,7 @@ const createParameters = (instanceProperties) => {
           return this;
         },
         clear: function () {
+          this.id = undefined;
           this[instanceKey()] = {};
         },
         merge: function (params) {
