@@ -145,14 +145,30 @@ const createRouter = (instanceProperties = {}, staticProperties = {}) => {
 const Router = createRouter();
 const router = Router.new();
 router.createRoutes('todo', 'todos');
-// router.createRoutes('project', 'projects');
+router.createRoutes('project', 'projects');
+
+const redirectTo = router.redirectTo;
+const rootPath = routes.rootPath;
 
 const todosPath = routes.todosPath;
 const newTodoPath = routes.newTodoPath;
 const editTodoPath = routes.editTodoPath;
 const todoPath = routes.todoPath;
-const rootPath = routes.rootPath;
 
-const redirectTo = router.redirectTo;
+const projectsPath = routes.projectsPath;
+const newProjectPath = routes.newProjectPath;
+const editProjectPath = routes.editProjectPath;
+const projectPath = routes.projectPath;
 
-export { redirectTo, todosPath, newTodoPath, editTodoPath, todoPath, rootPath };
+export {
+  redirectTo,
+  rootPath,
+  todosPath,
+  newTodoPath,
+  editTodoPath,
+  todoPath,
+  projectsPath,
+  newProjectPath,
+  editProjectPath,
+  projectPath,
+};

@@ -9,7 +9,6 @@ import {
 
 const newTodo = () => {
   redirectTo('GET', newTodoPath);
-  // redirectTo('/todos/new', 'GET');
 };
 
 const createFlexContainer = (...classList) => {
