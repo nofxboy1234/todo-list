@@ -1,12 +1,12 @@
-import { render as showTodo } from '../views/todos/show';
-import { render as indexTodo } from '../views/todos/index';
-import { render as newTodo } from '../views/todos/new';
-import { render as editTodo } from '../views/todos/edit';
+import { render as showTodo } from './views/todos/show';
+import { render as indexTodo } from './views/todos/index';
+import { render as newTodo } from './views/todos/new';
+import { render as editTodo } from './views/todos/edit';
 
-import { contentContainer } from '../views/layouts/application';
-import { clearContent } from '../views/helpers';
+import { contentContainer } from './views/layouts/application';
+import { clearContent } from './views/helpers';
 
-import { todo, todos } from './todosController';
+import { todo, todos } from './controllers/todosController';
 
 const render = (path) => {
   if (path.includes('/')) {
