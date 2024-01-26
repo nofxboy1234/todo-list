@@ -1,5 +1,5 @@
 import { Todo } from '../models/todo';
-import { params } from './todoParameters';
+import { params } from '../parameters/todoParameters';
 import {
   createController,
   resourceSingular as todo,

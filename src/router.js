@@ -1,7 +1,7 @@
 import { TodosController as todosController } from './controllers/todosController';
 import { ProjectsController as projectsController } from './controllers/projectsController';
-import { params as todoParams } from './controllers/todoParameters';
-import { params as projectParams } from './controllers/projectParameters';
+import { params as todoParams } from './parameters/todoParameters';
+import { params as projectParams } from './parameters/projectParameters';
 
 //     Prefix Verb   URI Pattern                 Controller#Action
 //     kittens GET    /kittens(.:format)          kittens#index

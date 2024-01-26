@@ -1,5 +1,5 @@
 import { Project } from '../models/project';
-import { params } from './projectParameters';
+import { params } from '../parameters/projectParameters';
 import {
   createController,
   resourceSingular as project,
