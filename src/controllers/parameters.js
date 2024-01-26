@@ -7,7 +7,7 @@ const createParameters = (instanceProperties) => {
           if (Object.keys(this).includes(requiredParam)) {
             return this;
           } else {
-            console.log('Missing required parameter');
+            console.error('Missing required parameter');
           }
         },
         permit: function (...permittedParams) {
@@ -21,7 +21,6 @@ const createParameters = (instanceProperties) => {
         clear: function () {
           this.id = undefined;
           this[instanceKey] = {};
-          // instanceParams() = {};
         },
         merge: function (params) {
           Object.assign(this, params);
