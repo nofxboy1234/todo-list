@@ -1,5 +1,5 @@
 import { Project } from './project';
-import { createModel as Model } from './applicationRecord';
+import { createModel as Model } from './model';
 
 const instanceProperties = {
   project: function () {

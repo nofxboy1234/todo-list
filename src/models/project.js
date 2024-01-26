@@ -1,5 +1,5 @@
 import { Todo } from './todo';
-import { createModel as Model } from './applicationRecord';
+import { createModel as Model } from './model';
 
 const instanceProperties = {
   todos: function () {
