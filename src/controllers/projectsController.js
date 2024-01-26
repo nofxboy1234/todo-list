@@ -22,4 +22,12 @@ const ProjectsController = createController(
   permittedParams
 );
 
-export { ProjectsController, project, projects };
+export {
+  ProjectsController,
+  project,
+  projects,
+  projectsPath,
+  newProjectPath,
+  editProjectPath,
+  projectPath,
+};
