@@ -40,13 +40,13 @@ const createController = (
   resourcePluralName,
   resourceClass,
   params,
-  ...permittedParams
+  permittedParams
 ) => {
   const setResourceSingular = () => {
     resourceSingular = resourceClass.find(params.id);
   };
   const resourceSingularParams = () => {
-    return params.require(resourceSingularName).permit(...permittedParams);
+    return params.require(resourceSingularName).permit(permittedParams);
   };
 
   const ResourcePluralController = {

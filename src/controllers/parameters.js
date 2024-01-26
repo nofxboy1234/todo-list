@@ -10,7 +10,7 @@ const createParameters = (instanceProperties) => {
             console.error('Missing required parameter');
           }
         },
-        permit: function (...permittedParams) {
+        permit: function (permittedParams) {
           Object.keys(this[instanceKey]).forEach((key) => {
             if (!permittedParams.includes(key)) {
               delete this[instanceKey][key];
