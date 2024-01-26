@@ -4,7 +4,7 @@ import {
   createController,
   resourceSingular as todo,
   resourcePlural as todos,
-} from './applicationController';
+} from './controller';
 
 const permittedParams = [
   'title',

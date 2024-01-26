@@ -4,7 +4,7 @@ import {
   createController,
   resourceSingular as project,
   resourcePlural as projects,
-} from './applicationController';
+} from './controller';
 
 const permittedParams = ['name'];
 
