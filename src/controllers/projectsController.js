@@ -1,5 +1,5 @@
 import { Project } from '../models/project';
-import { params } from './todoParameters';
+import { params } from './projectParameters';
 import {
   projectsPath,
   newProjectPath,
@@ -12,12 +12,6 @@ import {
   resourcePlural as projects,
 } from './applicationController';
 
-const pathHelpers = {
-  resourcePluralPath: projectsPath,
-  newResourceSingularPath: newProjectPath,
-  editResourceSingularPath: editProjectPath,
-  resourceSingularPath: projectPath,
-};
 const permittedParams = ['name'];
 
 const ProjectsController = createController(
@@ -25,7 +19,6 @@ const ProjectsController = createController(
   'projects',
   Project,
   params,
-  pathHelpers,
   permittedParams
 );
 

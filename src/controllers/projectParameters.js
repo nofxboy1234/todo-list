@@ -8,7 +8,7 @@ const ProjectParameters = Object.assign({}, Parameters(instanceProperties));
 const staticProperties = {};
 Object.assign(ProjectParameters, staticProperties);
 
-const params = ProjectParameters.new({
+const params = ProjectParameters.new('project', {
   id: undefined,
   project: {
     name: '',

@@ -8,7 +8,7 @@ const TodoParameters = Object.assign({}, Parameters(instanceProperties));
 const staticProperties = {};
 Object.assign(TodoParameters, staticProperties);
 
-const params = TodoParameters.new({
+const params = TodoParameters.new('todo', {
   id: undefined,
   todo: {
     title: '',

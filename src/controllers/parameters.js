@@ -1,42 +1,34 @@
 const createParameters = (instanceProperties) => {
   const Parameters = {
-    new: function (params) {
-      const instanceKey = () => {
-        return Object.keys(params).at(1);
-      };
-
-      const instanceParams = () => {
-        return params[instanceKey()];
-      };
-
+    new: function (instanceKey, initialParams) {
       const instance = {
-        ...params,
+        ...initialParams,
         require: function (requiredParam) {
-          if (Object.keys(params).includes(requiredParam)) {
+          if (Object.keys(this).includes(requiredParam)) {
             return this;
           } else {
             console.log('Missing required parameter');
           }
         },
         permit: function (...permittedParams) {
-          Object.keys(instanceParams()).forEach((key) => {
+          Object.keys(this[instanceKey]).forEach((key) => {
             if (!permittedParams.includes(key)) {
-              delete this[key];
+              delete this[instanceKey][key];
             }
           });
           return this;
         },
         clear: function () {
           this.id = undefined;
-          this[instanceKey()] = {};
+          this[instanceKey] = {};
+          // instanceParams() = {};
         },
         merge: function (params) {
-          // this.clear();
           Object.assign(this, params);
         },
         reset: function () {
           this.clear();
-          Object.assign(this[instanceKey()], instanceParams());
+          Object.assign(this[instanceKey], initialParams);
         },
       };
       Object.assign(instance, instanceProperties);

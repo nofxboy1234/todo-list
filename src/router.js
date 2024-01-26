@@ -1,6 +1,7 @@
 import { TodosController as todosController } from './controllers/todosController';
 import { ProjectsController as projectsController } from './controllers/projectsController';
-import { params } from './controllers/todoParameters';
+import { params as todoParams } from './controllers/todoParameters';
+import { params as projectParams } from './controllers/projectParameters';
 
 //     Prefix Verb   URI Pattern                 Controller#Action
 //     kittens GET    /kittens(.:format)          kittens#index
@@ -20,6 +21,11 @@ const controllers = {
   projects: projectsController,
 };
 
+const params = {
+  todos: todoParams,
+  projects: projectParams,
+};
+
 const createRouter = (instanceProperties = {}, staticProperties = {}) => {
   const Router = {
     new: function () {
@@ -33,9 +39,6 @@ const createRouter = (instanceProperties = {}, staticProperties = {}) => {
 
       const instance = {
         redirectTo: function (method, path, data = {}) {
-          const tmp = params;
-          params.clear();
-
           let resolvedPath;
           if (isPathHelper(path)) {
             resolvedPath = path(data);
@@ -43,6 +46,7 @@ const createRouter = (instanceProperties = {}, staticProperties = {}) => {
             resolvedPath = path;
           }
           const resourcePlural = resolvedPath.split('/').at(1);
+          params[resourcePlural].clear();
 
           switch (resolvedPath) {
             // todosPath, /todos
@@ -51,40 +55,40 @@ const createRouter = (instanceProperties = {}, staticProperties = {}) => {
                 controllers[resourcePlural].index();
               }
               if (method === 'POST') {
-                params.merge(data);
+                params[resourcePlural].merge(data);
                 controllers[resourcePlural].create();
               }
               break;
             // newTodoPath, /todos/new
             case `/${resourcePlural}/new`:
               if (method === 'GET') {
-                params.reset();
+                params[resourcePlural].reset();
                 controllers[resourcePlural].new();
               }
               break;
             // editTodoPath, /todos/:id/edit
             case `/${resourcePlural}/${data.id}/edit`:
               if (method === 'GET') {
-                params.merge({ id: data.id });
+                params[resourcePlural].merge({ id: data.id });
                 controllers[resourcePlural].edit();
               }
               break;
             // todoPath, /todos/:id
             case `/${resourcePlural}/${data.id}`:
               if (method === 'GET') {
-                params.merge({ id: data.id });
+                params[resourcePlural].merge({ id: data.id });
                 controllers[resourcePlural].show();
               }
               if (method === 'PATCH') {
-                params.merge(data);
+                params[resourcePlural].merge(data);
                 controllers[resourcePlural].update();
               }
               if (method === 'PUT') {
-                params.merge(data);
+                params[resourcePlural].merge(data);
                 controllers[resourcePlural].update();
               }
               if (method === 'DELETE') {
-                params.merge({ id: data.id });
+                params[resourcePlural].merge({ id: data.id });
                 controllers[resourcePlural].destroy();
               }
               break;
