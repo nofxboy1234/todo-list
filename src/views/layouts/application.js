@@ -1,11 +1,4 @@
-import {
-  redirectTo,
-  todosPath,
-  newTodoPath,
-  editTodoPath,
-  todoPath,
-  rootPath,
-} from '../../router';
+import { redirectTo, todosPath, newTodoPath } from '../../router';
 
 const newTodo = () => {
   redirectTo('GET', newTodoPath);

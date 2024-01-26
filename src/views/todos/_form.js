@@ -7,14 +7,7 @@ import {
 } from '../helpers';
 import { Project } from '../../models/project';
 
-import {
-  redirectTo,
-  todosPath,
-  newTodoPath,
-  editTodoPath,
-  todoPath,
-  rootPath,
-} from '../../router';
+import { redirectTo, todosPath, todoPath } from '../../router';
 
 const form = (data) => {
   const exists = data.id ? true : false;
