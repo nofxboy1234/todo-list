@@ -1,5 +1,36 @@
 import { render } from './renderer';
-import { redirectTo, rootPath } from '../router';
+import {
+  redirectTo,
+  rootPath,
+  todosPath,
+  newTodoPath,
+  editTodoPath,
+  todoPath,
+  projectsPath,
+  newProjectPath,
+  editProjectPath,
+  projectPath,
+} from '../router';
+
+const pathHelpers = () => {
+  const helpers = {
+    rootPath,
+    todos: {
+      resourcePluralPath: todosPath,
+      newResourceSingularPath: newTodoPath,
+      editResourceSingularPath: editTodoPath,
+      resourceSingularPath: todoPath,
+    },
+    projects: {
+      resourcePluralPath: projectsPath,
+      newResourceSingularPath: newProjectPath,
+      editResourceSingularPath: editProjectPath,
+      resourceSingularPath: projectPath,
+    },
+  };
+
+  return helpers;
+};
 
 let resourceSingular;
 let resourcePlural;
@@ -9,7 +40,6 @@ const createController = (
   resourcePluralName,
   resourceClass,
   params,
-  pathHelpers,
   ...permittedParams
 ) => {
   const setResourceSingular = () => {
@@ -28,7 +58,7 @@ const createController = (
       resourceSingular = resourceClass.new(resourceSingularParams());
 
       if (resourceSingular.save()) {
-        redirectTo('GET', pathHelpers.resourcePluralPath);
+        redirectTo('GET', pathHelpers[resourcePluralName].resourcePluralPath);
       } else {
         render(`${resourcePluralName}/new`);
       }
@@ -49,7 +79,7 @@ const createController = (
       setResourceSingular();
 
       if (resourceSingular.update(resourceSingularParams())) {
-        redirectTo('GET', pathHelpers.resourcePluralPath);
+        redirectTo('GET', pathHelpers[resourcePluralName].resourcePluralPath);
       } else {
         render(`${resourcePluralName}/edit`);
       }
@@ -57,7 +87,7 @@ const createController = (
     destroy: function () {
       setResourceSingular();
       resourceSingular.destroy();
-      redirectTo('GET', pathHelpers.resourcePluralPath);
+      redirectTo('GET', pathHelpers[resourcePluralName].resourcePluralPath);
     },
   };
 

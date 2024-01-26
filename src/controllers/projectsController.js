@@ -1,12 +1,6 @@
 import { Project } from '../models/project';
 import { params } from './projectParameters';
 import {
-  projectsPath,
-  newProjectPath,
-  editProjectPath,
-  projectPath,
-} from '../router';
-import {
   createController,
   resourceSingular as project,
   resourcePlural as projects,
@@ -26,8 +20,4 @@ export {
   ProjectsController,
   project,
   projects,
-  projectsPath,
-  newProjectPath,
-  editProjectPath,
-  projectPath,
 };
