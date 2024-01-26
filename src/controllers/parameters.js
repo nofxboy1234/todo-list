@@ -1,8 +1,11 @@
 const createParameters = (instanceProperties) => {
   const Parameters = {
     new: function (instanceKey, initialParams) {
+      const assignInitialParams = () => {
+        instance.merge(initialParams);
+      };
+
       const instance = {
-        ...initialParams,
         require: function (requiredParam) {
           if (Object.keys(this).includes(requiredParam)) {
             return this;
@@ -27,10 +30,12 @@ const createParameters = (instanceProperties) => {
         },
         reset: function () {
           this.clear();
-          Object.assign(this[instanceKey], initialParams);
+          assignInitialParams();
         },
       };
-      Object.assign(instance, instanceProperties);
+
+      assignInitialParams();
+      instance.merge(instanceProperties);
 
       return instance;
     },
