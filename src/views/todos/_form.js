@@ -7,7 +7,13 @@ import {
 } from '../helpers';
 import { Project } from '../../models/project';
 
-import { redirectTo, todosPath, todoPath, newProjectPath } from '../../router';
+import {
+  redirectTo,
+  todosPath,
+  todoPath,
+  newProjectPath,
+  saveState,
+} from '../../router';
 
 const form = (data) => {
   const exists = data.id ? true : false;
@@ -17,6 +23,7 @@ const form = (data) => {
   };
 
   const newProject = () => {
+    saveState('todos', currentData());
     redirectTo('GET', newProjectPath);
   };
 

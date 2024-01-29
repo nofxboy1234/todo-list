@@ -46,6 +46,9 @@ const createRouter = (instanceProperties = {}, staticProperties = {}) => {
       };
 
       const instance = {
+        saveState: function (resourcePlural, data) {
+          params()[resourcePlural].merge(data);
+        },
         redirectTo: function (method, path, data = {}) {
           let resolvedPath;
           if (isPathHelper(path)) {
@@ -159,6 +162,7 @@ const router = Router.new();
 router.createRoutes('todo', 'todos');
 router.createRoutes('project', 'projects');
 
+const saveState = router.saveState;
 const redirectTo = router.redirectTo;
 const rootPath = routes.rootPath;
 
@@ -173,6 +177,7 @@ const editProjectPath = routes.editProjectPath;
 const projectPath = routes.projectPath;
 
 export {
+  saveState,
   redirectTo,
   rootPath,
   todosPath,

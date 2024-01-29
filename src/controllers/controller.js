@@ -40,6 +40,7 @@ const createController = (
   permittedParams
 ) => {
   const ResourcePluralController = {
+    resourceClass,
     resourceSingular: {},
     resourcePlural: {},
     setResourceSingular: function () {

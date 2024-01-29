@@ -1,6 +1,8 @@
 import { Project } from '../models/project';
 import { params } from '../parameters/projectParameters';
 import { createController } from './controller';
+import { render } from '../renderer';
+import { params as todoParams } from '../parameters/todoParameters';
 
 const permittedParams = ['name'];
 
@@ -21,10 +23,19 @@ const Controller = createController(
 );
 
 const OtherController = {
+  project: Controller.resourceSingular,
+  projectParams: Controller.resourceSingularParams,
   // new: Controller.new,
   ...Controller.new,
   create: function () {
-    Controller.resourceSingular;
+    this.project = Project.new(this.projectParams());
+
+    if (this.project.save()) {
+      // todos/new and todos/edit render the same form
+      render('todos/new', todoParams);
+    } else {
+      render('projects/new', this.project);
+    }
   },
   ...Controller.index,
   ...Controller.show,

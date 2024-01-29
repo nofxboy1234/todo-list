@@ -29,6 +29,7 @@ const render = (path, data) => {
     case 'todos/edit':
       clearContent();
       contentContainer.appendChild(editTodo(data));
+      document.getElementById('titleID').focus();
       break;
 
     case 'projects/new':
@@ -47,6 +48,7 @@ const render = (path, data) => {
     case 'projects/edit':
       clearContent();
       contentContainer.appendChild(editProject(data));
+      document.getElementById('nameID').focus();
       break;
     default:
       break;
