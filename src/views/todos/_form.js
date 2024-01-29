@@ -167,9 +167,9 @@ const form = (data) => {
   const project = (() => {
     const div = document.createElement('div');
     div.appendChild(createLabel('project:', 'projectID'));
-    const options = Project.all().map((project) => ({
-      value: project.id,
-      text: project.name,
+    const options = Project.all().map((data) => ({
+      value: data.id,
+      text: data.project.name,
     }));
 
     const input = createSelect('projectID', 'project', options);
