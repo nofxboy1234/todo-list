@@ -66,7 +66,7 @@ const createRouter = (instanceProperties = {}, staticProperties = {}) => {
                 controllers()[resourcePlural].index();
               }
               if (method === 'POST') {
-                params()[resourcePlural].merge(data);
+                saveState(resourcePlural, data);
                 controllers()[resourcePlural].create();
               }
               break;
@@ -80,26 +80,26 @@ const createRouter = (instanceProperties = {}, staticProperties = {}) => {
             // editTodoPath, /todos/:id/edit
             case `/${resourcePlural}/${data.id}/edit`:
               if (method === 'GET') {
-                params()[resourcePlural].merge(data);
+                saveState(resourcePlural, data);
                 controllers()[resourcePlural].edit();
               }
               break;
             // todoPath, /todos/:id
             case `/${resourcePlural}/${data.id}`:
               if (method === 'GET') {
-                params()[resourcePlural].merge(data);
+                saveState(resourcePlural, data);
                 controllers()[resourcePlural].show();
               }
               if (method === 'PATCH') {
-                params()[resourcePlural].merge(data);
+                saveState(resourcePlural, data);
                 controllers()[resourcePlural].update();
               }
               if (method === 'PUT') {
-                params()[resourcePlural].merge(data);
+                saveState(resourcePlural, data);
                 controllers()[resourcePlural].update();
               }
               if (method === 'DELETE') {
-                params()[resourcePlural].merge(data);
+                saveState(resourcePlural, data);
                 controllers()[resourcePlural].destroy();
               }
               break;
