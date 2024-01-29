@@ -16,8 +16,4 @@ const ProjectsController = createController(
   permittedParams
 );
 
-export {
-  ProjectsController,
-  project,
-  projects,
-};
+export { ProjectsController };

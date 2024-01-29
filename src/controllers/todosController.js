@@ -23,4 +23,4 @@ const TodosController = createController(
   permittedParams
 );
 
-export { TodosController, todo, todos };
+export { TodosController };

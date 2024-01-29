@@ -16,14 +16,22 @@ import { params as projectParams } from './parameters/projectParameters';
 
 const routes = {};
 
-const controllers = {
-  todos: todosController,
-  projects: projectsController,
+const controllers = () => {
+  const data = {
+    todos: todosController,
+    projects: projectsController,
+  };
+
+  return data;
 };
 
-const params = {
-  todos: todoParams,
-  projects: projectParams,
+const params = () => {
+  const data = {
+    todos: todoParams,
+    projects: projectParams,
+  };
+
+  return data;
 };
 
 const createRouter = (instanceProperties = {}, staticProperties = {}) => {
@@ -46,56 +54,56 @@ const createRouter = (instanceProperties = {}, staticProperties = {}) => {
             resolvedPath = path;
           }
           const resourcePlural = resolvedPath.split('/').at(1);
-          params[resourcePlural].clear();
+          params()[resourcePlural].clear();
 
           switch (resolvedPath) {
             // todosPath, /todos
             case `/${resourcePlural}`:
               if (method === 'GET') {
-                controllers[resourcePlural].index();
+                controllers()[resourcePlural].index();
               }
               if (method === 'POST') {
-                params[resourcePlural].merge(data);
-                controllers[resourcePlural].create();
+                params()[resourcePlural].merge(data);
+                controllers()[resourcePlural].create();
               }
               break;
             // newTodoPath, /todos/new
             case `/${resourcePlural}/new`:
               if (method === 'GET') {
-                params[resourcePlural].reset();
-                controllers[resourcePlural].new();
+                params()[resourcePlural].reset();
+                controllers()[resourcePlural].new();
               }
               break;
             // editTodoPath, /todos/:id/edit
             case `/${resourcePlural}/${data.id}/edit`:
               if (method === 'GET') {
-                params[resourcePlural].merge({ id: data.id });
-                controllers[resourcePlural].edit();
+                params()[resourcePlural].merge({ id: data.id });
+                controllers()[resourcePlural].edit();
               }
               break;
             // todoPath, /todos/:id
             case `/${resourcePlural}/${data.id}`:
               if (method === 'GET') {
-                params[resourcePlural].merge({ id: data.id });
-                controllers[resourcePlural].show();
+                params()[resourcePlural].merge({ id: data.id });
+                controllers()[resourcePlural].show();
               }
               if (method === 'PATCH') {
-                params[resourcePlural].merge(data);
-                controllers[resourcePlural].update();
+                params()[resourcePlural].merge(data);
+                controllers()[resourcePlural].update();
               }
               if (method === 'PUT') {
-                params[resourcePlural].merge(data);
-                controllers[resourcePlural].update();
+                params()[resourcePlural].merge(data);
+                controllers()[resourcePlural].update();
               }
               if (method === 'DELETE') {
-                params[resourcePlural].merge({ id: data.id });
-                controllers[resourcePlural].destroy();
+                params()[resourcePlural].merge({ id: data.id });
+                controllers()[resourcePlural].destroy();
               }
               break;
             // rootPath, /
             case '/':
               if (method === 'GET') {
-                controllers[resourcePlural].index();
+                controllers()[resourcePlural].index();
               }
               break;
             default:

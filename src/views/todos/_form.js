@@ -7,7 +7,7 @@ import {
 } from '../helpers';
 import { Project } from '../../models/project';
 
-import { redirectTo, todosPath, todoPath } from '../../router';
+import { redirectTo, todosPath, todoPath, newProjectPath } from '../../router';
 
 const form = (data) => {
   const exists = data.id ? true : false;
@@ -16,9 +16,9 @@ const form = (data) => {
     redirectTo('GET', todosPath);
   };
 
-  // const newProject = () => {
-  //   redirectTo('GET', newTodoPath);
-  // };
+  const newProject = () => {
+    redirectTo('GET', newProjectPath);
+  };
 
   const createTodo = (event) => {
     event.preventDefault();
@@ -89,7 +89,7 @@ const form = (data) => {
 
   const setupEventListeners = () => {
     submit.button.addEventListener('click', submitButtonCallback());
-    // project.button.addEventListener('click', newProject);
+    project.button.addEventListener('click', newProject);
     cancel.button.addEventListener('click', cancelForm);
   };
 

@@ -52,7 +52,7 @@ const createController = (
   const ResourcePluralController = {
     new: function () {
       resourceSingular = resourceClass.new(resourceSingularParams());
-      render(`${resourcePluralName}/new`);
+      render(`${resourcePluralName}/new`, resourceSingular);
     },
     create: function () {
       resourceSingular = resourceClass.new(resourceSingularParams());
@@ -60,20 +60,20 @@ const createController = (
       if (resourceSingular.save()) {
         redirectTo('GET', pathHelpers()[resourcePluralName].resourcePluralPath);
       } else {
-        render(`${resourcePluralName}/new`);
+        render(`${resourcePluralName}/new`, resourceSingular);
       }
     },
     index: function () {
       resourcePlural = resourceClass.all();
-      render(`${resourcePluralName}/index`);
+      render(`${resourcePluralName}/index`, resourcePlural);
     },
     show: function () {
       setResourceSingular();
-      render(`${resourcePluralName}/show`);
+      render(`${resourcePluralName}/show`, resourceSingular);
     },
     edit: function () {
       setResourceSingular();
-      render(`${resourcePluralName}/edit`);
+      render(`${resourcePluralName}/edit`, resourceSingular);
     },
     update: function () {
       setResourceSingular();
@@ -81,7 +81,7 @@ const createController = (
       if (resourceSingular.update(resourceSingularParams())) {
         redirectTo('GET', pathHelpers()[resourcePluralName].resourcePluralPath);
       } else {
-        render(`${resourcePluralName}/edit`);
+        render(`${resourcePluralName}/edit`, resourceSingular);
       }
     },
     destroy: function () {
