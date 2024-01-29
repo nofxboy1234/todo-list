@@ -1,11 +1,8 @@
 import {
   createLabel,
   createInput,
-  createTextArea,
-  createSelect,
   createButton,
 } from '../helpers';
-import { Project } from '../../models/project';
 
 import { redirectTo, projectsPath, projectPath } from '../../router';
 
