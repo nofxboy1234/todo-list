@@ -32,9 +32,6 @@ const pathHelpers = () => {
   return helpers;
 };
 
-let resourceSingular;
-let resourcePlural;
-
 const createController = (
   resourceSingularName,
   resourcePluralName,
@@ -42,51 +39,52 @@ const createController = (
   params,
   permittedParams
 ) => {
-  const setResourceSingular = () => {
-    resourceSingular = resourceClass.find(params.id);
-  };
-  const resourceSingularParams = () => {
-    return params.require(resourceSingularName).permit(permittedParams);
-  };
-
   const ResourcePluralController = {
+    resourceSingular: {},
+    resourcePlural: {},
+    setResourceSingular: function () {
+      this.resourceSingular = resourceClass.find(params.id);
+    },
+    resourceSingularParams: function () {
+      return params.require(resourceSingularName).permit(permittedParams);
+    },
     new: function () {
-      resourceSingular = resourceClass.new(resourceSingularParams());
-      render(`${resourcePluralName}/new`, resourceSingular);
+      this.resourceSingular = resourceClass.new(this.resourceSingularParams());
+      render(`${resourcePluralName}/new`, this.resourceSingular);
     },
     create: function () {
-      resourceSingular = resourceClass.new(resourceSingularParams());
+      this.resourceSingular = resourceClass.new(this.resourceSingularParams());
 
-      if (resourceSingular.save()) {
+      if (this.resourceSingular.save()) {
         redirectTo('GET', pathHelpers()[resourcePluralName].resourcePluralPath);
       } else {
-        render(`${resourcePluralName}/new`, resourceSingular);
+        render(`${resourcePluralName}/new`, this.resourceSingular);
       }
     },
     index: function () {
-      resourcePlural = resourceClass.all();
-      render(`${resourcePluralName}/index`, resourcePlural);
+      this.resourcePlural = resourceClass.all();
+      render(`${resourcePluralName}/index`, this.resourcePlural);
     },
     show: function () {
-      setResourceSingular();
-      render(`${resourcePluralName}/show`, resourceSingular);
+      this.setResourceSingular();
+      render(`${resourcePluralName}/show`, this.resourceSingular);
     },
     edit: function () {
-      setResourceSingular();
-      render(`${resourcePluralName}/edit`, resourceSingular);
+      this.setResourceSingular();
+      render(`${resourcePluralName}/edit`, this.resourceSingular);
     },
     update: function () {
-      setResourceSingular();
+      this.setResourceSingular();
 
-      if (resourceSingular.update(resourceSingularParams())) {
+      if (this.resourceSingular.update(this.resourceSingularParams())) {
         redirectTo('GET', pathHelpers()[resourcePluralName].resourcePluralPath);
       } else {
-        render(`${resourcePluralName}/edit`, resourceSingular);
+        render(`${resourcePluralName}/edit`, this.resourceSingular);
       }
     },
     destroy: function () {
-      setResourceSingular();
-      resourceSingular.destroy();
+      this.setResourceSingular();
+      this.resourceSingular.destroy();
       redirectTo('GET', pathHelpers()[resourcePluralName].resourcePluralPath);
     },
   };

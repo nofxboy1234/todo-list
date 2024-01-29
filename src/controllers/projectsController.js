@@ -24,7 +24,7 @@ const OtherController = {
   // new: Controller.new,
   ...Controller.new,
   create: function () {
-    // Controller.resourceSingular;
+    Controller.resourceSingular;
   },
   ...Controller.index,
   ...Controller.show,
