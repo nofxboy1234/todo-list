@@ -2,8 +2,6 @@ import { Project } from '../models/project';
 import { params } from '../parameters/projectParameters';
 import {
   createController,
-  resourceSingular as project,
-  resourcePlural as projects,
 } from './controller';
 
 const permittedParams = ['name'];

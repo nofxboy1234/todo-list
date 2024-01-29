@@ -94,4 +94,4 @@ const createController = (
   return ResourcePluralController;
 };
 
-export { createController, resourceSingular, resourcePlural };
+export { createController };
