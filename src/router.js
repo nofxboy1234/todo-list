@@ -80,14 +80,14 @@ const createRouter = (instanceProperties = {}, staticProperties = {}) => {
             // editTodoPath, /todos/:id/edit
             case `/${resourcePlural}/${data.id}/edit`:
               if (method === 'GET') {
-                params()[resourcePlural].merge({ id: data.id });
+                params()[resourcePlural].merge(data);
                 controllers()[resourcePlural].edit();
               }
               break;
             // todoPath, /todos/:id
             case `/${resourcePlural}/${data.id}`:
               if (method === 'GET') {
-                params()[resourcePlural].merge({ id: data.id });
+                params()[resourcePlural].merge(data);
                 controllers()[resourcePlural].show();
               }
               if (method === 'PATCH') {
@@ -99,7 +99,7 @@ const createRouter = (instanceProperties = {}, staticProperties = {}) => {
                 controllers()[resourcePlural].update();
               }
               if (method === 'DELETE') {
-                params()[resourcePlural].merge({ id: data.id });
+                params()[resourcePlural].merge(data);
                 controllers()[resourcePlural].destroy();
               }
               break;
