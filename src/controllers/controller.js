@@ -40,7 +40,11 @@ const createController = (
   permittedParams
 ) => {
   const ResourcePluralController = {
+    resourceSingularName,
+    resourcePluralName,
     resourceClass,
+    params,
+    permittedParams,
     resourceSingular: {},
     resourcePlural: {},
     setResourceSingular: function () {
@@ -50,11 +54,11 @@ const createController = (
       return params.require(resourceSingularName).permit(permittedParams);
     },
     new: function () {
-      this.resourceSingular = resourceClass.new(this.resourceSingularParams());
+      this.resourceSingular = this.resourceClass.new(this.resourceSingularParams());
       render(`${resourcePluralName}/new`, this.resourceSingular);
     },
     create: function () {
-      this.resourceSingular = resourceClass.new(this.resourceSingularParams());
+      this.resourceSingular = this.resourceClass.new(this.resourceSingularParams());
 
       if (this.resourceSingular.save()) {
         redirectTo('GET', pathHelpers()[resourcePluralName].resourcePluralPath);
@@ -63,7 +67,7 @@ const createController = (
       }
     },
     index: function () {
-      this.resourcePlural = resourceClass.all();
+      this.resourcePlural = this.resourceClass.all();
       render(`${resourcePluralName}/index`, this.resourcePlural);
     },
     show: function () {
@@ -86,7 +90,7 @@ const createController = (
     destroy: function () {
       this.setResourceSingular();
       this.resourceSingular.destroy();
-      redirectTo('GET', pathHelpers()[resourcePluralName].resourcePluralPath);
+      redirectTo('GET', pathHelpers()[this.resourcePluralName].resourcePluralPath);
     },
   };
 

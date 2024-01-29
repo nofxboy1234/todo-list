@@ -6,13 +6,13 @@ import { params as todoParams } from '../parameters/todoParameters';
 
 const permittedParams = ['name'];
 
-const ProjectsController = createController(
-  'project',
-  'projects',
-  Project,
-  params,
-  permittedParams
-);
+// const ProjectsController = createController(
+//   'project',
+//   'projects',
+//   Project,
+//   params,
+//   permittedParams
+// );
 
 const Controller = createController(
   'project',
@@ -22,26 +22,34 @@ const Controller = createController(
   permittedParams
 );
 
-const OtherController = {
-  project: Controller.resourceSingular,
-  projectParams: Controller.resourceSingularParams,
-  // new: Controller.new,
-  ...Controller.new,
+const ProjectsController = {
+  resourceSingularName: Controller.resourceSingularName,
+  resourcePluralName: Controller.resourcePluralName,
+  resourceClass: Controller.resourceClass,
+  params: Controller.params,
+  permittedParams: Controller.permittedParams,
+  resourceSingular: Controller.resourceSingular,
+  resourcePlural: Controller.resourcePlural,
+  setResourceSingular: Controller.setResourceSingular,
+  resourceSingularParams: Controller.resourceSingularParams,
+  new: Controller.new,
   create: function () {
-    this.project = Project.new(this.projectParams());
+    this.resourceSingular = this.resourceClass.new(
+      this.resourceSingularParams()
+    );
 
-    if (this.project.save()) {
-      // todos/new and todos/edit render the same form
+    if (this.resourceSingular.save()) {
+      // todos/new and todos/edit use the same rendering
       render('todos/new', todoParams);
     } else {
-      render('projects/new', this.project);
+      render(`${this.resourcePluralName}/new`, this.resourceSingular);
     }
   },
-  ...Controller.index,
-  ...Controller.show,
-  ...Controller.edit,
-  ...Controller.update,
-  ...Controller.destroy,
+  index: Controller.index,
+  show: Controller.show,
+  edit: Controller.edit,
+  update: Controller.update,
+  destroy: Controller.destroy,
 };
 
 export { ProjectsController };
