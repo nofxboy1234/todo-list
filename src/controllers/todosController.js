@@ -46,6 +46,13 @@ const instanceProperties = {
       render(`${resourcePluralName}/edit`, this.resourceSingular);
     }
   },
+  destroy: function () {
+    this.setResourceSingular();
+    this.resourceSingular.destroy();
+
+    redirectTo('GET', projectsPath);
+    redirectTo('GET', todosPath);
+  },
 };
 Object.assign(TodosController, instanceProperties);
 

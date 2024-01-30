@@ -35,7 +35,6 @@ const createLayout = () => {
   newTodoButton.addEventListener('click', newTodo);
   menuContainer.appendChild(newTodoButton);
 
-  projectIndex.textContent = 'Index projects here';
   menuContainer.appendChild(projectIndex);
 
   redirectTo('GET', todosPath);
