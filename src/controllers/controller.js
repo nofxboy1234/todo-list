@@ -54,11 +54,15 @@ const createController = (
       return params.require(resourceSingularName).permit(permittedParams);
     },
     new: function () {
-      this.resourceSingular = this.resourceClass.new(this.resourceSingularParams());
+      this.resourceSingular = this.resourceClass.new(
+        this.resourceSingularParams()
+      );
       render(`${resourcePluralName}/new`, this.resourceSingular);
     },
     create: function () {
-      this.resourceSingular = this.resourceClass.new(this.resourceSingularParams());
+      this.resourceSingular = this.resourceClass.new(
+        this.resourceSingularParams()
+      );
 
       if (this.resourceSingular.save()) {
         redirectTo('GET', pathHelpers()[resourcePluralName].resourcePluralPath);
@@ -90,7 +94,10 @@ const createController = (
     destroy: function () {
       this.setResourceSingular();
       this.resourceSingular.destroy();
-      redirectTo('GET', pathHelpers()[this.resourcePluralName].resourcePluralPath);
+      redirectTo(
+        'GET',
+        pathHelpers()[this.resourcePluralName].resourcePluralPath
+      );
     },
   };
 

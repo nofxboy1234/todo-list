@@ -1,8 +1,9 @@
 import { Todo } from '../models/todo';
 import { params } from '../parameters/todoParameters';
-import {
-  createController,
-} from './controller';
+import { createController } from './controller';
+import { render } from '../renderer';
+
+import { todosPath, projectsPath, redirectTo } from '../router';
 
 const permittedParams = [
   'title',
@@ -13,12 +14,29 @@ const permittedParams = [
   'projectID',
 ];
 
-const TodosController = createController(
+const Controller = createController(
   'todo',
   'todos',
   Todo,
   params,
   permittedParams
 );
+
+const TodosController = Object.create(Controller);
+const instanceProperties = {
+  create: function () {
+    this.resourceSingular = this.resourceClass.new(
+      this.resourceSingularParams()
+    );
+
+    if (this.resourceSingular.save()) {
+      redirectTo('GET', projectsPath);
+      redirectTo('GET', todosPath);
+    } else {
+      render(`${this.resourcePluralName}/new`, this.resourceSingular);
+    }
+  },
+};
+Object.assign(TodosController, instanceProperties);
 
 export { TodosController };

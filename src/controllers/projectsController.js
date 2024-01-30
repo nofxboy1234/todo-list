@@ -2,18 +2,11 @@ import { Project } from '../models/project';
 import { params } from '../parameters/projectParameters';
 import { createController } from './controller';
 import { render } from '../renderer';
-import { params as todoParams } from '../parameters/todoParameters';
+
 import { projectsPath, redirectTo } from '../router';
+import { params as todoParams } from '../parameters/todoParameters';
 
 const permittedParams = ['name'];
-
-// const ProjectsController = createController(
-//   'project',
-//   'projects',
-//   Project,
-//   params,
-//   permittedParams
-// );
 
 const Controller = createController(
   'project',
@@ -23,7 +16,7 @@ const Controller = createController(
   permittedParams
 );
 
-const NewProjectsController = Object.create(Controller);
+const ProjectsController = Object.create(Controller);
 const instanceProperties = {
   create: function () {
     this.resourceSingular = this.resourceClass.new(
@@ -39,6 +32,6 @@ const instanceProperties = {
     }
   },
 };
-Object.assign(NewProjectsController, instanceProperties);
+Object.assign(ProjectsController, instanceProperties);
 
-export { NewProjectsController as ProjectsController };
+export { ProjectsController };
