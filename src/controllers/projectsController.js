@@ -24,6 +24,7 @@ const instanceProperties = {
     );
 
     if (this.resourceSingular.save()) {
+      Object.assign(todoParams.todo, { newProjectID: Project.last().id });
       // todos/new and todos/edit use the same rendering
       render('todos/new', todoParams);
       redirectTo('GET', projectsPath);
