@@ -59,9 +59,7 @@ const createRouter = (instanceProperties = {}, staticProperties = {}) => {
           }
           const resourcePlural = resolvedPath.split('/').at(1);
           const controller = controllers()[resourcePlural];
-          const resourceParams = parameters()[resourcePlural];
-          resourceParams.clear();
-
+          
           switch (resolvedPath) {
             // todosPath, /todos
             case `/${resourcePlural}`:
@@ -73,9 +71,10 @@ const createRouter = (instanceProperties = {}, staticProperties = {}) => {
                 controller.create();
               }
               break;
-            // newTodoPath, /todos/new
+              // newTodoPath, /todos/new
             case `/${resourcePlural}/new`:
               if (method === 'GET') {
+                const resourceParams = parameters()[resourcePlural];
                 resourceParams.reset();
                 controller.new();
               }
