@@ -3,7 +3,9 @@ import { createModel as Model } from './model';
 
 const instanceProperties = {
   project: function () {
-    return Project.find(this.todo.projectID) || { name: 'no project' };
+    return (
+      Project.find(this.todo.projectID) || { project: { name: 'no project' } }
+    );
   },
 };
 

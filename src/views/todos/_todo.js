@@ -31,7 +31,8 @@ const todoPartial = (data) => {
 
   const projectDiv = document.createElement('div');
 
-  projectDiv.textContent = data.project().name;
+  const projectInstance = data.project();
+  projectDiv.textContent = projectInstance.project.name;
   todoParagraph.appendChild(projectDiv);
 
   const destroyTodo = () => {
