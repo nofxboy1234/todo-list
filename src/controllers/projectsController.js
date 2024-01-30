@@ -3,6 +3,7 @@ import { params } from '../parameters/projectParameters';
 import { createController } from './controller';
 import { render } from '../renderer';
 import { params as todoParams } from '../parameters/todoParameters';
+import { projectsPath, redirectTo } from '../router';
 
 const permittedParams = ['name'];
 
@@ -41,6 +42,7 @@ const ProjectsController = {
     if (this.resourceSingular.save()) {
       // todos/new and todos/edit use the same rendering
       render('todos/new', todoParams);
+      redirectTo('GET', projectsPath);
     } else {
       render(`${this.resourcePluralName}/new`, this.resourceSingular);
     }

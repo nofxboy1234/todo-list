@@ -8,8 +8,8 @@ import { render as indexProject } from './views/projects/index';
 import { render as newProject } from './views/projects/new';
 import { render as editProject } from './views/projects/edit';
 
-import { contentContainer } from './views/layouts/application';
-import { clearContent } from './views/helpers';
+import { contentContainer, projectIndex } from './views/layouts/application';
+import { clearContent, clearProjectIndex } from './views/helpers';
 
 const render = (path, data) => {
   switch (path) {
@@ -38,8 +38,8 @@ const render = (path, data) => {
       document.getElementById('nameID').focus();
       break;
     case 'projects/index':
-      clearContent();
-      contentContainer.appendChild(indexProject(data));
+      clearProjectIndex();
+      projectIndex.appendChild(indexProject(data));
       break;
     case 'projects/show':
       clearContent();

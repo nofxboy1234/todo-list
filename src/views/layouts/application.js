@@ -21,6 +21,8 @@ nestContainer(flexContainer, menuContainer);
 const contentContainer = createFlexContainer('flex-item', 'flex-item-right');
 nestContainer(flexContainer, contentContainer);
 
+const projectIndex = document.createElement('div');
+
 const createLayout = () => {
   const headingItem = document.createElement('div');
   headingItem.classList.add('heading');
@@ -33,11 +35,10 @@ const createLayout = () => {
   newTodoButton.addEventListener('click', newTodo);
   menuContainer.appendChild(newTodoButton);
 
-  const placeholder = document.createElement('div');
-  placeholder.textContent = 'Index projects here';
-  menuContainer.appendChild(placeholder);
+  projectIndex.textContent = 'Index projects here';
+  menuContainer.appendChild(projectIndex);
 
   redirectTo('GET', todosPath);
 };
 
-export { createLayout, menuContainer, contentContainer };
+export { createLayout, menuContainer, contentContainer, projectIndex };

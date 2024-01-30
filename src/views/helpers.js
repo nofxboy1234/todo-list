@@ -1,9 +1,16 @@
-import { contentContainer } from './layouts/application';
+import { contentContainer, projectIndex } from './layouts/application';
 
 const clearContent = () => {
   while (contentContainer.firstChild) {
     const lastChild = contentContainer.lastChild;
     contentContainer.removeChild(lastChild);
+  }
+};
+
+const clearProjectIndex = () => {
+  while (projectIndex.firstChild) {
+    const lastChild = projectIndex.lastChild;
+    projectIndex.removeChild(lastChild);
   }
 };
 
@@ -65,6 +72,7 @@ const createButton = (type, text, id) => {
 
 export {
   clearContent,
+  clearProjectIndex,
   createLabel,
   createInput,
   createTextArea,
