@@ -3,7 +3,9 @@ import { createModel as Model } from './model';
 
 const instanceProperties = {
   todos: function () {
-    return Todo.all.filter((todo) => todo.projectID === this.id);
+    return Todo.all().filter(
+      (todoInstance) => todoInstance.todo.projectID === this.id
+    );
   },
 };
 

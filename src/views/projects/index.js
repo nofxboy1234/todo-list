@@ -17,6 +17,12 @@ const render = (projects) => {
     nameDiv.addEventListener('click', showProject);
     projectParagraph.appendChild(nameDiv);
 
+    data.todos().forEach((todoInstance) => {
+      const div = document.createElement('div');
+      div.textContent = todoInstance.todo.title;
+      projectParagraph.appendChild(div);
+    });
+
     const deleteButton = createButton('button', 'DELETE', 'deleteButtonID');
     deleteButton.addEventListener('click', destroyProject);
     projectParagraph.appendChild(deleteButton);
