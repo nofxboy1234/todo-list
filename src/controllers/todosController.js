@@ -36,6 +36,16 @@ const instanceProperties = {
       render(`${this.resourcePluralName}/new`, this.resourceSingular);
     }
   },
+  update: function () {
+    this.setResourceSingular();
+
+    if (this.resourceSingular.update(this.resourceSingularParams())) {
+      redirectTo('GET', projectsPath);
+      redirectTo('GET', todosPath);
+    } else {
+      render(`${resourcePluralName}/edit`, this.resourceSingular);
+    }
+  },
 };
 Object.assign(TodosController, instanceProperties);
 
