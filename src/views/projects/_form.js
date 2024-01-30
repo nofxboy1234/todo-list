@@ -5,12 +5,14 @@ import {
 } from '../helpers';
 
 import { redirectTo, projectsPath, projectPath } from '../../router';
+import { params as todoParams } from '../../parameters/todoParameters';
+import { render } from '../../renderer';
 
 const form = (data) => {
   const exists = data.id ? true : false;
 
   const cancelForm = () => {
-    redirectTo('GET', projectsPath);
+    render('todos/new', todoParams);
   };
 
   const createProject = (event) => {
