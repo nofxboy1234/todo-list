@@ -1,4 +1,8 @@
-const createModel = (instanceProperties) => {
+const createModel = (resourceSingularName, instanceProperties) => {
+  const getResourceSingularName = () => {
+    return resourceSingularName;
+  };
+
   const Model = {
     instances: [],
     new: function (params) {
@@ -7,9 +11,9 @@ const createModel = (instanceProperties) => {
       };
 
       const lastID = () => {
-        const modelInstance = this.last();
-        if (modelInstance) {
-          return modelInstance.id;
+        const instance = this.last();
+        if (instance) {
+          return instance.id;
         } else {
           return 0;
         }
@@ -20,7 +24,6 @@ const createModel = (instanceProperties) => {
       };
 
       const instance = {
-        ...params,
         save: function () {
           this.id = nextID();
           getInstances().push(this);
@@ -35,6 +38,8 @@ const createModel = (instanceProperties) => {
           getInstances().splice(removeIndex, 1);
         },
       };
+      instance['id'] = params.id;
+      instance[getResourceSingularName()] = params[getResourceSingularName()];
       Object.assign(instance, instanceProperties);
 
       return instance;
@@ -43,9 +48,7 @@ const createModel = (instanceProperties) => {
       return this.instances;
     },
     find: function (id) {
-      return this.instances.find(
-        (modelInstance) => modelInstance.id === id
-      );
+      return this.instances.find((instance) => instance.id === id);
     },
     last: function () {
       return this.instances.at(-1);

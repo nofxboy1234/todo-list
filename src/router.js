@@ -25,7 +25,7 @@ const controllers = () => {
   return data;
 };
 
-const params = () => {
+const parameters = () => {
   const data = {
     todos: todoParams,
     projects: projectParams,
@@ -47,7 +47,8 @@ const createRouter = (instanceProperties = {}, staticProperties = {}) => {
 
       const instance = {
         saveState: function (resourcePlural, data) {
-          params()[resourcePlural].merge(data);
+          const resourceParams = parameters()[resourcePlural];
+          resourceParams.merge(data);
         },
         redirectTo: function (method, path, data = {}) {
           let resolvedPath;
@@ -57,56 +58,58 @@ const createRouter = (instanceProperties = {}, staticProperties = {}) => {
             resolvedPath = path;
           }
           const resourcePlural = resolvedPath.split('/').at(1);
-          params()[resourcePlural].clear();
+          const controller = controllers()[resourcePlural];
+          const resourceParams = parameters()[resourcePlural];
+          resourceParams.clear();
 
           switch (resolvedPath) {
             // todosPath, /todos
             case `/${resourcePlural}`:
               if (method === 'GET') {
-                controllers()[resourcePlural].index();
+                controller.index();
               }
               if (method === 'POST') {
                 saveState(resourcePlural, data);
-                controllers()[resourcePlural].create();
+                controller.create();
               }
               break;
             // newTodoPath, /todos/new
             case `/${resourcePlural}/new`:
               if (method === 'GET') {
-                params()[resourcePlural].reset();
-                controllers()[resourcePlural].new();
+                resourceParams.reset();
+                controller.new();
               }
               break;
             // editTodoPath, /todos/:id/edit
             case `/${resourcePlural}/${data.id}/edit`:
               if (method === 'GET') {
                 saveState(resourcePlural, data);
-                controllers()[resourcePlural].edit();
+                controller.edit();
               }
               break;
             // todoPath, /todos/:id
             case `/${resourcePlural}/${data.id}`:
               if (method === 'GET') {
                 saveState(resourcePlural, data);
-                controllers()[resourcePlural].show();
+                controller.show();
               }
               if (method === 'PATCH') {
                 saveState(resourcePlural, data);
-                controllers()[resourcePlural].update();
+                controller.update();
               }
               if (method === 'PUT') {
                 saveState(resourcePlural, data);
-                controllers()[resourcePlural].update();
+                controller.update();
               }
               if (method === 'DELETE') {
                 saveState(resourcePlural, data);
-                controllers()[resourcePlural].destroy();
+                controller.destroy();
               }
               break;
             // rootPath, /
             case '/':
               if (method === 'GET') {
-                controllers()[resourcePlural].index();
+                controller.index();
               }
               break;
             default:

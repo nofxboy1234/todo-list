@@ -7,8 +7,7 @@ const instanceProperties = {
   },
 };
 
-// const Project = Object.create(Model(instanceProperties));
-const Project = Object.assign({}, Model(instanceProperties));
+const Project = Object.assign({}, Model('project', instanceProperties));
 
 const staticProperties = {};
 Object.assign(Project, staticProperties);
