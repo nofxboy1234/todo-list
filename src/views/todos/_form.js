@@ -91,7 +91,12 @@ const form = (data) => {
     dueDate.input.value = data.todo.dueDate;
     priority.input.value = data.todo.priority;
     checkList.data = {};
-    project.input.value = data.todo.projectID;
+
+    if (exists) {
+      project.input.value = data.todo.projectID;
+    } else {
+      project.input.value = Project.first().id;
+    }
   };
 
   const setupEventListeners = () => {

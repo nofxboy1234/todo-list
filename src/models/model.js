@@ -53,6 +53,9 @@ const createModel = (resourceSingularName, instanceProperties) => {
     last: function () {
       return this.instances.at(-1);
     },
+    first: function() {
+      return this.instances.at(0);
+    }
   };
 
   return Model;
