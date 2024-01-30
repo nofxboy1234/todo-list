@@ -23,17 +23,8 @@ const Controller = createController(
   permittedParams
 );
 
-const ProjectsController = {
-  resourceSingularName: Controller.resourceSingularName,
-  resourcePluralName: Controller.resourcePluralName,
-  resourceClass: Controller.resourceClass,
-  params: Controller.params,
-  permittedParams: Controller.permittedParams,
-  resourceSingular: Controller.resourceSingular,
-  resourcePlural: Controller.resourcePlural,
-  setResourceSingular: Controller.setResourceSingular,
-  resourceSingularParams: Controller.resourceSingularParams,
-  new: Controller.new,
+const NewProjectsController = Object.create(Controller);
+const instanceProperties = {
   create: function () {
     this.resourceSingular = this.resourceClass.new(
       this.resourceSingularParams()
@@ -47,11 +38,7 @@ const ProjectsController = {
       render(`${this.resourcePluralName}/new`, this.resourceSingular);
     }
   },
-  index: Controller.index,
-  show: Controller.show,
-  edit: Controller.edit,
-  update: Controller.update,
-  destroy: Controller.destroy,
 };
+Object.assign(NewProjectsController, instanceProperties);
 
-export { ProjectsController };
+export { NewProjectsController as ProjectsController };
