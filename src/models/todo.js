@@ -12,8 +12,11 @@ const instanceProperties = {
 const Todo = Object.assign({}, Model('todo', instanceProperties));
 
 const staticProperties = {
-  hello: function () {
-    console.log('hello');
+  allTodosBelongingTo: function (projectInstance) {
+    const todos = this.all().filter(
+      (todoInstance) => todoInstance.todo.projectID === projectInstance.id
+    );
+    return todos;
   },
 };
 Object.assign(Todo, staticProperties);
