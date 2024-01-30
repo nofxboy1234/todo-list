@@ -1,4 +1,4 @@
-import { redirectTo, todosPath, newTodoPath } from '../../router';
+import { redirectTo, todosPath, newTodoPath, projectsPath } from '../../router';
 
 const newTodo = () => {
   redirectTo('GET', newTodoPath);
@@ -37,7 +37,8 @@ const createLayout = () => {
 
   menuContainer.appendChild(projectIndex);
 
-  redirectTo('GET', todosPath);
+  // redirectTo('GET', todosPath);
+  redirectTo('GET', projectsPath);
 };
 
 export { createLayout, menuContainer, contentContainer, projectIndex };
