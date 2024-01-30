@@ -1,4 +1,6 @@
-Default project
+Select last project created when returning from project new form
+What needs to update when a Project is Created, Updated, Destroyed?
+
 Today, Upcoming etc links (data-fns)
 
 LocalStorage
