@@ -30,9 +30,12 @@ const createLayout = () => {
   const newTodoButton = document.createElement('button');
   newTodoButton.classList.add('new-todo-button');
   newTodoButton.textContent = 'New List';
+  newTodoButton.addEventListener('click', newTodo);
   menuContainer.appendChild(newTodoButton);
 
-  newTodoButton.addEventListener('click', newTodo);
+  const placeholder = document.createElement('div');
+  placeholder.textContent = 'Index projects here';
+  menuContainer.appendChild(placeholder);
 
   redirectTo('GET', todosPath);
 };
