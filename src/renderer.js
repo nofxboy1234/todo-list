@@ -11,7 +11,18 @@ import { render as editProject } from './views/projects/edit';
 import { contentContainer, projectIndex } from './views/layouts/application';
 import { clearContent, clearProjectIndex } from './views/helpers';
 
-let lastRenderedView = undefined;
+const viewHistory = [];
+
+const saveViewToViewHistory = (view) => {
+  viewHistory.push(view);
+  if (viewHistory.length > 2) {
+    viewHistory.shift();
+  }
+};
+
+const lastRenderedView = () => {
+  viewHistory.at(0);
+}
 
 const render = (path, data) => {
   let view;
@@ -21,26 +32,26 @@ const render = (path, data) => {
       view = newTodo(data);
       contentContainer.appendChild(view);
       document.getElementById('titleID').focus();
-      lastRenderedView = view;
+      saveViewToViewHistory(view);
       break;
     case 'todos/index':
       clearContent();
       view = indexTodo(data);
       contentContainer.appendChild(view);
-      lastRenderedView = view;
+      saveViewToViewHistory(view);
       break;
     case 'todos/show':
       clearContent();
       view = showTodo(data);
       contentContainer.appendChild(view);
-      lastRenderedView = view;
+      saveViewToViewHistory(view);
       break;
     case 'todos/edit':
       clearContent();
       view = editTodo(data);
       contentContainer.appendChild(view);
       document.getElementById('titleID').focus();
-      lastRenderedView = view;
+      saveViewToViewHistory(view);
       break;
 
     case 'projects/new':
@@ -48,7 +59,7 @@ const render = (path, data) => {
       view = newProject(data);
       contentContainer.appendChild(view);
       document.getElementById('nameID').focus();
-      lastRenderedView = view;
+      saveViewToViewHistory(view);
       break;
     case 'projects/index':
       clearProjectIndex();
@@ -58,14 +69,14 @@ const render = (path, data) => {
     case 'projects/show':
       clearContent();
       contentContainer.appendChild(showProject(data));
-      lastRenderedView = view;
+      saveViewToViewHistory(view);
       break;
     case 'projects/edit':
       clearContent();
       view = editProject(data);
       contentContainer.appendChild(view);
       document.getElementById('nameID').focus();
-      lastRenderedView = view;
+      saveViewToViewHistory(view);
       break;
 
     default:
@@ -77,7 +88,7 @@ const render = (path, data) => {
 
 const renderLastView = () => {
   clearContent();
-  contentContainer.appendChild(lastRenderedView);
+  contentContainer.appendChild(lastRenderedView());
 };
 
-export { render };
+export { render, renderLastView };
