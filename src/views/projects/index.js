@@ -1,7 +1,6 @@
 import { createButton } from '../helpers';
 import { redirectTo, projectPath } from '../../router';
-import { Todo } from '../../models/todo';
-import { render as mainRender } from '../../renderer';
+import { renderChildTodosOfProject } from '../helpers';
 
 const render = (projects) => {
   const projectParagraph = document.createElement('p');
@@ -14,15 +13,13 @@ const render = (projects) => {
       redirectTo('DELETE', projectPath, data);
     };
 
-    const indexTodosUnderProject = () => {
-      const projectInstance = data;
-      const todos = Todo.allTodosBelongingTo(projectInstance);
-      mainRender('todos/index', todos)
+    const renderChildTodos = () => {
+      renderChildTodosOfProject(data);
     };
 
     const nameDiv = document.createElement('div');
     nameDiv.textContent = data.project.name;
-    nameDiv.addEventListener('click', indexTodosUnderProject);
+    nameDiv.addEventListener('click', renderChildTodos);
     projectParagraph.appendChild(nameDiv);
 
     data.todos().forEach((todoInstance) => {

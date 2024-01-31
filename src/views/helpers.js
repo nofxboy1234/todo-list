@@ -1,4 +1,6 @@
 import { contentContainer, projectIndex } from './layouts/application';
+import { Todo } from '../models/todo';
+import { render } from '../renderer';
 
 const clearContent = () => {
   while (contentContainer.firstChild) {
@@ -70,6 +72,12 @@ const createButton = (type, text, id) => {
   return button;
 };
 
+const renderChildTodosOfProject = (projectInstance) => {
+  console.log(`renderChildTodosOfProject: ${projectInstance.project.name}`);
+  const todos = Todo.childrenOfProject(projectInstance);
+  render('todos/index', todos);
+};
+
 export {
   clearContent,
   clearProjectIndex,
@@ -80,4 +88,5 @@ export {
   createSelect,
   createDataList,
   createButton,
+  renderChildTodosOfProject,
 };

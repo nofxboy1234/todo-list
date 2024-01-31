@@ -92,11 +92,10 @@ const form = (data) => {
     priority.input.value = data.todo.priority;
     checkList.data = {};
 
-    // Get the last project id if newProjectID key exists in data
     if (data.todo.newProjectID) {
       project.input.value = data.todo.newProjectID;
     } else {
-      if (exists) {
+      if (exists || data.todo.projectID) {
         project.input.value = data.todo.projectID;
       } else {
         project.input.value = Project.first().id;
