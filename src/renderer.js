@@ -27,17 +27,20 @@ const render = (path, data) => {
       clearContent();
       view = indexTodo(data);
       contentContainer.appendChild(view);
+      lastRenderedView = view;
       break;
     case 'todos/show':
       clearContent();
       view = showTodo(data);
       contentContainer.appendChild(view);
+      lastRenderedView = view;
       break;
     case 'todos/edit':
       clearContent();
       view = editTodo(data);
       contentContainer.appendChild(view);
       document.getElementById('titleID').focus();
+      lastRenderedView = view;
       break;
 
     case 'projects/new':
@@ -45,6 +48,7 @@ const render = (path, data) => {
       view = newProject(data);
       contentContainer.appendChild(view);
       document.getElementById('nameID').focus();
+      lastRenderedView = view;
       break;
     case 'projects/index':
       clearProjectIndex();
@@ -54,12 +58,14 @@ const render = (path, data) => {
     case 'projects/show':
       clearContent();
       contentContainer.appendChild(showProject(data));
+      lastRenderedView = view;
       break;
     case 'projects/edit':
       clearContent();
       view = editProject(data);
       contentContainer.appendChild(view);
       document.getElementById('nameID').focus();
+      lastRenderedView = view;
       break;
 
     default:
