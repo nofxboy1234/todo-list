@@ -11,35 +11,45 @@ import { render as editProject } from './views/projects/edit';
 import { contentContainer, projectIndex } from './views/layouts/application';
 import { clearContent, clearProjectIndex } from './views/helpers';
 
+let lastRenderedView = undefined;
+
 const render = (path, data) => {
+  let view;
   switch (path) {
     case 'todos/new':
       clearContent();
-      contentContainer.appendChild(newTodo(data));
+      view = newTodo(data);
+      contentContainer.appendChild(view);
       document.getElementById('titleID').focus();
+      lastRenderedView = view;
       break;
     case 'todos/index':
       clearContent();
-      contentContainer.appendChild(indexTodo(data));
+      view = indexTodo(data);
+      contentContainer.appendChild(view);
       break;
     case 'todos/show':
       clearContent();
-      contentContainer.appendChild(showTodo(data));
+      view = showTodo(data);
+      contentContainer.appendChild(view);
       break;
     case 'todos/edit':
       clearContent();
-      contentContainer.appendChild(editTodo(data));
+      view = editTodo(data);
+      contentContainer.appendChild(view);
       document.getElementById('titleID').focus();
       break;
 
     case 'projects/new':
       clearContent();
-      contentContainer.appendChild(newProject(data));
+      view = newProject(data);
+      contentContainer.appendChild(view);
       document.getElementById('nameID').focus();
       break;
     case 'projects/index':
       clearProjectIndex();
-      projectIndex.appendChild(indexProject(data));
+      view = indexProject(data);
+      projectIndex.appendChild(view);
       break;
     case 'projects/show':
       clearContent();
@@ -47,14 +57,18 @@ const render = (path, data) => {
       break;
     case 'projects/edit':
       clearContent();
-      contentContainer.appendChild(editProject(data));
+      view = editProject(data);
+      contentContainer.appendChild(view);
       document.getElementById('nameID').focus();
       break;
+
     default:
       break;
   }
   // if (path.includes('/')) {
   // }
 };
+
+const renderLastView = () => {};
 
 export { render };
