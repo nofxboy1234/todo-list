@@ -75,6 +75,9 @@ const render = (path, data) => {
   // }
 };
 
-const renderLastView = () => {};
+const renderLastView = () => {
+  clearContent();
+  contentContainer.appendChild(lastRenderedView);
+};
 
 export { render };
