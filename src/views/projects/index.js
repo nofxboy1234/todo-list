@@ -1,28 +1,29 @@
 import { createButton } from '../helpers';
-import { redirectTo, projectPath } from '../../router';
-import { renderChildTodosOfProject } from '../helpers';
+import { redirectTo, projectPath, todosPath } from '../../router';
 
 const render = (projects) => {
   const projectParagraph = document.createElement('p');
-  projects.forEach((data) => {
+  projects.forEach((projectInstance) => {
     const showProject = () => {
-      redirectTo('GET', projectPath, data);
+      redirectTo('GET', projectPath, projectInstance);
     };
 
     const destroyProject = () => {
-      redirectTo('DELETE', projectPath, data);
+      redirectTo('DELETE', projectPath, projectInstance);
     };
 
     const renderChildTodos = () => {
-      renderChildTodosOfProject(data);
+      redirectTo('GET', todosPath, {
+        projectName: projectInstance.project.name,
+      });
     };
 
     const nameDiv = document.createElement('div');
-    nameDiv.textContent = data.project.name;
+    nameDiv.textContent = projectInstance.project.name;
     nameDiv.addEventListener('click', renderChildTodos);
     projectParagraph.appendChild(nameDiv);
 
-    data.todos().forEach((todoInstance) => {
+    projectInstance.todos().forEach((todoInstance) => {
       const div = document.createElement('div');
       div.textContent = todoInstance.todo.title;
       projectParagraph.appendChild(div);

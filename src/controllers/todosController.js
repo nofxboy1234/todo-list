@@ -4,6 +4,7 @@ import { createController } from './controller';
 import { render } from '../renderer';
 
 import { todosPath, projectsPath, redirectTo } from '../router';
+import { Project } from '../models/project';
 
 const permittedParams = [
   'title',
@@ -36,6 +37,11 @@ const instanceProperties = {
       render(`${this.resourcePluralName}/new`, this.resourceSingular);
     }
   },
+  index: function () {
+    const projectInstance = Project.findByName(params.projectName)
+    this.resourcePlural = Todo.childrenOfProject(projectInstance);
+    render(`${this.resourcePluralName}/index`, this.resourcePlural);
+  },
   update: function () {
     this.setResourceSingular();
 
@@ -53,6 +59,10 @@ const instanceProperties = {
     redirectTo('GET', projectsPath);
     redirectTo('GET', todosPath);
   },
+  // belongingToProject: function (projectInstance) {
+  //   this.resourcePlural = Todo.childrenOfProject(projectInstance);
+  //   render(`${resourcePluralName}/index`, this.resourcePlural);
+  // },
 };
 Object.assign(TodosController, instanceProperties);
 

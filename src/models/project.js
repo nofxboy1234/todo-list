@@ -11,7 +11,11 @@ const instanceProperties = {
 
 const Project = Object.assign({}, Model('project', instanceProperties));
 
-const staticProperties = {};
+const staticProperties = {
+  findByName: function (name) {
+    return this.instances.find((instance) => instance.project.name === name);
+  },
+};
 Object.assign(Project, staticProperties);
 
 export { Project };

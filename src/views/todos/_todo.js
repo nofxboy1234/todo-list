@@ -1,5 +1,6 @@
 import { createButton } from '../helpers';
 import { redirectTo, todosPath, editTodoPath, todoPath } from '../../router';
+import { renderPreviousView } from '../../renderer';
 
 const todoPartial = (data) => {
   const todoParagraph = document.createElement('p');
@@ -44,7 +45,7 @@ const todoPartial = (data) => {
   };
 
   const closeTodo = () => {
-    redirectTo('GET', todosPath);
+    renderPreviousView();
   };
 
   const deleteButton = createButton('button', 'DELETE', 'deleteButtonID');

@@ -14,16 +14,19 @@ import {
   newProjectPath,
   saveState,
 } from '../../router';
+import { renderPreviousView, saveViewToHistory } from '../../renderer';
+import { render as newTodo } from './new';
 
 const form = (data) => {
   const exists = data.id ? true : false;
 
   const cancelForm = () => {
-    redirectTo('GET', todosPath);
+    renderPreviousView();
   };
 
   const newProject = () => {
-    saveState('todos', currentData());
+    saveViewToHistory(newTodo, currentData())
+    // saveState('todos', currentData());
     redirectTo('GET', newProjectPath);
   };
 
@@ -92,14 +95,10 @@ const form = (data) => {
     priority.input.value = data.todo.priority;
     checkList.data = {};
 
-    if (data.todo.newProjectID) {
-      project.input.value = data.todo.newProjectID;
+    if (exists) {
+      project.input.value = data.todo.projectID;
     } else {
-      if (exists || data.todo.projectID) {
-        project.input.value = data.todo.projectID;
-      } else {
-        project.input.value = Project.first().id;
-      }
+      project.input.value = Project.first().id;
     }
   };
 

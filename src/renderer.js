@@ -11,84 +11,91 @@ import { render as editProject } from './views/projects/edit';
 import { contentContainer, projectIndex } from './views/layouts/application';
 import { clearContent, clearProjectIndex } from './views/helpers';
 
-const viewHistory = [];
+let viewHistory = [];
 
-const saveViewToViewHistory = (view) => {
-  viewHistory.push(view);
-  if (viewHistory.length > 2) {
-    viewHistory.shift();
-  }
+const saveViewToHistory = (view, data) => {
+  const historyEntry = { view, data };
+  viewHistory.push(historyEntry);
 };
 
-const lastRenderedView = () => {
-  viewHistory.at(0);
-}
+// const resetViewHistory = (view, data) => {
+//   const historyEntry = { view, data };
+//   viewHistory = [historyEntry];
+// };
+
+const previousView = () => {
+  viewHistory.pop();
+  return viewHistory.at(-1);
+};
 
 const render = (path, data) => {
   let view;
   switch (path) {
     case 'todos/new':
       clearContent();
-      view = newTodo(data);
-      contentContainer.appendChild(view);
+      view = newTodo;
+      contentContainer.appendChild(view(data));
       document.getElementById('titleID').focus();
-      saveViewToViewHistory(view);
+      saveViewToHistory(view, data);
       break;
     case 'todos/index':
       clearContent();
-      view = indexTodo(data);
-      contentContainer.appendChild(view);
-      saveViewToViewHistory(view);
+      view = indexTodo;
+      contentContainer.appendChild(view(data));
+      saveViewToHistory(view, data);
       break;
     case 'todos/show':
       clearContent();
-      view = showTodo(data);
-      contentContainer.appendChild(view);
-      saveViewToViewHistory(view);
+      view = showTodo;
+      contentContainer.appendChild(view(data));
+      saveViewToHistory(view, data);
       break;
     case 'todos/edit':
       clearContent();
-      view = editTodo(data);
-      contentContainer.appendChild(view);
+      view = editTodo;
+      contentContainer.appendChild(view(data));
       document.getElementById('titleID').focus();
-      saveViewToViewHistory(view);
+      saveViewToHistory(view, data);
       break;
 
     case 'projects/new':
       clearContent();
-      view = newProject(data);
-      contentContainer.appendChild(view);
+      view = newProject;
+      contentContainer.appendChild(view(data));
       document.getElementById('nameID').focus();
-      saveViewToViewHistory(view);
+      saveViewToHistory(view, data);
       break;
     case 'projects/index':
       clearProjectIndex();
-      view = indexProject(data);
-      projectIndex.appendChild(view);
+      view = indexProject;
+      projectIndex.appendChild(view(data));
+      // resetViewHistory(view, data);
       break;
     case 'projects/show':
       clearContent();
-      contentContainer.appendChild(showProject(data));
-      saveViewToViewHistory(view);
+      view = showProject;
+      contentContainer.appendChild(view(data));
+      saveViewToHistory(view, data);
       break;
     case 'projects/edit':
       clearContent();
-      view = editProject(data);
-      contentContainer.appendChild(view);
+      view = editProject;
+      contentContainer.appendChild(view(data));
       document.getElementById('nameID').focus();
-      saveViewToViewHistory(view);
+      saveViewToHistory(view, data);
       break;
 
     default:
       break;
   }
-  // if (path.includes('/')) {
-  // }
 };
 
-const renderLastView = () => {
+const renderPreviousView = () => {
   clearContent();
-  contentContainer.appendChild(lastRenderedView());
+  const historyEntry = previousView();
+  const view = historyEntry.view;
+  const cachedData = historyEntry.data;
+  contentContainer.appendChild(view(cachedData));
 };
 
-export { render, renderLastView };
+export { render, renderPreviousView, saveViewToHistory };

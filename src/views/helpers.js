@@ -72,12 +72,6 @@ const createButton = (type, text, id) => {
   return button;
 };
 
-const renderChildTodosOfProject = (projectInstance) => {
-  console.log(`renderChildTodosOfProject: ${projectInstance.project.name}`);
-  const todos = Todo.childrenOfProject(projectInstance);
-  render('todos/index', todos);
-};
-
 export {
   clearContent,
   clearProjectIndex,
@@ -88,5 +82,4 @@ export {
   createSelect,
   createDataList,
   createButton,
-  renderChildTodosOfProject,
 };

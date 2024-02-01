@@ -3,8 +3,7 @@ import { params } from '../parameters/projectParameters';
 import { createController } from './controller';
 import { render } from '../renderer';
 
-import { projectsPath, redirectTo } from '../router';
-import { params as todoParams } from '../parameters/todoParameters';
+import { editTodoPath, projectsPath, redirectTo } from '../router';
 
 const permittedParams = ['name'];
 
@@ -24,9 +23,7 @@ const instanceProperties = {
     );
 
     if (this.resourceSingular.save()) {
-      Object.assign(todoParams.todo, { newProjectID: Project.last().id });
-      // todos/new and todos/edit use the same rendering
-      render('todos/new', todoParams);
+      redirectTo('GET', editTodoPath, this.resourceSingular)
       redirectTo('GET', projectsPath);
     } else {
       render(`${this.resourcePluralName}/new`, this.resourceSingular);

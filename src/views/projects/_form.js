@@ -1,18 +1,13 @@
-import {
-  createLabel,
-  createInput,
-  createButton,
-} from '../helpers';
+import { createLabel, createInput, createButton } from '../helpers';
 
 import { redirectTo, projectsPath, projectPath } from '../../router';
-import { params as todoParams } from '../../parameters/todoParameters';
-import { render } from '../../renderer';
+import { renderPreviousView } from '../../renderer';
 
 const form = (data) => {
   const exists = data.id ? true : false;
 
   const cancelForm = () => {
-    render('todos/new', todoParams);
+    renderPreviousView();
   };
 
   const createProject = (event) => {

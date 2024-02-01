@@ -1,3 +1,13 @@
+Last rendered view function - Used if data has not been updated for target view: Cancel buttons etc
+
+if data has been updated (eg new project form) or data needs to be updated before rendering the 
+target view, RedirectTo router->controller->renderer->view.
+
+Debug test viewHistory
+
+
+
+
 What needs to update when a Project is Created, Updated, Destroyed?
 Set up Tasks
 

@@ -1,6 +1,4 @@
-import { Project } from '../../models/project';
 import { redirectTo, todosPath, newTodoPath, projectsPath } from '../../router';
-import { renderChildTodosOfProject } from '../helpers';
 
 const newTodo = () => {
   redirectTo('GET', newTodoPath);
@@ -39,10 +37,8 @@ const createLayout = () => {
 
   menuContainer.appendChild(projectIndex);
 
-  // redirectTo('GET', todosPath);
   redirectTo('GET', projectsPath);
-
-  renderChildTodosOfProject(Project.first());
+  redirectTo('GET', todosPath, { projectName: 'Default' });
 };
 
 export { createLayout, menuContainer, contentContainer, projectIndex };
