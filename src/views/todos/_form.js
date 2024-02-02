@@ -14,7 +14,7 @@ import {
   newProjectPath,
   saveState,
 } from '../../router';
-import { renderPreviousView, saveViewToHistory } from '../../renderer';
+import { renderPreviousView } from '../../renderer';
 import { render as newTodo } from './new';
 
 const form = (data) => {
@@ -25,8 +25,7 @@ const form = (data) => {
   };
 
   const newProject = () => {
-    saveViewToHistory(newTodo, currentData())
-    // saveState('todos', currentData());
+    saveState('todos', currentData());
     redirectTo('GET', newProjectPath);
   };
 

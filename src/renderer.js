@@ -98,4 +98,4 @@ const renderPreviousView = () => {
   contentContainer.appendChild(view(cachedData));
 };
 
-export { render, renderPreviousView, saveViewToHistory };
+export { render, renderPreviousView };

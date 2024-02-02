@@ -38,7 +38,7 @@ const instanceProperties = {
     }
   },
   index: function () {
-    const projectInstance = Project.findByName(params.projectName)
+    const projectInstance = Project.find(params.todo.projectID);
     this.resourcePlural = Todo.childrenOfProject(projectInstance);
     render(`${this.resourcePluralName}/index`, this.resourcePlural);
   },

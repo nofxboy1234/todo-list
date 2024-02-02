@@ -1,4 +1,5 @@
 import { redirectTo, todosPath, newTodoPath, projectsPath } from '../../router';
+import { params as todoParams } from '../../parameters/todoParameters';
 
 const newTodo = () => {
   redirectTo('GET', newTodoPath);
@@ -38,7 +39,9 @@ const createLayout = () => {
   menuContainer.appendChild(projectIndex);
 
   redirectTo('GET', projectsPath);
-  redirectTo('GET', todosPath, { projectName: 'Default' });
+  const a = todoParams;
+  todoParams.todo.projectID = 1;
+  redirectTo('GET', todosPath, todoParams);
 };
 
 export { createLayout, menuContainer, contentContainer, projectIndex };

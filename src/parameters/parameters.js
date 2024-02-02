@@ -22,13 +22,13 @@ const createParameters = (instanceProperties) => {
           this[instanceKey] = {};
         },
         merge: function (params) {
-          this.clear();
           Object.assign(this, params);
         },
         reset: function () {
           this.merge(initialParams);
         },
       };
+      instance.clear();
       instance.reset();
       instance.merge(instanceProperties);
 

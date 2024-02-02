@@ -13,9 +13,11 @@ const render = (projects) => {
     };
 
     const renderChildTodos = () => {
-      redirectTo('GET', todosPath, {
-        projectName: projectInstance.project.name,
-      });
+      const projectData = {
+        id: undefined,
+        project: { name: projectInstance.project.name },
+      };
+      redirectTo('GET', todosPath, projectData);
     };
 
     const nameDiv = document.createElement('div');

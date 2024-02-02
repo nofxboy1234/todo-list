@@ -48,7 +48,11 @@ const createController = (
     resourceSingular: {},
     resourcePlural: {},
     setResourceSingular: function () {
-      this.resourceSingular = resourceClass.find(params.id);
+      if (params.id) {
+        this.resourceSingular = resourceClass.find(params.id);
+      } else {
+        this.resourceSingular = params;
+      }
     },
     resourceSingularParams: function () {
       return params.require(resourceSingularName).permit(permittedParams);
