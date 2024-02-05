@@ -14,7 +14,10 @@ import {
   newProjectPath,
   saveState,
 } from '../../router';
-import { renderPreviousView, saveViewToHistory } from '../../renderer';
+import {
+  renderPreviousView,
+  saveViewToHistory,
+} from '../../renderer';
 import { render as newTodo } from './new';
 import { render as editTodo } from './edit';
 
@@ -25,16 +28,19 @@ const form = (todo) => {
     renderPreviousView();
   };
 
-  const newProject = () => {
-    saveState('todos', currentData());
-
-    let view;
+  const getView = () => {
     if (persisted) {
-      view = editTodo;
+      return editTodo;
     } else {
-      view = newTodo;
+      return newTodo;
     }
-    saveViewToHistory(view, currentData());
+  };
+
+  const newProject = () => {
+    const view = getView();
+    const renderedView = view(currentData());
+    saveViewToHistory(renderedView);
+    saveState('todos', currentData());
 
     redirectTo('GET', newProjectPath);
   };
