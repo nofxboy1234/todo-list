@@ -40,18 +40,8 @@ const createController = (resourcePluralName, resourceClass, params) => {
     resourceSingular: {},
     resourcePlural: {},
     setResourceSingular: function () {
-      let model;
       const id = params.data.id;
-      if (id) {
-        model = resourceClass.find(id);
-        // E.g. If redirected to the todo edit view from another view (e.g. new project)
-        // and the todo IS persisted.
-        Object.assign(model.data, params.data);
-      } else {
-        // E.g. If redirected to the todo edit view from another view (e.g. new project)
-        // and the todo IS NOT persisted.
-        model = resourceClass.new(params);
-      }
+      const model = resourceClass.find(id);
       this.resourceSingular = model;
     },
     new: function () {
@@ -77,6 +67,19 @@ const createController = (resourcePluralName, resourceClass, params) => {
     },
     edit: function () {
       this.setResourceSingular();
+
+      if (this.resourceSingular) {
+        // E.g. If redirected to the todo edit view from another view (e.g. new project)
+        // and the todo IS persisted.
+        this.resourceSingular = resourceClass.new(params);
+        // this.resourceSingular = Object.assign({});
+        // Object.assign(this.resourceSingular.data, params.data);
+      } else {
+        // E.g. If redirected to the todo edit view from another view (e.g. new project)
+        // and the todo IS NOT persisted.
+        this.resourceSingular = resourceClass.new(params);
+      }
+
       render(`${resourcePluralName}/edit`, this.resourceSingular);
     },
     update: function () {

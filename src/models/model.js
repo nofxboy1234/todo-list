@@ -27,7 +27,7 @@ const createModel = (instanceProperties) => {
           return true;
         },
         update: function (params) {
-          Object.assign(this, params);
+          Object.assign(this.data, params.data);
           return true;
         },
         destroy: function () {
