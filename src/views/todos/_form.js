@@ -14,8 +14,9 @@ import {
   newProjectPath,
   saveState,
 } from '../../router';
-import { renderPreviousView } from '../../renderer';
+import { renderPreviousView, saveViewToHistory } from '../../renderer';
 import { render as newTodo } from './new';
+import { render as editTodo } from './edit';
 
 const form = (todo) => {
   const persisted = todo.data.id ? true : false;
@@ -26,6 +27,15 @@ const form = (todo) => {
 
   const newProject = () => {
     saveState('todos', currentData());
+
+    let view;
+    if (persisted) {
+      view = editTodo;
+    } else {
+      view = newTodo;
+    }
+    saveViewToHistory(view, currentData());
+
     redirectTo('GET', newProjectPath);
   };
 

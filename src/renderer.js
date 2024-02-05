@@ -23,8 +23,12 @@ const saveViewToHistory = (view, data) => {
 //   viewHistory = [historyEntry];
 // };
 
-const previousView = () => {
+const removeLastViewFromHistory = () => {
   viewHistory.pop();
+};
+
+const previousView = () => {
+  removeLastViewFromHistory();
   return viewHistory.at(-1);
 };
 
@@ -98,4 +102,4 @@ const renderPreviousView = () => {
   contentContainer.appendChild(view(cachedData));
 };
 
-export { render, renderPreviousView };
+export { render, renderPreviousView, saveViewToHistory };
