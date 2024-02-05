@@ -64,7 +64,7 @@ const createRouter = (instanceProperties = {}, staticProperties = {}) => {
             // todosPath, /todos
             case `/${resourcePlural}`:
               if (method === 'GET') {
-                // saveState(resourcePlural, data);
+                saveState(resourcePlural, data);
                 controller.index();
               }
               if (method === 'POST') {
