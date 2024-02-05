@@ -1,16 +1,13 @@
 import { createParameters as Parameters } from './parameters';
 
 const instanceProperties = {};
-
-// const TodoParameters = Object.create(Parameters(instanceProperties));
 const TodoParameters = Object.assign({}, Parameters(instanceProperties));
-
 const staticProperties = {};
 Object.assign(TodoParameters, staticProperties);
 
-const params = TodoParameters.new('todo', {
-  id: undefined,
-  todo: {
+const initialParams = {
+  data: {
+    id: undefined,
     title: '',
     description: '',
     dueDate: '',
@@ -18,6 +15,7 @@ const params = TodoParameters.new('todo', {
     checkList: {},
     projectID: undefined,
   },
-});
+};
+const params = TodoParameters.new(initialParams);
 
 export { params };

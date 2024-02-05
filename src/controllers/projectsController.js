@@ -4,27 +4,16 @@ import { params as todoParams } from '../parameters/todoParameters';
 import { createController } from './controller';
 import { render } from '../renderer';
 
-import { editTodoPath, newTodoPath, projectsPath, redirectTo } from '../router';
+import { editTodoPath, projectsPath, redirectTo } from '../router';
 
-const permittedParams = ['name'];
-
-const Controller = createController(
-  'project',
-  'projects',
-  Project,
-  params,
-  permittedParams
-);
+const Controller = createController('projects', Project, params);
 
 const ProjectsController = Object.create(Controller);
 const instanceProperties = {
   create: function () {
-    this.resourceSingular = this.resourceClass.new(
-      this.resourceSingularParams()
-    );
+    this.resourceSingular = this.resourceClass.new(params);
 
     if (this.resourceSingular.save()) {
-      const temp = todoParams;
       redirectTo('GET', editTodoPath, todoParams);
       redirectTo('GET', projectsPath);
     } else {

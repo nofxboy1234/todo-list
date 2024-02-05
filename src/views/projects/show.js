@@ -1,7 +1,7 @@
-import { projectPartial } from './_project';
+import { Partial } from './_project';
 
 const render = (project) => {
-  return projectPartial(project);
+  return Partial(project);
 };
 
 export { render };

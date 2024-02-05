@@ -39,8 +39,7 @@ const createLayout = () => {
   menuContainer.appendChild(projectIndex);
 
   redirectTo('GET', projectsPath);
-  const a = todoParams;
-  todoParams.todo.projectID = 1;
+  todoParams.data.projectID = 1;
   redirectTo('GET', todosPath, todoParams);
 };
 

@@ -3,8 +3,8 @@ import { createLabel, createInput, createButton } from '../helpers';
 import { redirectTo, projectsPath, projectPath } from '../../router';
 import { renderPreviousView } from '../../renderer';
 
-const form = (data) => {
-  const exists = data.id ? true : false;
+const form = (project) => {
+  const persisted = project.data.id ? true : false;
 
   const cancelForm = () => {
     renderPreviousView();
@@ -22,7 +22,7 @@ const form = (data) => {
 
   const currentData = () => {
     return {
-      id: data.id,
+      id: project.data.id,
       project: {
         name: name.input.value,
       },
@@ -30,7 +30,7 @@ const form = (data) => {
   };
 
   const submitButtonCallback = () => {
-    if (exists) {
+    if (persisted) {
       return updateProject;
     } else {
       return createProject;
@@ -39,8 +39,6 @@ const form = (data) => {
 
   const setupUI = () => {
     const projectForm = document.createElement('form');
-    projectForm.classList.add('new-project-form');
-
     projectForm.appendChild(name.div);
     projectForm.appendChild(cancel.div);
     projectForm.appendChild(submit.div);
@@ -49,8 +47,7 @@ const form = (data) => {
   };
 
   const setupData = () => {
-    // set values on ui elements
-    name.input.value = data.project.name;
+    name.input.value = project.data.name;
   };
 
   const setupEventListeners = () => {
@@ -79,7 +76,7 @@ const form = (data) => {
     const div = document.createElement('div');
 
     let buttonText;
-    if (exists) {
+    if (persisted) {
       buttonText = 'UPDATE';
     } else {
       buttonText = 'CREATE';

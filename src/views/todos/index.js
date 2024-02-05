@@ -3,22 +3,22 @@ import { redirectTo, todoPath } from '../../router';
 
 const render = (todos) => {
   const todoParagraph = document.createElement('p');
-  todos.forEach((data) => {
+  todos.forEach((todo) => {
     const showTodo = () => {
-      redirectTo('GET', todoPath, data);
+      redirectTo('GET', todoPath, todo);
     };
 
     const destroyTodo = () => {
-      redirectTo('DELETE', todoPath, data);
+      redirectTo('DELETE', todoPath, todo);
     };
 
     const titleDiv = document.createElement('div');
-    titleDiv.textContent = data.todo.title;
+    titleDiv.textContent = todo.data.title;
     titleDiv.addEventListener('click', showTodo);
     todoParagraph.appendChild(titleDiv);
 
     const dueDateDiv = document.createElement('div');
-    dueDateDiv.textContent = data.todo.dueDate;
+    dueDateDiv.textContent = todo.data.dueDate;
     todoParagraph.appendChild(dueDateDiv);
 
     const deleteButton = createButton('button', 'DELETE', 'deleteButtonID');

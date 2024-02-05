@@ -3,29 +3,27 @@ import { redirectTo, projectPath, todosPath } from '../../router';
 
 const render = (projects) => {
   const projectParagraph = document.createElement('p');
-  projects.forEach((projectInstance) => {
-    const showProject = () => {
-      redirectTo('GET', projectPath, projectInstance);
-    };
-
+  projects.forEach((project) => {
     const destroyProject = () => {
-      redirectTo('DELETE', projectPath, projectInstance);
+      redirectTo('DELETE', projectPath, project);
     };
 
     const renderChildTodos = () => {
       const projectData = {
-        id: undefined,
-        project: { name: projectInstance.project.name },
+        data: {
+          id: undefined,
+          projectID: project.data.id,
+        },
       };
       redirectTo('GET', todosPath, projectData);
     };
 
     const nameDiv = document.createElement('div');
-    nameDiv.textContent = projectInstance.project.name;
+    nameDiv.textContent = project.data.name;
     nameDiv.addEventListener('click', renderChildTodos);
     projectParagraph.appendChild(nameDiv);
 
-    projectInstance.todos().forEach((todoInstance) => {
+    project.todos().forEach((todoInstance) => {
       const div = document.createElement('div');
       div.textContent = todoInstance.todo.title;
       projectParagraph.appendChild(div);

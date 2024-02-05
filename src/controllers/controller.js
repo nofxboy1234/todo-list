@@ -32,41 +32,23 @@ const pathHelpers = () => {
   return helpers;
 };
 
-const createController = (
-  resourceSingularName,
-  resourcePluralName,
-  resourceClass,
-  params,
-  permittedParams
-) => {
+const createController = (resourcePluralName, resourceClass, params) => {
   const ResourcePluralController = {
-    resourceSingularName,
     resourcePluralName,
     resourceClass,
     params,
-    permittedParams,
     resourceSingular: {},
     resourcePlural: {},
     setResourceSingular: function () {
-      if (params.id) {
-        this.resourceSingular = resourceClass.find(params.id);
-      } else {
-        this.resourceSingular = params;
-      }
-    },
-    resourceSingularParams: function () {
-      return params.require(resourceSingularName).permit(permittedParams);
+      const model = resourceClass.find(params.data.id);
+      this.resourceSingular = model;
     },
     new: function () {
-      this.resourceSingular = this.resourceClass.new(
-        this.resourceSingularParams()
-      );
+      this.resourceSingular = resourceClass.new(params);
       render(`${resourcePluralName}/new`, this.resourceSingular);
     },
     create: function () {
-      this.resourceSingular = this.resourceClass.new(
-        this.resourceSingularParams()
-      );
+      this.resourceSingular = resourceClass.new(params);
 
       if (this.resourceSingular.save()) {
         redirectTo('GET', pathHelpers()[resourcePluralName].resourcePluralPath);
@@ -75,7 +57,7 @@ const createController = (
       }
     },
     index: function () {
-      this.resourcePlural = this.resourceClass.all();
+      this.resourcePlural = resourceClass.all();
       render(`${resourcePluralName}/index`, this.resourcePlural);
     },
     show: function () {
@@ -89,7 +71,7 @@ const createController = (
     update: function () {
       this.setResourceSingular();
 
-      if (this.resourceSingular.update(this.resourceSingularParams())) {
+      if (this.resourceSingular.update(params)) {
         redirectTo('GET', pathHelpers()[resourcePluralName].resourcePluralPath);
       } else {
         render(`${resourcePluralName}/edit`, this.resourceSingular);
@@ -98,10 +80,7 @@ const createController = (
     destroy: function () {
       this.setResourceSingular();
       this.resourceSingular.destroy();
-      redirectTo(
-        'GET',
-        pathHelpers()[this.resourcePluralName].resourcePluralPath
-      );
+      redirectTo('GET', pathHelpers()[resourcePluralName].resourcePluralPath);
     },
   };
 

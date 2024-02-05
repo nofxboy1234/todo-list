@@ -1,7 +1,7 @@
-import { todoPartial } from './_todo';
+import { Partial } from './_todo';
 
 const render = (todo) => {
-  return todoPartial(todo);
+  return Partial(todo);
 };
 
 export { render };

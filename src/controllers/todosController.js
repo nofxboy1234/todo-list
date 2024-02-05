@@ -6,29 +6,12 @@ import { render } from '../renderer';
 import { todosPath, projectsPath, redirectTo } from '../router';
 import { Project } from '../models/project';
 
-const permittedParams = [
-  'title',
-  'description',
-  'dueDate',
-  'priority',
-  'checkList',
-  'projectID',
-];
-
-const Controller = createController(
-  'todo',
-  'todos',
-  Todo,
-  params,
-  permittedParams
-);
+const Controller = createController('todos', Todo, params);
 
 const TodosController = Object.create(Controller);
 const instanceProperties = {
   create: function () {
-    this.resourceSingular = this.resourceClass.new(
-      this.resourceSingularParams()
-    );
+    this.resourceSingular = this.resourceClass.new(this.params);
 
     if (this.resourceSingular.save()) {
       redirectTo('GET', projectsPath);
@@ -38,18 +21,19 @@ const instanceProperties = {
     }
   },
   index: function () {
-    const projectInstance = Project.find(params.todo.projectID);
-    this.resourcePlural = Todo.childrenOfProject(projectInstance);
+    const todoParams = params;
+    const project = Project.find(params.data.projectID);
+    this.resourcePlural = project.todos();
     render(`${this.resourcePluralName}/index`, this.resourcePlural);
   },
   update: function () {
     this.setResourceSingular();
 
-    if (this.resourceSingular.update(this.resourceSingularParams())) {
+    if (this.resourceSingular.update(this.params)) {
       redirectTo('GET', projectsPath);
       redirectTo('GET', todosPath);
     } else {
-      render(`${resourcePluralName}/edit`, this.resourceSingular);
+      render(`${this.resourcePluralName}/edit`, this.resourceSingular);
     }
   },
   destroy: function () {
@@ -59,10 +43,6 @@ const instanceProperties = {
     redirectTo('GET', projectsPath);
     redirectTo('GET', todosPath);
   },
-  // belongingToProject: function (projectInstance) {
-  //   this.resourcePlural = Todo.childrenOfProject(projectInstance);
-  //   render(`${resourcePluralName}/index`, this.resourcePlural);
-  // },
 };
 Object.assign(TodosController, instanceProperties);
 

@@ -4,18 +4,12 @@ import { createModel as Model } from './model';
 const instanceProperties = {
   project: function () {
     return (
-      Project.find(this.todo.projectID) || { project: { name: 'no project' } }
+      Project.find(this.data.projectID) || { data: { name: 'no project' } }
     );
   },
 };
-
-const Todo = Object.assign({}, Model('todo', instanceProperties));
-
-const staticProperties = {
-  childrenOfProject: function (projectInstance) {
-    return projectInstance.todos();
-  },
-};
+const Todo = Object.assign({}, Model(instanceProperties));
+const staticProperties = {};
 Object.assign(Todo, staticProperties);
 
 export { Todo };

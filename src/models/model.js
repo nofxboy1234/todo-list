@@ -1,19 +1,15 @@
-const createModel = (resourceSingularName, instanceProperties) => {
-  const getResourceSingularName = () => {
-    return resourceSingularName;
-  };
-
+const createModel = (instanceProperties) => {
   const Model = {
-    instances: [],
-    new: function (params) {
-      const getInstances = () => {
-        return this.instances;
+    models: [],
+    new: function (parameters) {
+      const getModels = () => {
+        return this.models;
       };
 
       const lastID = () => {
-        const instance = this.last();
-        if (instance) {
-          return instance.id;
+        const model = this.last();
+        if (model) {
+          return model.data.id;
         } else {
           return 0;
         }
@@ -25,8 +21,8 @@ const createModel = (resourceSingularName, instanceProperties) => {
 
       const instance = {
         save: function () {
-          this.id = nextID();
-          getInstances().push(this);
+          this.data.id = nextID();
+          getModels().push(this);
           return true;
         },
         update: function (params) {
@@ -34,28 +30,27 @@ const createModel = (resourceSingularName, instanceProperties) => {
           return true;
         },
         destroy: function () {
-          const removeIndex = getInstances().indexOf(this);
-          getInstances().splice(removeIndex, 1);
+          const removeIndex = getModels().indexOf(this);
+          getModels().splice(removeIndex, 1);
         },
       };
-      instance['id'] = params.id;
-      instance[getResourceSingularName()] = params[getResourceSingularName()];
+      Object.assign(instance, parameters);
       Object.assign(instance, instanceProperties);
 
       return instance;
     },
     all: function () {
-      return this.instances;
+      return this.models;
     },
     find: function (id) {
-      return this.instances.find((instance) => instance.id === id);
+      return this.models.find((instance) => instance.data.id === id);
     },
     last: function () {
-      return this.instances.at(-1);
+      return this.models.at(-1);
     },
-    first: function() {
-      return this.instances.at(0);
-    }
+    first: function () {
+      return this.models.at(0);
+    },
   };
 
   return Model;

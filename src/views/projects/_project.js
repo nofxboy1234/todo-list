@@ -6,19 +6,19 @@ import {
   projectPath,
 } from '../../router';
 
-const projectPartial = (data) => {
+const Partial = (project) => {
   const projectParagraph = document.createElement('p');
 
   const nameDiv = document.createElement('div');
-  nameDiv.textContent = data.project.name;
+  nameDiv.textContent = project.project.name;
   projectParagraph.appendChild(nameDiv);
 
   const destroyProject = () => {
-    redirectTo('DELETE', projectPath, data);
+    redirectTo('DELETE', projectPath, project);
   };
 
   const editProject = () => {
-    redirectTo('GET', editProjectPath, data);
+    redirectTo('GET', editProjectPath, project);
   };
 
   const closeProject = () => {
@@ -40,4 +40,4 @@ const projectPartial = (data) => {
   return projectParagraph;
 };
 
-export { projectPartial };
+export { Partial };

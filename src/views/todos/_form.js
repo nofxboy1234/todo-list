@@ -17,8 +17,8 @@ import {
 import { renderPreviousView } from '../../renderer';
 import { render as newTodo } from './new';
 
-const form = (data) => {
-  const exists = data.id ? true : false;
+const form = (todo) => {
+  const persisted = todo.data.id ? true : false;
 
   const cancelForm = () => {
     renderPreviousView();
@@ -41,7 +41,7 @@ const form = (data) => {
 
   const currentData = () => {
     return {
-      id: data.id,
+      id: todo.data.id,
       todo: {
         title: title.input.value,
         description: description.input.value,
@@ -63,7 +63,7 @@ const form = (data) => {
   };
 
   const submitButtonCallback = () => {
-    if (exists) {
+    if (persisted) {
       return updateTodo;
     } else {
       return createTodo;
@@ -87,17 +87,16 @@ const form = (data) => {
   };
 
   const setupData = () => {
-    // set values on ui elements
-    title.input.value = data.todo.title;
-    description.input.value = data.todo.description;
-    dueDate.input.value = data.todo.dueDate;
-    priority.input.value = data.todo.priority;
+    title.input.value = todo.data.title;
+    description.input.value = todo.data.description;
+    dueDate.input.value = todo.data.dueDate;
+    priority.input.value = todo.data.priority;
     checkList.data = {};
 
-    if (exists) {
-      project.input.value = data.todo.projectID;
+    if (todo.data.projectID) {
+      project.input.value = todo.data.projectID;
     } else {
-      project.input.value = Project.first().id;
+      project.input.value = Project.first().data.id;
     }
   };
 
@@ -156,8 +155,8 @@ const form = (data) => {
     div.appendChild(checkListLabelDiv);
 
     // { 'fill water bowl': false, 'fill food bowl': false };
-    if (data.checkList) {
-      const keys = Object.keys(data.checkList);
+    if (todo.data.checkList) {
+      const keys = Object.keys(todo.data.checkList);
       keys.forEach((key) => {
         const taskPair = document.createElement('div');
         const id = `task-${keys.indexOf(key)}`;
@@ -175,8 +174,8 @@ const form = (data) => {
     const div = document.createElement('div');
     div.appendChild(createLabel('project:', 'projectID'));
     const options = Project.all().map((data) => ({
-      value: data.id,
-      text: data.project.name,
+      value: todo.data.id,
+      text: todo.project().name,
     }));
 
     const input = createSelect('projectID', 'project', options);
@@ -200,7 +199,7 @@ const form = (data) => {
     const div = document.createElement('div');
 
     let buttonText;
-    if (exists) {
+    if (persisted) {
       buttonText = 'UPDATE';
     } else {
       buttonText = 'CREATE';

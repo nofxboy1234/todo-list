@@ -9,8 +9,8 @@ function createDefaultProject() {
 
 function defaultProjectData() {
   return {
-    id: 1,
-    project: {
+    data: {
+      id: 1,
       name: 'Default',
     },
   };
