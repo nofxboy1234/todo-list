@@ -66,7 +66,11 @@ const createController = (resourcePluralName, resourceClass, params) => {
     },
     edit: function () {
       this.setResourceSingular();
-      render(`${resourcePluralName}/edit`, this.resourceSingular);
+      if (this.resourceSingular) {
+        render(`${resourcePluralName}/edit`, this.resourceSingular);
+      } else {
+        render(`${resourcePluralName}/edit`, params);
+      }
     },
     update: function () {
       this.setResourceSingular();

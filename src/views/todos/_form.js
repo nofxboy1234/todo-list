@@ -41,8 +41,8 @@ const form = (todo) => {
 
   const currentData = () => {
     return {
-      id: todo.data.id,
-      todo: {
+      data: {
+        id: todo.data.id,
         title: title.input.value,
         description: description.input.value,
         dueDate: dueDate.input.value,
@@ -173,9 +173,9 @@ const form = (todo) => {
   const project = (() => {
     const div = document.createElement('div');
     div.appendChild(createLabel('project:', 'projectID'));
-    const options = Project.all().map((data) => ({
-      value: todo.data.id,
-      text: todo.project().name,
+    const options = Project.all().map((project) => ({
+      value: project.data.id,
+      text: project.data.name,
     }));
 
     const input = createSelect('projectID', 'project', options);

@@ -20,6 +20,7 @@ const createModel = (instanceProperties) => {
       };
 
       const instance = {
+        data: {},
         save: function () {
           this.data.id = nextID();
           getModels().push(this);
@@ -34,7 +35,7 @@ const createModel = (instanceProperties) => {
           getModels().splice(removeIndex, 1);
         },
       };
-      Object.assign(instance, parameters);
+      Object.assign(instance.data, parameters.data);
       Object.assign(instance, instanceProperties);
 
       return instance;

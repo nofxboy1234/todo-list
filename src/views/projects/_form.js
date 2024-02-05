@@ -22,8 +22,8 @@ const form = (project) => {
 
   const currentData = () => {
     return {
-      id: project.data.id,
-      project: {
+      data: {
+        id: project.data.id,
         name: name.input.value,
       },
     };

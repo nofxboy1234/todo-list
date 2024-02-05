@@ -6,8 +6,8 @@ const staticProperties = {};
 Object.assign(ProjectParameters, staticProperties);
 
 const initialParams = {
-  id: undefined,
-  project: {
+  data: {
+    id: undefined,
     name: '',
   },
 };

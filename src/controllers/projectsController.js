@@ -4,7 +4,7 @@ import { params as todoParams } from '../parameters/todoParameters';
 import { createController } from './controller';
 import { render } from '../renderer';
 
-import { editTodoPath, projectsPath, redirectTo } from '../router';
+import { newTodoPath, editTodoPath, projectsPath, redirectTo } from '../router';
 
 const Controller = createController('projects', Project, params);
 
@@ -15,6 +15,10 @@ const instanceProperties = {
 
     if (this.resourceSingular.save()) {
       redirectTo('GET', editTodoPath, todoParams);
+      // if (todoParams.data.id) {
+      // } else {
+      //   redirectTo('GET', newTodoPath, todoParams);
+      // }
       redirectTo('GET', projectsPath);
     } else {
       render(`${this.resourcePluralName}/new`, this.resourceSingular);
