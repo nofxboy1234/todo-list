@@ -14,11 +14,14 @@ const instanceProperties = {
     this.resourceSingular = this.resourceClass.new(params);
 
     if (this.resourceSingular.save()) {
+      const createdProjectData = {
+        data: {
+          projectID: this.resourceSingular.data.id,
+        },
+      };
+      todoParams.merge(createdProjectData);
+
       redirectTo('GET', editTodoPath, todoParams);
-      // if (todoParams.data.id) {
-      // } else {
-      //   redirectTo('GET', newTodoPath, todoParams);
-      // }
       redirectTo('GET', projectsPath);
     } else {
       render(`${this.resourcePluralName}/new`, this.resourceSingular);

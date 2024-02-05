@@ -10,7 +10,7 @@ const Partial = (project) => {
   const projectParagraph = document.createElement('p');
 
   const nameDiv = document.createElement('div');
-  nameDiv.textContent = project.project.name;
+  nameDiv.textContent = project.data.name;
   projectParagraph.appendChild(nameDiv);
 
   const destroyProject = () => {

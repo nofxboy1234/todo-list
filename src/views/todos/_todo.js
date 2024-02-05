@@ -6,23 +6,23 @@ const Partial = (todo) => {
   const todoParagraph = document.createElement('p');
 
   const titleDiv = document.createElement('div');
-  titleDiv.textContent = todo.todo.title;
+  titleDiv.textContent = todo.data.title;
   todoParagraph.appendChild(titleDiv);
 
   const descriptionDiv = document.createElement('div');
-  descriptionDiv.textContent = todo.todo.description;
+  descriptionDiv.textContent = todo.data.description;
   todoParagraph.appendChild(descriptionDiv);
 
   const dueDateDiv = document.createElement('div');
-  dueDateDiv.textContent = todo.todo.dueDate;
+  dueDateDiv.textContent = todo.data.dueDate;
   todoParagraph.appendChild(dueDateDiv);
 
   const priorityDiv = document.createElement('div');
-  priorityDiv.textContent = todo.todo.priority;
+  priorityDiv.textContent = todo.data.priority;
   todoParagraph.appendChild(priorityDiv);
 
   const checkListDiv = document.createElement('div');
-  for (const [key, value] of Object.entries(todo.todo.checkList)) {
+  for (const [key, value] of Object.entries(todo.data.checkList)) {
     const checkListEntryDiv = document.createElement('div');
     checkListEntryDiv.textContent = `- ${key}: ${value}`;
     checkListDiv.appendChild(checkListEntryDiv);
@@ -33,7 +33,7 @@ const Partial = (todo) => {
   const projectDiv = document.createElement('div');
 
   const projectInstance = todo.project();
-  projectDiv.textContent = projectInstance.project.name;
+  projectDiv.textContent = projectInstance.data.name;
   todoParagraph.appendChild(projectDiv);
 
   const destroyTodo = () => {

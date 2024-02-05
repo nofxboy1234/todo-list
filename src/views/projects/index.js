@@ -25,7 +25,7 @@ const render = (projects) => {
 
     project.todos().forEach((todoInstance) => {
       const div = document.createElement('div');
-      div.textContent = todoInstance.todo.title;
+      div.textContent = todoInstance.data.title;
       projectParagraph.appendChild(div);
     });
 
