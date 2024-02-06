@@ -16,7 +16,14 @@ const instanceProperties = {
 
     if (this.resourceSingular.save()) {
       redirectTo('GET', projectsPath);
+
+      // updateCachedView(indexTodo, )
       renderCachedView(indexTodo);
+
+      // render indexTodo for the last project that was displayed
+      // with updated array of todos
+      // Set these updated todos into cachedData: 
+
       // redirectTo('GET', todosPath, projectParams);
     } else {
       render(`${this.resourcePluralName}/new`, this.resourceSingular);

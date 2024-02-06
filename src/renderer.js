@@ -45,6 +45,10 @@ const isIndexView = (view) => {
   return resourcePluralViews.includes(view);
 };
 
+const removeViewFromCache = (view) => {
+  delete cache[view];
+};
+
 const renderCachedView = (view) => {
   const { cachedData, modelClass } = cache[view];
 
@@ -58,7 +62,7 @@ const renderCachedView = (view) => {
     } else {
       dataForView = modelClass.new(cachedData);
     }
-    delete cache[view];
+    removeViewFromCache(view);
   }
 
   renderView(view, dataForView);
