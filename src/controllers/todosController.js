@@ -2,7 +2,7 @@ import { Todo } from '../models/todo';
 import { params } from '../parameters/todoParameters';
 import { params as projectParams } from '../parameters/projectParameters';
 import { createController } from './controller';
-import { render } from '../renderer';
+import { indexTodo, render, renderCachedView } from '../renderer';
 
 import { todosPath, projectsPath, redirectTo } from '../router';
 import { Project } from '../models/project';
@@ -16,22 +16,28 @@ const instanceProperties = {
 
     if (this.resourceSingular.save()) {
       redirectTo('GET', projectsPath);
-      redirectTo('GET', todosPath);
+      renderCachedView(indexTodo);
+      // redirectTo('GET', todosPath, projectParams);
     } else {
       render(`${this.resourcePluralName}/new`, this.resourceSingular);
     }
   },
   index: function () {
-    const project = Project.find(params.data.projectID);
+    const temp = projectParams;
+    const project = Project.find(projectParams.data.id);
+    // const project = Project.find(params.data.projectID);
     this.resourcePlural = project.todos();
-    render(`${this.resourcePluralName}/index`, this.resourcePlural);
+
+    renderCachedView(indexTodo);
+    // render(`${this.resourcePluralName}/index`, this.resourcePlural);
   },
   update: function () {
     this.setResourceSingular();
 
     if (this.resourceSingular.update(this.params)) {
       redirectTo('GET', projectsPath);
-      redirectTo('GET', todosPath);
+      renderCachedView(indexTodo);
+      // redirectTo('GET', todosPath, projectParams);
     } else {
       render(`${this.resourcePluralName}/edit`, this.resourceSingular);
     }
@@ -41,7 +47,8 @@ const instanceProperties = {
     this.resourceSingular.destroy();
 
     redirectTo('GET', projectsPath);
-    redirectTo('GET', todosPath);
+    renderCachedView(indexTodo);
+    // redirectTo('GET', todosPath, projectParams);
   },
 };
 Object.assign(TodosController, instanceProperties);

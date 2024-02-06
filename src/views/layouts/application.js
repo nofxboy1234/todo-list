@@ -2,8 +2,18 @@ import { redirectTo, todosPath, newTodoPath, projectsPath } from '../../router';
 import { params as todoParams } from '../../parameters/todoParameters';
 import { cacheView, indexTodo } from '../../renderer';
 import { Project } from '../../models/project';
+import { params as projectParams } from '../../parameters/projectParameters';
 
 const newTodo = () => {
+  const projectData = {
+    data: {
+      id: projectParams.data.id,
+    },
+  };
+  const project = Project.find(projectData.data.id);
+  const todos = project.todos();
+  cacheView(indexTodo, projectData, 'todo', todos);
+
   redirectTo('GET', newTodoPath);
 };
 
@@ -44,12 +54,14 @@ const createLayout = () => {
 
   const projectData = {
     data: {
-      projectID: 1,
+      id: 1,
     },
   };
-  const project = Project.find(projectData.data.projectID);
+  projectParams.merge(projectData);
+  const project = Project.find(projectData.data.id);
   const todos = project.todos();
   cacheView(indexTodo, projectData, 'todo', todos);
+
   redirectTo('GET', todosPath, projectData);
 };
 

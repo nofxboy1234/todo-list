@@ -14,12 +14,13 @@ const render = (projects) => {
     const renderChildTodos = () => {
       const projectData = {
         data: {
-          projectID: project.data.id,
+          id: project.data.id,
         },
       };
-      // const project = Project.find(projectData.data.projectID);
+      projectParams.merge(projectData);
       const todos = project.todos();
       cacheView(indexTodo, projectData, 'todo', todos);
+
       redirectTo('GET', todosPath, projectData);
     };
 
