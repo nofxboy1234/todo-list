@@ -19,7 +19,7 @@ const render = (projects) => {
       };
       projectParams.merge(projectData);
       const todos = project.todos();
-      cacheView(indexTodo, projectData, 'todo', todos);
+      cacheView(indexTodo, todos, 'todo', project);
 
       redirectTo('GET', todosPath, projectData);
     };

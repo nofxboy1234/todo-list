@@ -12,7 +12,7 @@ const newTodo = () => {
   };
   const project = Project.find(projectData.data.id);
   const todos = project.todos();
-  cacheView(indexTodo, projectData, 'todo', todos);
+  cacheView(indexTodo, todos, 'todo', project);
 
   redirectTo('GET', newTodoPath);
 };
@@ -60,7 +60,7 @@ const createLayout = () => {
   projectParams.merge(projectData);
   const project = Project.find(projectData.data.id);
   const todos = project.todos();
-  cacheView(indexTodo, projectData, 'todo', todos);
+  cacheView(indexTodo, todos, 'todo', project);
 
   redirectTo('GET', todosPath, projectData);
 };

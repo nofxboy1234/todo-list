@@ -16,7 +16,7 @@ import { Project } from './models/project';
 const cache = {};
 const resourcePluralViews = [indexTodo, indexProject];
 
-const cacheView = (view, dataToCache, resourceSingularName, resources = []) => {
+const cacheView = (view, dataToCache, resourceSingularName, dataSource) => {
   let modelClass;
   switch (resourceSingularName) {
     case 'todo':
@@ -30,15 +30,23 @@ const cacheView = (view, dataToCache, resourceSingularName, resources = []) => {
       break;
   }
 
-  let dataToStore;
-  if (isIndexView(view)) {
-    dataToStore = resources;
-  } else {
-    dataToStore = dataToCache;
-  }
-
-  const viewData = Object.assign({}, { cachedData: dataToStore, modelClass });
+  const dataToCopy = { cachedData: dataToCache, modelClass, dataSource };
+  const viewData = Object.assign({}, dataToCopy);
   cache[view] = viewData;
+};
+
+const updateCachedView = (view, dataToCopy) => {
+  let {cachedData} = cache[view];
+  if (isIndexView(view)) {
+    cachedData = [...dataToCopy];
+  } else {
+    Object.assign(cachedData, dataToCopy);
+  }
+};
+
+const cachedViewDataSource = (view) => {
+  const {dataSource} = cache[view];
+  return dataSource;
 };
 
 const isIndexView = (view) => {
@@ -125,4 +133,6 @@ export {
   indexProject,
   newProject,
   editProject,
+  updateCachedView,
+  cachedViewDataSource
 };
