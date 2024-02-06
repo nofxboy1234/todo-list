@@ -12,36 +12,35 @@ import {
   todosPath,
   todoPath,
   newProjectPath,
-  saveState,
+  editTodoPath,
+  newTodoPath,
 } from '../../router';
-import { renderPreviousView, saveViewToHistory } from '../../renderer';
-import { render as newTodo } from './new';
-import { render as editTodo } from './edit';
+import {
+  cacheView,
+  editTodo,
+  indexTodo,
+  newTodo,
+  render,
+  renderCachedView,
+} from '../../renderer';
+import { params as todoParams } from '../../parameters/todoParameters';
 
 const form = (todo) => {
   const persisted = todo.data.id ? true : false;
 
   const cancelForm = () => {
-    renderPreviousView();
-  };
-
-  const getView = () => {
-    if (persisted) {
-      return editTodo;
-    } else {
-      return newTodo;
-    }
-  };
-
-  const cacheView = () => {
-    const view = getView();
-    const renderedView = view(currentData());
-    saveViewToHistory(renderedView);
+    renderCachedView(indexTodo);
   };
 
   const newProject = () => {
-    cacheView();
-    saveState('todos', currentData());
+    let view;
+    if (persisted) {
+      view = editTodo;
+    } else {
+      view = newTodo;
+    }
+    todoParams.merge(currentData());
+    cacheView(view, todoParams, 'todo');
     redirectTo('GET', newProjectPath);
   };
 

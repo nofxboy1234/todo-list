@@ -1,5 +1,7 @@
 import { redirectTo, todosPath, newTodoPath, projectsPath } from '../../router';
 import { params as todoParams } from '../../parameters/todoParameters';
+import { cacheView, indexTodo } from '../../renderer';
+import { Project } from '../../models/project';
 
 const newTodo = () => {
   redirectTo('GET', newTodoPath);
@@ -39,8 +41,16 @@ const createLayout = () => {
   menuContainer.appendChild(projectIndex);
 
   redirectTo('GET', projectsPath);
-  todoParams.data.projectID = 1;
-  redirectTo('GET', todosPath, todoParams);
+
+  const projectData = {
+    data: {
+      projectID: 1,
+    },
+  };
+  const project = Project.find(projectData.data.projectID);
+  const todos = project.todos();
+  cacheView(indexTodo, projectData, 'todo', todos);
+  redirectTo('GET', todosPath, projectData);
 };
 
 export { createLayout, menuContainer, contentContainer, projectIndex };

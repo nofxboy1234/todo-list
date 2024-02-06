@@ -1,13 +1,27 @@
 import { createLabel, createInput, createButton } from '../helpers';
 
-import { redirectTo, projectsPath, projectPath } from '../../router';
-import { renderPreviousView } from '../../renderer';
+import {
+  redirectTo,
+  projectsPath,
+  projectPath,
+  newTodoPath,
+} from '../../router';
+import { editTodo, newTodo, render, renderCachedView } from '../../renderer';
+import { params as todoParams } from '../../parameters/todoParameters';
 
 const form = (project) => {
   const persisted = project.data.id ? true : false;
 
   const cancelForm = () => {
-    renderPreviousView();
+    const persisted = todoParams.data.id ? true : false;
+
+    let view;
+    if (persisted) {
+      view = editTodo;
+    } else {
+      view = newTodo;
+    }
+    renderCachedView(view);
   };
 
   const createProject = (event) => {

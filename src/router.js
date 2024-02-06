@@ -46,7 +46,7 @@ const createRouter = (instanceProperties = {}, staticProperties = {}) => {
       };
 
       const instance = {
-        saveState: function (resourcePlural, data) {
+        saveToParameters: function (resourcePlural, data) {
           const resourceParams = parameters()[resourcePlural];
           resourceParams.merge(data);
         },
@@ -64,11 +64,11 @@ const createRouter = (instanceProperties = {}, staticProperties = {}) => {
             // todosPath, /todos
             case `/${resourcePlural}`:
               if (method === 'GET') {
-                saveState(resourcePlural, data);
+                saveToParameters(resourcePlural, data)
                 controller.index();
               }
               if (method === 'POST') {
-                saveState(resourcePlural, data);
+                saveToParameters(resourcePlural, data);
                 controller.create();
               }
               break;
@@ -83,26 +83,26 @@ const createRouter = (instanceProperties = {}, staticProperties = {}) => {
             // editTodoPath, /todos/:id/edit
             case `/${resourcePlural}/${data.id}/edit`:
               if (method === 'GET') {
-                saveState(resourcePlural, data);
+                saveToParameters(resourcePlural, data);
                 controller.edit();
               }
               break;
             // todoPath, /todos/:id
             case `/${resourcePlural}/${data.id}`:
               if (method === 'GET') {
-                saveState(resourcePlural, data);
+                saveToParameters(resourcePlural, data);
                 controller.show();
               }
               if (method === 'PATCH') {
-                saveState(resourcePlural, data);
+                saveToParameters(resourcePlural, data);
                 controller.update();
               }
               if (method === 'PUT') {
-                saveState(resourcePlural, data);
+                saveToParameters(resourcePlural, data);
                 controller.update();
               }
               if (method === 'DELETE') {
-                saveState(resourcePlural, data);
+                saveToParameters(resourcePlural, data);
                 controller.destroy();
               }
               break;
@@ -165,7 +165,7 @@ const router = Router.new();
 router.createRoutes('todo', 'todos');
 router.createRoutes('project', 'projects');
 
-const saveState = router.saveState;
+const saveToParameters = router.saveToParameters;
 const redirectTo = router.redirectTo;
 const rootPath = routes.rootPath;
 
@@ -180,7 +180,6 @@ const editProjectPath = routes.editProjectPath;
 const projectPath = routes.projectPath;
 
 export {
-  saveState,
   redirectTo,
   rootPath,
   todosPath,

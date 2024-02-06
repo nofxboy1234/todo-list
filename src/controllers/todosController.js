@@ -1,5 +1,6 @@
 import { Todo } from '../models/todo';
 import { params } from '../parameters/todoParameters';
+import { params as projectParams } from '../parameters/projectParameters';
 import { createController } from './controller';
 import { render } from '../renderer';
 
@@ -21,7 +22,6 @@ const instanceProperties = {
     }
   },
   index: function () {
-    const todoParams = params;
     const project = Project.find(params.data.projectID);
     this.resourcePlural = project.todos();
     render(`${this.resourcePluralName}/index`, this.resourcePlural);

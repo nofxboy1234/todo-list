@@ -10,21 +10,58 @@ import { render as editProject } from './views/projects/edit';
 
 import { contentContainer, projectIndex } from './views/layouts/application';
 import { clearContent, clearProjectIndex } from './views/helpers';
+import { Todo } from './models/todo';
+import { Project } from './models/project';
 
-let viewHistory = [];
+const cache = {};
+const resourcePluralViews = [indexTodo, indexProject];
 
-const saveViewToHistory = (cachedView) => {
-  viewHistory.push(cachedView);
+const cacheView = (view, dataToCache, resourceSingularName, resources = []) => {
+  let modelClass;
+  switch (resourceSingularName) {
+    case 'todo':
+      modelClass = Todo;
+      break;
+    case 'project':
+      modelClass = Project;
+      break;
+
+    default:
+      break;
+  }
+
+  let dataToStore;
+  if (isIndexView(view)) {
+    dataToStore = resources;
+  } else {
+    dataToStore = dataToCache;
+  }
+
+  const viewData = Object.assign({}, { cachedData: dataToStore, modelClass });
+  cache[view] = viewData;
 };
 
-const previousView = () => {
-  return viewHistory.pop();
+const isIndexView = (view) => {
+  return resourcePluralViews.includes(view);
 };
 
-const renderPreviousView = () => {
-  clearContent();
-  const cachedView = previousView();
-  contentContainer.appendChild(cachedView);
+const renderCachedView = (view) => {
+  const { cachedData, modelClass } = cache[view];
+
+  let dataForView;
+  if (isIndexView(view)) {
+    dataForView = cachedData;
+  } else {
+    const persisted = cachedData.data.id ? true : false;
+    if (persisted) {
+      dataForView = modelClass.find(cachedData.data.id);
+    } else {
+      dataForView = modelClass.new(cachedData);
+    }
+  }
+
+  delete cache[view];
+  renderView(view, dataForView);
 };
 
 const renderView = (view, data) => {
@@ -72,4 +109,16 @@ const render = (path, data) => {
   }
 };
 
-export { render, renderPreviousView, saveViewToHistory };
+export {
+  render,
+  cacheView,
+  renderCachedView,
+  showTodo,
+  indexTodo,
+  newTodo,
+  editTodo,
+  showProject,
+  indexProject,
+  newProject,
+  editProject,
+};
