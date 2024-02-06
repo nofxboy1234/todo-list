@@ -1,7 +1,9 @@
+*Fixing navigation between Todo and Project views
+
 What needs to update when a Project is Created, Updated, Destroyed?
 Set up Tasks
-
 Today, Upcoming etc links (data-fns)
+Check what happens when saving a resource etc fails
 
 LocalStorage
 

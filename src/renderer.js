@@ -36,7 +36,8 @@ const cacheView = (view, dataToCache, resourceSingularName, dataSource) => {
 };
 
 const updateCachedView = (view, dataToCopy) => {
-  let {cachedData} = cache[view];
+  let cachedData = cache[view].cachedData;
+  // let {cachedData} = cache[view];
   if (isIndexView(view)) {
     cachedData = [...dataToCopy];
   } else {
