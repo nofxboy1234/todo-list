@@ -15,7 +15,7 @@ const createParameters = (instanceProperties) => {
       };
       instance.clear();
       instance.reset();
-      instance.merge(instanceProperties);
+      Object.assign(instance, instanceProperties);
 
       return instance;
     },
