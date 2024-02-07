@@ -31,22 +31,22 @@ const cacheView = (view, dataToCache, resourceSingularName, dataSource) => {
   }
 
   const dataToCopy = { cachedData: dataToCache, modelClass, dataSource };
-  const viewData = Object.assign({}, dataToCopy);
-  cache[view] = viewData;
+  const copyOfData = Object.assign({}, dataToCopy);
+  cache[view] = copyOfData;
 };
 
 const updateCachedView = (view, dataToCopy) => {
-  let cachedData = cache[view].cachedData;
-  // let {cachedData} = cache[view];
+  let copyOfData;
   if (isIndexView(view)) {
-    cachedData = [...dataToCopy];
+    copyOfData = [...dataToCopy];
   } else {
-    Object.assign(cachedData, dataToCopy);
+    copyOfData = Object.assign({}, dataToCopy);
   }
+  cache[view].cachedData = copyOfData;
 };
 
 const cachedViewDataSource = (view) => {
-  const {dataSource} = cache[view];
+  const { dataSource } = cache[view];
   return dataSource;
 };
 
@@ -135,5 +135,5 @@ export {
   newProject,
   editProject,
   updateCachedView,
-  cachedViewDataSource
+  cachedViewDataSource,
 };
