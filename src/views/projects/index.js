@@ -17,11 +17,10 @@ const render = (projects) => {
           id: project.data.id,
         },
       };
-      projectParams.merge(projectData);
       const todos = project.todos();
       cacheView(indexTodo, todos, 'todo', project);
 
-      redirectTo('GET', todosPath, projectData);
+      redirectTo('GET', todosPath);
     };
 
     const nameDiv = document.createElement('div');

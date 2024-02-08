@@ -5,15 +5,6 @@ import { Project } from '../../models/project';
 import { params as projectParams } from '../../parameters/projectParameters';
 
 const newTodo = () => {
-  const projectData = {
-    data: {
-      id: projectParams.data.id,
-    },
-  };
-  const project = Project.find(projectData.data.id);
-  const todos = project.todos();
-  cacheView(indexTodo, todos, 'todo', project);
-
   redirectTo('GET', newTodoPath);
 };
 
@@ -52,17 +43,11 @@ const createLayout = () => {
 
   redirectTo('GET', projectsPath);
 
-  const projectData = {
-    data: {
-      id: 1,
-    },
-  };
-  projectParams.merge(projectData);
-  const project = Project.find(projectData.data.id);
+  const project = Project.first();
   const todos = project.todos();
   cacheView(indexTodo, todos, 'todo', project);
 
-  redirectTo('GET', todosPath, projectData);
+  redirectTo('GET', todosPath);
 };
 
 export { createLayout, menuContainer, contentContainer, projectIndex };

@@ -13,10 +13,10 @@ const form = (project) => {
   const persisted = project.data.id ? true : false;
 
   const cancelForm = () => {
-    const persisted = todoParams.data.id ? true : false;
+    const todoPersisted = todoParams.data.id ? true : false;
 
     let view;
-    if (persisted) {
+    if (todoPersisted) {
       view = editTodo;
     } else {
       view = newTodo;
