@@ -72,8 +72,8 @@ const renderCachedView = (view) => {
     } else {
       dataForView = modelClass.new(cachedData);
     }
-    removeViewFromCache(view);
   }
+  removeViewFromCache(view);
 
   renderView(view, dataForView);
 };
