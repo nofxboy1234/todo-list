@@ -1,8 +1,6 @@
 import { createButton } from '../helpers';
 import { redirectTo, projectPath, todosPath } from '../../router';
-import { params as projectParams } from '../../parameters/projectParameters';
 import { cacheView, indexTodo } from '../../renderer';
-import { Project } from '../../models/project';
 
 const render = (projects) => {
   const projectParagraph = document.createElement('p');
@@ -12,11 +10,6 @@ const render = (projects) => {
     };
 
     const renderChildTodos = () => {
-      const projectData = {
-        data: {
-          id: project.data.id,
-        },
-      };
       const todos = project.todos();
       cacheView(indexTodo, todos, 'todo', project);
 

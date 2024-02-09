@@ -4,9 +4,8 @@ import {
   redirectTo,
   projectsPath,
   projectPath,
-  newTodoPath,
 } from '../../router';
-import { editTodo, newTodo, render, renderCachedView } from '../../renderer';
+import { editTodo, newTodo, renderCachedView } from '../../renderer';
 import { params as todoParams } from '../../parameters/todoParameters';
 
 const form = (project) => {

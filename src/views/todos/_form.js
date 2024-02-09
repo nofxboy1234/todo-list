@@ -12,15 +12,12 @@ import {
   todosPath,
   todoPath,
   newProjectPath,
-  editTodoPath,
-  newTodoPath,
 } from '../../router';
 import {
   cacheView,
   editTodo,
   indexTodo,
   newTodo,
-  render,
   renderCachedView,
 } from '../../renderer';
 import { params as todoParams } from '../../parameters/todoParameters';

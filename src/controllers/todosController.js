@@ -1,6 +1,5 @@
 import { Todo } from '../models/todo';
 import { params } from '../parameters/todoParameters';
-import { params as projectParams } from '../parameters/projectParameters';
 import { createController } from './controller';
 import {
   cachedViewDataSource,
@@ -11,7 +10,6 @@ import {
 } from '../renderer';
 
 import { todosPath, projectsPath, redirectTo } from '../router';
-import { Project } from '../models/project';
 
 const Controller = createController('todos', Todo, params);
 
@@ -32,7 +30,6 @@ const instanceProperties = {
     const todos = project.todos();
     updateCachedView(indexTodo, todos);
     renderCachedView(indexTodo);
-    // render(`${this.resourcePluralName}/index`, this.resourcePlural);
   },
   update: function () {
     this.setResourceSingular();

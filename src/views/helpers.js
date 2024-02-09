@@ -1,6 +1,4 @@
 import { contentContainer, projectIndex } from './layouts/application';
-import { Todo } from '../models/todo';
-import { render } from '../renderer';
 
 const clearContent = () => {
   while (contentContainer.firstChild) {

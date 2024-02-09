@@ -1,8 +1,6 @@
 import { redirectTo, todosPath, newTodoPath, projectsPath } from '../../router';
-import { params as todoParams } from '../../parameters/todoParameters';
 import { cacheView, indexTodo } from '../../renderer';
 import { Project } from '../../models/project';
-import { params as projectParams } from '../../parameters/projectParameters';
 
 const newTodo = () => {
   redirectTo('GET', newTodoPath);
