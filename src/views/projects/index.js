@@ -10,9 +10,6 @@ const render = (projects) => {
     };
 
     const renderChildTodos = () => {
-      const todos = project.todos();
-      cacheView(indexTodo, todos, 'todo', project);
-
       redirectTo('GET', todosPath);
     };
 

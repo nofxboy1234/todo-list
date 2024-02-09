@@ -1,6 +1,16 @@
 import { createButton } from '../helpers';
 import { redirectTo, todoPath } from '../../router';
 
+let project;
+
+const setProject = (renderedProject) => {
+  project = renderedProject;
+};
+
+const getProject = () => {
+  return project;
+}
+
 const render = (todos) => {
   const todoParagraph = document.createElement('p');
   todos.forEach((todo) => {
@@ -29,4 +39,4 @@ const render = (todos) => {
   return todoParagraph;
 };
 
-export { render };
+export { render, setProject };
