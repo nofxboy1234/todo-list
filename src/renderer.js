@@ -68,7 +68,6 @@ const renderCachedView = (view) => {
     const persisted = cachedData.data.id ? true : false;
     if (persisted) {
       dataForView = modelClass.new(cachedData);
-      // dataForView = modelClass.find(cachedData.data.id);
     } else {
       dataForView = modelClass.new(cachedData);
     }
