@@ -5,8 +5,6 @@ import {
   cachedViewDataSource,
   indexTodo,
   render,
-  renderCachedView,
-  updateCachedView,
 } from '../renderer';
 
 import { todosPath, projectsPath, redirectTo } from '../router';
@@ -29,7 +27,6 @@ const instanceProperties = {
   index: function () {
     const project = getProjectForTodosIndex();
     const todos = project.todos();
-
     render('todos/index', todos);
   },
   update: function () {

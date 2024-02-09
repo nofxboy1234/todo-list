@@ -7,17 +7,13 @@ import {
 } from '../helpers';
 import { Project } from '../../models/project';
 
-import {
-  redirectTo,
-  todosPath,
-  todoPath,
-  newProjectPath,
-} from '../../router';
+import { redirectTo, todosPath, todoPath, newProjectPath } from '../../router';
 import {
   cacheView,
   editTodo,
   indexTodo,
   newTodo,
+  render,
   renderCachedView,
 } from '../../renderer';
 import { params as todoParams } from '../../parameters/todoParameters';
@@ -26,7 +22,10 @@ const form = (todo) => {
   const persisted = todo.data.id ? true : false;
 
   const cancelForm = () => {
-    renderCachedView(indexTodo);
+    const project = getProjectForTodosIndex();
+    const todos = project.todos();
+    render('todos/index', todos);
+    // renderCachedView();
   };
 
   const newProject = () => {
@@ -37,7 +36,7 @@ const form = (todo) => {
       view = newTodo;
     }
     todoParams.merge(currentData());
-    cacheView(view, todoParams, 'todo');
+    cacheView(view(todoParams));
     redirectTo('GET', newProjectPath);
   };
 

@@ -13,95 +13,56 @@ import { clearContent, clearProjectIndex } from './views/helpers';
 import { Todo } from './models/todo';
 import { Project } from './models/project';
 
-const cache = {};
-const resourcePluralViews = [indexTodo, indexProject];
+const cache = [];
 
-const cacheView = (view, dataToCache, resourceSingularName, dataSource) => {
-  let modelClass;
-  switch (resourceSingularName) {
-    case 'todo':
-      modelClass = Todo;
-      break;
-    case 'project':
-      modelClass = Project;
-      break;
+// const getModelClass = (resourceSingularName) => {
+//   let modelClass;
+//   switch (resourceSingularName) {
+//     case 'todo':
+//       modelClass = Todo;
+//       break;
+//     case 'project':
+//       modelClass = Project;
+//       break;
 
-    default:
-      break;
-  }
+//     default:
+//       break;
+//   }
+//   return modelClass;
+// };
 
-  const dataToCopy = { cachedData: dataToCache, modelClass, dataSource };
-  const copyOfData = Object.assign({}, dataToCopy);
-  cache[view] = copyOfData;
+const cacheView = (view) => {
+  cache.push(view);
 };
 
-const updateCachedView = (view, dataToCopy) => {
-  let copyOfData;
-  if (isIndexView(view)) {
-    copyOfData = [...dataToCopy];
-  } else {
-    copyOfData = Object.assign({}, dataToCopy);
-  }
-  cache[view].cachedData = copyOfData;
+const renderCachedView = () => {
+  renderView(cache.pop());
 };
 
-const cachedViewDataSource = (view) => {
-  const { dataSource } = cache[view];
-  return dataSource;
-};
-
-const isIndexView = (view) => {
-  return resourcePluralViews.includes(view);
-};
-
-const removeViewFromCache = (view) => {
-  delete cache[view];
-};
-
-const renderCachedView = (view) => {
-  const { cachedData, modelClass } = cache[view];
-
-  let dataForView;
-  if (isIndexView(view)) {
-    dataForView = cachedData;
-  } else {
-    const persisted = cachedData.data.id ? true : false;
-    if (persisted) {
-      dataForView = modelClass.new(cachedData);
-    } else {
-      dataForView = modelClass.new(cachedData);
-    }
-  }
-  removeViewFromCache(view);
-
-  renderView(view, dataForView);
-};
-
-const renderView = (view, data) => {
+const renderView = (view) => {
   clearContent();
-  const renderedView = view(data);
-  contentContainer.appendChild(renderedView);
+  contentContainer.appendChild(view);
 };
 
 const render = (path, data) => {
   switch (path) {
     case 'todos/new':
-      renderView(newTodo, data);
+      renderView(newTodo(data));
       document.getElementById('titleID').focus();
       break;
     case 'todos/index':
-      renderView(indexTodo, data);
+      renderView(indexTodo(data));
       break;
     case 'todos/show':
-      renderView(showTodo, data);
+      renderView(showTodo(data));
       break;
     case 'todos/edit':
-      renderView(editTodo, data);
+      renderView(editTodo(data));
       document.getElementById('titleID').focus();
       break;
 
     case 'projects/new':
-      renderView(newProject, data);
+      renderView(newProject(data));
       document.getElementById('nameID').focus();
       break;
     case 'projects/index':
@@ -110,10 +71,10 @@ const render = (path, data) => {
       projectIndex.appendChild(renderedView);
       break;
     case 'projects/show':
-      renderView(showProject, data);
+      renderView(showProject(data));
       break;
     case 'projects/edit':
-      renderView(editProject, data);
+      renderView(editProject(data));
       document.getElementById('nameID').focus();
       break;
 
@@ -134,6 +95,4 @@ export {
   indexProject,
   newProject,
   editProject,
-  updateCachedView,
-  cachedViewDataSource,
 };

@@ -20,7 +20,7 @@ const form = (project) => {
     } else {
       view = newTodo;
     }
-    renderCachedView(view);
+    renderCachedView();
   };
 
   const createProject = (event) => {

@@ -1,6 +1,5 @@
 import { createButton } from '../helpers';
 import { redirectTo, projectPath, todosPath } from '../../router';
-import { cacheView, indexTodo } from '../../renderer';
 import { setProjectForTodosIndex } from '../todos';
 
 const render = (projects) => {
