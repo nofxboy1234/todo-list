@@ -10,6 +10,7 @@ import {
 } from '../renderer';
 
 import { todosPath, projectsPath, redirectTo } from '../router';
+import { getProjectForTodosIndex } from '../views/todos';
 
 const Controller = createController('todos', Todo, params);
 
@@ -26,7 +27,7 @@ const instanceProperties = {
     }
   },
   index: function () {
-    const project = cachedViewDataSource(indexTodo);
+    const project = getProjectForTodosIndex();
     const todos = project.todos();
 
     render('todos/index', todos);

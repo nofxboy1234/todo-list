@@ -3,13 +3,13 @@ import { redirectTo, todoPath } from '../../router';
 
 let project;
 
-const setProject = (renderedProject) => {
+const setProjectForTodosIndex = (renderedProject) => {
   project = renderedProject;
 };
 
-const getProject = () => {
+const getProjectForTodosIndex = () => {
   return project;
-}
+};
 
 const render = (todos) => {
   const todoParagraph = document.createElement('p');
@@ -39,4 +39,4 @@ const render = (todos) => {
   return todoParagraph;
 };
 
-export { render, setProject };
+export { render, setProjectForTodosIndex, getProjectForTodosIndex };

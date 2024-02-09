@@ -1,6 +1,7 @@
 import { createButton } from '../helpers';
 import { redirectTo, projectPath, todosPath } from '../../router';
 import { cacheView, indexTodo } from '../../renderer';
+import { setProjectForTodosIndex } from '../todos';
 
 const render = (projects) => {
   const projectParagraph = document.createElement('p');
@@ -10,6 +11,7 @@ const render = (projects) => {
     };
 
     const renderChildTodos = () => {
+      setProjectForTodosIndex(project);
       redirectTo('GET', todosPath);
     };
 
