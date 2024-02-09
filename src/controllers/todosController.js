@@ -28,8 +28,10 @@ const instanceProperties = {
   index: function () {
     const project = cachedViewDataSource(indexTodo);
     const todos = project.todos();
-    updateCachedView(indexTodo, todos);
-    renderCachedView(indexTodo);
+
+    render('todos/index', todos);
+    // updateCachedView(indexTodo, todos);
+    // renderCachedView(indexTodo);
   },
   update: function () {
     this.setResourceSingular();
