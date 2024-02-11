@@ -17,6 +17,7 @@ import {
   renderCachedView,
 } from '../../renderer';
 import { params as todoParams } from '../../parameters/todoParameters';
+import { getProjectForTodosIndex } from '.';
 
 const form = (todo) => {
   const persisted = todo.data.id ? true : false;
@@ -25,7 +26,6 @@ const form = (todo) => {
     const project = getProjectForTodosIndex();
     const todos = project.todos();
     render('todos/index', todos);
-    // renderCachedView();
   };
 
   const newProject = () => {

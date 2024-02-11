@@ -15,22 +15,6 @@ import { Project } from './models/project';
 
 const cache = [];
 
-// const getModelClass = (resourceSingularName) => {
-//   let modelClass;
-//   switch (resourceSingularName) {
-//     case 'todo':
-//       modelClass = Todo;
-//       break;
-//     case 'project':
-//       modelClass = Project;
-//       break;
-
-//     default:
-//       break;
-//   }
-//   return modelClass;
-// };
-
 const cacheView = (view) => {
   cache.push(view);
 };
