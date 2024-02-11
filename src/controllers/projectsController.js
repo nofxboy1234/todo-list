@@ -20,7 +20,6 @@ const instanceProperties = {
         },
       };
       todoParams.merge(createdProjectData);
-
       redirectTo('GET', editTodoPath, todoParams);
       redirectTo('GET', projectsPath);
     } else {

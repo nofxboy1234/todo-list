@@ -1,6 +1,11 @@
 import { createButton } from '../helpers';
-import { redirectTo, editTodoPath, todoPath } from '../../router';
-import { cacheView, indexTodo, renderCachedView } from '../../renderer';
+import { redirectTo, editTodoPath, todoPath, todosPath } from '../../router';
+import {
+  cacheView,
+  popCachedView,
+  renderCachedView,
+  showTodo,
+} from '../../renderer';
 
 const Partial = (todo) => {
   const todoParagraph = document.createElement('p');
@@ -41,12 +46,12 @@ const Partial = (todo) => {
   };
 
   const editTodo = () => {
-    cacheView(Partial(todo));
+    cacheView(showTodo(todo));
     redirectTo('GET', editTodoPath, todo);
   };
 
   const closeTodo = () => {
-    renderCachedView();
+    redirectTo('GET', todosPath);
   };
 
   const deleteButton = createButton('button', 'DELETE', 'deleteButtonID');

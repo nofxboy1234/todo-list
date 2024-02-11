@@ -13,19 +13,17 @@ import {
   editTodo,
   indexTodo,
   newTodo,
+  popCachedView,
   render,
   renderCachedView,
 } from '../../renderer';
 import { params as todoParams } from '../../parameters/todoParameters';
-import { getProjectForTodosIndex } from '.';
 
 const form = (todo) => {
   const persisted = todo.data.id ? true : false;
 
   const cancelForm = () => {
-    const project = getProjectForTodosIndex();
-    const todos = project.todos();
-    render('todos/index', todos);
+    renderCachedView();
   };
 
   const newProject = () => {
@@ -42,11 +40,13 @@ const form = (todo) => {
 
   const createTodo = (event) => {
     event.preventDefault();
+    popCachedView();
     redirectTo('POST', todosPath, currentData());
   };
 
   const updateTodo = (event) => {
     event.preventDefault();
+    popCachedView();
     redirectTo('PATCH', todoPath, currentData());
   };
 

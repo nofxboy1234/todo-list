@@ -1,13 +1,9 @@
 import { Todo } from '../models/todo';
 import { params } from '../parameters/todoParameters';
 import { createController } from './controller';
-import {
-  cachedViewDataSource,
-  indexTodo,
-  render,
-} from '../renderer';
+import { cachedViewDataSource, indexTodo, render } from '../renderer';
 
-import { todosPath, projectsPath, redirectTo } from '../router';
+import { todosPath, projectsPath, redirectTo, todoPath } from '../router';
 import { getProjectForTodosIndex } from '../views/todos';
 
 const Controller = createController('todos', Todo, params);
@@ -34,7 +30,7 @@ const instanceProperties = {
 
     if (this.resourceSingular.update(this.params)) {
       redirectTo('GET', projectsPath);
-      redirectTo('GET', todosPath);
+      redirectTo('GET', todoPath, this.resourceSingular);
     } else {
       render(`${this.resourcePluralName}/edit`, this.resourceSingular);
     }

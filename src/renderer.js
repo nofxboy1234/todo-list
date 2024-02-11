@@ -19,8 +19,13 @@ const cacheView = (view) => {
   cache.push(view);
 };
 
+const popCachedView = () => {
+  return cache.pop();
+};
+
 const renderCachedView = () => {
-  renderView(cache.pop());
+  const view = popCachedView();
+  renderView(view);
 };
 
 const renderView = (view) => {
@@ -29,6 +34,7 @@ const renderView = (view) => {
 };
 
 const render = (path, data) => {
+  let injectedView;
   switch (path) {
     case 'todos/new':
       renderView(newTodo(data));
@@ -70,6 +76,7 @@ const render = (path, data) => {
 export {
   render,
   cacheView,
+  popCachedView,
   renderCachedView,
   showTodo,
   indexTodo,
