@@ -31,6 +31,7 @@ const createModel = (instanceProperties) => {
           return true;
         },
         destroy: function () {
+          this.destroyDependent();
           const removeIndex = getModels().indexOf(this);
           getModels().splice(removeIndex, 1);
         },

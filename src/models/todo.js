@@ -7,6 +7,11 @@ const instanceProperties = {
       Project.find(this.data.projectID) || { data: { name: 'no project' } }
     );
   },
+  destroyDependent: function () {
+    // this.tasks().forEach((task) => {
+    //   task.destroy();
+    // });
+  },
 };
 const Todo = Object.assign({}, Model(instanceProperties));
 const staticProperties = {};

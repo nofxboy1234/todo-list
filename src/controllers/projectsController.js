@@ -26,6 +26,11 @@ const instanceProperties = {
       render(`${this.resourcePluralName}/new`, this.resourceSingular);
     }
   },
+  destroy: function () {
+    this.setResourceSingular();
+    this.resourceSingular.destroy();
+    redirectTo('GET', projectsPath);
+  },
 };
 Object.assign(ProjectsController, instanceProperties);
 
