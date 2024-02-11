@@ -4,7 +4,11 @@ import { params as todoParams } from '../parameters/todoParameters';
 import { createController } from './controller';
 import { render } from '../renderer';
 
-import { editTodoPath, projectsPath, redirectTo } from '../router';
+import { editTodoPath, projectsPath, redirectTo, todosPath } from '../router';
+import {
+  getProjectForTodosIndex,
+  setProjectForTodosIndex,
+} from '../views/todos';
 
 const Controller = createController('projects', Project, params);
 
@@ -30,6 +34,11 @@ const instanceProperties = {
     this.setResourceSingular();
     this.resourceSingular.destroy();
     redirectTo('GET', projectsPath);
+
+    if (!Project.all().includes(getProjectForTodosIndex())) {
+      setProjectForTodosIndex(Project.first());
+      redirectTo('GET', todosPath);
+    }
   },
 };
 Object.assign(ProjectsController, instanceProperties);
