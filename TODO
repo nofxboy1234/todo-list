@@ -1,9 +1,8 @@
-Change indexTodo view if the Project it's rendering is Deleted
-What needs to update when a Project is Updated, Destroyed?
+Add 'Update' Project Button
 
 Set up Tasks
-
 Check what happens when operating on a resource etc fails
+
 Today, Upcoming etc links (data-fns)
 
 LocalStorage
