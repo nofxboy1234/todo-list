@@ -25,9 +25,11 @@ const render = (projects) => {
       projectParagraph.appendChild(div);
     });
 
-    const deleteButton = createButton('button', 'DELETE', 'deleteButtonID');
-    deleteButton.addEventListener('click', destroyProject);
-    projectParagraph.appendChild(deleteButton);
+    if (project.data.id != 1) {
+      const deleteButton = createButton('button', 'DELETE', 'deleteButtonID');
+      deleteButton.addEventListener('click', destroyProject);
+      projectParagraph.appendChild(deleteButton);
+    }
   });
 
   return projectParagraph;
