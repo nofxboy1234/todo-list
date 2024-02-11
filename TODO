@@ -1,3 +1,4 @@
+Change indexTodo view if the Project it's rendering is Deleted
 What needs to update when a Project is Updated, Destroyed?
 
 Set up Tasks
