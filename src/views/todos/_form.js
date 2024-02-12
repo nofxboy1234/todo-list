@@ -42,7 +42,7 @@ const form = (todo) => {
     redirectTo('GET', newProjectPath);
   };
 
-  const updateProject = () => {
+  const editProject = () => {
     let view;
     if (persisted) {
       view = editTodo;
@@ -53,6 +53,18 @@ const form = (todo) => {
     cacheView(view(todoParams));
     const projectToEdit = Project.find(Number(project.input.value));
     redirectTo('GET', editProjectPath, projectToEdit);
+  };
+
+  const newTask = () => {
+    // let view;
+    // if (persisted) {
+    //   view = editTodo;
+    // } else {
+    //   view = newTodo;
+    // }
+    // todoParams.merge(currentData());
+    // cacheView(view(todoParams));
+    // redirectTo('GET', newProjectPath);
   };
 
   const createTodo = (event) => {
@@ -75,19 +87,14 @@ const form = (todo) => {
         description: description.input.value,
         dueDate: dueDate.input.value,
         priority: priority.input.value,
-        checkList: getChecklist(),
+        checkList: getTasks(),
         projectID: Number(project.input.value),
       },
     };
   };
 
-  const getChecklist = () => {
-    const taskCheckboxes = document.getElementsByName('task');
-    const checklist = {};
-    taskCheckboxes.forEach((checkbox) => {
-      checklist[checkbox.value] = checkbox.checked;
-    });
-    return checklist;
+  const getTasks = () => {
+    return {};
   };
 
   const submitButtonCallback = () => {
@@ -127,14 +134,15 @@ const form = (todo) => {
       project.input.value = Project.first().data.id;
     }
 
-    setUpdateProjectButtonState();
+    setEditProjectButtonState();
   };
 
   const setupEventListeners = () => {
     submit.button.addEventListener('click', submitButtonCallback());
-    project.button.addEventListener('click', newProject);
-    project.input.addEventListener('change', setUpdateProjectButtonState);
-    project.updateButton.addEventListener('click', updateProject);
+    taskList.newButton.addEventListener('click', newTask);
+    project.newButton.addEventListener('click', newProject);
+    project.input.addEventListener('change', setEditProjectButtonState);
+    project.editButton.addEventListener('click', editProject);
     cancel.button.addEventListener('click', cancelForm);
   };
 
@@ -186,17 +194,17 @@ const form = (todo) => {
     checkListLabelDiv.textContent = 'tasks:';
     div.appendChild(checkListLabelDiv);
 
-    const button = createButton('button', 'NEW', 'newTaskButtonID');
-    div.appendChild(button);
+    const newButton = createButton('button', 'NEW', 'newTaskButtonID');
+    div.appendChild(newButton);
 
-    return { div };
+    return { div, newButton };
   })();
 
-  const setUpdateProjectButtonState = () => {
+  const setEditProjectButtonState = () => {
     if (project.input.value === '1') {
-      project.updateButton.disabled = true;
+      project.editButton.disabled = true;
     } else {
-      project.updateButton.disabled = false;
+      project.editButton.disabled = false;
     }
   };
 
@@ -211,13 +219,13 @@ const form = (todo) => {
     const input = createSelect('projectID', 'project', options);
     div.appendChild(input);
 
-    const button = createButton('button', 'NEW', 'newProjectButtonID');
-    div.appendChild(button);
+    const newButton = createButton('button', 'NEW', 'newProjectButtonID');
+    div.appendChild(newButton);
 
-    const updateButton = createButton('button', 'UPDATE', 'updateButtonID');
-    div.appendChild(updateButton);
+    const editButton = createButton('button', 'EDIT', 'editProjectButtonID');
+    div.appendChild(editButton);
 
-    return { div, input, button, updateButton };
+    return { div, input, newButton, editButton };
   })();
 
   const cancel = (() => {
