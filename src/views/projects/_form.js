@@ -1,6 +1,6 @@
 import { createLabel, createInput, createButton } from '../helpers';
 
-import { redirectTo, projectsPath, projectPath } from '../../router';
+import { redirectTo, projectsPath, projectPath, editTodoPath } from '../../router';
 import {
   editTodo,
   newTodo,
@@ -26,6 +26,7 @@ const form = (project) => {
     event.preventDefault();
     popCachedView();
     redirectTo('PATCH', projectPath, currentData());
+    // redirectTo('GET', editTodoPath)
   };
 
   const currentData = () => {
