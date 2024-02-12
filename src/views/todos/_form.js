@@ -81,6 +81,10 @@ const form = (todo) => {
     }
   };
 
+  const setUpdateButtonState = (event) => {
+    console.log(event.target.value);
+  };
+
   const setupUI = () => {
     const todoForm = document.createElement('form');
     todoForm.classList.add('new-todo-form');
@@ -114,6 +118,7 @@ const form = (todo) => {
   const setupEventListeners = () => {
     submit.button.addEventListener('click', submitButtonCallback());
     project.button.addEventListener('click', newProject);
+    project.input.addEventListener('change', setUpdateButtonState);
     cancel.button.addEventListener('click', cancelForm);
   };
 
