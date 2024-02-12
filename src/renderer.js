@@ -10,8 +10,6 @@ import { render as editProject } from './views/projects/edit';
 
 import { contentContainer, projectIndex } from './views/layouts/application';
 import { clearContent, clearProjectIndex } from './views/helpers';
-import { Todo } from './models/todo';
-import { Project } from './models/project';
 
 const cache = [];
 

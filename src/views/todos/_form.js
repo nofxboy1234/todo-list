@@ -17,10 +17,8 @@ import {
 import {
   cacheView,
   editTodo,
-  indexTodo,
   newTodo,
   popCachedView,
-  render,
   renderCachedView,
 } from '../../renderer';
 import { params as todoParams } from '../../parameters/todoParameters';
@@ -188,7 +186,6 @@ const form = (todo) => {
     checkListLabelDiv.textContent = 'checklist:';
     div.appendChild(checkListLabelDiv);
 
-    // { 'fill water bowl': false, 'fill food bowl': false };
     if (todo.data.checkList) {
       const keys = Object.keys(todo.data.checkList);
       keys.forEach((key) => {

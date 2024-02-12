@@ -8,9 +8,6 @@ const instanceProperties = {
     );
   },
   destroyDependent: function () {
-    // this.tasks().forEach((task) => {
-    //   task.destroy();
-    // });
   },
 };
 const Todo = Object.assign({}, Model(instanceProperties));

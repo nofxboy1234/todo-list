@@ -2,8 +2,6 @@ import { createButton } from '../helpers';
 import { redirectTo, editTodoPath, todoPath, todosPath } from '../../router';
 import {
   cacheView,
-  popCachedView,
-  renderCachedView,
   showTodo,
 } from '../../renderer';
 
