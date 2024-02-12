@@ -200,6 +200,12 @@ const form = (todo) => {
     const button = createButton('button', 'NEW', 'newProjectButtonID');
     div.appendChild(button);
 
+    const updateButton = createButton('button', 'Update', 'updateButtonID');
+    if (input.value === 1) {
+      updateButton.disabled = true;
+    }
+    div.appendChild(updateButton);
+
     return { div, input, button };
   })();
 
