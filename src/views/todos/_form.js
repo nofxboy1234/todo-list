@@ -23,6 +23,7 @@ import {
   renderCachedView,
 } from '../../renderer';
 import { params as todoParams } from '../../parameters/todoParameters';
+import { Todo } from '../../models/todo';
 
 const form = (todo) => {
   const persisted = todo.data.id ? true : false;
@@ -39,7 +40,8 @@ const form = (todo) => {
       view = newTodo;
     }
     todoParams.merge(currentData());
-    cacheView(view(todoParams));
+
+    cacheView(view(Todo.new(todoParams)));
     redirectTo('GET', newProjectPath);
   };
 
@@ -51,7 +53,7 @@ const form = (todo) => {
       view = newTodo;
     }
     todoParams.merge(currentData());
-    cacheView(view(todoParams));
+    cacheView(view(Todo.new(todoParams)));
     const projectToEdit = Project.find(Number(project.input.value));
     redirectTo('GET', editProjectPath, projectToEdit);
   };
@@ -64,7 +66,7 @@ const form = (todo) => {
       view = newTodo;
     }
     todoParams.merge(currentData());
-    cacheView(view(todoParams));
+    cacheView(view(Todo.new(todoParams)));
     redirectTo('GET', newTaskPath);
   };
 
@@ -95,7 +97,11 @@ const form = (todo) => {
   };
 
   const getTasks = () => {
-    return todo.data.tasks || [];
+    if (persisted) {
+      return todo.tasks();
+    } else {
+      return todo.data.tasks || [];
+    }
   };
 
   const submitButtonCallback = (event) => {
@@ -128,13 +134,12 @@ const form = (todo) => {
     dueDate.input.value = todo.data.dueDate;
     priority.input.value = todo.data.priority;
 
-    if (todo.data.tasks) {
-      todo.data.tasks.forEach((task) => {
-        const taskDiv = document.createElement('div');
-        taskDiv.textContent = task.data.description;
-        taskList.div.appendChild(taskDiv);
-      });
-    }
+    const tasks = getTasks();
+    tasks.forEach((task) => {
+      const taskDiv = document.createElement('div');
+      taskDiv.textContent = task.data.description;
+      taskList.div.appendChild(taskDiv);
+    });
 
     if (todo.data.projectID) {
       project.input.value = todo.data.projectID;

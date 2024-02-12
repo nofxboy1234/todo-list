@@ -24,6 +24,7 @@ const createModel = (instanceProperties) => {
         save: function () {
           this.data.id = nextID();
           getModels().push(this);
+          this.updateDependent();
           return true;
         },
         update: function (params) {

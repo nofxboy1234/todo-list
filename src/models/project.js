@@ -10,6 +10,7 @@ const instanceProperties = {
       todo.destroy();
     });
   },
+  updateDependent: function () {},
 };
 const Project = Object.assign({}, Model(instanceProperties));
 const staticProperties = {};

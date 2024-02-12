@@ -9,6 +9,7 @@ import {
   getProjectForTodosIndex,
   setProjectForTodosIndex,
 } from '../views/todos';
+import { Todo } from '../models/todo';
 
 const Controller = createController('tasks', Task, params);
 
@@ -18,15 +19,15 @@ const instanceProperties = {
     this.resourceSingular = this.resourceClass.new(params);
 
     if (this.resourceSingular.save()) {
-      // const createdTaskData = {
-      //   data: {
-      //     tasks: {this.resourceSingular.data.id},
-      //   },
-      // };
-      // todoParams.merge(createdTaskData);
       const temp = todoParams;
       todoParams.data.tasks.push(this.resourceSingular);
-      redirectTo('GET', editTodoPath, todoParams);
+      const todoPersisted = todoParams.data.id ? true : false;
+      if (todoPersisted) {
+        const todo = Todo.new(todoParams);
+        todo.updateDependent();
+      }
+
+      redirectTo('GET', editTodoPath, Todo.new(todoParams));
     } else {
       render(`${this.resourcePluralName}/new`, this.resourceSingular);
     }
@@ -35,7 +36,7 @@ const instanceProperties = {
     this.setResourceSingular();
 
     if (this.resourceSingular.update(params)) {
-      redirectTo('GET', editTodoPath, todoParams);
+      redirectTo('GET', editTodoPath, Todo.new(todoParams));
     } else {
       render(`${resourcePluralName}/edit`, this.resourceSingular);
     }
@@ -44,7 +45,7 @@ const instanceProperties = {
     this.setResourceSingular();
     this.resourceSingular.destroy();
 
-    redirectTo('GET', editTodoPath, todoParams);
+    redirectTo('GET', editTodoPath, Todo.new(todoParams));
   },
 };
 Object.assign(TasksController, instanceProperties);

@@ -9,6 +9,7 @@ import {
   getProjectForTodosIndex,
   setProjectForTodosIndex,
 } from '../views/todos';
+import { Todo } from '../models/todo';
 
 const Controller = createController('projects', Project, params);
 
@@ -24,7 +25,7 @@ const instanceProperties = {
         },
       };
       todoParams.merge(createdProjectData);
-      redirectTo('GET', editTodoPath, todoParams);
+      redirectTo('GET', editTodoPath, Todo.new(todoParams));
       redirectTo('GET', projectsPath);
     } else {
       render(`${this.resourcePluralName}/new`, this.resourceSingular);
@@ -34,7 +35,7 @@ const instanceProperties = {
     this.setResourceSingular();
 
     if (this.resourceSingular.update(params)) {
-      redirectTo('GET', editTodoPath, todoParams);
+      redirectTo('GET', editTodoPath, Todo.new(todoParams));
       redirectTo('GET', projectsPath);
     } else {
       render(`${resourcePluralName}/edit`, this.resourceSingular);

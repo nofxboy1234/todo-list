@@ -1,4 +1,6 @@
-Set up Tasks
+Set up Tasks:
+  - update todoID of a task if todo is persisted
+  - remove todo.data.tasks property
 Check what happens when operating on a resource etc fails
 
 Today, Upcoming etc links (data-fns)

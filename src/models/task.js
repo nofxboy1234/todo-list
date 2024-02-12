@@ -6,6 +6,7 @@ const instanceProperties = {
     return Todo.find(this.data.todoID) || { data: { title: 'no todo' } };
   },
   destroyDependent: function () {},
+  updateDependent: function () {},
 };
 const Task = Object.assign({}, Model(instanceProperties));
 const staticProperties = {};
