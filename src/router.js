@@ -1,8 +1,10 @@
 import { TodosController as todosController } from './controllers/todosController';
 import { ProjectsController as projectsController } from './controllers/projectsController';
+import { TasksController as tasksController } from './controllers/tasksController';
+
 import { params as todoParams } from './parameters/todoParameters';
 import { params as projectParams } from './parameters/projectParameters';
-
+import { params as taskParams } from './parameters/taskParameters';
 //     Prefix Verb   URI Pattern                 Controller#Action
 //     kittens GET    /kittens(.:format)          kittens#index
 //             POST   /kittens(.:format)          kittens#create
@@ -20,8 +22,8 @@ const controllers = () => {
   const data = {
     todos: todosController,
     projects: projectsController,
+    tasks: tasksController,
   };
-
   return data;
 };
 
@@ -29,8 +31,8 @@ const parameters = () => {
   const data = {
     todos: todoParams,
     projects: projectParams,
+    tasks: taskParams,
   };
-
   return data;
 };
 
@@ -180,11 +182,10 @@ const newProjectPath = routes.newProjectPath;
 const editProjectPath = routes.editProjectPath;
 const projectPath = routes.projectPath;
 
-const tasksPath = routes.projectsPath;
-const newTaskPath = routes.newProjectPath;
-const editTaskPath = routes.editProjectPath;
-const taskPath = routes.projectPath;
-
+const tasksPath = routes.tasksPath;
+const newTaskPath = routes.newTaskPath;
+const editTaskPath = routes.editTaskPath;
+const taskPath = routes.taskPath;
 
 export {
   redirectTo,

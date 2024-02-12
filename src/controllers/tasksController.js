@@ -1,5 +1,5 @@
-import { Project } from '../models/project';
-import { params } from '../parameters/projectParameters';
+import { Task } from '../models/task';
+import { params } from '../parameters/taskParameters';
 import { params as todoParams } from '../parameters/todoParameters';
 import { createController } from './controller';
 import { render } from '../renderer';
@@ -18,14 +18,13 @@ const instanceProperties = {
     this.resourceSingular = this.resourceClass.new(params);
 
     if (this.resourceSingular.save()) {
-      const createdTaskData = {
-        data: {
-          projectID: this.resourceSingular.data.id,
-        },
-      };
-      todoParams.merge(createdTaskData);
+      // const createdTaskData = {
+      //   data: {
+      //     projectID: this.resourceSingular.data.id,
+      //   },
+      // };
+      // todoParams.merge(createdTaskData);
       redirectTo('GET', editTodoPath, todoParams);
-      redirectTo('GET', projectsPath);
     } else {
       render(`${this.resourcePluralName}/new`, this.resourceSingular);
     }
@@ -35,7 +34,6 @@ const instanceProperties = {
 
     if (this.resourceSingular.update(params)) {
       redirectTo('GET', editTodoPath, todoParams);
-      redirectTo('GET', projectsPath);
     } else {
       render(`${resourcePluralName}/edit`, this.resourceSingular);
     }
@@ -43,14 +41,10 @@ const instanceProperties = {
   destroy: function () {
     this.setResourceSingular();
     this.resourceSingular.destroy();
-    redirectTo('GET', projectsPath);
 
-    if (!Project.all().includes(getProjectForTodosIndex())) {
-      setProjectForTodosIndex(Project.first());
-      redirectTo('GET', todosPath);
-    }
+    redirectTo('GET', editTodoPath, todoParams);
   },
 };
 Object.assign(TasksController, instanceProperties);
 
-export { TasksController as ProjectsController };
+export { TasksController };

@@ -71,7 +71,7 @@ const render = (path, data) => {
 
     case 'tasks/new':
       renderView(newTask(data));
-      document.getElementById('nameID').focus();
+      document.getElementById('descriptionID').focus();
       break;
     case 'tasks/index':
       renderView(indexTask(data));
@@ -81,7 +81,7 @@ const render = (path, data) => {
       break;
     case 'tasks/edit':
       renderView(editTask(data));
-      document.getElementById('nameID').focus();
+      document.getElementById('descriptionID').focus();
       break;
 
     default:

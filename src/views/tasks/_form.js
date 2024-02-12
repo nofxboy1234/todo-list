@@ -34,11 +34,11 @@ const form = (task) => {
     };
   };
 
-  const submitButtonCallback = () => {
+  const submitButtonCallback = (event) => {
     if (persisted) {
-      return updateTask;
+      updateTask(event);
     } else {
-      return createTask;
+      createTask(event);
     }
   };
 
@@ -52,7 +52,7 @@ const form = (task) => {
   };
 
   const setupData = () => {
-    description.input.value = task.data.name;
+    description.input.value = task.data.description;
   };
 
   const setupEventListeners = () => {
@@ -62,8 +62,8 @@ const form = (task) => {
 
   const description = (() => {
     const div = document.createElement('div');
-    div.appendChild(createLabel('name:', 'descriptionID'));
-    const input = createInput('text', 'descriptionID', 'name');
+    div.appendChild(createLabel('description:', 'descriptionID'));
+    const input = createInput('text', 'descriptionID', 'description');
     div.appendChild(input);
 
     return { div, input };

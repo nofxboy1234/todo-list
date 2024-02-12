@@ -34,11 +34,11 @@ const form = (project) => {
     };
   };
 
-  const submitButtonCallback = () => {
+  const submitButtonCallback = (event) => {
     if (persisted) {
-      return updateProject;
+      updateProject(event);
     } else {
-      return createProject;
+      createProject(event);
     }
   };
 

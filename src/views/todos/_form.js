@@ -98,11 +98,11 @@ const form = (todo) => {
     return {};
   };
 
-  const submitButtonCallback = () => {
+  const submitButtonCallback = (event) => {
     if (persisted) {
-      return updateTodo;
+      updateTodo(event);
     } else {
-      return createTodo;
+      createTodo(event);
     }
   };
 
