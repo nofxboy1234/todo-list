@@ -106,7 +106,7 @@ const form = (todo) => {
     todoForm.appendChild(description.div);
     todoForm.appendChild(dueDate.div);
     todoForm.appendChild(priority.div);
-    todoForm.appendChild(checkList.div);
+    todoForm.appendChild(taskList.div);
     todoForm.appendChild(project.div);
     todoForm.appendChild(cancel.div);
     todoForm.appendChild(submit.div);
@@ -119,7 +119,7 @@ const form = (todo) => {
     description.input.value = todo.data.description;
     dueDate.input.value = todo.data.dueDate;
     priority.input.value = todo.data.priority;
-    checkList.data = {};
+    // taskList.data = {};
 
     if (todo.data.projectID) {
       project.input.value = todo.data.projectID;
@@ -179,25 +179,16 @@ const form = (todo) => {
     return { div, input };
   })();
 
-  const checkList = (() => {
+  const taskList = (() => {
     const div = document.createElement('div');
 
     const checkListLabelDiv = document.createElement('div');
-    checkListLabelDiv.textContent = 'checklist:';
+    checkListLabelDiv.textContent = 'tasks:';
     div.appendChild(checkListLabelDiv);
 
-    if (todo.data.checkList) {
-      const keys = Object.keys(todo.data.checkList);
-      keys.forEach((key) => {
-        const taskPair = document.createElement('div');
-        const id = `task-${keys.indexOf(key)}`;
-        taskPair.appendChild(createLabel(key, id));
-        const taskCheckbox = createInput('checkbox', id, 'task');
-        taskPair.appendChild(taskCheckbox);
+    const button = createButton('button', 'NEW', 'newTaskButtonID');
+    div.appendChild(button);
 
-        div.appendChild(taskPair);
-      });
-    }
     return { div };
   })();
 
