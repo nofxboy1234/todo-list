@@ -10,6 +10,7 @@ const createParameters = (instanceProperties) => {
           Object.assign(this.data, params.data);
         },
         reset: function () {
+          this.data = {};
           this.merge(initialParams);
         },
       };
