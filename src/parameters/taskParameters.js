@@ -9,6 +9,7 @@ const initialParams = {
   data: {
     id: undefined,
     description: '',
+    complete: false,
   },
 };
 const params = TaskParameters.new(initialParams);
