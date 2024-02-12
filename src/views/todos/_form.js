@@ -88,14 +88,14 @@ const form = (todo) => {
         description: description.input.value,
         dueDate: dueDate.input.value,
         priority: priority.input.value,
-        checkList: getTasks(),
+        tasks: getTasks(),
         projectID: Number(project.input.value),
       },
     };
   };
 
   const getTasks = () => {
-    return {};
+    return todo.data.tasks || [];
   };
 
   const submitButtonCallback = (event) => {
@@ -127,7 +127,14 @@ const form = (todo) => {
     description.input.value = todo.data.description;
     dueDate.input.value = todo.data.dueDate;
     priority.input.value = todo.data.priority;
-    // taskList.data = {};
+
+    if (todo.data.tasks) {
+      todo.data.tasks.forEach((task) => {
+        const taskDiv = document.createElement('div');
+        taskDiv.textContent = task.data.description;
+        taskList.div.appendChild(taskDiv);
+      });
+    }
 
     if (todo.data.projectID) {
       project.input.value = todo.data.projectID;

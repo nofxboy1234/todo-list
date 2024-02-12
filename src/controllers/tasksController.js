@@ -20,10 +20,12 @@ const instanceProperties = {
     if (this.resourceSingular.save()) {
       // const createdTaskData = {
       //   data: {
-      //     projectID: this.resourceSingular.data.id,
+      //     tasks: {this.resourceSingular.data.id},
       //   },
       // };
       // todoParams.merge(createdTaskData);
+      const temp = todoParams;
+      todoParams.data.tasks.push(this.resourceSingular);
       redirectTo('GET', editTodoPath, todoParams);
     } else {
       render(`${this.resourcePluralName}/new`, this.resourceSingular);
