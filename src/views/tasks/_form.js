@@ -1,69 +1,69 @@
 import { createLabel, createInput, createButton } from '../helpers';
 
-import { redirectTo, projectsPath, projectPath } from '../../router';
+import { redirectTo, projectsPath, projectPath, tasksPath, taskPath } from '../../router';
 import {
   popCachedView,
   renderCachedView,
 } from '../../renderer';
 
-const form = (project) => {
-  const persisted = project.data.id ? true : false;
+const form = (task) => {
+  const persisted = task.data.id ? true : false;
 
   const cancelForm = () => {
     renderCachedView();
   };
 
-  const createProject = (event) => {
+  const createTask = (event) => {
     event.preventDefault();
     popCachedView();
-    redirectTo('POST', projectsPath, currentData());
+    redirectTo('POST', tasksPath, currentData());
   };
 
-  const updateProject = (event) => {
+  const updateTask = (event) => {
     event.preventDefault();
     popCachedView();
-    redirectTo('PATCH', projectPath, currentData());
+    redirectTo('PATCH', taskPath, currentData());
   };
 
   const currentData = () => {
     return {
       data: {
-        id: project.data.id,
-        name: name.input.value,
+        id: task.data.id,
+        description: description.input.value,
       },
     };
   };
 
   const submitButtonCallback = () => {
     if (persisted) {
-      return updateProject;
+      return updateTask;
     } else {
-      return createProject;
+      return createTask;
     }
   };
 
   const setupUI = () => {
-    const projectForm = document.createElement('form');
-    projectForm.appendChild(name.div);
-    projectForm.appendChild(cancel.div);
-    projectForm.appendChild(submit.div);
+    const taskForm = document.createElement('form');
+    taskForm.appendChild(description.div);
+    taskForm.appendChild(cancel.div);
+    taskForm.appendChild(submit.div);
 
-    return projectForm;
+    return taskForm;
   };
 
   const setupData = () => {
-    name.input.value = project.data.name;
+    description.input.value = task.data.name;
   };
 
   const setupEventListeners = () => {
-    submit.button.addEventListener('click', submitButtonCallback());
+    submit.button.addEventListener('click', submitButtonCallback);
     cancel.button.addEventListener('click', cancelForm);
   };
 
-  const name = (() => {
+  const description = (() => {
     const div = document.createElement('div');
-    div.appendChild(createLabel('name:', 'nameID'));
-    const input = createInput('text', 'nameID', 'name');
+    div.appendChild(createLabel('name:', 'descriptionID'));
+    const input = createInput('text', 'descriptionID', 'name');
     div.appendChild(input);
 
     return { div, input };
@@ -93,11 +93,11 @@ const form = (project) => {
     return { div, button };
   })();
 
-  const projectForm = setupUI();
+  const taskForm = setupUI();
   setupData();
   setupEventListeners();
 
-  return projectForm;
+  return taskForm;
 };
 
 export { form };

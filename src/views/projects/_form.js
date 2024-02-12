@@ -56,7 +56,7 @@ const form = (project) => {
   };
 
   const setupEventListeners = () => {
-    submit.button.addEventListener('click', submitButtonCallback());
+    submit.button.addEventListener('click', submitButtonCallback);
     cancel.button.addEventListener('click', cancelForm);
   };
 

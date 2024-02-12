@@ -1,12 +1,17 @@
+import { render as showProject } from './views/projects/show';
+import { render as indexProject } from './views/projects/index';
+import { render as newProject } from './views/projects/new';
+import { render as editProject } from './views/projects/edit';
+
 import { render as showTodo } from './views/todos/show';
 import { render as indexTodo } from './views/todos/index';
 import { render as newTodo } from './views/todos/new';
 import { render as editTodo } from './views/todos/edit';
 
-import { render as showProject } from './views/projects/show';
-import { render as indexProject } from './views/projects/index';
-import { render as newProject } from './views/projects/new';
-import { render as editProject } from './views/projects/edit';
+import { render as showTask } from './views/tasks/show';
+import { render as indexTask } from './views/tasks/index';
+import { render as newTask } from './views/tasks/new';
+import { render as editTask } from './views/tasks/edit';
 
 import { contentContainer, projectIndex } from './views/layouts/application';
 import { clearContent, clearProjectIndex } from './views/helpers';
@@ -33,6 +38,22 @@ const renderView = (view) => {
 
 const render = (path, data) => {
   switch (path) {
+    case 'projects/new':
+      renderView(newProject(data));
+      document.getElementById('nameID').focus();
+      break;
+    case 'projects/index':
+      clearProjectIndex();
+      projectIndex.appendChild(indexProject(data));
+      break;
+    case 'projects/show':
+      renderView(showProject(data));
+      break;
+    case 'projects/edit':
+      renderView(editProject(data));
+      document.getElementById('nameID').focus();
+      break;
+
     case 'todos/new':
       renderView(newTodo(data));
       document.getElementById('titleID').focus();
@@ -48,20 +69,18 @@ const render = (path, data) => {
       document.getElementById('titleID').focus();
       break;
 
-    case 'projects/new':
-      renderView(newProject(data));
+    case 'tasks/new':
+      renderView(newTask(data));
       document.getElementById('nameID').focus();
       break;
-    case 'projects/index':
-      clearProjectIndex();
-      const renderedView = indexProject(data);
-      projectIndex.appendChild(renderedView);
+    case 'tasks/index':
+      renderView(indexTask(data));
       break;
-    case 'projects/show':
-      renderView(showProject(data));
+    case 'tasks/show':
+      renderView(showTask(data));
       break;
-    case 'projects/edit':
-      renderView(editProject(data));
+    case 'tasks/edit':
+      renderView(editTask(data));
       document.getElementById('nameID').focus();
       break;
 
@@ -83,4 +102,8 @@ export {
   indexProject,
   newProject,
   editProject,
+  showTask,
+  indexTask,
+  newTask,
+  editTask,
 };

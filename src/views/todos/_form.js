@@ -13,6 +13,7 @@ import {
   todoPath,
   newProjectPath,
   editProjectPath,
+  newTaskPath,
 } from '../../router';
 import {
   cacheView,
@@ -56,15 +57,15 @@ const form = (todo) => {
   };
 
   const newTask = () => {
-    // let view;
-    // if (persisted) {
-    //   view = editTodo;
-    // } else {
-    //   view = newTodo;
-    // }
-    // todoParams.merge(currentData());
-    // cacheView(view(todoParams));
-    // redirectTo('GET', newProjectPath);
+    let view;
+    if (persisted) {
+      view = editTodo;
+    } else {
+      view = newTodo;
+    }
+    todoParams.merge(currentData());
+    cacheView(view(todoParams));
+    redirectTo('GET', newTaskPath);
   };
 
   const createTodo = (event) => {
@@ -138,7 +139,7 @@ const form = (todo) => {
   };
 
   const setupEventListeners = () => {
-    submit.button.addEventListener('click', submitButtonCallback());
+    submit.button.addEventListener('click', submitButtonCallback);
     taskList.newButton.addEventListener('click', newTask);
     project.newButton.addEventListener('click', newProject);
     project.input.addEventListener('change', setEditProjectButtonState);

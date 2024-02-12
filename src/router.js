@@ -59,12 +59,12 @@ const createRouter = (instanceProperties = {}, staticProperties = {}) => {
           }
           const resourcePlural = resolvedPath.split('/').at(1);
           const controller = controllers()[resourcePlural];
-          
+
           switch (resolvedPath) {
             // todosPath, /todos
             case `/${resourcePlural}`:
               if (method === 'GET') {
-                saveToParameters(resourcePlural, data)
+                saveToParameters(resourcePlural, data);
                 controller.index();
               }
               if (method === 'POST') {
@@ -72,7 +72,7 @@ const createRouter = (instanceProperties = {}, staticProperties = {}) => {
                 controller.create();
               }
               break;
-              // newTodoPath, /todos/new
+            // newTodoPath, /todos/new
             case `/${resourcePlural}/new`:
               if (method === 'GET') {
                 const resourceParams = parameters()[resourcePlural];
@@ -164,6 +164,7 @@ const Router = createRouter();
 const router = Router.new();
 router.createRoutes('todo', 'todos');
 router.createRoutes('project', 'projects');
+router.createRoutes('task', 'tasks');
 
 const saveToParameters = router.saveToParameters;
 const redirectTo = router.redirectTo;
@@ -179,6 +180,12 @@ const newProjectPath = routes.newProjectPath;
 const editProjectPath = routes.editProjectPath;
 const projectPath = routes.projectPath;
 
+const tasksPath = routes.projectsPath;
+const newTaskPath = routes.newProjectPath;
+const editTaskPath = routes.editProjectPath;
+const taskPath = routes.projectPath;
+
+
 export {
   redirectTo,
   rootPath,
@@ -190,4 +197,8 @@ export {
   newProjectPath,
   editProjectPath,
   projectPath,
+  tasksPath,
+  newTaskPath,
+  editTaskPath,
+  taskPath,
 };

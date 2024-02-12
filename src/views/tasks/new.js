@@ -1,7 +1,7 @@
 import { form } from './_form';
 
-const render = (project) => {
-  return form(project);
+const render = (task) => {
+  return form(task);
 };
 
 export { render };

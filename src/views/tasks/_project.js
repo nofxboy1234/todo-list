@@ -4,40 +4,43 @@ import {
   projectsPath,
   editProjectPath,
   projectPath,
+  taskPath,
+  editTaskPath,
+  tasksPath,
 } from '../../router';
 
-const Partial = (project) => {
-  const projectParagraph = document.createElement('p');
+const Partial = (task) => {
+  const taskParagraph = document.createElement('p');
 
-  const nameDiv = document.createElement('div');
-  nameDiv.textContent = project.data.name;
-  projectParagraph.appendChild(nameDiv);
+  const descriptionDiv = document.createElement('div');
+  descriptionDiv.textContent = task.data.description;
+  taskParagraph.appendChild(descriptionDiv);
 
-  const destroyProject = () => {
-    redirectTo('DELETE', projectPath, project);
+  const destroyTask = () => {
+    redirectTo('DELETE', taskPath, task);
   };
 
-  const editProject = () => {
-    redirectTo('GET', editProjectPath, project);
+  const editTask = () => {
+    redirectTo('GET', editTaskPath, task);
   };
 
-  const closeProject = () => {
-    redirectTo('GET', projectsPath);
+  const closeTask = () => {
+    redirectTo('GET', tasksPath);
   };
 
   const deleteButton = createButton('button', 'DELETE', 'deleteButtonID');
-  deleteButton.addEventListener('click', destroyProject);
-  projectParagraph.appendChild(deleteButton);
+  deleteButton.addEventListener('click', destroyTask);
+  taskParagraph.appendChild(deleteButton);
 
   const updateButton = createButton('button', 'EDIT', 'editButtonID');
-  updateButton.addEventListener('click', editProject);
-  projectParagraph.appendChild(updateButton);
+  updateButton.addEventListener('click', editTask);
+  taskParagraph.appendChild(updateButton);
 
   const closeButton = createButton('button', 'CLOSE', 'closeButtonID');
-  closeButton.addEventListener('click', closeProject);
-  projectParagraph.appendChild(closeButton);
+  closeButton.addEventListener('click', closeTask);
+  taskParagraph.appendChild(closeButton);
 
-  return projectParagraph;
+  return taskParagraph;
 };
 
 export { Partial };
