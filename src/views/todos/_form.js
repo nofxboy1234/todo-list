@@ -53,7 +53,7 @@ const form = (todo) => {
     }
     todoParams.merge(currentData());
     cacheView(view(todoParams));
-    const projectToEdit = Project.find(project.input.value);
+    const projectToEdit = Project.find(Number(project.input.value));
     redirectTo('GET', editProjectPath, projectToEdit);
   };
 
