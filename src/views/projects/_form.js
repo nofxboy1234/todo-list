@@ -24,6 +24,7 @@ const form = (project) => {
 
   const updateProject = (event) => {
     event.preventDefault();
+    popCachedView();
     redirectTo('PATCH', projectPath, currentData());
   };
 

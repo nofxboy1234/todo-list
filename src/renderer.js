@@ -34,7 +34,6 @@ const renderView = (view) => {
 };
 
 const render = (path, data) => {
-  let injectedView;
   switch (path) {
     case 'todos/new':
       renderView(newTodo(data));

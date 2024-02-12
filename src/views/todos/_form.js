@@ -7,7 +7,13 @@ import {
 } from '../helpers';
 import { Project } from '../../models/project';
 
-import { redirectTo, todosPath, todoPath, newProjectPath } from '../../router';
+import {
+  redirectTo,
+  todosPath,
+  todoPath,
+  newProjectPath,
+  editProjectPath,
+} from '../../router';
 import {
   cacheView,
   editTodo,
@@ -36,6 +42,19 @@ const form = (todo) => {
     todoParams.merge(currentData());
     cacheView(view(todoParams));
     redirectTo('GET', newProjectPath);
+  };
+
+  const updateProject = () => {
+    let view;
+    if (persisted) {
+      view = editTodo;
+    } else {
+      view = newTodo;
+    }
+    todoParams.merge(currentData());
+    cacheView(view(todoParams));
+    const projectToEdit = Project.find(project.input.value);
+    redirectTo('GET', editProjectPath, projectToEdit);
   };
 
   const createTodo = (event) => {
@@ -81,10 +100,6 @@ const form = (todo) => {
     }
   };
 
-  const setUpdateButtonState = (event) => {
-    console.log(event.target.value);
-  };
-
   const setupUI = () => {
     const todoForm = document.createElement('form');
     todoForm.classList.add('new-todo-form');
@@ -113,12 +128,15 @@ const form = (todo) => {
     } else {
       project.input.value = Project.first().data.id;
     }
+
+    setUpdateProjectButtonState();
   };
 
   const setupEventListeners = () => {
     submit.button.addEventListener('click', submitButtonCallback());
     project.button.addEventListener('click', newProject);
-    project.input.addEventListener('change', setUpdateButtonState);
+    project.input.addEventListener('change', setUpdateProjectButtonState);
+    project.updateButton.addEventListener('click', updateProject);
     cancel.button.addEventListener('click', cancelForm);
   };
 
@@ -186,6 +204,14 @@ const form = (todo) => {
     return { div };
   })();
 
+  const setUpdateProjectButtonState = () => {
+    if (project.input.value === '1') {
+      project.updateButton.disabled = true;
+    } else {
+      project.updateButton.disabled = false;
+    }
+  };
+
   const project = (() => {
     const div = document.createElement('div');
     div.appendChild(createLabel('project:', 'projectID'));
@@ -201,12 +227,9 @@ const form = (todo) => {
     div.appendChild(button);
 
     const updateButton = createButton('button', 'UPDATE', 'updateButtonID');
-    if (input.value === 1) {
-      updateButton.disabled = true;
-    }
     div.appendChild(updateButton);
 
-    return { div, input, button };
+    return { div, input, button, updateButton };
   })();
 
   const cancel = (() => {
