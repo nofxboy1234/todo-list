@@ -52,10 +52,10 @@ const createRouter = (instanceProperties = {}, staticProperties = {}) => {
           const resourceParams = parameters()[resourcePlural];
           resourceParams.merge(data);
         },
-        redirectTo: function (method, path, data = {}) {
+        redirectTo: function (method, path, resourceData = {}) {
           let resolvedPath;
           if (isPathHelper(path)) {
-            resolvedPath = path(data);
+            resolvedPath = path(resourceData);
           } else {
             resolvedPath = path;
           }
@@ -66,11 +66,11 @@ const createRouter = (instanceProperties = {}, staticProperties = {}) => {
             // todosPath, /todos
             case `/${resourcePlural}`:
               if (method === 'GET') {
-                saveToParameters(resourcePlural, data);
+                saveToParameters(resourcePlural, resourceData);
                 controller.index();
               }
               if (method === 'POST') {
-                saveToParameters(resourcePlural, data);
+                saveToParameters(resourcePlural, resourceData);
                 controller.create();
               }
               break;
@@ -83,28 +83,28 @@ const createRouter = (instanceProperties = {}, staticProperties = {}) => {
               }
               break;
             // editTodoPath, /todos/:id/edit
-            case `/${resourcePlural}/${data.id}/edit`:
+            case `/${resourcePlural}/${resourceData.data.id}/edit`:
               if (method === 'GET') {
-                saveToParameters(resourcePlural, data);
+                saveToParameters(resourcePlural, resourceData);
                 controller.edit();
               }
               break;
             // todoPath, /todos/:id
-            case `/${resourcePlural}/${data.id}`:
+            case `/${resourcePlural}/${resourceData.data.id}`:
               if (method === 'GET') {
-                saveToParameters(resourcePlural, data);
+                saveToParameters(resourcePlural, resourceData);
                 controller.show();
               }
               if (method === 'PATCH') {
-                saveToParameters(resourcePlural, data);
+                saveToParameters(resourcePlural, resourceData);
                 controller.update();
               }
               if (method === 'PUT') {
-                saveToParameters(resourcePlural, data);
+                saveToParameters(resourcePlural, resourceData);
                 controller.update();
               }
               if (method === 'DELETE') {
-                saveToParameters(resourcePlural, data);
+                saveToParameters(resourcePlural, resourceData);
                 controller.destroy();
               }
               break;
@@ -135,13 +135,13 @@ const createRouter = (instanceProperties = {}, staticProperties = {}) => {
             [
               `edit${capitalize(resourceSingular)}Path`,
               function (resource) {
-                return `/${resourcePlural}/${resource.id}/edit`;
+                return `/${resourcePlural}/${resource.data.id}/edit`;
               },
             ],
             [
               `${resourceSingular}Path`,
               function (resource) {
-                return `/${resourcePlural}/${resource.id}`;
+                return `/${resourcePlural}/${resource.data.id}`;
               },
             ],
             [

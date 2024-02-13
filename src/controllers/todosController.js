@@ -14,6 +14,7 @@ const instanceProperties = {
     this.resourceSingular = this.resourceClass.new(this.params);
 
     if (this.resourceSingular.save()) {
+      delete this.resourceSingular.data.tasks;
       redirectTo('GET', projectsPath);
       redirectTo('GET', todosPath);
     } else {
