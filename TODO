@@ -1,5 +1,4 @@
 Set up Tasks:
-  - remove todo.data.tasks property
   - edit, delete tasks
 Check what happens when operating on a resource etc fails
 
