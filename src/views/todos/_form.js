@@ -128,25 +128,48 @@ const form = (todo) => {
     return todoForm;
   };
 
-  const setupData = () => {
-    title.input.value = todo.data.title;
-    description.input.value = todo.data.description;
-    dueDate.input.value = todo.data.dueDate;
-    priority.input.value = todo.data.priority;
-
+  const setupTaskListData = () => {
     const tasks = getTasks();
     tasks.forEach((task) => {
       const taskDiv = document.createElement('div');
-      taskDiv.textContent = task.data.description;
+
+      const descriptionSpan = document.createElement('span');
+      descriptionSpan.textContent = task.data.description;
+      taskDiv.appendChild(descriptionSpan);
+
+      const editButton = createButton('button', 'EDIT', 'editTaskButtonID');
+      taskDiv.appendChild(editButton);
+
+      const destroyButton = createButton(
+        'button',
+        'DESTROY',
+        'destroyTaskButtonID'
+      );
+      taskDiv.appendChild(destroyButton);
+
       taskList.div.appendChild(taskDiv);
     });
+  };
 
+  const setupProjectData = () => {
     if (todo.data.projectID) {
       project.input.value = todo.data.projectID;
     } else {
       project.input.value = Project.first().data.id;
     }
+  };
 
+  const setupSimpleData = () => {
+    title.input.value = todo.data.title;
+    description.input.value = todo.data.description;
+    dueDate.input.value = todo.data.dueDate;
+    priority.input.value = todo.data.priority;
+  };
+
+  const setupData = () => {
+    setupSimpleData();
+    setupTaskListData();
+    setupProjectData();
     setEditProjectButtonState();
   };
 
