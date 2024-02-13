@@ -19,7 +19,6 @@ const instanceProperties = {
     this.resourceSingular = this.resourceClass.new(params);
 
     if (this.resourceSingular.save()) {
-      const temp = todoParams;
       todoParams.data.tasks.push(this.resourceSingular);
       const todoPersisted = todoParams.data.id ? true : false;
       if (todoPersisted) {
