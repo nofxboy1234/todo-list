@@ -13,17 +13,29 @@ import { Todo } from '../models/todo';
 
 const Controller = createController('tasks', Task, params);
 
+const addTaskToTodo = (task) => {
+  todoParams.data.tasks.push(task);
+};
+
+const isPersisted = (params) => {
+  return params.data.id ? true : false;
+};
+
+const updateDependentOfTodo = () => {
+  const todo = Todo.new(todoParams);
+  todo.updateDependent();
+};
+
 const TasksController = Object.create(Controller);
 const instanceProperties = {
   create: function () {
     this.resourceSingular = this.resourceClass.new(params);
 
     if (this.resourceSingular.save()) {
-      todoParams.data.tasks.push(this.resourceSingular);
-      const todoPersisted = todoParams.data.id ? true : false;
-      if (todoPersisted) {
-        const todo = Todo.new(todoParams);
-        todo.updateDependent();
+      addTaskToTodo(this.resourceSingular);
+
+      if (isPersisted(todoParams)) {
+        updateDependentOfTodo();
       }
 
       redirectTo('GET', editTodoPath, Todo.new(todoParams));
