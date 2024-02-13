@@ -28,9 +28,9 @@ const Partial = (task) => {
     redirectTo('GET', tasksPath);
   };
 
-  const deleteButton = createButton('button', 'DELETE', 'deleteButtonID');
-  deleteButton.addEventListener('click', destroyTask);
-  taskParagraph.appendChild(deleteButton);
+  const destroyButton = createButton('button', 'DESTROY', 'deleteButtonID');
+  destroyButton.addEventListener('click', destroyTask);
+  taskParagraph.appendChild(destroyButton);
 
   const updateButton = createButton('button', 'EDIT', 'editButtonID');
   updateButton.addEventListener('click', editTask);

@@ -25,9 +25,9 @@ const Partial = (project) => {
     redirectTo('GET', projectsPath);
   };
 
-  const deleteButton = createButton('button', 'DELETE', 'deleteButtonID');
-  deleteButton.addEventListener('click', destroyProject);
-  projectParagraph.appendChild(deleteButton);
+  const destroyButton = createButton('button', 'DESTROY', 'deleteButtonID');
+  destroyButton.addEventListener('click', destroyProject);
+  projectParagraph.appendChild(destroyButton);
 
   const updateButton = createButton('button', 'EDIT', 'editButtonID');
   updateButton.addEventListener('click', editProject);

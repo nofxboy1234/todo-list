@@ -52,9 +52,9 @@ const Partial = (todo) => {
     redirectTo('GET', todosPath);
   };
 
-  const deleteButton = createButton('button', 'DELETE', 'deleteButtonID');
-  deleteButton.addEventListener('click', destroyTodo);
-  todoParagraph.appendChild(deleteButton);
+  const destroyButton = createButton('button', 'DESTROY', 'deleteButtonID');
+  destroyButton.addEventListener('click', destroyTodo);
+  todoParagraph.appendChild(destroyButton);
 
   const updateButton = createButton('button', 'EDIT', 'editButtonID');
   updateButton.addEventListener('click', editTodo);

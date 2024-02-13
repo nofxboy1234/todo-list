@@ -13,9 +13,9 @@ const render = (tasks) => {
     descriptionDiv.textContent = task.data.description;
     taskParagraph.appendChild(descriptionDiv);
 
-    const deleteButton = createButton('button', 'DELETE', 'deleteButtonID');
-    deleteButton.addEventListener('click', destroyTask);
-    taskParagraph.appendChild(deleteButton);
+    const destroyButton = createButton('button', 'DESTROY', 'deleteButtonID');
+    destroyButton.addEventListener('click', destroyTask);
+    taskParagraph.appendChild(destroyButton);
   });
 
   return taskParagraph;

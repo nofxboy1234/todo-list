@@ -26,9 +26,9 @@ const render = (projects) => {
     });
 
     if (project.data.id != 1) {
-      const deleteButton = createButton('button', 'DELETE', 'deleteButtonID');
-      deleteButton.addEventListener('click', destroyProject);
-      projectParagraph.appendChild(deleteButton);
+      const destroyButton = createButton('button', 'DESTROY', 'deleteButtonID');
+      destroyButton.addEventListener('click', destroyProject);
+      projectParagraph.appendChild(destroyButton);
     }
   });
 
