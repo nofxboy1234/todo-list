@@ -55,8 +55,7 @@ const instanceProperties = {
   destroy: function () {
     this.setResourceSingular();
     this.resourceSingular.destroy();
-
-    redirectTo('GET', editTodoPath, Todo.new(todoParams));
+    redirectTo('GET', editTodoPath, todoParams);
   },
 };
 Object.assign(TasksController, instanceProperties);

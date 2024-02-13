@@ -15,6 +15,8 @@ import {
   editProjectPath,
   newTaskPath,
   editTaskPath,
+  editTodoPath,
+  taskPath,
 } from '../../router';
 import {
   cacheView,
@@ -42,7 +44,6 @@ const form = (todo) => {
       view = newTodo;
     }
     todoParams.merge(currentData());
-
     cacheView(view(Todo.new(todoParams)));
     redirectTo('GET', newProjectPath);
   };
@@ -72,6 +73,12 @@ const form = (todo) => {
     redirectTo('GET', newTaskPath);
   };
 
+  const getTask = (targetID) => {
+    const id = Number(targetID);
+    const task = Task.find(id);
+    return task;
+  };
+
   const editTask = (event) => {
     let view;
     if (persisted) {
@@ -81,9 +88,21 @@ const form = (todo) => {
     }
     todoParams.merge(currentData());
     cacheView(view(Todo.new(todoParams)));
-    const id = Number(event.target.dataset.id);
-    const task = Task.find(id);
+    const task = getTask(event.target.dataset.id);
     redirectTo('GET', editTaskPath, task);
+  };
+
+  const removeTaskFromParamTasks = (task) => {
+    const paramTasks = todo.data.tasks;
+    const removeIndex = paramTasks.indexOf(task);
+    paramTasks.splice(removeIndex, 1);
+  };
+
+  const destroyTask = (event) => {
+    const task = getTask(event.target.dataset.id);
+    removeTaskFromParamTasks(task);
+    todoParams.merge(currentData());
+    redirectTo('DELETE', taskPath, task);
   };
 
   const createTodo = (event) => {
@@ -163,6 +182,8 @@ const form = (todo) => {
         'DESTROY',
         'destroyTaskButtonID'
       );
+      destroyButton.addEventListener('click', destroyTask);
+      destroyButton.dataset.id = task.data.id;
       taskDiv.appendChild(destroyButton);
       taskList.div.appendChild(taskDiv);
     });
