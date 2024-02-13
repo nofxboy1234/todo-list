@@ -14,6 +14,7 @@ import {
   newProjectPath,
   editProjectPath,
   newTaskPath,
+  editTaskPath,
 } from '../../router';
 import {
   cacheView,
@@ -24,6 +25,7 @@ import {
 } from '../../renderer';
 import { params as todoParams } from '../../parameters/todoParameters';
 import { Todo } from '../../models/todo';
+import { Task } from '../../models/task';
 
 const form = (todo) => {
   const persisted = todo.data.id ? true : false;
@@ -68,6 +70,20 @@ const form = (todo) => {
     todoParams.merge(currentData());
     cacheView(view(Todo.new(todoParams)));
     redirectTo('GET', newTaskPath);
+  };
+
+  const editTask = (event) => {
+    let view;
+    if (persisted) {
+      view = editTodo;
+    } else {
+      view = newTodo;
+    }
+    todoParams.merge(currentData());
+    cacheView(view(Todo.new(todoParams)));
+    const id = Number(event.target.dataset.id);
+    const task = Task.find(id);
+    redirectTo('GET', editTaskPath, task);
   };
 
   const createTodo = (event) => {
@@ -138,6 +154,8 @@ const form = (todo) => {
       taskDiv.appendChild(descriptionSpan);
 
       const editButton = createButton('button', 'EDIT', 'editTaskButtonID');
+      editButton.addEventListener('click', editTask);
+      editButton.dataset.id = task.data.id;
       taskDiv.appendChild(editButton);
 
       const destroyButton = createButton(
@@ -146,7 +164,6 @@ const form = (todo) => {
         'destroyTaskButtonID'
       );
       taskDiv.appendChild(destroyButton);
-
       taskList.div.appendChild(taskDiv);
     });
   };
