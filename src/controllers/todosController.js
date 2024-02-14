@@ -15,6 +15,7 @@ const instanceProperties = {
 
     if (this.resourceSingular.save()) {
       delete this.resourceSingular.data.tasks;
+      delete this.params.data.tasks;
       popCachedView();
       redirectTo('GET', projectsPath);
       redirectTo('GET', todosPath);
@@ -32,6 +33,7 @@ const instanceProperties = {
 
     if (this.resourceSingular.update(this.params)) {
       delete this.resourceSingular.data.tasks;
+      delete this.params.data.tasks;
       popCachedView();
       redirectTo('GET', projectsPath);
       redirectTo('GET', todoPath, this.resourceSingular);

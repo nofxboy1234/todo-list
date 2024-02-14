@@ -43,6 +43,7 @@ const createModel = (instanceProperties) => {
             return false;
           } else {
             Object.assign(this.data, params.data);
+            this.updateDependent();
             return true;
           }
         },

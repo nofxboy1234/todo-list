@@ -15,7 +15,6 @@ import {
   editProjectPath,
   newTaskPath,
   editTaskPath,
-  editTodoPath,
   taskPath,
 } from '../../router';
 import { cacheView, editTodo, newTodo, renderCachedView } from '../../renderer';
@@ -26,11 +25,9 @@ import { Task } from '../../models/task';
 const form = (todo) => {
   const persisted = todo.data.id ? true : false;
 
-  const addTasksToParamTasks = () => {
-    const todoTasks = todo.tasks();
-    let paramTasks = todo.data.tasks;
-    paramTasks = todoTasks;
-  };
+  if (!todoParams.data.tasks) {
+    todoParams.data.tasks = [];
+  }
 
   const cancelForm = () => {
     const temp = params;
@@ -97,13 +94,11 @@ const form = (todo) => {
 
   const createTodo = (event) => {
     event.preventDefault();
-    // popCachedView();
     redirectTo('POST', todosPath, currentData());
   };
 
   const updateTodo = (event) => {
     event.preventDefault();
-    // popCachedView();
     redirectTo('PATCH', todoPath, currentData());
   };
 
@@ -114,7 +109,7 @@ const form = (todo) => {
   };
 
   const removeTaskFromParamTasks = (task) => {
-    const paramTasks = todo.data.tasks;
+    const paramTasks = todoParams.data.tasks;
     const removeIndex = paramTasks.indexOf(task);
     paramTasks.splice(removeIndex, 1);
   };
@@ -127,20 +122,16 @@ const form = (todo) => {
         description: description.input.value,
         dueDate: dueDate.input.value,
         priority: priority.input.value,
-        tasks: getTasks(),
+        tasks: todoParams.data.tasks,
         projectID: Number(project.input.value),
       },
     };
   };
 
-  const getTasks = () => {
-    return todo.data.tasks || [];
-
-    // if (persisted) {
-    //   return todo.tasks();
-    // } else {
-    //   return todo.data.tasks || [];
-    // }
+  const getAllTasks = () => {
+    const persistedTasks = todo.tasks();
+    const unsavedTasks = todoParams.data.tasks;
+    return persistedTasks.concat(unsavedTasks);
   };
 
   const submitButtonCallback = (event) => {
@@ -168,7 +159,7 @@ const form = (todo) => {
   };
 
   const setupTaskListData = () => {
-    const tasks = getTasks();
+    const tasks = getAllTasks();
     tasks.forEach((task) => {
       const taskDiv = document.createElement('div');
 
@@ -348,10 +339,6 @@ const form = (todo) => {
 
     return { div, button };
   })();
-
-  if (persisted) {
-    addTasksToParamTasks();
-  }
 
   const todoForm = setupUI();
   setupData();
