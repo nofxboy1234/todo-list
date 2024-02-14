@@ -18,19 +18,19 @@ import {
   taskPath,
 } from '../../router';
 import { cacheView, editTodo, newTodo, renderCachedView } from '../../renderer';
-import { params, params as todoParams } from '../../parameters/todoParameters';
+import { params } from '../../parameters/todoParameters';
 import { Todo } from '../../models/todo';
 import { Task } from '../../models/task';
 
 const form = (todo) => {
+  const temp = params;
   const persisted = todo.data.id ? true : false;
 
-  if (!todoParams.data.tasks) {
-    todoParams.data.tasks = [];
+  if (!params.data.tasks) {
+    params.data.tasks = [];
   }
 
   const cancelForm = () => {
-    const temp = params;
     delete params.data.tasks;
     renderCachedView();
   };
@@ -42,8 +42,8 @@ const form = (todo) => {
     } else {
       view = newTodo;
     }
-    todoParams.merge(currentData());
-    cacheView(view(Todo.new(todoParams)));
+    params.merge(currentData());
+    cacheView(view(Todo.new(params)));
     redirectTo('GET', newProjectPath);
   };
 
@@ -54,8 +54,8 @@ const form = (todo) => {
     } else {
       view = newTodo;
     }
-    todoParams.merge(currentData());
-    cacheView(view(Todo.new(todoParams)));
+    params.merge(currentData());
+    cacheView(view(Todo.new(params)));
     const projectToEdit = Project.find(Number(project.input.value));
     redirectTo('GET', editProjectPath, projectToEdit);
   };
@@ -67,8 +67,8 @@ const form = (todo) => {
     } else {
       view = newTodo;
     }
-    todoParams.merge(currentData());
-    cacheView(view(Todo.new(todoParams)));
+    params.merge(currentData());
+    cacheView(view(Todo.new(params)));
     redirectTo('GET', newTaskPath);
   };
 
@@ -79,8 +79,8 @@ const form = (todo) => {
     } else {
       view = newTodo;
     }
-    todoParams.merge(currentData());
-    cacheView(view(Todo.new(todoParams)));
+    params.merge(currentData());
+    cacheView(view(Todo.new(params)));
     const task = getTask(event.target.dataset.id);
     redirectTo('GET', editTaskPath, task);
   };
@@ -88,7 +88,7 @@ const form = (todo) => {
   const destroyTask = (event) => {
     const task = getTask(event.target.dataset.id);
     removeTaskFromParamTasks(task);
-    todoParams.merge(currentData());
+    params.merge(currentData());
     redirectTo('DELETE', taskPath, task);
   };
 
@@ -109,7 +109,7 @@ const form = (todo) => {
   };
 
   const removeTaskFromParamTasks = (task) => {
-    const paramTasks = todoParams.data.tasks;
+    const paramTasks = params.data.tasks;
     const removeIndex = paramTasks.indexOf(task);
     paramTasks.splice(removeIndex, 1);
   };
@@ -122,7 +122,7 @@ const form = (todo) => {
         description: description.input.value,
         dueDate: dueDate.input.value,
         priority: priority.input.value,
-        tasks: todoParams.data.tasks,
+        tasks: params.data.tasks,
         projectID: Number(project.input.value),
       },
     };
@@ -130,7 +130,7 @@ const form = (todo) => {
 
   const getAllTasks = () => {
     const persistedTasks = todo.tasks();
-    const unsavedTasks = todoParams.data.tasks;
+    const unsavedTasks = params.data.tasks;
     return persistedTasks.concat(unsavedTasks);
   };
 
