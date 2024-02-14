@@ -65,7 +65,7 @@ const form = (task) => {
   };
 
   const clearErrors = () => {
-    todo.errors = [];
+    task.errors = [];
   };
 
   const displayErrors = () => {

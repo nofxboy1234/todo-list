@@ -40,7 +40,7 @@ const instanceProperties = {
       redirectTo('GET', editTodoPath, Todo.new(todoParams));
       redirectTo('GET', projectsPath);
     } else {
-      render(`${resourcePluralName}/edit`, this.resourceSingular);
+      render(`${this.resourcePluralName}/edit`, this.resourceSingular);
     }
   },
   destroy: function () {

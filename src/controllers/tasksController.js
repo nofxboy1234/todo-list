@@ -51,7 +51,7 @@ const instanceProperties = {
       popCachedView();
       redirectTo('GET', editTodoPath, Todo.new(todoParams));
     } else {
-      render(`${resourcePluralName}/edit`, this.resourceSingular);
+      render(`${this.resourcePluralName}/edit`, this.resourceSingular);
     }
   },
   destroy: function () {

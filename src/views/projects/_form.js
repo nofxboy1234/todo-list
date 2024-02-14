@@ -59,7 +59,7 @@ const form = (project) => {
   };
 
   const clearErrors = () => {
-    todo.errors = [];
+    project.errors = [];
   };
 
   const displayErrors = () => {
