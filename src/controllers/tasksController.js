@@ -31,7 +31,10 @@ const instanceProperties = {
   create: function () {
     this.resourceSingular = this.resourceClass.new(this.params);
 
-    if (this.resourceSingular.save()) {
+    this.resourceSingular.validate();
+
+    // if (this.resourceSingular.save()) {
+    if (this.resourceSingular.errors.length === 0) {
       addTaskToTodoParams(this.resourceSingular);
       popCachedView();
       redirectTo('GET', editTodoPath, Todo.new(todoParams));

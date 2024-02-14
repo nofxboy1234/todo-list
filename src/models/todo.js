@@ -23,6 +23,7 @@ const instanceProperties = {
           todoID: this.data.id,
         },
       };
+      task.save();
       task.update(updatedData);
     });
   },
