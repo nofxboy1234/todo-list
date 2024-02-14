@@ -79,7 +79,7 @@ const createModel = (instanceProperties) => {
 
 const exists = (className, propertyToCheck, instanceToCheck) => {
   const found = className.all().filter((instance) => {
-    instance[propertyToCheck] === instanceToCheck.data[propertyToCheck];
+    return instance.data[propertyToCheck] === instanceToCheck.data[propertyToCheck];
   });
   return found.length > 0 ? true : false;
 };
