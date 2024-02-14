@@ -17,8 +17,10 @@ const instanceProperties = {
     if (this.data.name.length < 2) {
       this.errors.push('Name must be 2 or more characters');
     }
-    if (exists(Project, 'name', this)) {
-      this.errors.push('A Project already exists with this name');
+    if (!this.data.id) {
+      if (exists(Project, 'name', this)) {
+        this.errors.push('A Project already exists with this name');
+      }
     }
   },
 };
