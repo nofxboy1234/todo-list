@@ -21,21 +21,39 @@ const createModel = (instanceProperties) => {
 
       const instance = {
         data: {},
+        errors: [],
         save: function () {
-          this.data.id = nextID();
-          getModels().push(this);
-          this.updateDependent();
-          return true;
+          this.validate();
+
+          if (this.errors.length > 0) {
+            return false;
+          } else {
+            this.data.id = nextID();
+            getModels().push(this);
+            this.updateDependent();
+            return true;
+          }
         },
         update: function (params) {
-          Object.assign(this.data, params.data);
-          return true;
+          const validationInstance = Object.assign({}, this);
+          Object.assign(validationInstance.data, params.data)
+          validationInstance.validate();
+
+          if (validationInstance.errors.length > 0) {
+            return false;
+          } else {
+            Object.assign(this.data, params.data);
+            return true;
+          }
         },
         destroy: function () {
           this.destroyDependent();
           const removeIndex = getModels().indexOf(this);
           getModels().splice(removeIndex, 1);
         },
+        destroyDependent: function () {},
+        updateDependent: function () {},
+        validate: function () {},
       };
       Object.assign(instance.data, parameters.data);
       Object.assign(instance, instanceProperties);
@@ -59,4 +77,11 @@ const createModel = (instanceProperties) => {
   return Model;
 };
 
-export { createModel };
+const exists = (className, propertyToCheck, instanceToCheck) => {
+  const found = className.all().filter((instance) => {
+    instance[propertyToCheck] === instanceToCheck.data[propertyToCheck];
+  });
+  return found.length > 0 ? true : false;
+};
+
+export { createModel, exists };

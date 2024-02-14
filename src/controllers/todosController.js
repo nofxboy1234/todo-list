@@ -1,7 +1,7 @@
 import { Todo } from '../models/todo';
 import { params } from '../parameters/todoParameters';
 import { createController } from './controller';
-import { render } from '../renderer';
+import { popCachedView, render } from '../renderer';
 
 import { todosPath, projectsPath, redirectTo, todoPath } from '../router';
 import { getProjectForTodosIndex } from '../views/todos';
@@ -15,6 +15,7 @@ const instanceProperties = {
 
     if (this.resourceSingular.save()) {
       delete this.resourceSingular.data.tasks;
+      popCachedView();
       redirectTo('GET', projectsPath);
       redirectTo('GET', todosPath);
     } else {
@@ -31,6 +32,7 @@ const instanceProperties = {
 
     if (this.resourceSingular.update(this.params)) {
       delete this.resourceSingular.data.tasks;
+      popCachedView();
       redirectTo('GET', projectsPath);
       redirectTo('GET', todoPath, this.resourceSingular);
     } else {

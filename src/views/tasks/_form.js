@@ -1,10 +1,13 @@
 import { createLabel, createInput, createButton } from '../helpers';
 
-import { redirectTo, projectsPath, projectPath, tasksPath, taskPath } from '../../router';
 import {
-  popCachedView,
-  renderCachedView,
-} from '../../renderer';
+  redirectTo,
+  projectsPath,
+  projectPath,
+  tasksPath,
+  taskPath,
+} from '../../router';
+import { renderCachedView } from '../../renderer';
 
 const form = (task) => {
   const persisted = task.data.id ? true : false;
@@ -15,13 +18,13 @@ const form = (task) => {
 
   const createTask = (event) => {
     event.preventDefault();
-    popCachedView();
+    // popCachedView();
     redirectTo('POST', tasksPath, currentData());
   };
 
   const updateTask = (event) => {
     event.preventDefault();
-    popCachedView();
+    // popCachedView();
     redirectTo('PATCH', taskPath, currentData());
   };
 
@@ -44,6 +47,7 @@ const form = (task) => {
 
   const setupUI = () => {
     const taskForm = document.createElement('form');
+    taskForm.appendChild(errors.div);
     taskForm.appendChild(description.div);
     taskForm.appendChild(cancel.div);
     taskForm.appendChild(submit.div);
@@ -59,6 +63,25 @@ const form = (task) => {
     submit.button.addEventListener('click', submitButtonCallback);
     cancel.button.addEventListener('click', cancelForm);
   };
+
+  const clearErrors = () => {
+    todo.errors = [];
+  };
+
+  const displayErrors = () => {
+    task.errors.forEach((error) => {
+      const errorDiv = document.createElement('div');
+      errorDiv.textContent = error;
+      errors.div.appendChild(errorDiv);
+    });
+    clearErrors();
+  };
+
+  const errors = (() => {
+    const div = document.createElement('div');
+
+    return { div };
+  })();
 
   const description = (() => {
     const div = document.createElement('div');
@@ -96,6 +119,9 @@ const form = (task) => {
   const taskForm = setupUI();
   setupData();
   setupEventListeners();
+  if (task.errors.length > 0) {
+    displayErrors();
+  }
 
   return taskForm;
 };

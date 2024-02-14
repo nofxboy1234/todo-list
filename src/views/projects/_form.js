@@ -1,10 +1,7 @@
 import { createLabel, createInput, createButton } from '../helpers';
 
 import { redirectTo, projectsPath, projectPath } from '../../router';
-import {
-  popCachedView,
-  renderCachedView,
-} from '../../renderer';
+import { renderCachedView } from '../../renderer';
 
 const form = (project) => {
   const persisted = project.data.id ? true : false;
@@ -15,13 +12,13 @@ const form = (project) => {
 
   const createProject = (event) => {
     event.preventDefault();
-    popCachedView();
+    // popCachedView();
     redirectTo('POST', projectsPath, currentData());
   };
 
   const updateProject = (event) => {
     event.preventDefault();
-    popCachedView();
+    // popCachedView();
     redirectTo('PATCH', projectPath, currentData());
   };
 
@@ -44,6 +41,7 @@ const form = (project) => {
 
   const setupUI = () => {
     const projectForm = document.createElement('form');
+    projectForm.appendChild(errors.div);
     projectForm.appendChild(name.div);
     projectForm.appendChild(cancel.div);
     projectForm.appendChild(submit.div);
@@ -59,6 +57,25 @@ const form = (project) => {
     submit.button.addEventListener('click', submitButtonCallback);
     cancel.button.addEventListener('click', cancelForm);
   };
+
+  const clearErrors = () => {
+    todo.errors = [];
+  };
+
+  const displayErrors = () => {
+    project.errors.forEach((error) => {
+      const errorDiv = document.createElement('div');
+      errorDiv.textContent = error;
+      errors.div.appendChild(errorDiv);
+    });
+    clearErrors();
+  };
+
+  const errors = (() => {
+    const div = document.createElement('div');
+
+    return { div };
+  })();
 
   const name = (() => {
     const div = document.createElement('div');
@@ -96,6 +113,9 @@ const form = (project) => {
   const projectForm = setupUI();
   setupData();
   setupEventListeners();
+  if (project.errors.length > 0) {
+    displayErrors();
+  }
 
   return projectForm;
 };

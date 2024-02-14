@@ -2,7 +2,7 @@ import { Task } from '../models/task';
 import { params } from '../parameters/taskParameters';
 import { params as todoParams } from '../parameters/todoParameters';
 import { createController } from './controller';
-import { render } from '../renderer';
+import { popCachedView, render } from '../renderer';
 
 import { editTodoPath, projectsPath, redirectTo, todosPath } from '../router';
 import {
@@ -29,7 +29,7 @@ const updateDependentOfTodo = () => {
 const TasksController = Object.create(Controller);
 const instanceProperties = {
   create: function () {
-    this.resourceSingular = this.resourceClass.new(params);
+    this.resourceSingular = this.resourceClass.new(this.params);
 
     if (this.resourceSingular.save()) {
       addTaskToTodo(this.resourceSingular);
@@ -38,6 +38,7 @@ const instanceProperties = {
         updateDependentOfTodo();
       }
 
+      popCachedView();
       redirectTo('GET', editTodoPath, Todo.new(todoParams));
     } else {
       render(`${this.resourcePluralName}/new`, this.resourceSingular);
@@ -46,7 +47,8 @@ const instanceProperties = {
   update: function () {
     this.setResourceSingular();
 
-    if (this.resourceSingular.update(params)) {
+    if (this.resourceSingular.update(this.params)) {
+      popCachedView();
       redirectTo('GET', editTodoPath, Todo.new(todoParams));
     } else {
       render(`${resourcePluralName}/edit`, this.resourceSingular);

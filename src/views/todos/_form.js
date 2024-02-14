@@ -22,7 +22,6 @@ import {
   cacheView,
   editTodo,
   newTodo,
-  popCachedView,
   renderCachedView,
 } from '../../renderer';
 import { params as todoParams } from '../../parameters/todoParameters';
@@ -73,12 +72,6 @@ const form = (todo) => {
     redirectTo('GET', newTaskPath);
   };
 
-  const getTask = (targetID) => {
-    const id = Number(targetID);
-    const task = Task.find(id);
-    return task;
-  };
-
   const editTask = (event) => {
     let view;
     if (persisted) {
@@ -92,12 +85,6 @@ const form = (todo) => {
     redirectTo('GET', editTaskPath, task);
   };
 
-  const removeTaskFromParamTasks = (task) => {
-    const paramTasks = todo.data.tasks;
-    const removeIndex = paramTasks.indexOf(task);
-    paramTasks.splice(removeIndex, 1);
-  };
-
   const destroyTask = (event) => {
     const task = getTask(event.target.dataset.id);
     removeTaskFromParamTasks(task);
@@ -107,14 +94,26 @@ const form = (todo) => {
 
   const createTodo = (event) => {
     event.preventDefault();
-    popCachedView();
+    // popCachedView();
     redirectTo('POST', todosPath, currentData());
   };
 
   const updateTodo = (event) => {
     event.preventDefault();
-    popCachedView();
+    // popCachedView();
     redirectTo('PATCH', todoPath, currentData());
+  };
+
+  const getTask = (targetID) => {
+    const id = Number(targetID);
+    const task = Task.find(id);
+    return task;
+  };
+
+  const removeTaskFromParamTasks = (task) => {
+    const paramTasks = todo.data.tasks;
+    const removeIndex = paramTasks.indexOf(task);
+    paramTasks.splice(removeIndex, 1);
   };
 
   const currentData = () => {
@@ -150,7 +149,7 @@ const form = (todo) => {
   const setupUI = () => {
     const todoForm = document.createElement('form');
     todoForm.classList.add('new-todo-form');
-
+    todoForm.appendChild(errors.div);
     todoForm.appendChild(title.div);
     todoForm.appendChild(description.div);
     todoForm.appendChild(dueDate.div);
@@ -219,6 +218,25 @@ const form = (todo) => {
     project.editButton.addEventListener('click', editProject);
     cancel.button.addEventListener('click', cancelForm);
   };
+
+  const clearErrors = () => {
+    todo.errors = [];
+  };
+
+  const displayErrors = () => {
+    todo.errors.forEach((error) => {
+      const errorDiv = document.createElement('div');
+      errorDiv.textContent = error;
+      errors.div.appendChild(errorDiv);
+    });
+    clearErrors();
+  };
+
+  const errors = (() => {
+    const div = document.createElement('div');
+
+    return { div };
+  })();
 
   const title = (() => {
     const div = document.createElement('div');
@@ -329,6 +347,9 @@ const form = (todo) => {
   const todoForm = setupUI();
   setupData();
   setupEventListeners();
+  if (todo.errors.length > 0) {
+    displayErrors();
+  }
 
   return todoForm;
 };
