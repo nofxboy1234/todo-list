@@ -34,10 +34,6 @@ const instanceProperties = {
     if (this.resourceSingular.save()) {
       addTaskToTodo(this.resourceSingular);
 
-      if (isPersisted(todoParams)) {
-        updateDependentOfTodo();
-      }
-
       popCachedView();
       redirectTo('GET', editTodoPath, Todo.new(todoParams));
     } else {
