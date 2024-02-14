@@ -66,6 +66,7 @@ const createController = (resourcePluralName, resourceClass, params) => {
       render(`${resourcePluralName}/show`, this.resourceSingular);
     },
     edit: function () {
+      const temp = params;
       this.resourceSingular = resourceClass.new(params);
       render(`${resourcePluralName}/edit`, this.resourceSingular);
     },

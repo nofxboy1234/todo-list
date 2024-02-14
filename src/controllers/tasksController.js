@@ -13,7 +13,7 @@ import { Todo } from '../models/todo';
 
 const Controller = createController('tasks', Task, params);
 
-const addTaskToTodo = (task) => {
+const addTaskToTodoParams = (task) => {
   todoParams.data.tasks.push(task);
 };
 
@@ -32,8 +32,7 @@ const instanceProperties = {
     this.resourceSingular = this.resourceClass.new(this.params);
 
     if (this.resourceSingular.save()) {
-      addTaskToTodo(this.resourceSingular);
-
+      addTaskToTodoParams(this.resourceSingular);
       popCachedView();
       redirectTo('GET', editTodoPath, Todo.new(todoParams));
     } else {

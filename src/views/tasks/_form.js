@@ -18,13 +18,11 @@ const form = (task) => {
 
   const createTask = (event) => {
     event.preventDefault();
-    // popCachedView();
     redirectTo('POST', tasksPath, currentData());
   };
 
   const updateTask = (event) => {
     event.preventDefault();
-    // popCachedView();
     redirectTo('PATCH', taskPath, currentData());
   };
 

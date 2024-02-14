@@ -19,14 +19,22 @@ import {
   taskPath,
 } from '../../router';
 import { cacheView, editTodo, newTodo, renderCachedView } from '../../renderer';
-import { params as todoParams } from '../../parameters/todoParameters';
+import { params, params as todoParams } from '../../parameters/todoParameters';
 import { Todo } from '../../models/todo';
 import { Task } from '../../models/task';
 
 const form = (todo) => {
   const persisted = todo.data.id ? true : false;
 
+  const addTasksToParamTasks = () => {
+    const todoTasks = todo.tasks();
+    let paramTasks = todo.data.tasks;
+    paramTasks = todoTasks;
+  };
+
   const cancelForm = () => {
+    const temp = params;
+    delete params.data.tasks;
     renderCachedView();
   };
 
@@ -126,11 +134,13 @@ const form = (todo) => {
   };
 
   const getTasks = () => {
-    if (persisted) {
-      return todo.tasks();
-    } else {
-      return todo.data.tasks || [];
-    }
+    return todo.data.tasks || [];
+
+    // if (persisted) {
+    //   return todo.tasks();
+    // } else {
+    //   return todo.data.tasks || [];
+    // }
   };
 
   const submitButtonCallback = (event) => {
@@ -338,6 +348,10 @@ const form = (todo) => {
 
     return { div, button };
   })();
+
+  if (persisted) {
+    addTasksToParamTasks();
+  }
 
   const todoForm = setupUI();
   setupData();
