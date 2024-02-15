@@ -2,6 +2,10 @@ import { Project } from './project';
 import { createModel as Model, exists } from './model';
 import { Task } from './task';
 
+const isPersistedTask = (task) => {
+  return task.data.id ? true : false;
+};
+
 const instanceProperties = {
   project: function () {
     return (
@@ -23,8 +27,10 @@ const instanceProperties = {
           todoID: this.data.id,
         },
       };
-      task.save();
-      task.update(updatedData);
+      if (!isPersistedTask) {
+        task.save();
+        task.update(updatedData);
+      }
     });
   },
   validate: function () {

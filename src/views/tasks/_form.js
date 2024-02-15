@@ -10,7 +10,8 @@ import {
 import { renderCachedView } from '../../renderer';
 
 const form = (task) => {
-  const persisted = task.data.id ? true : false;
+  const isOnTodoForm = task.data.onTodoForm ? true : false;
+  // const isOnTodoForm = task.data.id ? true : false;
 
   const cancelForm = () => {
     renderCachedView();
@@ -31,12 +32,13 @@ const form = (task) => {
       data: {
         id: task.data.id,
         description: description.input.value,
+        onTodoForm: true,
       },
     };
   };
 
   const submitButtonCallback = (event) => {
-    if (persisted) {
+    if (isOnTodoForm) {
       updateTask(event);
     } else {
       createTask(event);
@@ -102,7 +104,7 @@ const form = (task) => {
     const div = document.createElement('div');
 
     let buttonText;
-    if (persisted) {
+    if (isOnTodoForm) {
       buttonText = 'UPDATE';
     } else {
       buttonText = 'CREATE';

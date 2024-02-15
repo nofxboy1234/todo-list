@@ -16,8 +16,14 @@ const Controller = createController('tasks', Task, params);
 const addTaskToTodoParams = (task) => {
   todoParams.data.tasks.push(task);
 };
+const updateTaskInTodoParams = (task) => {
+  const tasks = todoParams.data.tasks;
+  const indexOfTask = task.data.indexInTasks;
+  const todoParamsTask = tasks.at(indexOfTask);
+  Object.assign(todoParamsTask.data, task.data);
+};
 
-const isPersisted = (params) => {
+const isPersisted = (task) => {
   return params.data.id ? true : false;
 };
 
@@ -30,10 +36,8 @@ const TasksController = Object.create(Controller);
 const instanceProperties = {
   create: function () {
     this.resourceSingular = this.resourceClass.new(this.params);
-
     this.resourceSingular.validate();
 
-    // if (this.resourceSingular.save()) {
     if (this.resourceSingular.errors.length === 0) {
       addTaskToTodoParams(this.resourceSingular);
       popCachedView();
@@ -43,13 +47,15 @@ const instanceProperties = {
     }
   },
   update: function () {
-    this.setResourceSingular();
+    this.resourceSingular = this.resourceClass.new(this.params);
+    this.resourceSingular.validate();
 
-    if (this.resourceSingular.update(this.params)) {
+    if (this.resourceSingular.errors.length === 0) {
+      updateTaskInTodoParams(this.resourceSingular);
       popCachedView();
       redirectTo('GET', editTodoPath, Todo.new(todoParams));
     } else {
-      render(`${this.resourcePluralName}/edit`, this.resourceSingular);
+      render(`${this.resourcePluralName}/new`, this.resourceSingular);
     }
   },
   destroy: function () {

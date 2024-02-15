@@ -30,7 +30,7 @@ const form = (todo) => {
   }
 
   const cancelForm = () => {
-    delete params.data.tasks;
+    // delete params.data.tasks;
     renderCachedView();
   };
 
@@ -86,9 +86,11 @@ const form = (todo) => {
     if (taskID.startsWith('undefined-')) {
       const index = Number(taskID.split('-').at(1));
       const taskData = params.data.tasks.at(index);
+      taskData.data.indexInTasks = index;
       task = Task.new(taskData);
     } else {
-      task = getTask(event.target.dataset.id);
+      task = getTask(taskID);
+      task.data.indexInTasks = Number(taskID);
     }
 
     redirectTo('GET', editTaskPath, task);
@@ -180,7 +182,8 @@ const form = (todo) => {
     if (!task.data.id) {
       id = `undefined-${index}`;
     } else {
-      id = task.data.id;
+      id = index;
+      // id = task.data.id;
     }
     return id;
   };
@@ -210,11 +213,7 @@ const form = (todo) => {
   };
 
   const setupTaskListData = () => {
-    savedTasks().forEach((task, index) => {
-      addTaskToDOM(task, index);
-    });
-
-    unsavedTasks().forEach((task, index) => {
+    params.data.tasks.forEach((task, index) => {
       addTaskToDOM(task, index);
     });
   };
@@ -236,6 +235,7 @@ const form = (todo) => {
 
   const setupData = () => {
     setupSimpleData();
+    addExistingTasksToParamTasks();
     setupTaskListData();
     setupProjectData();
     setEditProjectButtonState();
@@ -261,6 +261,11 @@ const form = (todo) => {
       errors.div.appendChild(errorDiv);
     });
     clearErrors();
+  };
+
+  const addExistingTasksToParamTasks = () => {
+    const existingTasks = todo.tasks();
+    params.data.tasks.concat(existingTasks);
   };
 
   const errors = (() => {
