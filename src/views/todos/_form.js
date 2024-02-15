@@ -23,7 +23,6 @@ import { Todo } from '../../models/todo';
 import { Task } from '../../models/task';
 
 const form = (todo) => {
-  const temp = params;
   const persisted = todo.data.id ? true : false;
 
   if (!params.data.tasks) {
@@ -81,7 +80,18 @@ const form = (todo) => {
     }
     params.merge(currentData());
     cacheView(view(Todo.new(params)));
-    const task = getTask(event.target.dataset.id);
+
+    const temp = params;
+    const taskID = event.target.dataset.id;
+    let task;
+    if (taskID.startsWith('undefined-')) {
+      const index = Number(taskID.split('-').at(1));
+      const taskData = params.data.tasks.at(index);
+      task = Task.new(taskData);
+    } else {
+      task = getTask(event.target.dataset.id);
+    }
+
     redirectTo('GET', editTaskPath, task);
   };
 
@@ -128,6 +138,14 @@ const form = (todo) => {
     };
   };
 
+  const savedTasks = () => {
+    return todo.tasks();
+  };
+
+  const unsavedTasks = () => {
+    return params.data.tasks;
+  };
+
   const getAllTasks = () => {
     const persistedTasks = todo.tasks();
     const unsavedTasks = params.data.tasks;
@@ -158,29 +176,47 @@ const form = (todo) => {
     return todoForm;
   };
 
+  const getTaskID = (task, index) => {
+    let id;
+    if (!task.data.id) {
+      id = `undefined-${index}`;
+    } else {
+      id = task.data.id;
+    }
+    return id;
+  };
+
+  const addTaskToDOM = (task, index) => {
+    const taskDiv = document.createElement('div');
+
+    const descriptionSpan = document.createElement('span');
+    descriptionSpan.textContent = task.data.description;
+    taskDiv.appendChild(descriptionSpan);
+
+    const editButton = createButton('button', 'EDIT', 'editTaskButtonID');
+    editButton.addEventListener('click', editTask);
+    editButton.dataset.id = getTaskID(task, index);
+    taskDiv.appendChild(editButton);
+
+    const destroyButton = createButton(
+      'button',
+      'DESTROY',
+      'destroyTaskButtonID'
+    );
+    destroyButton.addEventListener('click', destroyTask);
+    destroyButton.dataset.id = getTaskID(task, index);
+    taskDiv.appendChild(destroyButton);
+
+    taskList.div.appendChild(taskDiv);
+  };
+
   const setupTaskListData = () => {
-    const tasks = getAllTasks();
-    tasks.forEach((task) => {
-      const taskDiv = document.createElement('div');
+    savedTasks().forEach((task, index) => {
+      addTaskToDOM(task, index);
+    });
 
-      const descriptionSpan = document.createElement('span');
-      descriptionSpan.textContent = task.data.description;
-      taskDiv.appendChild(descriptionSpan);
-
-      const editButton = createButton('button', 'EDIT', 'editTaskButtonID');
-      editButton.addEventListener('click', editTask);
-      editButton.dataset.id = task.data.id;
-      taskDiv.appendChild(editButton);
-
-      const destroyButton = createButton(
-        'button',
-        'DESTROY',
-        'destroyTaskButtonID'
-      );
-      destroyButton.addEventListener('click', destroyTask);
-      destroyButton.dataset.id = task.data.id;
-      taskDiv.appendChild(destroyButton);
-      taskList.div.appendChild(taskDiv);
+    unsavedTasks().forEach((task, index) => {
+      addTaskToDOM(task, index);
     });
   };
 
