@@ -81,7 +81,6 @@ const form = (todo) => {
     params.merge(currentData());
     cacheView(view(Todo.new(params)));
 
-    const temp = params;
     const taskID = event.target.dataset.id;
     let task;
     if (taskID.startsWith('undefined-')) {
