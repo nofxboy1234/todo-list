@@ -18,7 +18,8 @@ const addTaskToTodoParams = (task) => {
   tempTodoParams.data.tasks.push(task);
 };
 const updateTaskInTodoParams = (task) => {
-  const tasks = todoParams.data.tasks;
+  const tempTodoParams = todoParams;
+  const tasks = tempTodoParams.data.tasks;
   const indexOfTask = task.data.indexInTasks;
   const todoParamsTask = tasks.at(indexOfTask);
   Object.assign(todoParamsTask.data, task.data);
@@ -54,6 +55,7 @@ const instanceProperties = {
 
     if (this.resourceSingular.errors.length === 0) {
       updateTaskInTodoParams(this.resourceSingular);
+      params.reset();
       popCachedView();
       redirectTo('GET', editTodoPath, Todo.new(todoParams));
     } else {

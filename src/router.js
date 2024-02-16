@@ -47,9 +47,13 @@ const createRouter = (instanceProperties = {}, staticProperties = {}) => {
         return string.charAt(0).toUpperCase() + string.slice(1);
       };
 
+      const getParameters = (resourcePlural) => {
+        return parameters()[resourcePlural];
+      };
+
       const instance = {
         saveToParameters: function (resourcePlural, data) {
-          const resourceParams = parameters()[resourcePlural];
+          const resourceParams = getParameters(resourcePlural);
           resourceParams.merge(data);
         },
         redirectTo: function (method, path, resourceData = {}) {
@@ -77,7 +81,7 @@ const createRouter = (instanceProperties = {}, staticProperties = {}) => {
             // newTodoPath, /todos/new
             case `/${resourcePlural}/new`:
               if (method === 'GET') {
-                const resourceParams = parameters()[resourcePlural];
+                const resourceParams = getParameters(resourcePlural);
                 resourceParams.reset();
                 controller.new();
               }
@@ -85,6 +89,8 @@ const createRouter = (instanceProperties = {}, staticProperties = {}) => {
             // editTodoPath, /todos/:id/edit
             case `/${resourcePlural}/${resourceData.data.id}/edit`:
               if (method === 'GET') {
+                const resourceParams = getParameters(resourcePlural);
+                resourceParams.reset();
                 saveToParameters(resourcePlural, resourceData);
                 controller.edit();
               }
