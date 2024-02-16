@@ -1,6 +1,6 @@
 import { createParameters as Parameters } from './parameters';
 
-const instanceProperties = {};
+const instanceProperties = { instanceName: 'projectParameters' };
 const ProjectParameters = Object.assign({}, Parameters(instanceProperties));
 const staticProperties = {};
 Object.assign(ProjectParameters, staticProperties);
