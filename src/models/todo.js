@@ -27,7 +27,7 @@ const instanceProperties = {
           todoID: this.data.id,
         },
       };
-      if (!isPersistedTask) {
+      if (!isPersistedTask(task)) {
         task.save();
         task.update(updatedData);
       }
