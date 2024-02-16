@@ -34,72 +34,59 @@ const form = (todo) => {
     renderCachedView();
   };
 
-  const newProject = () => {
+  const getView = () => {
     let view;
     if (persisted) {
       view = editTodo;
     } else {
       view = newTodo;
     }
+    return view;
+  };
+
+  const mergeCurrentDataIntoParams = () => {
     params.merge(currentData());
+  };
+
+  const cacheCurrentView = () => {
+    const view = getView();
     cacheView(view(Todo.new(params)));
+  };
+
+  const newProject = () => {
+    mergeCurrentDataIntoParams();
+    cacheCurrentView();
+
     redirectTo('GET', newProjectPath);
   };
 
   const editProject = () => {
-    let view;
-    if (persisted) {
-      view = editTodo;
-    } else {
-      view = newTodo;
-    }
-    params.merge(currentData());
-    cacheView(view(Todo.new(params)));
+    mergeCurrentDataIntoParams();
+    cacheCurrentView();
+
     const projectToEdit = Project.find(Number(project.input.value));
     redirectTo('GET', editProjectPath, projectToEdit);
   };
 
   const newTask = () => {
-    let view;
-    if (persisted) {
-      view = editTodo;
-    } else {
-      view = newTodo;
-    }
-    params.merge(currentData());
-    cacheView(view(Todo.new(params)));
+    mergeCurrentDataIntoParams();
+    cacheCurrentView();
+
     redirectTo('GET', newTaskPath);
   };
 
   const editTask = (event) => {
-    let view;
-    if (persisted) {
-      view = editTodo;
-    } else {
-      view = newTodo;
-    }
-    params.merge(currentData());
-    cacheView(view(Todo.new(params)));
-
-    const taskID = event.target.dataset.id;
-    let task;
-    if (taskID.startsWith('undefined-')) {
-      const index = Number(taskID.split('-').at(1));
-      const taskData = params.data.tasks.at(index);
-      taskData.data.indexInTasks = index;
-      task = Task.new(taskData);
-    } else {
-      task = getTask(taskID);
-      task.data.indexInTasks = Number(taskID);
-    }
+    mergeCurrentDataIntoParams();
+    cacheCurrentView();
+    const task = createTaskFromParams(event.target.dataset.id);
 
     redirectTo('GET', editTaskPath, task);
   };
 
   const destroyTask = (event) => {
-    const task = getTask(event.target.dataset.id);
-    removeTaskFromParamTasks(task);
-    params.merge(currentData());
+    mergeCurrentDataIntoParams();
+    const task = createTaskFromParams(event.target.dataset.id);
+
     redirectTo('DELETE', taskPath, task);
   };
 
@@ -113,16 +100,26 @@ const form = (todo) => {
     redirectTo('PATCH', todoPath, currentData());
   };
 
-  const getTask = (targetID) => {
+  const getSavedTask = (targetID) => {
     const id = Number(targetID);
     const task = Task.find(id);
     return task;
   };
 
-  const removeTaskFromParamTasks = (task) => {
-    const paramTasks = params.data.tasks;
-    const removeIndex = paramTasks.indexOf(task);
-    paramTasks.splice(removeIndex, 1);
+  const createTaskFromParams = (taskID) => {
+    let task;
+    if (taskID.startsWith('undefined-')) {
+      const index = Number(taskID.split('-').at(1));
+      const taskData = params.data.tasks.at(index);
+
+      task = Task.new(taskData);
+      task.data.indexInTasks = index;
+    } else {
+      task = getSavedTask(taskID);
+      task.data.indexInTasks = Number(taskID);
+    }
+
+    return task;
   };
 
   const currentData = () => {
@@ -137,20 +134,6 @@ const form = (todo) => {
         projectID: Number(project.input.value),
       },
     };
-  };
-
-  const savedTasks = () => {
-    return todo.tasks();
-  };
-
-  const unsavedTasks = () => {
-    return params.data.tasks;
-  };
-
-  const getAllTasks = () => {
-    const persistedTasks = todo.tasks();
-    const unsavedTasks = params.data.tasks;
-    return persistedTasks.concat(unsavedTasks);
   };
 
   const submitButtonCallback = (event) => {
@@ -183,7 +166,6 @@ const form = (todo) => {
       id = `undefined-${index}`;
     } else {
       id = index;
-      // id = task.data.id;
     }
     return id;
   };
