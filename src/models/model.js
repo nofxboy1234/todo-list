@@ -20,12 +20,12 @@ const createModel = (instanceProperties) => {
       };
 
       const saveInstanceToStorage = (instance) => {
-        getInstances().push(instance);
         instance.updateDependent();
+        getInstances().push(instance);
       };
 
-      const updateInstanceInStorage = (instance) => {
-        Object.assign(instance.data, params.data);
+      const updateInstanceInStorage = (instance, updatedData) => {
+        Object.assign(instance.data, updatedData.data);
         instance.updateDependent();
       };
 
@@ -38,9 +38,9 @@ const createModel = (instanceProperties) => {
         instance.data.id = nextID();
       };
 
-      const validateInstance = (instance) => {
+      const validateInstance = (instance, updatedData) => {
         const validationInstance = Object.assign({}, instance);
-        Object.assign(validationInstance.data, params.data);
+        Object.assign(validationInstance.data, updatedData.data);
         validationInstance.validate();
 
         return validationInstance;
@@ -60,13 +60,13 @@ const createModel = (instanceProperties) => {
             return true;
           }
         },
-        update: function (params) {
-          const validationInstance = validateInstance(this);
+        update: function (data) {
+          const validationInstance = validateInstance(this, data);
 
           if (validationInstance.errors.length > 0) {
             return false;
           } else {
-            updateInstanceInStorage(this);
+            updateInstanceInStorage(this, data);
             return true;
           }
         },

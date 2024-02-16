@@ -1,6 +1,7 @@
 import { Project } from './project';
 import { createModel as Model, exists } from './model';
 import { Task } from './task';
+import { params } from '../parameters/todoParameters';
 
 const isPersistedTask = (task) => {
   return task.data.id ? true : false;
@@ -21,7 +22,7 @@ const instanceProperties = {
     });
   },
   updateDependent: function () {
-    this.data.tasks.forEach((task) => {
+    params.data.tasks.forEach((task) => {
       const updatedData = {
         data: {
           todoID: this.data.id,
