@@ -14,7 +14,8 @@ import { Todo } from '../models/todo';
 const Controller = createController('tasks', Task, params);
 
 const addTaskToTodoParams = (task) => {
-  todoParams.data.tasks.push(task);
+  const tempTodoParams = todoParams;
+  tempTodoParams.data.tasks.push(task);
 };
 const updateTaskInTodoParams = (task) => {
   const tasks = todoParams.data.tasks;
@@ -40,6 +41,7 @@ const instanceProperties = {
 
     if (this.resourceSingular.errors.length === 0) {
       addTaskToTodoParams(this.resourceSingular);
+      params.reset();
       popCachedView();
       redirectTo('GET', editTodoPath, Todo.new(todoParams));
     } else {
