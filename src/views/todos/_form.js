@@ -30,7 +30,7 @@ const form = (todo) => {
   }
 
   const cancelForm = () => {
-    // delete params.data.tasks;
+    params.reset();
     renderCachedView();
   };
 

@@ -21,6 +21,7 @@ const instanceProperties = {
     this.resourceSingular = this.resourceClass.new(this.params);
 
     if (this.resourceSingular.save()) {
+      this.params.reset();
       // delete this.resourceSingular.data.tasks;
       // delete this.params.data.tasks;
       popCachedView();
