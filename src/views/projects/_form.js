@@ -2,23 +2,23 @@ import { createLabel, createInput, createButton } from '../helpers';
 
 import { redirectTo, projectsPath, projectPath } from '../../router';
 import { renderCachedView } from '../../renderer';
+import { params } from '../../parameters/projectParameters';
 
 const form = (project) => {
   const persisted = project.data.id ? true : false;
 
   const cancelForm = () => {
+    params.reset();
     renderCachedView();
   };
 
   const createProject = (event) => {
     event.preventDefault();
-    // popCachedView();
     redirectTo('POST', projectsPath, currentData());
   };
 
   const updateProject = (event) => {
     event.preventDefault();
-    // popCachedView();
     redirectTo('PATCH', projectPath, currentData());
   };
 
@@ -27,6 +27,7 @@ const form = (project) => {
       data: {
         id: project.data.id,
         name: name.input.value,
+        onTodoForm: true,
       },
     };
   };

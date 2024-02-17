@@ -43,7 +43,7 @@ const createOption = (value, text) => {
   return option;
 };
 
-const createSelect = (id, name, options) => {
+const createSelect = (id, name, options = []) => {
   const select = document.createElement('select');
   select.id = id;
   select.name = name;

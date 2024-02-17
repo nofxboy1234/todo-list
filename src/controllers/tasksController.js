@@ -4,14 +4,8 @@ import { params as todoParams } from '../parameters/todoParameters';
 import { createController } from './controller';
 import { popCachedView, render } from '../renderer';
 
-import { editTodoPath, projectsPath, redirectTo, todosPath } from '../router';
-import {
-  getProjectForTodosIndex,
-  setProjectForTodosIndex,
-} from '../views/todos';
+import { editTodoPath, redirectTo } from '../router';
 import { Todo } from '../models/todo';
-
-const Controller = createController('tasks', Task, params);
 
 const createTaskInTodoParams = (task) => {
   const tempTodoParams = todoParams;
@@ -32,14 +26,7 @@ const destroyTaskInTodoParams = (task) => {
   tasks.splice(indexOfTask, 1);
 };
 
-const isPersisted = (task) => {
-  return params.data.id ? true : false;
-};
-
-const updateDependentOfTodo = () => {
-  const todo = Todo.new(todoParams);
-  todo.updateDependent();
-};
+const Controller = createController('tasks', Task, params);
 
 const TasksController = Object.create(Controller);
 const instanceProperties = {
@@ -71,9 +58,7 @@ const instanceProperties = {
   },
   destroy: function () {
     this.resourceSingular = this.resourceClass.new(this.params);
-    // this.setResourceSingular();
     destroyTaskInTodoParams(this.resourceSingular);
-    // this.resourceSingular.destroy();
     redirectTo('GET', editTodoPath, Todo.new(todoParams));
   },
 };
