@@ -57,9 +57,14 @@ const instanceProperties = {
     }
   },
   destroy: function () {
-    this.resourceSingular = this.resourceClass.new(this.params);
-    destroyProjectInTodoParams(this.resourceSingular);
-    redirectTo('GET', editTodoPath, Todo.new(todoParams));
+    this.setResourceSingular();
+    this.resourceSingular.destroy();
+    redirectTo('GET', projectsPath);
+
+    if (!Project.all().includes(getProjectForTodosIndex())) {
+      setProjectForTodosIndex(Project.first());
+      redirectTo('GET', todosPath);
+    }
   },
 };
 Object.assign(ProjectsController, instanceProperties);
