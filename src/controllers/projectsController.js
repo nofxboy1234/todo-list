@@ -38,7 +38,7 @@ const instanceProperties = {
       createProjectInTodoParams(this.resourceSingular);
       params.reset();
       popCachedView();
-      render('todos/edit', Todo.new(todoParams))
+      render('todos/edit', Todo.new(todoParams));
     } else {
       render(`${this.resourcePluralName}/new`, this.resourceSingular);
     }
@@ -51,7 +51,7 @@ const instanceProperties = {
       updateProjectInTodoParams(this.resourceSingular);
       params.reset();
       popCachedView();
-      render('todos/edit', Todo.new(todoParams))
+      render('todos/edit', Todo.new(todoParams));
     } else {
       render(`${this.resourcePluralName}/new`, this.resourceSingular);
     }
