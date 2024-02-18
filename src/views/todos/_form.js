@@ -47,6 +47,7 @@ const form = (todo) => {
 
   const cacheCurrentView = () => {
     const view = getView();
+    const tempParams = params;
     cacheView(view(Todo.new(params)));
   };
 
@@ -153,7 +154,7 @@ const form = (todo) => {
         dueDate: dueDate.input.value,
         priority: priority.input.value,
         tasks: params.data.tasks,
-        projectID: Number(project.input.value),
+        // projectID: Number(project.input.value),
       },
     };
   };
@@ -244,6 +245,19 @@ const form = (todo) => {
     project.input.value = indexInParams;
   };
 
+  const getProjectInputValueToSelect = (indexOfTodoProject) => {
+    let index;
+    const tempParams = params;
+    let projectInputValue = tempParams.data.projectInputValue;
+    if (projectInputValue) {
+      index = projectInputValue;
+    } else {
+      index = indexOfTodoProject;
+    }
+
+    return index;
+  };
+
   const setupProjectData = () => {
     const tempParams = params;
     let indexOfTodoProject;
@@ -259,11 +273,8 @@ const form = (todo) => {
       // }
     });
 
-    if (indexOfTodoProject) {
-      selectProject(indexOfTodoProject);
-    } else {
-      // selectProject(indexOfDefaultProject);
-    }
+    const index = getProjectInputValueToSelect(indexOfTodoProject);
+    selectProject(index);
   };
 
   const setupSimpleData = () => {

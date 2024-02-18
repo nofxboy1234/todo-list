@@ -4,13 +4,22 @@ import { params as todoParams } from '../parameters/todoParameters';
 import { createController } from './controller';
 import { popCachedView, render } from '../renderer';
 
-import { editTodoPath, redirectTo } from '../router';
 import { Todo } from '../models/todo';
 
 const createProjectInTodoParams = (task) => {
   const tempTodoParams = todoParams;
-  tempTodoParams.data.projects.push(task);
+  const projects = tempTodoParams.data.projects;
+  projects.push(task);
+  const indexOfCreatedProject = projects.length - 1;
+
+  return indexOfCreatedProject;
 };
+
+const setProjectInputValueOfTodo = (index) => {
+  const tempTodoParams = todoParams;
+  tempTodoParams.data.projectInputValue = `undefined-${index}`;
+};
+
 const updateProjectInTodoParams = (task) => {
   const tempTodoParams = todoParams;
   const tasks = tempTodoParams.data.projects;
@@ -19,12 +28,12 @@ const updateProjectInTodoParams = (task) => {
   Object.assign(todoParamsTask.data, task.data);
 };
 
-const destroyProjectInTodoParams = (task) => {
-  const tempTodoParams = todoParams;
-  const tasks = tempTodoParams.data.projects;
-  const indexOfTask = task.data.indexInProjects;
-  tasks.splice(indexOfTask, 1);
-};
+// const destroyProjectInTodoParams = (task) => {
+//   const tempTodoParams = todoParams;
+//   const tasks = tempTodoParams.data.projects;
+//   const indexOfTask = task.data.indexInProjects;
+//   tasks.splice(indexOfTask, 1);
+// };
 
 const Controller = createController('projects', Project, params);
 
@@ -35,7 +44,10 @@ const instanceProperties = {
     this.resourceSingular.validate();
 
     if (this.resourceSingular.errors.length === 0) {
-      createProjectInTodoParams(this.resourceSingular);
+      const indexOfCreatedProject = createProjectInTodoParams(
+        this.resourceSingular
+      );
+      setProjectInputValueOfTodo(indexOfCreatedProject);
       params.reset();
       popCachedView();
       render('todos/edit', Todo.new(todoParams));
