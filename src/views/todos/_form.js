@@ -154,6 +154,7 @@ const form = (todo) => {
         dueDate: dueDate.input.value,
         priority: priority.input.value,
         tasks: params.data.tasks,
+        projectInputValue: project.input.value,
         // projectID: Number(project.input.value),
       },
     };
