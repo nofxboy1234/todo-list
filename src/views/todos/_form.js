@@ -254,15 +254,15 @@ const form = (todo) => {
       if (project === Project.find(todo.data.projectID)) {
         indexOfTodoProject = indexInParams;
       }
-      if (project === Project.first()) {
-        indexOfDefaultProject = indexInParams;
-      }
+      // if (project === Project.first()) {
+      //   indexOfDefaultProject = indexInParams;
+      // }
     });
 
     if (indexOfTodoProject) {
       selectProject(indexOfTodoProject);
     } else {
-      selectProject(indexOfDefaultProject);
+      // selectProject(indexOfDefaultProject);
     }
   };
 
