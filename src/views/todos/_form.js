@@ -60,7 +60,8 @@ const form = (todo) => {
   const editProject = (event) => {
     mergeCurrentDataIntoParams();
     cacheCurrentView();
-    const project = createProjectFromParams(event.target.dataset.id);
+    const formProjectID = event.target.dataset.id;
+    const project = createProjectFromParams(formProjectID);
 
     redirectTo('GET', editProjectPath, project);
   };
@@ -75,14 +76,16 @@ const form = (todo) => {
   const editTask = (event) => {
     mergeCurrentDataIntoParams();
     cacheCurrentView();
-    const task = createTaskFromParams(event.target.dataset.id);
+    const formTaskID = event.target.dataset.id;
+    const task = createTaskFromParams(formTaskID);
 
     redirectTo('GET', editTaskPath, task);
   };
 
   const destroyTask = (event) => {
     mergeCurrentDataIntoParams();
-    const task = createTaskFromParams(event.target.dataset.id);
+    const formTaskID = event.target.dataset.id;
+    const task = createTaskFromParams(formTaskID);
 
     redirectTo('DELETE', taskPath, task);
   };
@@ -97,8 +100,8 @@ const form = (todo) => {
     redirectTo('PATCH', todoPath, currentData());
   };
 
-  const getSavedTask = (targetID) => {
-    const id = Number(targetID);
+  const getSavedTask = (formTaskID) => {
+    const id = Number(formTaskID);
     const task = Task.find(id);
     return task;
   };
@@ -109,33 +112,33 @@ const form = (todo) => {
     return project;
   };
 
-  const createTaskFromParams = (taskID) => {
+  const createTaskFromParams = (formTaskID) => {
     let task;
-    if (taskID.startsWith('undefined-')) {
-      const index = Number(taskID.split('-').at(1));
+    if (formTaskID.startsWith('undefined-')) {
+      const index = Number(formTaskID.split('-').at(1));
       const taskData = params.data.tasks.at(index);
 
       task = Task.new(taskData);
       task.data.indexInTasks = index;
     } else {
-      task = getSavedTask(taskID);
-      task.data.indexInTasks = Number(taskID);
+      task = getSavedTask(formTaskID);
+      task.data.indexInTasks = Number(formTaskID);
     }
 
     return task;
   };
 
-  const createProjectFromParams = (projectID) => {
+  const createProjectFromParams = (formProjectID) => {
     let project;
-    if (projectID.startsWith('undefined-')) {
-      const index = Number(projectID.split('-').at(1));
+    if (formProjectID.startsWith('undefined-')) {
+      const index = Number(formProjectID.split('-').at(1));
       const projectData = params.data.projects.at(index);
 
       project = Project.new(projectData);
       project.data.indexInTasks = index;
     } else {
-      project = getSavedProject(projectID);
-      project.data.indexInTasks = Number(projectID);
+      project = getSavedProject(formProjectID);
+      project.data.indexInTasks = Number(formProjectID);
     }
 
     return project;
@@ -179,27 +182,27 @@ const form = (todo) => {
     return todoForm;
   };
 
-  const getTaskID = (task, index) => {
+  const generateFormTaskID = (task, indexInParams) => {
     let id;
     if (!task.data.id) {
-      id = `undefined-${index}`;
+      id = `undefined-${indexInParams}`;
     } else {
-      id = index;
+      id = indexInParams;
     }
     return id;
   };
 
-  const getProjectID = (project, index) => {
+  const generateFormProjectID = (project, indexInParams) => {
     let id;
     if (!project.data.id) {
-      id = `undefined-${index}`;
+      id = `undefined-${indexInParams}`;
     } else {
-      id = index;
+      id = indexInParams;
     }
     return id;
   };
 
-  const addTaskToDOM = (task, index) => {
+  const addTaskToDOM = (task, indexInParams) => {
     const taskDiv = document.createElement('div');
 
     const descriptionSpan = document.createElement('span');
@@ -208,7 +211,7 @@ const form = (todo) => {
 
     const editButton = createButton('button', 'EDIT', 'editTaskButtonID');
     editButton.addEventListener('click', editTask);
-    editButton.dataset.id = getTaskID(task, index);
+    editButton.dataset.id = generateFormTaskID(task, indexInParams);
     taskDiv.appendChild(editButton);
 
     const destroyButton = createButton(
@@ -217,31 +220,50 @@ const form = (todo) => {
       'destroyTaskButtonID'
     );
     destroyButton.addEventListener('click', destroyTask);
-    destroyButton.dataset.id = getTaskID(task, index);
+    destroyButton.dataset.id = generateFormTaskID(task, indexInParams);
     taskDiv.appendChild(destroyButton);
 
     taskList.div.appendChild(taskDiv);
   };
 
-  const addProjectToDOM = (projectToAdd, index) => {
+  const addProjectToDOM = (projectToAdd, indexInParams) => {
     const option = {
-      value: getProjectID(projectToAdd, index),
+      value: generateFormProjectID(projectToAdd, indexInParams),
       text: projectToAdd.data.name,
     };
     project.input.add(createOption(option.value, option.text));
   };
 
   const setupTaskListData = () => {
-    params.data.tasks.forEach((task, index) => {
-      addTaskToDOM(task, index);
+    params.data.tasks.forEach((task, indexInParams) => {
+      addTaskToDOM(task, indexInParams);
     });
+  };
+
+  const selectProject = (indexInParams) => {
+    project.input.value = indexInParams;
   };
 
   const setupProjectData = () => {
     const tempParams = params;
-    tempParams.data.projects.forEach((project, index) => {
-      addProjectToDOM(project, index);
+    let indexOfTodoProject;
+    let indexOfDefaultProject;
+    tempParams.data.projects.forEach((project, indexInParams) => {
+      addProjectToDOM(project, indexInParams);
+
+      if (project === Project.find(todo.data.projectID)) {
+        indexOfTodoProject = indexInParams;
+      }
+      if (project === Project.first()) {
+        indexOfDefaultProject = indexInParams;
+      }
     });
+
+    if (indexOfTodoProject) {
+      selectProject(indexOfTodoProject);
+    } else {
+      selectProject(indexOfDefaultProject);
+    }
   };
 
   const setupSimpleData = () => {

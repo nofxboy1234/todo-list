@@ -34,7 +34,8 @@ const addExistingProjectsToParams = () => {
     tempParams.data.projects = [];
   }
 
-  tempParams.data.projects = tempParams.data.projects.concat(existingProjects);
+  tempParams.data.projects = existingProjects;
+  // tempParams.data.projects = tempParams.data.projects.concat(existingProjects);
 };
 
 const TodosController = Object.create(Controller);
