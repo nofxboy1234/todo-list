@@ -8,7 +8,6 @@ const isPersistedTask = (task) => {
 };
 
 const instanceProperties = {
-  data: { projectID: 1 },
   project: function () {
     return (
       Project.find(this.data.projectID) || { data: { name: 'no project' } }
