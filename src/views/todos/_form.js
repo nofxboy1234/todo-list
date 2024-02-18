@@ -62,7 +62,7 @@ const form = (todo) => {
     mergeCurrentDataIntoParams();
     cacheCurrentView();
     const formProjectID = event.target.dataset.id;
-    const project = createProjectFromParams(formProjectID);
+    const project = getProjectFromParams(formProjectID);
 
     redirectTo('GET', editProjectPath, project);
   };
@@ -78,7 +78,7 @@ const form = (todo) => {
     mergeCurrentDataIntoParams();
     cacheCurrentView();
     const formTaskID = event.target.dataset.id;
-    const task = createTaskFromParams(formTaskID);
+    const task = getTaskFromParams(formTaskID);
 
     redirectTo('GET', editTaskPath, task);
   };
@@ -86,7 +86,7 @@ const form = (todo) => {
   const destroyTask = (event) => {
     mergeCurrentDataIntoParams();
     const formTaskID = event.target.dataset.id;
-    const task = createTaskFromParams(formTaskID);
+    const task = getTaskFromParams(formTaskID);
 
     redirectTo('DELETE', taskPath, task);
   };
@@ -113,34 +113,44 @@ const form = (todo) => {
     return project;
   };
 
-  const createTaskFromParams = (formTaskID) => {
-    let task;
-    if (formTaskID.startsWith('undefined-')) {
-      const index = Number(formTaskID.split('-').at(1));
-      const taskData = params.data.tasks.at(index);
+  // const createTaskFromParams = (formTaskID) => {
+  //   let task;
+  //   if (formTaskID.startsWith('undefined-')) {
+  //     const index = Number(formTaskID.split('-').at(1));
+  //     const taskData = params.data.tasks.at(index);
 
-      task = Task.new(taskData);
-      task.data.indexInTasks = index;
+  //     task = Task.new(taskData);
+  //     task.data.indexInTasks = index;
+  //   } else {
+  //     task = getSavedTask(formTaskID);
+  //     task.data.indexInTasks = Number(formTaskID);
+  //   }
+
+  //   return task;
+  // };
+
+  const getTaskFromParams = (formTaskID) => {
+    let index;
+    if (formTaskID.startsWith('undefined-')) {
+      index = Number(formTaskID.split('-').at(1));
     } else {
-      task = getSavedTask(formTaskID);
-      task.data.indexInTasks = Number(formTaskID);
+      index = Number(formTaskID);
     }
+    const task = params.data.tasks.at(index);
+    task.data.indexInTasks = index;
 
     return task;
   };
 
-  const createProjectFromParams = (formProjectID) => {
-    let project;
+  const getProjectFromParams = (formProjectID) => {
+    let index;
     if (formProjectID.startsWith('undefined-')) {
-      const index = Number(formProjectID.split('-').at(1));
-      const projectData = params.data.projects.at(index);
-
-      project = Project.new(projectData);
-      project.data.indexInTasks = index;
+      index = Number(formProjectID.split('-').at(1));
     } else {
-      project = getSavedProject(formProjectID);
-      project.data.indexInTasks = Number(formProjectID);
+      index = Number(formProjectID);
     }
+    const project = params.data.projects.at(index);
+    project.data.indexInProjects = index;
 
     return project;
   };
@@ -199,6 +209,7 @@ const form = (todo) => {
     if (!project.data.id) {
       id = `undefined-${indexInParams}`;
     } else {
+      // id = project.data.id;
       id = indexInParams;
     }
     return id;
@@ -290,6 +301,7 @@ const form = (todo) => {
     setupTaskListData();
     setupProjectData();
     setEditProjectButtonState();
+    setEditProjectButtonDatasetID();
   };
 
   const setupEventListeners = () => {
@@ -376,7 +388,7 @@ const form = (todo) => {
   })();
 
   const setEditProjectButtonState = () => {
-    if (project.input.value === '1') {
+    if (project.input.value === '0') {
       project.editButton.disabled = true;
     } else {
       project.editButton.disabled = false;

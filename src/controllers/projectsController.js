@@ -20,12 +20,12 @@ const setProjectInputValueOfTodo = (index) => {
   tempTodoParams.data.projectInputValue = `undefined-${index}`;
 };
 
-const updateProjectInTodoParams = (task) => {
+const updateProjectInTodoParams = (project) => {
   const tempTodoParams = todoParams;
-  const tasks = tempTodoParams.data.projects;
-  const indexOfTask = task.data.indexInProjects;
-  const todoParamsTask = tasks.at(indexOfTask);
-  Object.assign(todoParamsTask.data, task.data);
+  const projects = tempTodoParams.data.projects;
+  const indexOfProject = project.data.indexInProjects;
+  const todoParamsProject = projects.at(indexOfProject);
+  Object.assign(todoParamsProject.data, project.data);
 };
 
 // const destroyProjectInTodoParams = (task) => {
