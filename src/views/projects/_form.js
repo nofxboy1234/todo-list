@@ -5,7 +5,7 @@ import { renderCachedView } from '../../renderer';
 import { params } from '../../parameters/projectParameters';
 
 const form = (project) => {
-  const persisted = project.data.id ? true : false;
+  const isOnTodoForm = project.data.onTodoForm ? true : false;
 
   const cancelForm = () => {
     params.reset();
@@ -33,7 +33,7 @@ const form = (project) => {
   };
 
   const submitButtonCallback = (event) => {
-    if (persisted) {
+    if (isOnTodoForm) {
       updateProject(event);
     } else {
       createProject(event);
@@ -99,7 +99,7 @@ const form = (project) => {
     const div = document.createElement('div');
 
     let buttonText;
-    if (persisted) {
+    if (isOnTodoForm) {
       buttonText = 'UPDATE';
     } else {
       buttonText = 'CREATE';

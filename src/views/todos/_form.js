@@ -61,6 +61,7 @@ const form = (todo) => {
   const editProject = (event) => {
     mergeCurrentDataIntoParams();
     cacheCurrentView();
+    
     const formProjectID = event.target.dataset.id;
     const project = getProjectFromParams(formProjectID);
 
