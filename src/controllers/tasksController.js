@@ -59,6 +59,7 @@ const instanceProperties = {
   destroy: function () {
     this.resourceSingular = this.resourceClass.new(this.params);
     destroyTaskInTodoParams(this.resourceSingular);
+    params.reset();
     render('todos/edit', Todo.new(todoParams));
   },
 };

@@ -5,6 +5,11 @@ import { createController } from './controller';
 import { popCachedView, render } from '../renderer';
 
 import { Todo } from '../models/todo';
+import { projectsPath, redirectTo, todosPath } from '../router';
+import {
+  getProjectForTodosIndex,
+  setProjectForTodosIndex,
+} from '../views/todos';
 
 const createProjectInTodoParams = (task) => {
   const tempTodoParams = todoParams;
@@ -34,6 +39,10 @@ const updateProjectInTodoParams = (project) => {
 //   const indexOfTask = task.data.indexInProjects;
 //   tasks.splice(indexOfTask, 1);
 // };
+
+const todosIndexProjectDestroyedFromStorage = () => {
+  return !Project.all().includes(getProjectForTodosIndex());
+};
 
 const Controller = createController('projects', Project, params);
 
@@ -71,9 +80,10 @@ const instanceProperties = {
   destroy: function () {
     this.setResourceSingular();
     this.resourceSingular.destroy();
+    params.reset();
     redirectTo('GET', projectsPath);
 
-    if (!Project.all().includes(getProjectForTodosIndex())) {
+    if (todosIndexProjectDestroyedFromStorage()) {
       setProjectForTodosIndex(Project.first());
       redirectTo('GET', todosPath);
     }
