@@ -1,4 +1,8 @@
-Visual TDD flow between Todo, Task, Project forms
+new todo: save tasks and projects
+edit todo: tasks and projects
+
 Form validation
+Confirmation messages
+
 Today, Upcoming etc links (data-fns)
 LocalStorage

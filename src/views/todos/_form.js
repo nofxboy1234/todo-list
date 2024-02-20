@@ -47,7 +47,6 @@ const form = (todo) => {
 
   const cacheCurrentView = () => {
     const view = getView();
-    const tempParams = params;
     cacheView(view(Todo.new(params)));
   };
 
@@ -61,7 +60,7 @@ const form = (todo) => {
   const editProject = (event) => {
     mergeCurrentDataIntoParams();
     cacheCurrentView();
-    
+
     const formProjectID = event.target.dataset.id;
     const project = getProjectFromParams(formProjectID);
 
@@ -85,7 +84,7 @@ const form = (todo) => {
   };
 
   const destroyTask = (event) => {
-    mergeCurrentDataIntoParams();
+    // mergeCurrentDataIntoParams();
     const formTaskID = event.target.dataset.id;
     const task = getTaskFromParams(formTaskID);
 
@@ -94,6 +93,10 @@ const form = (todo) => {
 
   const createTodo = (event) => {
     event.preventDefault();
+
+    // const saveData = currentData();
+    // saveData.data.projectID = saveData.data.projectInputValue;
+
     redirectTo('POST', todosPath, currentData());
   };
 
@@ -164,9 +167,8 @@ const form = (todo) => {
         description: description.input.value,
         dueDate: dueDate.input.value,
         priority: priority.input.value,
-        tasks: params.data.tasks,
+        // projectID: project.input.value,
         projectInputValue: project.input.value,
-        // projectID: Number(project.input.value),
       },
     };
   };
@@ -258,6 +260,19 @@ const form = (todo) => {
     project.input.value = indexInParams;
   };
 
+  // const getProjectInputValueToSelect = (indexOfTodoProject) => {
+  //   let index;
+  //   const tempParams = params;
+  //   let projectID = tempParams.data.projectID;
+  //   if (projectID) {
+  //     index = projectID;
+  //   } else {
+  //     index = indexOfTodoProject;
+  //   }
+
+  //   return index;
+  // };
+
   const getProjectInputValueToSelect = (indexOfTodoProject) => {
     let index;
     const tempParams = params;
@@ -274,16 +289,12 @@ const form = (todo) => {
   const setupProjectData = () => {
     const tempParams = params;
     let indexOfTodoProject;
-    let indexOfDefaultProject;
     tempParams.data.projects.forEach((project, indexInParams) => {
       addProjectToDOM(project, indexInParams);
 
       if (project === Project.find(todo.data.projectID)) {
         indexOfTodoProject = indexInParams;
       }
-      // if (project === Project.first()) {
-      //   indexOfDefaultProject = indexInParams;
-      // }
     });
 
     const index = getProjectInputValueToSelect(indexOfTodoProject);

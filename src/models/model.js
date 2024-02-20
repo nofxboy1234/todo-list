@@ -20,7 +20,6 @@ const createModel = (instanceProperties) => {
       };
 
       const saveInstanceToStorage = (instance) => {
-        instance.updateDependent();
         getInstances().push(instance);
       };
 
@@ -46,9 +45,25 @@ const createModel = (instanceProperties) => {
         return validationInstance;
       };
 
+      const dataKeyNotInInitialParametersKeys = (dataKey) => {
+        const initialParametersKeys = Object.keys(parameters.initialParams.data);
+        return !initialParametersKeys.includes(dataKey);
+      };
+
+      const removeDataKey = (data, key) => {
+        delete data[key];
+      };
+
       const instance = {
         data: {},
         errors: [],
+        cleanData: function () {
+          Object.keys(this.data).forEach((dataKey) => {
+            if (dataKeyNotInInitialParametersKeys(dataKey)) {
+              removeDataKey(this.data, dataKey);
+            }
+          });
+        },
         save: function () {
           this.validate();
 
@@ -56,6 +71,8 @@ const createModel = (instanceProperties) => {
             return false;
           } else {
             assignID(this);
+            this.updateDependent();
+            this.cleanData();
             saveInstanceToStorage(this);
             return true;
           }

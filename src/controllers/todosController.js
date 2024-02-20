@@ -9,11 +9,11 @@ import { Project } from '../models/project';
 
 const Controller = createController('todos', Todo, params);
 
-const cleanData = (dataToClean) => {
-  const paramsWithUpdatedData = Object.assign({}, dataToClean);
-  dataToClean.reset();
-  Object.assign(dataToClean, paramsWithUpdatedData);
-};
+// const cleanData = (dataToClean) => {
+//   const paramsWithUpdatedData = Object.assign({}, dataToClean);
+//   dataToClean.reset();
+//   Object.assign(dataToClean, paramsWithUpdatedData);
+// };
 
 const addExistingTasksToParams = (todo) => {
   const existingTasks = todo.tasks();
@@ -49,7 +49,7 @@ const instanceProperties = {
     render(`${this.resourcePluralName}/new`, this.resourceSingular);
   },
   create: function () {
-    cleanData(this.params);
+    // cleanData(this.params);
     this.resourceSingular = this.resourceClass.new(this.params);
 
     if (this.resourceSingular.save()) {
@@ -77,9 +77,9 @@ const instanceProperties = {
     render(`${this.resourcePluralName}/edit`, this.resourceSingular);
   },
   update: function () {
+    // cleanData(this.params);
     this.setResourceSingular();
 
-    cleanData(this.params);
     if (this.resourceSingular.update(this.params)) {
       // delete this.resourceSingular.data.tasks;
       // delete this.params.data.tasks;

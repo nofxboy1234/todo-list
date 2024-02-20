@@ -12,11 +12,6 @@ const instanceProperties = {
     if (this.data.description.length < 2) {
       this.errors.push('Description must be 2 or more characters');
     }
-    if (!this.data.id) {
-      if (exists(Task, 'description', this)) {
-        this.errors.push('A Task already exists with this description');
-      }
-    }
   },
 };
 const Task = Object.assign({}, Model(instanceProperties));

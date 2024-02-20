@@ -7,6 +7,14 @@ const isPersistedTask = (task) => {
   return task.data.id ? true : false;
 };
 
+const isPersistedProject = (project) => {
+  return project.data.id ? true : false;
+};
+
+const isProjectOfTodo = (todo, index) => {
+  return Number(todo.data.projectInputValue.split('-').at(1)) === index;
+};
+
 const instanceProperties = {
   project: function () {
     return (
@@ -29,8 +37,35 @@ const instanceProperties = {
         },
       };
       if (!isPersistedTask(task)) {
-        task.save();
+        if (task.save()) {
+          console.log(`saved task with id:${task.data.id}`);
+        } else {
+          task.errors.forEach((error) => {
+            console.log(error);
+          });
+        }
         task.update(updatedData);
+      }
+    });
+
+    params.data.projects.forEach((project, index) => {
+      // const updatedData = {
+      //   data: {
+      //     projectID: this.data.id,
+      //   },
+      // };
+      if (!isPersistedProject(project)) {
+        if (project.save()) {
+          console.log(`saved project with id:${project.data.id}`);
+        } else {
+          project.errors.forEach((error) => {
+            console.log(error);
+          });
+        }
+        // project.update(updatedData);
+        if (isProjectOfTodo(this, index)) {
+          this.data.projectID = project.data.id;
+        }
       }
     });
   },

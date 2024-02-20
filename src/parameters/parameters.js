@@ -2,6 +2,7 @@ const createParameters = (instanceProperties) => {
   const Parameters = {
     new: function (initialParams) {
       const instance = {
+        initialParams,
         data: {},
         clear: function () {
           this.data = {};
