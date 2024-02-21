@@ -4,7 +4,7 @@ import { Project } from './models/project';
 import { params as projectParams } from './parameters/projectParameters';
 
 function createDefaultProject() {
-  updateProjectParams(defaultProjectData());
+  updateProjectParams();
   const project = Project.new(projectParams);
   if (project.save()) {
     console.log('saved Default project');
@@ -25,13 +25,8 @@ function defaultProjectData() {
 }
 
 function updateProjectParams() {
-  const updatedData = {
-    data: {
-      id: 1,
-      name: 'Default',
-    },
-  };
-  Object.assign(projectParams.data, updatedData.data);
+  const updatedData = defaultProjectData();
+  projectParams.merge(updatedData);
 }
 
 createDefaultProject();

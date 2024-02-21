@@ -9,26 +9,18 @@ import { Project } from '../models/project';
 
 const Controller = createController('todos', Todo, params);
 
-// const cleanData = (dataToClean) => {
-//   const paramsWithUpdatedData = Object.assign({}, dataToClean);
-//   dataToClean.reset();
-//   Object.assign(dataToClean, paramsWithUpdatedData);
-// };
-
 const addExistingTasksToParams = (todo) => {
-  let tempParams = params;
-  tempParams.data.tasks = todo.tasks();
+  const existingTasks = [...todo.tasks()];
+  params.data.tasks = existingTasks;
 };
 
 const addExistingProjectsToParams = () => {
-  const existingProjects = Project.all();
-
+  const existingProjects = [...Project.all()];
   existingProjects.forEach((project, index) => {
     project.data.projectInputValue = index.toString();
   });
 
-  let tempParams = params;
-  tempParams.data.projects = existingProjects;
+  params.data.projects = existingProjects;
 };
 
 const TodosController = Object.create(Controller);
@@ -42,13 +34,10 @@ const instanceProperties = {
     render(`${this.resourcePluralName}/new`, this.resourceSingular);
   },
   create: function () {
-    // cleanData(this.params);
     this.resourceSingular = this.resourceClass.new(this.params);
 
     if (this.resourceSingular.save()) {
       this.params.reset();
-      // delete this.resourceSingular.data.tasks;
-      // delete this.params.data.tasks;
       popCachedView();
       redirectTo('GET', projectsPath);
       redirectTo('GET', todosPath);
@@ -70,12 +59,9 @@ const instanceProperties = {
     render(`${this.resourcePluralName}/edit`, this.resourceSingular);
   },
   update: function () {
-    // cleanData(this.params);
     this.setResourceSingular();
 
     if (this.resourceSingular.update(this.params)) {
-      // delete this.resourceSingular.data.tasks;
-      // delete this.params.data.tasks;
       popCachedView();
       redirectTo('GET', projectsPath);
       redirectTo('GET', todoPath, this.resourceSingular);

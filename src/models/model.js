@@ -6,6 +6,10 @@ const createModel = (instanceProperties) => {
         return this.instances;
       };
 
+      const addToInstances = (instance) => {
+        this.instances.push(instance)
+      };
+
       const lastID = () => {
         const instance = this.last();
         if (instance) {
@@ -20,7 +24,7 @@ const createModel = (instanceProperties) => {
       };
 
       const saveInstanceToStorage = (instance) => {
-        getInstances().push(instance);
+        addToInstances(instance);
       };
 
       const updateInstanceInStorage = (instance, updatedData) => {
@@ -46,7 +50,9 @@ const createModel = (instanceProperties) => {
       };
 
       const dataKeyNotInInitialParametersKeys = (dataKey) => {
-        const initialParametersKeys = Object.keys(parameters.initialParams.data);
+        const initialParametersKeys = Object.keys(
+          parameters.initialParams.data
+        );
         return !initialParametersKeys.includes(dataKey);
       };
 
