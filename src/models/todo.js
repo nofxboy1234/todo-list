@@ -11,8 +11,11 @@ const isPersistedProject = (project) => {
   return project.data.id ? true : false;
 };
 
-const isProjectOfTodo = (todo, index) => {
-  return Number(todo.data.projectInputValue.split('-').at(1)) === index;
+const isProjectOfTodo = (todo, indexInParams) => {
+  const projectInputValueIndex = Number(
+    todo.data.projectInputValue.split('-').at(1)
+  );
+  return projectInputValueIndex === indexInParams;
 };
 
 const instanceProperties = {
@@ -38,33 +41,31 @@ const instanceProperties = {
       };
       if (!isPersistedTask(task)) {
         if (task.save()) {
-          console.log(`saved task with id:${task.data.id}`);
+          task.update(updatedData);
+          console.log(
+            `saved task with id:${task.data.id} and set its todoID to ${this.data.id}`
+          );
         } else {
           task.errors.forEach((error) => {
             console.log(error);
           });
         }
-        task.update(updatedData);
       }
     });
 
     params.data.projects.forEach((project, index) => {
-      // const updatedData = {
-      //   data: {
-      //     projectID: this.data.id,
-      //   },
-      // };
       if (!isPersistedProject(project)) {
         if (project.save()) {
           console.log(`saved project with id:${project.data.id}`);
+
+          if (isProjectOfTodo(this, index)) {
+            this.data.projectID = project.data.id;
+            console.log(`set projectID of todo to ${project.data.id}`);
+          }
         } else {
           project.errors.forEach((error) => {
             console.log(error);
           });
-        }
-        // project.update(updatedData);
-        if (isProjectOfTodo(this, index)) {
-          this.data.projectID = project.data.id;
         }
       }
     });

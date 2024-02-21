@@ -61,8 +61,8 @@ const form = (todo) => {
     mergeCurrentDataIntoParams();
     cacheCurrentView();
 
-    const formProjectID = event.target.dataset.id;
-    const project = getProjectFromParams(formProjectID);
+    const projectInputValue = event.target.dataset.projectInputValue;
+    const project = getProjectFromParams(projectInputValue);
 
     redirectTo('GET', editProjectPath, project);
   };
@@ -77,15 +77,15 @@ const form = (todo) => {
   const editTask = (event) => {
     mergeCurrentDataIntoParams();
     cacheCurrentView();
-    const formTaskID = event.target.dataset.id;
-    const task = getTaskFromParams(formTaskID);
+    const taskInputValue = event.target.dataset.taskInputValue;
+    const task = getTaskFromParams(taskInputValue);
 
     redirectTo('GET', editTaskPath, task);
   };
 
   const destroyTask = (event) => {
     // mergeCurrentDataIntoParams();
-    const formTaskID = event.target.dataset.id;
+    const formTaskID = event.target.dataset.taskInputValue;
     const task = getTaskFromParams(formTaskID);
 
     redirectTo('DELETE', taskPath, task);
@@ -93,9 +93,6 @@ const form = (todo) => {
 
   const createTodo = (event) => {
     event.preventDefault();
-
-    // const saveData = currentData();
-    // saveData.data.projectID = saveData.data.projectInputValue;
 
     redirectTo('POST', todosPath, currentData());
   };
@@ -117,22 +114,6 @@ const form = (todo) => {
     return project;
   };
 
-  // const createTaskFromParams = (formTaskID) => {
-  //   let task;
-  //   if (formTaskID.startsWith('undefined-')) {
-  //     const index = Number(formTaskID.split('-').at(1));
-  //     const taskData = params.data.tasks.at(index);
-
-  //     task = Task.new(taskData);
-  //     task.data.indexInTasks = index;
-  //   } else {
-  //     task = getSavedTask(formTaskID);
-  //     task.data.indexInTasks = Number(formTaskID);
-  //   }
-
-  //   return task;
-  // };
-
   const getTaskFromParams = (formTaskID) => {
     let index;
     if (formTaskID.startsWith('undefined-')) {
@@ -146,12 +127,12 @@ const form = (todo) => {
     return task;
   };
 
-  const getProjectFromParams = (formProjectID) => {
+  const getProjectFromParams = (projectInputValue) => {
     let index;
-    if (formProjectID.startsWith('undefined-')) {
-      index = Number(formProjectID.split('-').at(1));
+    if (projectInputValue.startsWith('undefined-')) {
+      index = Number(projectInputValue.split('-').at(1));
     } else {
-      index = Number(formProjectID);
+      index = Number(projectInputValue);
     }
     const project = params.data.projects.at(index);
     project.data.indexInProjects = index;
@@ -167,7 +148,6 @@ const form = (todo) => {
         description: description.input.value,
         dueDate: dueDate.input.value,
         priority: priority.input.value,
-        // projectID: project.input.value,
         projectInputValue: project.input.value,
       },
     };
@@ -197,25 +177,24 @@ const form = (todo) => {
     return todoForm;
   };
 
-  const generateFormTaskID = (task, indexInParams) => {
-    let id;
+  const generateTaskInputValue = (task, indexInParams) => {
+    let value;
     if (!task.data.id) {
-      id = `undefined-${indexInParams}`;
+      value = `undefined-${indexInParams}`;
     } else {
-      id = indexInParams;
+      value = indexInParams;
     }
-    return id;
+    return value;
   };
 
-  const generateFormProjectID = (project, indexInParams) => {
-    let id;
+  const generateProjectInputValue = (project, indexInParams) => {
+    let value;
     if (!project.data.id) {
-      id = `undefined-${indexInParams}`;
+      value = `undefined-${indexInParams}`;
     } else {
-      // id = project.data.id;
-      id = indexInParams;
+      value = project.data.projectInputValue;
     }
-    return id;
+    return value;
   };
 
   const addTaskToDOM = (task, indexInParams) => {
@@ -227,7 +206,10 @@ const form = (todo) => {
 
     const editButton = createButton('button', 'EDIT', 'editTaskButtonID');
     editButton.addEventListener('click', editTask);
-    editButton.dataset.id = generateFormTaskID(task, indexInParams);
+    editButton.dataset.taskInputValue = generateTaskInputValue(
+      task,
+      indexInParams
+    );
     taskDiv.appendChild(editButton);
 
     const destroyButton = createButton(
@@ -236,7 +218,10 @@ const form = (todo) => {
       'destroyTaskButtonID'
     );
     destroyButton.addEventListener('click', destroyTask);
-    destroyButton.dataset.id = generateFormTaskID(task, indexInParams);
+    destroyButton.dataset.taskInputValue = generateTaskInputValue(
+      task,
+      indexInParams
+    );
     taskDiv.appendChild(destroyButton);
 
     taskList.div.appendChild(taskDiv);
@@ -244,7 +229,7 @@ const form = (todo) => {
 
   const addProjectToDOM = (projectToAdd, indexInParams) => {
     const option = {
-      value: generateFormProjectID(projectToAdd, indexInParams),
+      value: generateProjectInputValue(projectToAdd, indexInParams),
       text: projectToAdd.data.name,
     };
     project.input.add(createOption(option.value, option.text));
@@ -256,49 +241,28 @@ const form = (todo) => {
     });
   };
 
-  const selectProject = (indexInParams) => {
-    project.input.value = indexInParams;
+  const selectProject = (value) => {
+    project.input.value = value;
   };
 
-  // const getProjectInputValueToSelect = (indexOfTodoProject) => {
-  //   let index;
-  //   const tempParams = params;
-  //   let projectID = tempParams.data.projectID;
-  //   if (projectID) {
-  //     index = projectID;
-  //   } else {
-  //     index = indexOfTodoProject;
-  //   }
-
-  //   return index;
-  // };
-
-  const getProjectInputValueToSelect = (indexOfTodoProject) => {
-    let index;
-    const tempParams = params;
-    let projectInputValue = tempParams.data.projectInputValue;
-    if (projectInputValue) {
-      index = projectInputValue;
-    } else {
-      index = indexOfTodoProject;
+  const getProjectInputValue = () => {
+    if (params.data.projectInputValue) {
+      return params.data.projectInputValue;
     }
 
-    return index;
+    let projectInputValue;
+    params.data.projects.forEach((project) => {
+      if (project.data.id === todo.data.projectID) {
+        projectInputValue = project.data.projectInputValue;
+      }
+    });
+    return projectInputValue
   };
 
   const setupProjectData = () => {
-    const tempParams = params;
-    let indexOfTodoProject;
-    tempParams.data.projects.forEach((project, indexInParams) => {
-      addProjectToDOM(project, indexInParams);
-
-      if (project === Project.find(todo.data.projectID)) {
-        indexOfTodoProject = indexInParams;
-      }
+    params.data.projects.forEach((project, index) => {
+      addProjectToDOM(project, index);
     });
-
-    const index = getProjectInputValueToSelect(indexOfTodoProject);
-    selectProject(index);
   };
 
   const setupSimpleData = () => {
@@ -311,18 +275,24 @@ const form = (todo) => {
   const setupData = () => {
     setupSimpleData();
     setupTaskListData();
+
     setupProjectData();
+    const projectInputValue = getProjectInputValue();
+    selectProject(projectInputValue);
+
     setEditProjectButtonState();
-    setEditProjectButtonDatasetID();
+    setEditProjectButtonDataset();
   };
 
   const setupEventListeners = () => {
     submit.button.addEventListener('click', submitButtonCallback);
     taskList.newButton.addEventListener('click', newTask);
+
     project.newButton.addEventListener('click', newProject);
     project.input.addEventListener('change', setEditProjectButtonState);
-    project.input.addEventListener('change', setEditProjectButtonDatasetID);
+    project.input.addEventListener('change', setEditProjectButtonDataset);
     project.editButton.addEventListener('click', editProject);
+
     cancel.button.addEventListener('click', cancelForm);
   };
 
@@ -407,8 +377,8 @@ const form = (todo) => {
     }
   };
 
-  const setEditProjectButtonDatasetID = () => {
-    project.editButton.dataset.id = project.input.value;
+  const setEditProjectButtonDataset = () => {
+    project.editButton.dataset.projectInputValue = project.input.value;
   };
 
   const project = (() => {

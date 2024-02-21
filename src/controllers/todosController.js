@@ -16,26 +16,19 @@ const Controller = createController('todos', Todo, params);
 // };
 
 const addExistingTasksToParams = (todo) => {
-  const existingTasks = todo.tasks();
   let tempParams = params;
-
-  if (!tempParams.data.tasks) {
-    tempParams.data.tasks = [];
-  }
-
-  tempParams.data.tasks = tempParams.data.tasks.concat(existingTasks);
+  tempParams.data.tasks = todo.tasks();
 };
 
 const addExistingProjectsToParams = () => {
   const existingProjects = Project.all();
+
+  existingProjects.forEach((project, index) => {
+    project.data.projectInputValue = index.toString();
+  });
+
   let tempParams = params;
-
-  if (!tempParams.data.projects) {
-    tempParams.data.projects = [];
-  }
-
   tempParams.data.projects = existingProjects;
-  // tempParams.data.projects = tempParams.data.projects.concat(existingProjects);
 };
 
 const TodosController = Object.create(Controller);

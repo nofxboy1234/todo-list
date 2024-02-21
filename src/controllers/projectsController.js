@@ -11,18 +11,18 @@ import {
   setProjectForTodosIndex,
 } from '../views/todos';
 
-const createProjectInTodoParams = (task) => {
-  const tempTodoParams = todoParams;
-  const projects = tempTodoParams.data.projects;
-  projects.push(task);
-  const indexOfCreatedProject = projects.length - 1;
+const createProjectInTodoParams = (project) => {
+  const projects = todoParams.data.projects;
+  projects.push(project);
+  const index = projects.length - 1;
+  const projectInputValue = `undefined-${index}`;
+  project.data.projectInputValue = projectInputValue;
 
-  return indexOfCreatedProject;
+  return projectInputValue;
 };
 
-const setProjectInputValueOfTodo = (index) => {
-  const tempTodoParams = todoParams;
-  tempTodoParams.data.projectInputValue = `undefined-${index}`;
+const setProjectInputValueOfTodo = (projectInputValue) => {
+  todoParams.data.projectInputValue = projectInputValue;
 };
 
 const updateProjectInTodoParams = (project) => {
@@ -53,10 +53,10 @@ const instanceProperties = {
     this.resourceSingular.validate();
 
     if (this.resourceSingular.errors.length === 0) {
-      const indexOfCreatedProject = createProjectInTodoParams(
+      const projectInputValue = createProjectInTodoParams(
         this.resourceSingular
       );
-      setProjectInputValueOfTodo(indexOfCreatedProject);
+      setProjectInputValueOfTodo(projectInputValue);
       params.reset();
       popCachedView();
       render('todos/edit', Todo.new(todoParams));

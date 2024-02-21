@@ -12,7 +12,6 @@ const initialParams = {
     description: '',
     dueDate: '',
     priority: 'high',
-    // checkList: {},
     projectID: 1,
   },
 };
