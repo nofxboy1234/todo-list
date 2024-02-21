@@ -26,19 +26,11 @@ const setProjectInputValueOfTodo = (projectInputValue) => {
 };
 
 const updateProjectInTodoParams = (project) => {
-  const tempTodoParams = todoParams;
-  const projects = tempTodoParams.data.projects;
+  const projects = todoParams.data.projects;
   const indexOfProject = project.data.indexInProjects;
   const todoParamsProject = projects.at(indexOfProject);
   Object.assign(todoParamsProject.data, project.data);
 };
-
-// const destroyProjectInTodoParams = (task) => {
-//   const tempTodoParams = todoParams;
-//   const tasks = tempTodoParams.data.projects;
-//   const indexOfTask = task.data.indexInProjects;
-//   tasks.splice(indexOfTask, 1);
-// };
 
 const todosIndexProjectDestroyedFromStorage = () => {
   return !Project.all().includes(getProjectForTodosIndex());
