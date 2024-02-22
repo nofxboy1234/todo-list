@@ -41,13 +41,8 @@ const instanceProperties = {
   saveDependent: function () {
     params.data.tasks.forEach((task) => {
       if (!isPersistedTask(task)) {
-        const updatedData = {
-          data: {
-            todoID: this.data.id,
-          },
-        };
+        task.data.todoID = this.data.id;
         if (task.save()) {
-          task.update(updatedData);
           console.log(
             `saved task with id:${task.data.id} and set its todoID to ${this.data.id}`
           );
