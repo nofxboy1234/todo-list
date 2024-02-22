@@ -24,14 +24,6 @@ const Partial = (todo) => {
   priorityDiv.textContent = todo.data.priority;
   todoParagraph.appendChild(priorityDiv);
 
-  const checkListDiv = document.createElement('div');
-  for (const [key, value] of Object.entries(todo.data.checkList)) {
-    const checkListEntryDiv = document.createElement('div');
-    checkListEntryDiv.textContent = `- ${key}: ${value}`;
-    checkListDiv.appendChild(checkListEntryDiv);
-  }
-
-  todoParagraph.appendChild(checkListDiv);
 
   const projectDiv = document.createElement('div');
 
