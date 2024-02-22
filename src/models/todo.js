@@ -24,21 +24,6 @@ const isProjectOfTodo = (todo, indexInParams) => {
   return projectInputValueIndex === indexInParams;
 };
 
-const validateInstance = (instance, updatedData) => {
-  const validationInstance = Object.assign({}, instance);
-  const validationInstanceData = Object.assign({}, instance.data);
-  validationInstance.data = {};
-  Object.assign(validationInstance.data, validationInstanceData);
-  Object.assign(validationInstance.data, updatedData.data);
-  validationInstance.validate();
-
-  return validationInstance;
-};
-
-const updateInstanceInStorage = (instance, updatedData) => {
-  Object.assign(instance.data, updatedData.data);
-};
-
 const instanceProperties = {
   project: function () {
     return (
@@ -53,30 +38,7 @@ const instanceProperties = {
       task.destroy();
     });
   },
-  update: function (updatedData) {
-    const validationInstance = validateInstance(this, updatedData);
-
-    if (validationInstance.errors.length > 0) {
-      return false;
-    } else {
-      this.data.projectInputValue = updatedData.data.projectInputValue;
-      this.updateDependent();
-      this.cleanData();
-      updateInstanceInStorage(this, updatedData);
-
-      // get project from parameters
-      // const updatedData = updatedData;
-      // const paramsProject = parameters.data.projects.find(
-      //   (project, indexInParams) => {
-      //     updatedData.data.projectInputValue === indexInParams;
-      //   }
-      // );
-      // this.data.projectID = paramsProject.data.id;
-
-      return true;
-    }
-  },
-  updateDependent: function () {
+  saveDependent: function () {
     params.data.tasks.forEach((task) => {
       if (!isPersistedTask(task)) {
         const updatedData = {
@@ -96,7 +58,8 @@ const instanceProperties = {
         }
       }
     });
-
+  },
+  saveParents: function () {
     params.data.projects.forEach((project, index) => {
       if (!isPersistedProject(project)) {
         if (project.save()) {
@@ -107,12 +70,13 @@ const instanceProperties = {
           });
         }
       }
-
-      if (this.data.projectInputValue) {
-        if (isProjectOfTodo(this, index)) {
-          this.data.projectID = project.data.id;
-          console.log(`set projectID of todo to ${project.data.id}`);
-        }
+    });
+  },
+  linkToParents: function () {
+    params.data.projects.forEach((project, index) => {
+      if (isProjectOfTodo(this, index)) {
+        this.data.projectID = project.data.id;
+        console.log(`set projectID of todo to ${project.data.id}`);
       }
     });
   },

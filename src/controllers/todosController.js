@@ -61,6 +61,9 @@ const instanceProperties = {
   update: function () {
     this.setResourceSingular();
 
+    this.resourceSingular.data.projectInputValue =
+      this.params.data.projectInputValue;
+
     if (this.resourceSingular.update(this.params)) {
       this.params.reset();
       popCachedView();

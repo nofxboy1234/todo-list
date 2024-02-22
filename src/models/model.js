@@ -79,22 +79,29 @@ const createModel = (instanceProperties) => {
             return false;
           } else {
             assignID(this);
-            this.updateDependent();
+            
+            this.saveDependent();
+            this.saveParents();
+            this.linkToParents();
+
             this.cleanData();
             saveInstanceToStorage(this);
 
             return true;
           }
         },
-        update: function (data) {
-          const validationInstance = validateInstance(this, data);
+        update: function (updatedData) {
+          const validationInstance = validateInstance(this, updatedData);
 
           if (validationInstance.errors.length > 0) {
             return false;
           } else {
-            this.updateDependent();
+            this.saveDependent();
+            this.saveParents();
+            this.linkToParents();
+            
+            updateInstanceInStorage(this, updatedData);
             this.cleanData();
-            updateInstanceInStorage(this, data);
 
             return true;
           }
@@ -104,7 +111,9 @@ const createModel = (instanceProperties) => {
           removeInstanceFromStorage(this);
         },
         destroyDependent: function () {},
-        updateDependent: function () {},
+        saveDependent: function () {},
+        saveParents: function () {},
+        linkToParents: function () {},
         validate: function () {},
       };
       Object.assign(instance.data, parameters.data);
