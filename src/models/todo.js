@@ -12,10 +12,31 @@ const isPersistedProject = (project) => {
 };
 
 const isProjectOfTodo = (todo, indexInParams) => {
-  const projectInputValueIndex = Number(
-    todo.data.projectInputValue.split('-').at(1)
-  );
+  const projectInputValue = todo.data.projectInputValue;
+
+  let projectInputValueIndex;
+  if (projectInputValue.startsWith('undefined-')) {
+    projectInputValueIndex = Number(projectInputValue.split('-').at(1));
+  } else {
+    projectInputValueIndex = Number(projectInputValue);
+  }
+
   return projectInputValueIndex === indexInParams;
+};
+
+const validateInstance = (instance, updatedData) => {
+  const validationInstance = Object.assign({}, instance);
+  const validationInstanceData = Object.assign({}, instance.data);
+  validationInstance.data = {};
+  Object.assign(validationInstance.data, validationInstanceData);
+  Object.assign(validationInstance.data, updatedData.data);
+  validationInstance.validate();
+
+  return validationInstance;
+};
+
+const updateInstanceInStorage = (instance, updatedData) => {
+  Object.assign(instance.data, updatedData.data);
 };
 
 const instanceProperties = {
@@ -32,14 +53,37 @@ const instanceProperties = {
       task.destroy();
     });
   },
+  update: function (updatedData) {
+    const validationInstance = validateInstance(this, updatedData);
+
+    if (validationInstance.errors.length > 0) {
+      return false;
+    } else {
+      this.data.projectInputValue = updatedData.data.projectInputValue;
+      this.updateDependent();
+      this.cleanData();
+      updateInstanceInStorage(this, updatedData);
+
+      // get project from parameters
+      // const updatedData = updatedData;
+      // const paramsProject = parameters.data.projects.find(
+      //   (project, indexInParams) => {
+      //     updatedData.data.projectInputValue === indexInParams;
+      //   }
+      // );
+      // this.data.projectID = paramsProject.data.id;
+
+      return true;
+    }
+  },
   updateDependent: function () {
     params.data.tasks.forEach((task) => {
-      const updatedData = {
-        data: {
-          todoID: this.data.id,
-        },
-      };
       if (!isPersistedTask(task)) {
+        const updatedData = {
+          data: {
+            todoID: this.data.id,
+          },
+        };
         if (task.save()) {
           task.update(updatedData);
           console.log(
@@ -57,15 +101,17 @@ const instanceProperties = {
       if (!isPersistedProject(project)) {
         if (project.save()) {
           console.log(`saved project with id:${project.data.id}`);
-
-          if (isProjectOfTodo(this, index)) {
-            this.data.projectID = project.data.id;
-            console.log(`set projectID of todo to ${project.data.id}`);
-          }
         } else {
           project.errors.forEach((error) => {
             console.log(error);
           });
+        }
+      }
+
+      if (this.data.projectInputValue) {
+        if (isProjectOfTodo(this, index)) {
+          this.data.projectID = project.data.id;
+          console.log(`set projectID of todo to ${project.data.id}`);
         }
       }
     });

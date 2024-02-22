@@ -62,6 +62,7 @@ const instanceProperties = {
     this.setResourceSingular();
 
     if (this.resourceSingular.update(this.params)) {
+      this.params.reset();
       popCachedView();
       redirectTo('GET', projectsPath);
       redirectTo('GET', todoPath, this.resourceSingular);

@@ -7,7 +7,7 @@ const createModel = (instanceProperties) => {
       };
 
       const addToInstances = (instance) => {
-        this.instances.push(instance)
+        this.instances.push(instance);
       };
 
       const lastID = () => {
@@ -29,7 +29,6 @@ const createModel = (instanceProperties) => {
 
       const updateInstanceInStorage = (instance, updatedData) => {
         Object.assign(instance.data, updatedData.data);
-        instance.updateDependent();
       };
 
       const removeInstanceFromStorage = (instance) => {
@@ -43,6 +42,9 @@ const createModel = (instanceProperties) => {
 
       const validateInstance = (instance, updatedData) => {
         const validationInstance = Object.assign({}, instance);
+        const validationInstanceData = Object.assign({}, instance.data);
+        validationInstance.data = {};
+        Object.assign(validationInstance.data, validationInstanceData);
         Object.assign(validationInstance.data, updatedData.data);
         validationInstance.validate();
 
@@ -80,6 +82,7 @@ const createModel = (instanceProperties) => {
             this.updateDependent();
             this.cleanData();
             saveInstanceToStorage(this);
+
             return true;
           }
         },
@@ -89,7 +92,10 @@ const createModel = (instanceProperties) => {
           if (validationInstance.errors.length > 0) {
             return false;
           } else {
+            this.updateDependent();
+            this.cleanData();
             updateInstanceInStorage(this, data);
+
             return true;
           }
         },
