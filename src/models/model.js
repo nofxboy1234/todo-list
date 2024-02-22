@@ -79,7 +79,7 @@ const createModel = (instanceProperties) => {
             return false;
           } else {
             assignID(this);
-            
+
             this.saveDependent();
             this.saveParents();
             this.linkToParents();
@@ -98,8 +98,8 @@ const createModel = (instanceProperties) => {
           } else {
             this.saveDependent();
             this.saveParents();
-            this.linkToParents();
-            
+            this.linkToParents(updatedData);
+
             updateInstanceInStorage(this, updatedData);
             this.cleanData();
 
@@ -113,7 +113,7 @@ const createModel = (instanceProperties) => {
         destroyDependent: function () {},
         saveDependent: function () {},
         saveParents: function () {},
-        linkToParents: function () {},
+        linkToParents: function (updatedData) {},
         validate: function () {},
       };
       Object.assign(instance.data, parameters.data);

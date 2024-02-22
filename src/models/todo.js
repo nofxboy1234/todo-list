@@ -72,10 +72,13 @@ const instanceProperties = {
       }
     });
   },
-  linkToParents: function () {
+  linkToParents: function (updatedData) {
     params.data.projects.forEach((project, index) => {
       if (isProjectOfTodo(this, index)) {
         this.data.projectID = project.data.id;
+        if (updatedData) {
+          updatedData.data.projectID = project.data.id;
+        }
         console.log(`set projectID of todo to ${project.data.id}`);
       }
     });
