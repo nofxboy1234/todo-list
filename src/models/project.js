@@ -1,6 +1,10 @@
 import { Todo } from './todo';
 import { createModel as Model, exists } from './model';
 
+const updateInstanceInStorage = (instance, updatedData) => {
+  Object.assign(instance.data, updatedData.data);
+};
+
 const instanceProperties = {
   todos: function () {
     return Todo.all().filter((todo) => todo.data.projectID === this.data.id);

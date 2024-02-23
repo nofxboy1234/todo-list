@@ -84,6 +84,7 @@ const form = (todo) => {
   };
 
   const destroyTask = (event) => {
+    mergeCurrentDataIntoParams();
     const formTaskID = event.target.dataset.taskInputValue;
     const task = getTaskFromParams(formTaskID);
 
