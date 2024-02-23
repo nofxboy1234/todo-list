@@ -12,7 +12,6 @@ const createTaskInTodoParams = (task) => {
   tempTodoParams.data.tasks.push(task);
 };
 
-
 const addTaskToDestroyedTasks = (todoParamsTask) => {
   if (!todoParams.data.destroyedTasks) {
     todoParams.data.destroyedTasks = [];
@@ -31,11 +30,11 @@ const destroyTaskInTodoParams = (task) => {
   const tasks = todoParams.data.tasks;
   const indexOfTask = task.data.indexInTasks;
   const todoParamsTask = tasks.at(indexOfTask);
-  tasks.splice(indexOfTask, 1);
-
   if (todoParamsTask.data.id) {
     addTaskToDestroyedTasks(todoParamsTask);
   }
+  tasks.splice(indexOfTask, 1);
+
 };
 
 const Controller = createController('tasks', Task, params);

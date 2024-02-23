@@ -33,34 +33,66 @@ const instanceProperties = {
   tasks: function () {
     return Task.all().filter((task) => task.data.todoID === this.data.id);
   },
-  destroyDependent: function () {
-    this.tasks().forEach((task) => {
-      task.destroy();
-    });
-  },
   saveDependent: function () {
-    params.data.tasks.forEach((task) => {
-      if (!isPersistedTask(task)) {
-        task.data.todoID = this.data.id;
-        if (task.save()) {
+    params.data.tasks.forEach((paramsTask) => {
+      if (!isPersistedTask(paramsTask)) {
+        paramsTask.data.todoID = this.data.id;
+        if (paramsTask.save()) {
           console.log(
-            `saved task with id:${task.data.id} and set its todoID to ${this.data.id}`
+            `saved task with id:${paramsTask.data.id} and set its todoID to ${this.data.id}`
           );
         } else {
-          task.errors.forEach((error) => {
+          paramsTask.errors.forEach((error) => {
             console.log(error);
           });
         }
       }
     });
   },
-  saveParents: function () {
-    params.data.projects.forEach((project, index) => {
-      if (!isPersistedProject(project)) {
-        if (project.save()) {
-          console.log(`saved project with id:${project.data.id}`);
+  updateDependent: function () {
+    params.data.tasks.forEach((paramsTask) => {
+      if (isPersistedTask(paramsTask)) {
+        const storedTask = Task.find(paramsTask.data.id);
+        if (storedTask.update(paramsTask)) {
+          console.log(`updated task with id:${storedTask.data.id}`);
         } else {
-          project.errors.forEach((error) => {
+          paramsTask.errors.forEach((error) => {
+            console.log(error);
+          });
+        }
+      }
+    });
+  },
+  destroyDependent: function () {
+    params.data.destroyedTasks.forEach((paramsTask) => {
+      if (isPersistedTask(paramsTask)) {
+        const storedTask = Task.find(paramsTask.data.id);
+        storedTask.destroy();
+        console.log(`destroyed task with id:${storedTask.data.id}`);
+      }
+    });
+  },
+  saveParents: function () {
+    params.data.projects.forEach((paramsProject) => {
+      if (!isPersistedProject(paramsProject)) {
+        if (paramsProject.save()) {
+          console.log(`saved project with id:${paramsProject.data.id}`);
+        } else {
+          paramsProject.errors.forEach((error) => {
+            console.log(error);
+          });
+        }
+      }
+    });
+  },
+  updateParents: function () {
+    params.data.projects.forEach((paramsProject) => {
+      if (isPersistedProject(paramsProject)) {
+        const storedProject = Task.find(paramsProject.data.id);
+        if (storedProject.update(paramsProject)) {
+          console.log(`updated project with id:${storedProject.data.id}`);
+        } else {
+          paramsProject.errors.forEach((error) => {
             console.log(error);
           });
         }
@@ -68,13 +100,13 @@ const instanceProperties = {
     });
   },
   linkToParents: function (updatedData) {
-    params.data.projects.forEach((project, index) => {
+    params.data.projects.forEach((paramsProject, index) => {
       if (isProjectOfTodo(this, index)) {
-        this.data.projectID = project.data.id;
+        this.data.projectID = paramsProject.data.id;
         if (updatedData) {
-          updatedData.data.projectID = project.data.id;
+          updatedData.data.projectID = paramsProject.data.id;
         }
-        console.log(`set projectID of todo to ${project.data.id}`);
+        console.log(`set projectID of todo to ${paramsProject.data.id}`);
       }
     });
   },

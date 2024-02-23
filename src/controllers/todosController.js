@@ -64,7 +64,8 @@ const instanceProperties = {
     this.resourceSingular.data.projectInputValue =
       this.params.data.projectInputValue;
 
-    if (this.resourceSingular.update(this.params)) {
+    const validationInstance = Todo.new(this.params);
+    if (this.resourceSingular.update(validationInstance)) {
       this.params.reset();
       popCachedView();
       redirectTo('GET', projectsPath);

@@ -11,6 +11,14 @@ import {
   setProjectForTodosIndex,
 } from '../views/todos';
 
+const setProjectInputValueOfTodo = (projectInputValue) => {
+  todoParams.data.projectInputValue = projectInputValue;
+};
+
+const todosIndexProjectDestroyedFromStorage = () => {
+  return !Project.all().includes(getProjectForTodosIndex());
+};
+
 const createProjectInTodoParams = (project) => {
   const projects = todoParams.data.projects;
   projects.push(project);
@@ -21,19 +29,11 @@ const createProjectInTodoParams = (project) => {
   return projectInputValue;
 };
 
-const setProjectInputValueOfTodo = (projectInputValue) => {
-  todoParams.data.projectInputValue = projectInputValue;
-};
-
 const updateProjectInTodoParams = (project) => {
   const projects = todoParams.data.projects;
   const indexOfProject = project.data.indexInProjects;
   const todoParamsProject = projects.at(indexOfProject);
   Object.assign(todoParamsProject.data, project.data);
-};
-
-const todosIndexProjectDestroyedFromStorage = () => {
-  return !Project.all().includes(getProjectForTodosIndex());
 };
 
 const Controller = createController('projects', Project, params);

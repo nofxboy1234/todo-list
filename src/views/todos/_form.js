@@ -84,7 +84,6 @@ const form = (todo) => {
   };
 
   const destroyTask = (event) => {
-    // mergeCurrentDataIntoParams();
     const formTaskID = event.target.dataset.taskInputValue;
     const task = getTaskFromParams(formTaskID);
 
@@ -99,6 +98,7 @@ const form = (todo) => {
 
   const updateTodo = (event) => {
     event.preventDefault();
+    
     redirectTo('PATCH', todoPath, currentData());
   };
 
@@ -122,9 +122,11 @@ const form = (todo) => {
       index = Number(formTaskID);
     }
     const task = params.data.tasks.at(index);
-    task.data.indexInTasks = index;
+    const cloneOfTask = Object.assign({}, task);
+    cloneOfTask.data = Object.assign({}, task.data);
+    cloneOfTask.data.indexInTasks = index;
 
-    return task;
+    return cloneOfTask;
   };
 
   const getProjectFromParams = (projectInputValue) => {
@@ -135,9 +137,11 @@ const form = (todo) => {
       index = Number(projectInputValue);
     }
     const project = params.data.projects.at(index);
-    project.data.indexInProjects = index;
+    const cloneOfProject = Object.assign({}, project);
+    cloneOfProject.data = Object.assign({}, project.data);
+    cloneOfProject.data.indexInProjects = index;
 
-    return project;
+    return cloneOfProject;
   };
 
   const currentData = () => {
@@ -256,7 +260,7 @@ const form = (todo) => {
         projectInputValue = project.data.projectInputValue;
       }
     });
-    return projectInputValue
+    return projectInputValue;
   };
 
   const setupProjectData = () => {

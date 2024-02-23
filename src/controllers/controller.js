@@ -72,7 +72,7 @@ const createController = (resourcePluralName, resourceClass, params) => {
     update: function () {
       this.setResourceSingular();
 
-      if (this.resourceSingular.update(params)) {
+      if (this.resourceSingular.update(resourceClass.new(params))) {
         redirectTo('GET', pathHelpers()[resourcePluralName].resourcePluralPath);
       } else {
         render(`${resourcePluralName}/edit`, this.resourceSingular);

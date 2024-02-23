@@ -2,12 +2,13 @@ const createModel = (instanceProperties) => {
   const Model = {
     instances: [],
     new: function (parameters) {
-      const getInstances = () => {
-        return this.instances;
-      };
-
       const addToInstances = (instance) => {
         this.instances.push(instance);
+      };
+
+      const removeFromInstances = (instance) => {
+        const removeIndex = this.instances.indexOf(instance);
+        this.instances.splice(removeIndex, 1);
       };
 
       const lastID = () => {
@@ -32,23 +33,11 @@ const createModel = (instanceProperties) => {
       };
 
       const removeInstanceFromStorage = (instance) => {
-        const removeIndex = getInstances().indexOf(instance);
-        getInstances().splice(removeIndex, 1);
+        removeFromInstances(instance);
       };
 
       const assignID = (instance) => {
         instance.data.id = nextID();
-      };
-
-      const validateInstance = (instance, updatedData) => {
-        const validationInstance = Object.assign({}, instance);
-        const validationInstanceData = Object.assign({}, instance.data);
-        validationInstance.data = {};
-        Object.assign(validationInstance.data, validationInstanceData);
-        Object.assign(validationInstance.data, updatedData.data);
-        validationInstance.validate();
-
-        return validationInstance;
       };
 
       const dataKeyNotInInitialParametersKeys = (dataKey) => {
@@ -81,7 +70,12 @@ const createModel = (instanceProperties) => {
             assignID(this);
 
             this.saveDependent();
+            // this.updateDependent();
+            // this.destroyDependent();
+
             this.saveParents();
+            this.updateParents();
+
             this.linkToParents();
 
             this.cleanData();
@@ -90,17 +84,21 @@ const createModel = (instanceProperties) => {
             return true;
           }
         },
-        update: function (updatedData) {
-          const validationInstance = validateInstance(this, updatedData);
-
+        update: function (validationInstance) {
+          validationInstance.validate();
           if (validationInstance.errors.length > 0) {
             return false;
           } else {
             this.saveDependent();
-            this.saveParents();
-            this.linkToParents(updatedData);
+            this.updateDependent();
+            this.destroyDependent();
 
-            updateInstanceInStorage(this, updatedData);
+            this.saveParents();
+            this.updateParents();
+
+            this.linkToParents(validationInstance);
+
+            updateInstanceInStorage(this, validationInstance);
             this.cleanData();
 
             return true;
@@ -110,9 +108,11 @@ const createModel = (instanceProperties) => {
           this.destroyDependent();
           removeInstanceFromStorage(this);
         },
-        destroyDependent: function () {},
         saveDependent: function () {},
+        updateDependent: function () {},
+        destroyDependent: function () {},
         saveParents: function () {},
+        updateParents: function () {},
         linkToParents: function (updatedData) {},
         validate: function () {},
       };
