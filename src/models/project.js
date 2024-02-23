@@ -23,6 +23,25 @@ const instanceProperties = {
       }
     }
   },
+  update: function (validationInstance) {
+    validationInstance.validate();
+    if (validationInstance.errors.length > 0) {
+      return false;
+    } else {
+      this.saveDependent();
+      this.updateDependent();
+
+      this.saveParents();
+      this.updateParents();
+
+      this.linkToParents(validationInstance);
+
+      updateInstanceInStorage(this, validationInstance);
+      this.cleanData();
+
+      return true;
+    }
+  },
 };
 const Project = Object.assign({}, Model(instanceProperties));
 const staticProperties = {};

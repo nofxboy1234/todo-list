@@ -70,8 +70,6 @@ const createModel = (instanceProperties) => {
             assignID(this);
 
             this.saveDependent();
-            // this.updateDependent();
-            // this.destroyDependent();
 
             this.saveParents();
             this.updateParents();

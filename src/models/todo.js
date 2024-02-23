@@ -88,7 +88,7 @@ const instanceProperties = {
   updateParents: function () {
     params.data.projects.forEach((paramsProject) => {
       if (isPersistedProject(paramsProject)) {
-        const storedProject = Task.find(paramsProject.data.id);
+        const storedProject = Project.find(paramsProject.data.id);
         if (storedProject.update(paramsProject)) {
           console.log(`updated project with id:${storedProject.data.id}`);
         } else {

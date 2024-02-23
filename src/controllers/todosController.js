@@ -7,29 +7,40 @@ import { todosPath, projectsPath, redirectTo, todoPath } from '../router';
 import { getProjectForTodosIndex } from '../views/todos';
 import { Project } from '../models/project';
 
-const Controller = createController('todos', Todo, params);
+const cloneResource = (resource) => {
+  const clone = Object.assign({}, resource);
+  clone.data = {};
+  Object.assign(clone.data, resource.data);
 
-const addExistingTasksToParams = (todo) => {
-  const existingTasks = [...todo.tasks()];
+  return clone;
+};
+
+const addTodoTasksToParams = (todo) => {
+  const existingTasks = [];
+  todo.tasks().forEach((storedTask) => {
+    existingTasks.push(cloneResource(storedTask));
+  });
   params.data.tasks = existingTasks;
 };
 
-const addExistingProjectsToParams = () => {
-  const existingProjects = [...Project.all()];
-  existingProjects.forEach((project, index) => {
-    project.data.projectInputValue = index.toString();
+const addAllProjectsToParams = () => {
+  const existingProjects = [];
+  Project.all().forEach((storedProject, index) => {
+    const clonedProject = cloneResource(storedProject);
+    clonedProject.data.projectInputValue = index.toString();
+    existingProjects.push(clonedProject);
   });
-
   params.data.projects = existingProjects;
 };
 
+const Controller = createController('todos', Todo, params);
 const TodosController = Object.create(Controller);
 const instanceProperties = {
   new: function () {
     this.resourceSingular = this.resourceClass.new(params);
 
-    addExistingTasksToParams(this.resourceSingular);
-    addExistingProjectsToParams();
+    addTodoTasksToParams(this.resourceSingular);
+    addAllProjectsToParams();
 
     render(`${this.resourcePluralName}/new`, this.resourceSingular);
   },
@@ -53,8 +64,8 @@ const instanceProperties = {
   edit: function () {
     this.resourceSingular = this.resourceClass.new(params);
 
-    addExistingTasksToParams(this.resourceSingular);
-    addExistingProjectsToParams();
+    addTodoTasksToParams(this.resourceSingular);
+    addAllProjectsToParams();
 
     render(`${this.resourcePluralName}/edit`, this.resourceSingular);
   },
