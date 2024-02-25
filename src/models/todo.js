@@ -64,7 +64,10 @@ const instanceProperties = {
     });
   },
   destroyDependent: function () {
-    params.data.destroyedTasks.forEach((paramsTask) => {
+    const destroyedTasks = params.data.destroyedTasks;
+    if (!destroyedTasks) return;
+
+    destroyedTasks.forEach((paramsTask) => {
       if (isPersistedTask(paramsTask)) {
         const storedTask = Task.find(paramsTask.data.id);
         storedTask.destroy();

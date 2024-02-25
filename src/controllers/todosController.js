@@ -23,6 +23,10 @@ const addTodoTasksToParams = (todo) => {
   params.data.tasks = existingTasks;
 };
 
+const createDestroyedTasksInParams = () => {
+  params.data.destroyedTasks = [];
+};
+
 const addAllProjectsToParams = () => {
   const existingProjects = [];
   Project.all().forEach((storedProject, index) => {
@@ -41,6 +45,7 @@ const instanceProperties = {
 
     addTodoTasksToParams(this.resourceSingular);
     addAllProjectsToParams();
+    createDestroyedTasksInParams();
 
     render(`${this.resourcePluralName}/new`, this.resourceSingular);
   },
@@ -66,6 +71,7 @@ const instanceProperties = {
 
     addTodoTasksToParams(this.resourceSingular);
     addAllProjectsToParams();
+    createDestroyedTasksInParams();
 
     render(`${this.resourcePluralName}/edit`, this.resourceSingular);
   },

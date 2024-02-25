@@ -13,9 +13,6 @@ const createTaskInTodoParams = (task) => {
 };
 
 const addTaskToDestroyedTasks = (todoParamsTask) => {
-  if (!todoParams.data.destroyedTasks) {
-    todoParams.data.destroyedTasks = [];
-  }
   todoParams.data.destroyedTasks.push(todoParamsTask);
 };
 
