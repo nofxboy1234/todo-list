@@ -5,7 +5,7 @@ import { renderCachedView } from '../../renderer';
 import { params } from '../../parameters/projectParameters';
 
 const form = (project) => {
-  const isOnTodoForm = project.data.onTodoForm ? true : false;
+  const isOnTodoForm = project.data.onTodoForm || project.data.id ? true : false;
 
   const cancelForm = () => {
     params.reset();
