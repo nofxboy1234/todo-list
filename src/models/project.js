@@ -30,7 +30,7 @@ const instanceProperties = {
     if (this.data.name.length < 2) {
       this.errors.push('Name must be 2 or more characters');
     }
-    if (!this.data.id) {
+    if (!this.data.onTodoForm) {
       if (existsInTodoParams(this)) {
         this.errors.push('A Project already exists with this name');
       }
