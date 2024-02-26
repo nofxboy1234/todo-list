@@ -27,7 +27,7 @@ const form = (project) => {
       data: {
         id: project.data.id,
         name: name.input.value,
-        onTodoForm: true,
+        // onTodoForm: true,
       },
     };
   };

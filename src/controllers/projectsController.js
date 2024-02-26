@@ -25,6 +25,7 @@ const createProjectInTodoParams = (project) => {
   const index = projects.length - 1;
   const projectInputValue = `undefined-${index}`;
   project.data.projectInputValue = projectInputValue;
+  project.data.onTodoForm = true;
 
   return projectInputValue;
 };
