@@ -9,6 +9,7 @@ import { Todo } from '../models/todo';
 
 const createTaskInTodoParams = (task) => {
   const tempTodoParams = todoParams;
+  task.data.onTodoForm = true;
   tempTodoParams.data.tasks.push(task);
 };
 
@@ -31,7 +32,6 @@ const destroyTaskInTodoParams = (task) => {
     addTaskToDestroyedTasks(todoParamsTask);
   }
   tasks.splice(indexOfTask, 1);
-
 };
 
 const Controller = createController('tasks', Task, params);
