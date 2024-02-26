@@ -33,7 +33,6 @@ const form = (task) => {
       data: {
         id: task.data.id,
         description: description.input.value,
-        // onTodoForm: true,
       },
     };
   };
