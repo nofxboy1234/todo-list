@@ -6,12 +6,26 @@ const updateInstanceInStorage = (instance, updatedData) => {
   Object.assign(instance.data, updatedData.data);
 };
 
-const existsInTodoParams = (project) => {
-  const foundProject = todoParams.data.projects.find((paramsProject) => {
-    return paramsProject.data.name === project.data.name;
-  });
+const hasCollidingName = (project) => {
+  const paramsProjects = todoParams.data.projects;
+  const indexInProjects = project.data.indexInProjects;
+  if (indexInProjects) {
+    const otherProjects = paramsProjects.filter(
+      (project, index) => index !== indexInProjects
+    );
 
-  return foundProject;
+    const found = otherProjects.find(
+      (otherProject) => otherProject.data.name === project.data.name
+    );
+
+    return found;
+  } else {
+    const found = paramsProjects.find(
+      (otherProject) => otherProject.data.name === project.data.name
+    );
+
+    return found;
+  }
 };
 
 const instanceProperties = {
@@ -30,10 +44,8 @@ const instanceProperties = {
     if (this.data.name.length < 2) {
       this.errors.push('Name must be 2 or more characters');
     }
-    if (!this.data.onTodoForm) {
-      if (existsInTodoParams(this)) {
-        this.errors.push('A Project already exists with this name');
-      }
+    if (hasCollidingName(this)) {
+      this.errors.push('A Project already exists with this name');
     }
   },
   update: function (validationInstance) {
