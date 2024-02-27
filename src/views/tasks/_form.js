@@ -27,7 +27,6 @@ const form = (task) => {
   };
 
   const updateTask = (event) => {
-    event.preventDefault();
     redirectTo('PATCH', taskPath, currentData());
   };
 

@@ -18,12 +18,10 @@ const form = (project) => {
   };
 
   const createProject = (event) => {
-    event.preventDefault();
     redirectTo('POST', projectsPath, currentData());
   };
 
   const updateProject = (event) => {
-    event.preventDefault();
     redirectTo('PATCH', projectPath, currentData());
   };
 

@@ -96,14 +96,14 @@ const form = (todo) => {
   };
 
   const createTodo = (event) => {
-    event.preventDefault();
-
-    redirectTo('POST', todosPath, currentData());
+    if (window.confirm('Are you sure?')) {
+      redirectTo('POST', todosPath, currentData());
+    } else {
+      event.preventDefault();
+    }
   };
 
   const updateTodo = (event) => {
-    event.preventDefault();
-
     redirectTo('PATCH', todoPath, currentData());
   };
 
