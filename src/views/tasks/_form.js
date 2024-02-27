@@ -18,8 +18,11 @@ const form = (task) => {
     renderCachedView();
   };
 
+  const builtInValidation = (event) => {
+    console.log('let built-in form validation run');
+  };
+
   const createTask = (event) => {
-    event.preventDefault();
     redirectTo('POST', tasksPath, currentData());
   };
 
@@ -38,6 +41,10 @@ const form = (task) => {
   };
 
   const submitButtonCallback = (event) => {
+    if (!taskForm.checkValidity()) {
+      return;
+    }
+
     if (isOnTodoForm) {
       updateTask(event);
     } else {
@@ -60,6 +67,7 @@ const form = (task) => {
   };
 
   const setupEventListeners = () => {
+    submit.button.addEventListener('click', builtInValidation);
     submit.button.addEventListener('click', submitButtonCallback);
     cancel.button.addEventListener('click', cancelForm);
   };
@@ -87,6 +95,7 @@ const form = (task) => {
     const div = document.createElement('div');
     div.appendChild(createLabel('description:', 'descriptionID'));
     const input = createInput('text', 'descriptionID', 'description');
+    input.setAttribute('required', true);
     div.appendChild(input);
 
     return { div, input };
