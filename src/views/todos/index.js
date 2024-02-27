@@ -19,8 +19,6 @@ const render = (todos) => {
   mainDiv.appendChild(header);
 
   todos.forEach((todo) => {
-    const todoParagraph = document.createElement('p');
-
     const showTodo = () => {
       redirectTo('GET', todoPath, todo);
     };
@@ -29,13 +27,25 @@ const render = (todos) => {
       redirectTo('DELETE', todoPath, todo);
     };
 
+    const todoParagraph = document.createElement('p');
+
     const titleDiv = document.createElement('div');
-    titleDiv.textContent = todo.data.title;
-    titleDiv.addEventListener('click', showTodo);
+    const titleLabelSpan = document.createElement('span');
+    titleLabelSpan.textContent = 'Title: ';
+    titleDiv.appendChild(titleLabelSpan);
+    const titleValueSpan = document.createElement('span');
+    titleValueSpan.textContent = todo.data.title;
+    titleValueSpan.addEventListener('click', showTodo);
+    titleDiv.appendChild(titleValueSpan);
     todoParagraph.appendChild(titleDiv);
 
     const dueDateDiv = document.createElement('div');
-    dueDateDiv.textContent = todo.data.dueDate;
+    const dueDateLabelSpan = document.createElement('span');
+    dueDateLabelSpan.textContent = 'Due Date: ';
+    dueDateDiv.appendChild(dueDateLabelSpan);
+    const dueDateValueSpan = document.createElement('span');
+    dueDateValueSpan.textContent = todo.data.dueDate;
+    dueDateDiv.appendChild(dueDateValueSpan);
     todoParagraph.appendChild(dueDateDiv);
 
     const destroyButton = createButton('button', 'Destroy', 'deleteButtonID');
