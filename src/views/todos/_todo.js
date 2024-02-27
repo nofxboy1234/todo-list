@@ -1,34 +1,54 @@
 import { createButton } from '../helpers';
 import { redirectTo, editTodoPath, todoPath, todosPath } from '../../router';
-import {
-  cacheView,
-  showTodo,
-} from '../../renderer';
+import { cacheView, showTodo } from '../../renderer';
 
 const Partial = (todo) => {
   const todoParagraph = document.createElement('p');
 
   const titleDiv = document.createElement('div');
-  titleDiv.textContent = todo.data.title;
+  const titleLabelSpan = document.createElement('span');
+  titleLabelSpan.textContent = 'Title: ';
+  titleDiv.appendChild(titleLabelSpan);
+  const titleValueSpan = document.createElement('span');
+  titleValueSpan.textContent = todo.data.title;
+  titleDiv.appendChild(titleValueSpan);
   todoParagraph.appendChild(titleDiv);
 
   const descriptionDiv = document.createElement('div');
-  descriptionDiv.textContent = todo.data.description;
+  const descriptionLabelSpan = document.createElement('span');
+  descriptionLabelSpan.textContent = 'Description: ';
+  descriptionDiv.appendChild(descriptionLabelSpan);
+  const descriptionValueSpan = document.createElement('span');
+  descriptionValueSpan.textContent = todo.data.description;
+  descriptionDiv.appendChild(descriptionValueSpan);
   todoParagraph.appendChild(descriptionDiv);
 
   const dueDateDiv = document.createElement('div');
-  dueDateDiv.textContent = todo.data.dueDate;
+  const dueDateLabelSpan = document.createElement('span');
+  dueDateLabelSpan.textContent = 'Due Date: ';
+  dueDateDiv.appendChild(dueDateLabelSpan);
+  const dueDateValueSpan = document.createElement('span');
+  dueDateValueSpan.textContent = todo.data.dueDate;
+  dueDateDiv.appendChild(dueDateValueSpan);
   todoParagraph.appendChild(dueDateDiv);
 
   const priorityDiv = document.createElement('div');
-  priorityDiv.textContent = todo.data.priority;
+  const priorityLabelSpan = document.createElement('span');
+  priorityLabelSpan.textContent = 'Priority: ';
+  priorityDiv.appendChild(priorityLabelSpan);
+  const priorityValueSpan = document.createElement('span');
+  priorityValueSpan.textContent = todo.data.priority;
+  priorityDiv.appendChild(priorityValueSpan);
   todoParagraph.appendChild(priorityDiv);
 
-
   const projectDiv = document.createElement('div');
-
+  const projectLabelSpan = document.createElement('span');
+  projectLabelSpan.textContent = 'Project: ';
+  projectDiv.appendChild(projectLabelSpan);
+  const projectValueSpan = document.createElement('span');
   const projectInstance = todo.project();
-  projectDiv.textContent = projectInstance.data.name;
+  projectValueSpan.textContent = projectInstance.data.name;
+  projectDiv.appendChild(projectValueSpan);
   todoParagraph.appendChild(projectDiv);
 
   const destroyTodo = () => {
