@@ -96,11 +96,7 @@ const form = (todo) => {
   };
 
   const createTodo = (event) => {
-    if (window.confirm('Are you sure?')) {
-      redirectTo('POST', todosPath, currentData());
-    } else {
-      event.preventDefault();
-    }
+    redirectTo('POST', todosPath, currentData());
   };
 
   const updateTodo = (event) => {
@@ -164,6 +160,11 @@ const form = (todo) => {
 
   const submitButtonCallback = (event) => {
     if (!todoForm.checkValidity()) {
+      return;
+    }
+
+    if (!window.confirm('Are you sure?')) {
+      event.preventDefault();
       return;
     }
 
