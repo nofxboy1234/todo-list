@@ -62,7 +62,9 @@ const createModel = (instanceProperties) => {
           });
         },
         save: function () {
-          this.validate();
+          if (!this.data.validated) {
+            this.validate();
+          }
 
           if (this.errors.length > 0) {
             return false;

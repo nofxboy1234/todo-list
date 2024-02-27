@@ -134,6 +134,10 @@ const instanceProperties = {
         this.errors.push('A Todo already exists with this title');
       }
     }
+
+    if (this.errors.length === 0) {
+      this.data.validated = true;
+    }
   },
 };
 const Todo = Object.assign({}, Model(instanceProperties));

@@ -12,6 +12,10 @@ const instanceProperties = {
     if (this.data.description.length < 2) {
       this.errors.push('Description must be 2 or more characters');
     }
+
+    if (this.errors.length === 0) {
+      this.data.validated = true;
+    }
   },
 };
 const Task = Object.assign({}, Model(instanceProperties));

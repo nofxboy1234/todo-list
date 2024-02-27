@@ -43,6 +43,7 @@ const ProjectsController = Object.create(Controller);
 const instanceProperties = {
   create: function () {
     this.resourceSingular = this.resourceClass.new(this.params);
+    this.resourceSingular.data.validated = false;
     this.resourceSingular.validate();
 
     if (this.resourceSingular.errors.length === 0) {
@@ -59,6 +60,7 @@ const instanceProperties = {
   },
   update: function () {
     this.resourceSingular = this.resourceClass.new(this.params);
+    this.resourceSingular.data.validated = false;
     this.resourceSingular.validate();
 
     if (this.resourceSingular.errors.length === 0) {

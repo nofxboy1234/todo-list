@@ -9,21 +9,19 @@ const updateInstanceInStorage = (instance, updatedData) => {
 const hasCollidingName = (project) => {
   const paramsProjects = todoParams.data.projects;
   const indexInProjects = project.data.indexInProjects;
+  let found;
   if (indexInProjects) {
     const otherProjects = paramsProjects.filter(
       (project, index) => index !== indexInProjects
     );
-
-    const found = otherProjects.find(
+    found = otherProjects.find(
       (otherProject) => otherProject.data.name === project.data.name
     );
-
     return found;
   } else {
-    const found = paramsProjects.find(
+    found = paramsProjects.find(
       (otherProject) => otherProject.data.name === project.data.name
     );
-
     return found;
   }
 };
@@ -46,6 +44,10 @@ const instanceProperties = {
     }
     if (hasCollidingName(this)) {
       this.errors.push('A Project already exists with this name');
+    }
+
+    if (this.errors.length === 0) {
+      this.data.validated = true;
     }
   },
   update: function (validationInstance) {

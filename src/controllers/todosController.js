@@ -51,6 +51,7 @@ const instanceProperties = {
   },
   create: function () {
     this.resourceSingular = this.resourceClass.new(this.params);
+    this.resourceSingular.data.validated = false;
 
     if (this.resourceSingular.save()) {
       this.params.reset();
@@ -77,6 +78,7 @@ const instanceProperties = {
   },
   update: function () {
     this.setResourceSingular();
+    this.resourceSingular.data.validated = false;
 
     this.resourceSingular.data.projectInputValue =
       this.params.data.projectInputValue;
