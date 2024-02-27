@@ -52,6 +52,10 @@ const Partial = (todo) => {
   todoParagraph.appendChild(projectDiv);
 
   const destroyTodo = () => {
+    if (!window.confirm('Are you sure?')) {
+      return;
+    }
+
     redirectTo('DELETE', todoPath, todo);
   };
 
