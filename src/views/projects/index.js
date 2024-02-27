@@ -6,7 +6,7 @@ const render = (projects) => {
   const projectsDiv = document.createElement('div');
 
   const header = document.createElement('h2');
-  header.textContent = 'Projects';
+  header.textContent = 'Projects:';
   projectsDiv.appendChild(header);
 
   projects.forEach((project) => {
@@ -19,27 +19,19 @@ const render = (projects) => {
       redirectTo('GET', todosPath);
     };
 
-    const projectDiv = document.createElement('div');
-
+    const projectParagraph = document.createElement('p');
     const nameSpan = document.createElement('span');
     nameSpan.textContent = project.data.name;
     nameSpan.addEventListener('click', renderChildTodos);
-    projectDiv.appendChild(nameSpan);
-
-    // project.todos().forEach((todoInstance) => {
-    //   const div = document.createElement('div');
-    //   div.textContent = todoInstance.data.title;
-    //   projectParagraph.appendChild(div);
-    // });
+    projectParagraph.appendChild(nameSpan);
 
     if (project.data.id != 1) {
       const destroyButton = createButton('button', 'DESTROY', 'deleteButtonID');
       destroyButton.addEventListener('click', destroyProject);
-      projectDiv.appendChild(destroyButton);
+      projectParagraph.appendChild(destroyButton);
     }
 
-    projectsDiv.appendChild(projectDiv);
-
+    projectsDiv.appendChild(projectParagraph);
   });
 
   return projectsDiv;
