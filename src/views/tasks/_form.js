@@ -95,7 +95,10 @@ const form = (task) => {
     const div = document.createElement('div');
     div.appendChild(createLabel('description:', 'descriptionID'));
     const input = createInput('text', 'descriptionID', 'description');
+
     input.setAttribute('required', true);
+    input.setAttribute('minlength', 2);
+    
     div.appendChild(input);
 
     return { div, input };

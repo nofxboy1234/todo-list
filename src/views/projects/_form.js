@@ -12,6 +12,10 @@ const form = (project) => {
     renderCachedView();
   };
 
+  const builtInValidation = (event) => {
+    console.log('let built-in form validation run');
+  };
+
   const createProject = (event) => {
     event.preventDefault();
     redirectTo('POST', projectsPath, currentData());
@@ -33,6 +37,10 @@ const form = (project) => {
   };
 
   const submitButtonCallback = (event) => {
+    if (!projectForm.checkValidity()) {
+      return;
+    }
+
     if (isOnTodoForm) {
       updateProject(event);
     } else {
@@ -55,6 +63,7 @@ const form = (project) => {
   };
 
   const setupEventListeners = () => {
+    submit.button.addEventListener('click', builtInValidation);
     submit.button.addEventListener('click', submitButtonCallback);
     cancel.button.addEventListener('click', cancelForm);
   };
@@ -82,6 +91,10 @@ const form = (project) => {
     const div = document.createElement('div');
     div.appendChild(createLabel('name:', 'nameID'));
     const input = createInput('text', 'nameID', 'name');
+
+    input.setAttribute('required', true);
+    input.setAttribute('minlength', 2);
+
     div.appendChild(input);
 
     return { div, input };
