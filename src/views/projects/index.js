@@ -11,6 +11,10 @@ const render = (projects) => {
 
   projects.forEach((project) => {
     const destroyProject = () => {
+      if (!window.confirm('Are you sure?')) {
+        return;
+      }
+
       redirectTo('DELETE', projectPath, project);
     };
 
