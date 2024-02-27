@@ -4,6 +4,11 @@ import { setProjectForTodosIndex } from '../todos';
 
 const render = (projects) => {
   const projectParagraph = document.createElement('p');
+
+  const header = document.createElement('h2');
+  header.textContent = 'Projects';
+  projectParagraph.appendChild(header);
+
   projects.forEach((project) => {
     const destroyProject = () => {
       redirectTo('DELETE', projectPath, project);
