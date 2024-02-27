@@ -31,6 +31,10 @@ const form = (todo) => {
     renderCachedView();
   };
 
+  const builtInValidation = (event) => {
+    console.log('let built-in form validation run');
+  };
+
   const getView = () => {
     let view;
     if (persisted) {
@@ -159,6 +163,10 @@ const form = (todo) => {
   };
 
   const submitButtonCallback = (event) => {
+    if (!todoForm.checkValidity()) {
+      return;
+    }
+
     if (persisted) {
       updateTodo(event);
     } else {
@@ -290,7 +298,9 @@ const form = (todo) => {
   };
 
   const setupEventListeners = () => {
+    submit.button.addEventListener('click', builtInValidation);
     submit.button.addEventListener('click', submitButtonCallback);
+
     taskList.newButton.addEventListener('click', newTask);
 
     project.newButton.addEventListener('click', newProject);
@@ -324,6 +334,10 @@ const form = (todo) => {
     const div = document.createElement('div');
     div.appendChild(createLabel('title:', 'titleID'));
     const input = createInput('text', 'titleID', 'title');
+
+    input.setAttribute('required', true);
+    input.setAttribute('minlength', 2);
+
     div.appendChild(input);
 
     return { div, input };
@@ -333,6 +347,10 @@ const form = (todo) => {
     const div = document.createElement('div');
     div.appendChild(createLabel('description:', 'descriptionID'));
     const input = createTextArea('descriptionID', 'description');
+
+    input.setAttribute('required', true);
+    input.setAttribute('minlength', 2);
+
     div.appendChild(input);
 
     return { div, input };
@@ -342,6 +360,9 @@ const form = (todo) => {
     const div = document.createElement('div');
     div.appendChild(createLabel('due date:', 'dueDateID'));
     const input = createInput('date', 'dueDateID', 'dueDate');
+
+    input.setAttribute('required', true);
+
     div.appendChild(input);
 
     return { div, input };
