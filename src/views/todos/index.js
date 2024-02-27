@@ -25,10 +25,9 @@ const render = (todos) => {
 
     const destroyTodo = (event) => {
       if (!window.confirm('Are you sure?')) {
-        // event.preventDefault();
         return;
       }
-      
+
       redirectTo('DELETE', todoPath, todo);
     };
 
