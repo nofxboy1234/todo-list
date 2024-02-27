@@ -103,7 +103,7 @@ const form = (todo) => {
 
   const updateTodo = (event) => {
     event.preventDefault();
-    
+
     redirectTo('PATCH', todoPath, currentData());
   };
 
@@ -177,6 +177,7 @@ const form = (todo) => {
   const setupUI = () => {
     const todoForm = document.createElement('form');
     todoForm.classList.add('new-todo-form');
+    todoForm.appendChild(header.div);
     todoForm.appendChild(errors.div);
     todoForm.appendChild(title.div);
     todoForm.appendChild(description.div);
@@ -217,7 +218,7 @@ const form = (todo) => {
     descriptionSpan.textContent = task.data.description;
     taskDiv.appendChild(descriptionSpan);
 
-    const editButton = createButton('button', 'EDIT', 'editTaskButtonID');
+    const editButton = createButton('button', 'Edit', 'editTaskButtonID');
     editButton.addEventListener('click', editTask);
     editButton.dataset.taskInputValue = generateTaskInputValue(
       task,
@@ -227,7 +228,7 @@ const form = (todo) => {
 
     const destroyButton = createButton(
       'button',
-      'DESTROY',
+      'Remove',
       'destroyTaskButtonID'
     );
     destroyButton.addEventListener('click', destroyTask);
@@ -324,6 +325,19 @@ const form = (todo) => {
     clearErrors();
   };
 
+  const header = (() => {
+    const div = document.createElement('div');
+    const heading = document.createElement('h2');
+    if (persisted) {
+      heading.textContent = 'Edit Todo';
+    } else {
+      heading.textContent = 'New Todo';
+    }
+
+    div.appendChild(heading);
+    return { div };
+  })();
+
   const errors = (() => {
     const div = document.createElement('div');
 
@@ -389,7 +403,7 @@ const form = (todo) => {
     checkListLabelDiv.textContent = 'tasks:';
     div.appendChild(checkListLabelDiv);
 
-    const newButton = createButton('button', 'NEW', 'newTaskButtonID');
+    const newButton = createButton('button', 'New task', 'newTaskButtonID');
     div.appendChild(newButton);
 
     return { div, newButton };
@@ -414,10 +428,18 @@ const form = (todo) => {
     const input = createSelect('projectID', 'project');
     div.appendChild(input);
 
-    const newButton = createButton('button', 'NEW', 'newProjectButtonID');
+    const newButton = createButton(
+      'button',
+      'New Project',
+      'newProjectButtonID'
+    );
     div.appendChild(newButton);
 
-    const editButton = createButton('button', 'EDIT', 'editProjectButtonID');
+    const editButton = createButton(
+      'button',
+      'Edit Project',
+      'editProjectButtonID'
+    );
     div.appendChild(editButton);
 
     return { div, input, newButton, editButton };
@@ -436,9 +458,9 @@ const form = (todo) => {
 
     let buttonText;
     if (persisted) {
-      buttonText = 'UPDATE';
+      buttonText = 'Update Todo';
     } else {
-      buttonText = 'CREATE';
+      buttonText = 'Create Todo';
     }
 
     const button = createButton('submit', buttonText, 'submitButtonID');

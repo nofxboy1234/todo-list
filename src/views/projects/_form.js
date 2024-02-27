@@ -5,7 +5,8 @@ import { renderCachedView } from '../../renderer';
 import { params } from '../../parameters/projectParameters';
 
 const form = (project) => {
-  const isOnTodoForm = project.data.onTodoForm || project.data.id ? true : false;
+  const isOnTodoForm =
+    project.data.onTodoForm || project.data.id ? true : false;
 
   const cancelForm = () => {
     params.reset();
@@ -50,6 +51,7 @@ const form = (project) => {
 
   const setupUI = () => {
     const projectForm = document.createElement('form');
+    projectForm.appendChild(header.div);
     projectForm.appendChild(errors.div);
     projectForm.appendChild(name.div);
     projectForm.appendChild(cancel.div);
@@ -80,6 +82,19 @@ const form = (project) => {
     });
     clearErrors();
   };
+
+  const header = (() => {
+    const div = document.createElement('div');
+    const heading = document.createElement('h2');
+    if (isOnTodoForm) {
+      heading.textContent = 'Edit Project';
+    } else {
+      heading.textContent = 'New Project';
+    }
+
+    div.appendChild(heading);
+    return { div };
+  })();
 
   const errors = (() => {
     const div = document.createElement('div');
@@ -113,9 +128,9 @@ const form = (project) => {
 
     let buttonText;
     if (isOnTodoForm) {
-      buttonText = 'UPDATE';
+      buttonText = 'Edit Project';
     } else {
-      buttonText = 'CREATE';
+      buttonText = 'Add Project';
     }
 
     const button = createButton('submit', buttonText, 'submitButtonID');

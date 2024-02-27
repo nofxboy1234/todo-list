@@ -54,6 +54,7 @@ const form = (task) => {
 
   const setupUI = () => {
     const taskForm = document.createElement('form');
+    taskForm.appendChild(header.div);
     taskForm.appendChild(errors.div);
     taskForm.appendChild(description.div);
     taskForm.appendChild(cancel.div);
@@ -85,6 +86,19 @@ const form = (task) => {
     clearErrors();
   };
 
+  const header = (() => {
+    const div = document.createElement('div');
+    const heading = document.createElement('h2');
+    if (isOnTodoForm) {
+      heading.textContent = 'Edit Task';
+    } else {
+      heading.textContent = 'New Task';
+    }
+
+    div.appendChild(heading);
+    return { div };
+  })();
+
   const errors = (() => {
     const div = document.createElement('div');
 
@@ -98,7 +112,7 @@ const form = (task) => {
 
     input.setAttribute('required', true);
     input.setAttribute('minlength', 2);
-    
+
     div.appendChild(input);
 
     return { div, input };
@@ -117,9 +131,9 @@ const form = (task) => {
 
     let buttonText;
     if (isOnTodoForm) {
-      buttonText = 'UPDATE';
+      buttonText = 'Edit Task';
     } else {
-      buttonText = 'CREATE';
+      buttonText = 'Add Task';
     }
 
     const button = createButton('submit', buttonText, 'submitButtonID');

@@ -38,7 +38,7 @@ const createLayout = () => {
 
   const newTodoButton = document.createElement('button');
   newTodoButton.classList.add('new-todo-button');
-  newTodoButton.textContent = 'New List';
+  newTodoButton.textContent = 'New Todo';
   newTodoButton.addEventListener('click', newTodo);
   menuContainer.appendChild(newTodoButton);
 
