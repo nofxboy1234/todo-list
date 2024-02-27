@@ -23,7 +23,12 @@ const render = (todos) => {
       redirectTo('GET', todoPath, todo);
     };
 
-    const destroyTodo = () => {
+    const destroyTodo = (event) => {
+      if (!window.confirm('Are you sure?')) {
+        // event.preventDefault();
+        return;
+      }
+      
       redirectTo('DELETE', todoPath, todo);
     };
 
