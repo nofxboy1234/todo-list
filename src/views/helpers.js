@@ -70,6 +70,13 @@ const createButton = (type, text, id) => {
   return button;
 };
 
+const createCheckbox = (checked) => {
+  const checkbox = document.createElement('input');
+  checkbox.type = 'checkbox';
+  checkbox.checked = checked;
+  return checkbox;
+};
+
 export {
   clearContent,
   clearProjectIndex,
@@ -80,4 +87,5 @@ export {
   createSelect,
   createDataList,
   createButton,
+  createCheckbox,
 };

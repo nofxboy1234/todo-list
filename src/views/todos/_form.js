@@ -5,6 +5,7 @@ import {
   createSelect,
   createButton,
   createOption,
+  createCheckbox,
 } from '../helpers';
 import { Project } from '../../models/project';
 
@@ -219,6 +220,8 @@ const form = (todo) => {
     descriptionSpan.textContent = task.data.description;
     taskDiv.appendChild(descriptionSpan);
 
+    taskDiv.appendChild(createTaskCheckbox(task));
+
     const editButton = createButton('button', 'Edit', 'editTaskButtonID');
     editButton.addEventListener('click', editTask);
     editButton.dataset.taskInputValue = generateTaskInputValue(
@@ -344,6 +347,12 @@ const form = (todo) => {
 
     return { div };
   })();
+
+  const createTaskCheckbox = (task) => {
+    const checkbox = createCheckbox(task.data.complete);
+
+    return checkbox;
+  };
 
   const title = (() => {
     const div = document.createElement('div');
