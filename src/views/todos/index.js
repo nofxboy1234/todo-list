@@ -38,7 +38,7 @@ const render = (todos) => {
     dueDateDiv.textContent = todo.data.dueDate;
     todoParagraph.appendChild(dueDateDiv);
 
-    const destroyButton = createButton('button', 'DESTROY', 'deleteButtonID');
+    const destroyButton = createButton('button', 'Destroy', 'deleteButtonID');
     destroyButton.addEventListener('click', destroyTodo);
     todoParagraph.appendChild(destroyButton);
 
