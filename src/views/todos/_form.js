@@ -346,7 +346,7 @@ const form = (todo) => {
 
   const title = (() => {
     const div = document.createElement('div');
-    div.appendChild(createLabel('title:', 'titleID'));
+    div.appendChild(createLabel('Title:', 'titleID'));
     const input = createInput('text', 'titleID', 'title');
 
     input.setAttribute('required', true);
@@ -359,7 +359,7 @@ const form = (todo) => {
 
   const description = (() => {
     const div = document.createElement('div');
-    div.appendChild(createLabel('description:', 'descriptionID'));
+    div.appendChild(createLabel('Description:', 'descriptionID'));
     const input = createTextArea('descriptionID', 'description');
 
     input.setAttribute('required', true);
@@ -372,7 +372,7 @@ const form = (todo) => {
 
   const dueDate = (() => {
     const div = document.createElement('div');
-    div.appendChild(createLabel('due date:', 'dueDateID'));
+    div.appendChild(createLabel('Due Date:', 'dueDateID'));
     const input = createInput('date', 'dueDateID', 'dueDate');
 
     input.setAttribute('required', true);
@@ -384,7 +384,7 @@ const form = (todo) => {
 
   const priority = (() => {
     const div = document.createElement('div');
-    div.appendChild(createLabel('priority:', 'priorityID'));
+    div.appendChild(createLabel('Priority:', 'priorityID'));
     const options = [
       { value: 'low', text: 'low' },
       { value: 'medium', text: 'medium' },
@@ -400,7 +400,7 @@ const form = (todo) => {
     const div = document.createElement('div');
 
     const checkListLabelDiv = document.createElement('div');
-    checkListLabelDiv.textContent = 'tasks:';
+    checkListLabelDiv.textContent = 'Tasks:';
     div.appendChild(checkListLabelDiv);
 
     const newButton = createButton('button', 'New task', 'newTaskButtonID');
@@ -423,7 +423,7 @@ const form = (todo) => {
 
   const project = (() => {
     const div = document.createElement('div');
-    div.appendChild(createLabel('project:', 'projectID'));
+    div.appendChild(createLabel('Project:', 'projectID'));
 
     const input = createSelect('projectID', 'project');
     div.appendChild(input);
