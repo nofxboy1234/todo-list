@@ -12,8 +12,15 @@ const getProjectForTodosIndex = () => {
 };
 
 const render = (todos) => {
-  const todoParagraph = document.createElement('p');
+  const mainDiv = document.createElement('div');
+
+  const header = document.createElement('h2');
+  header.textContent = `Todos for Project: ${project.data.name}`;
+  mainDiv.appendChild(header);
+
   todos.forEach((todo) => {
+    const todoParagraph = document.createElement('p');
+
     const showTodo = () => {
       redirectTo('GET', todoPath, todo);
     };
@@ -34,9 +41,11 @@ const render = (todos) => {
     const destroyButton = createButton('button', 'DESTROY', 'deleteButtonID');
     destroyButton.addEventListener('click', destroyTodo);
     todoParagraph.appendChild(destroyButton);
+
+    mainDiv.appendChild(todoParagraph);
   });
 
-  return todoParagraph;
+  return mainDiv;
 };
 
 export { render, setProjectForTodosIndex, getProjectForTodosIndex };
