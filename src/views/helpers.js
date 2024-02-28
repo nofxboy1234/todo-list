@@ -70,10 +70,11 @@ const createButton = (type, text, id) => {
   return button;
 };
 
-const createCheckbox = (checked) => {
+const createCheckbox = (checked, cssClass) => {
   const checkbox = document.createElement('input');
   checkbox.type = 'checkbox';
   checkbox.checked = checked;
+  checkbox.classList.add(cssClass)
   return checkbox;
 };
 

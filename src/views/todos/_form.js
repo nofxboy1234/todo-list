@@ -143,6 +143,8 @@ const form = (todo) => {
   };
 
   const currentData = () => {
+    updateTasksCompleteStatus();
+
     return {
       data: {
         id: todo.data.id,
@@ -153,6 +155,15 @@ const form = (todo) => {
         projectInputValue: project.input.value,
       },
     };
+  };
+
+  const updateTasksCompleteStatus = () => {
+    const tasksCheckboxes = document.querySelectorAll('.task-checkbox');
+    params.data.tasks.forEach((paramsTask, index) => {
+      const taskCheckbox = tasksCheckboxes[index];
+      const complete = taskCheckbox.checked;
+      paramsTask.data.complete = complete;
+    });
   };
 
   const submitButtonCallback = (event) => {
@@ -223,7 +234,12 @@ const form = (todo) => {
     descriptionSpan.textContent = task.data.description;
     taskDiv.appendChild(descriptionSpan);
 
-    taskDiv.appendChild(createTaskCheckbox(task));
+    const checkbox = createCheckbox(task.data.complete, 'task-checkbox');
+    checkbox.dataset.taskInputValue = generateTaskInputValue(
+      task,
+      indexInParams
+    );
+    taskDiv.appendChild(checkbox);
 
     const editButton = createButton('button', 'Edit', 'editTaskButtonID');
     editButton.addEventListener('click', editTask);
@@ -349,12 +365,6 @@ const form = (todo) => {
 
     return { div };
   })();
-
-  const createTaskCheckbox = (task) => {
-    const checkbox = createCheckbox(task.data.complete);
-
-    return checkbox;
-  };
 
   const title = (() => {
     const div = document.createElement('div');
