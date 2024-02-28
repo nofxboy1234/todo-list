@@ -18,10 +18,6 @@ const form = (task) => {
     renderCachedView();
   };
 
-  const builtInValidation = (event) => {
-    console.log('let built-in form validation run');
-  };
-
   const createTask = (event) => {
     redirectTo('POST', tasksPath, currentData());
   };
@@ -67,7 +63,6 @@ const form = (task) => {
   };
 
   const setupEventListeners = () => {
-    submit.button.addEventListener('click', builtInValidation);
     submit.button.addEventListener('click', submitButtonCallback);
     cancel.button.addEventListener('click', cancelForm);
   };
