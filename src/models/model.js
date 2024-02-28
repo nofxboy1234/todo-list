@@ -73,8 +73,8 @@ const createModel = (instanceProperties) => {
 
             this.saveDependent();
 
-            this.saveParents();
             this.updateParents();
+            this.saveParents();
 
             this.linkToParents();
 
@@ -89,12 +89,12 @@ const createModel = (instanceProperties) => {
           if (validationInstance.errors.length > 0) {
             return false;
           } else {
-            this.saveDependent();
             this.updateDependent();
+            this.saveDependent();
             this.destroyDependent();
 
-            this.saveParents();
             this.updateParents();
+            this.saveParents();
 
             this.linkToParents(validationInstance);
 
