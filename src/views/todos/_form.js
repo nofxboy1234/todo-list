@@ -63,7 +63,7 @@ const form = (todo) => {
     cacheCurrentView();
 
     const projectInputValue = event.target.dataset.projectInputValue;
-    const project = getProjectFromParams(projectInputValue);
+    const project = getClonedProjectFromParams(projectInputValue);
 
     redirectTo('GET', editProjectPath, project);
   };
@@ -79,7 +79,7 @@ const form = (todo) => {
     mergeCurrentDataIntoParams();
     cacheCurrentView();
     const taskInputValue = event.target.dataset.taskInputValue;
-    const task = getTaskFromParams(taskInputValue);
+    const task = getClonedTaskFromParams(taskInputValue);
 
     redirectTo('GET', editTaskPath, task);
   };
@@ -87,7 +87,7 @@ const form = (todo) => {
   const destroyTask = (event) => {
     mergeCurrentDataIntoParams();
     const formTaskID = event.target.dataset.taskInputValue;
-    const task = getTaskFromParams(formTaskID);
+    const task = getClonedTaskFromParams(formTaskID);
 
     redirectTo('DELETE', taskPath, task);
   };
@@ -112,7 +112,7 @@ const form = (todo) => {
     return project;
   };
 
-  const getTaskFromParams = (formTaskID) => {
+  const getClonedTaskFromParams = (formTaskID) => {
     let index;
     if (formTaskID.startsWith('undefined-')) {
       index = Number(formTaskID.split('-').at(1));
@@ -120,6 +120,7 @@ const form = (todo) => {
       index = Number(formTaskID);
     }
     const task = params.data.tasks.at(index);
+
     const cloneOfTask = Object.assign({}, task);
     cloneOfTask.data = Object.assign({}, task.data);
     cloneOfTask.data.indexInTasks = index;
@@ -127,7 +128,7 @@ const form = (todo) => {
     return cloneOfTask;
   };
 
-  const getProjectFromParams = (projectInputValue) => {
+  const getClonedProjectFromParams = (projectInputValue) => {
     let index;
     if (projectInputValue.startsWith('undefined-')) {
       index = Number(projectInputValue.split('-').at(1));
@@ -135,6 +136,7 @@ const form = (todo) => {
       index = Number(projectInputValue);
     }
     const project = params.data.projects.at(index);
+
     const cloneOfProject = Object.assign({}, project);
     cloneOfProject.data = Object.assign({}, project.data);
     cloneOfProject.data.indexInProjects = index;
@@ -159,9 +161,16 @@ const form = (todo) => {
 
   const updateTasksCompleteStatus = () => {
     const tasksCheckboxes = document.querySelectorAll('.task-checkbox');
-    params.data.tasks.forEach((paramsTask, index) => {
-      const taskCheckbox = tasksCheckboxes[index];
+    tasksCheckboxes.forEach((taskCheckbox) => {
+      let index;
+      const formTaskID = taskCheckbox.dataset.taskInputValue;
+      if (formTaskID.startsWith('undefined-')) {
+        index = Number(formTaskID.split('-').at(1));
+      } else {
+        index = Number(formTaskID);
+      }
       const complete = taskCheckbox.checked;
+      const paramsTask = params.data.tasks.at(index);
       paramsTask.data.complete = complete;
     });
   };
