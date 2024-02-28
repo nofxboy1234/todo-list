@@ -32,10 +32,6 @@ const form = (todo) => {
     renderCachedView();
   };
 
-  const builtInValidation = (event) => {
-    console.log('let built-in form validation run');
-  };
-
   const getView = () => {
     let view;
     if (persisted) {
@@ -162,9 +158,13 @@ const form = (todo) => {
   const submitButtonCallback = (event) => {
     if (!todoForm.checkValidity()) {
       return;
+      // built-in form behaviour runs afterwards, and stops at
+      // stage 1 validity check
     }
 
+    // built-in validity check is now going to pass
     if (!window.confirm('Are you sure?')) {
+      // stop built-in form behaviour from submitting the form at stage 2
       event.preventDefault();
       return;
     }
@@ -174,6 +174,9 @@ const form = (todo) => {
     } else {
       createTodo(event);
     }
+    // built-in form submitting behaviour will not run afterwards due to
+    // form being removed from DOM, so no need for below preventDefault()
+    // event.preventDefault();
   };
 
   const setupUI = () => {
@@ -303,7 +306,6 @@ const form = (todo) => {
   };
 
   const setupEventListeners = () => {
-    submit.button.addEventListener('click', builtInValidation);
     submit.button.addEventListener('click', submitButtonCallback);
 
     taskList.newButton.addEventListener('click', newTask);
