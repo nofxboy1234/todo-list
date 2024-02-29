@@ -28,7 +28,12 @@ const popCachedView = () => {
 
 const renderCachedView = () => {
   const view = popCachedView();
-  renderView(view);
+  if (view) {
+    renderView(view);
+    return true;
+  }
+
+  return false;
 };
 
 const renderView = (view) => {

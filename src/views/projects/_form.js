@@ -1,8 +1,15 @@
-import { createLabel, createInput, createButton } from '../helpers';
+import {
+  createLabel,
+  createInput,
+  createButton,
+  clearContent,
+} from '../helpers';
 
 import { redirectTo, projectsPath, projectPath } from '../../router';
-import { renderCachedView } from '../../renderer';
+import { indexTodo, renderCachedView } from '../../renderer';
 import { params } from '../../parameters/projectParameters';
+import { contentContainer } from '../layouts/application';
+import { getProjectForTodosIndex } from '../todos';
 
 const form = (project) => {
   const isOnTodoForm =
@@ -10,7 +17,12 @@ const form = (project) => {
 
   const cancelForm = () => {
     params.reset();
-    renderCachedView();
+    if (!renderCachedView()) {
+      clearContent();
+      const data = getProjectForTodosIndex().todos();
+      const view = indexTodo(data);
+      contentContainer.appendChild(view);
+    }
   };
 
   const createProject = (event) => {

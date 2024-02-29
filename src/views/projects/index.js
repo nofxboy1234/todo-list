@@ -1,6 +1,15 @@
 import { createButton } from '../helpers';
-import { redirectTo, projectPath, todosPath } from '../../router';
+import {
+  redirectTo,
+  projectPath,
+  todosPath,
+  newProjectPath,
+} from '../../router';
 import { setProjectForTodosIndex } from '../todos';
+
+const newProject = () => {
+  redirectTo('GET', newProjectPath);
+};
 
 const render = (projects) => {
   const projectsDiv = document.createElement('div');
@@ -8,6 +17,10 @@ const render = (projects) => {
   const header = document.createElement('h2');
   header.textContent = 'Projects:';
   projectsDiv.appendChild(header);
+
+  const newButton = createButton('button', 'New Project', 'newProjectButtonID');
+  projectsDiv.appendChild(newButton);
+  newButton.addEventListener('click', newProject);
 
   projects.forEach((project) => {
     const destroyProject = () => {
