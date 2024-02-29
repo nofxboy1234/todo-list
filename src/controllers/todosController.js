@@ -90,7 +90,7 @@ const instanceProperties = {
       redirectTo('GET', projectsPath);
       redirectTo('GET', todoPath, this.resourceSingular);
     } else {
-      render(`${this.resourcePluralName}/edit`, this.resourceSingular);
+      render(`${this.resourcePluralName}/edit`, validationInstance);
     }
   },
   destroy: function () {

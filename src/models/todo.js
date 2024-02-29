@@ -129,11 +129,11 @@ const instanceProperties = {
     if (this.data.dueDate === '') {
       this.errors.push('Date cannot be blank');
     }
-    if (!this.data.id) {
-      if (exists(Todo, 'title', this)) {
-        this.errors.push('A Todo already exists with this title');
-      }
+    if (exists(Todo, 'title', this)) {
+      this.errors.push('A Todo already exists with this title');
     }
+    // if (!this.data.id) {
+    // }
 
     if (this.errors.length === 0) {
       this.data.validated = true;
