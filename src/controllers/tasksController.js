@@ -41,7 +41,10 @@ const instanceProperties = {
   create: function () {
     this.resourceSingular = this.resourceClass.new(this.params);
     this.resourceSingular.data.validated = false;
-    this.resourceSingular.validate();
+
+    if (!this.resourceSingular.data.validated) {
+      this.resourceSingular.validate();
+    }
 
     if (this.resourceSingular.errors.length === 0) {
       createTaskInTodoParams(this.resourceSingular);
@@ -55,7 +58,10 @@ const instanceProperties = {
   update: function () {
     this.resourceSingular = this.resourceClass.new(this.params);
     this.resourceSingular.data.validated = false;
-    this.resourceSingular.validate();
+    
+    if (!this.resourceSingular.data.validated) {
+      this.resourceSingular.validate();
+    }
 
     if (this.resourceSingular.errors.length === 0) {
       updateTaskInTodoParams(this.resourceSingular);

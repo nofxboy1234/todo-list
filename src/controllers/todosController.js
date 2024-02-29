@@ -32,6 +32,7 @@ const addAllProjectsToParams = () => {
   Project.all().forEach((storedProject, index) => {
     const clonedProject = cloneResource(storedProject);
     clonedProject.data.projectInputValue = index.toString();
+    clonedProject.data.validated = true;
     existingProjects.push(clonedProject);
   });
   params.data.projects = existingProjects;

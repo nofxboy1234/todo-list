@@ -44,7 +44,10 @@ const instanceProperties = {
   create: function () {
     this.resourceSingular = this.resourceClass.new(this.params);
     this.resourceSingular.data.validated = false;
-    this.resourceSingular.validate();
+
+    if (!this.resourceSingular.data.validated) {
+      this.resourceSingular.validate();
+    }
 
     if (this.resourceSingular.errors.length === 0) {
       const projectInputValue = createProjectInTodoParams(
@@ -61,7 +64,10 @@ const instanceProperties = {
   update: function () {
     this.resourceSingular = this.resourceClass.new(this.params);
     this.resourceSingular.data.validated = false;
-    this.resourceSingular.validate();
+
+    if (!this.resourceSingular.data.validated) {
+      this.resourceSingular.validate();
+    }
 
     if (this.resourceSingular.errors.length === 0) {
       updateProjectInTodoParams(this.resourceSingular);

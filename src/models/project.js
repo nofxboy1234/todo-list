@@ -51,7 +51,10 @@ const instanceProperties = {
     }
   },
   update: function (validationInstance) {
-    validationInstance.validate();
+    if (!validationInstance.data.validated) {
+      validationInstance.validate();
+    }
+    
     if (validationInstance.errors.length > 0) {
       return false;
     } else {
