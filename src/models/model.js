@@ -138,13 +138,26 @@ const createModel = (instanceProperties) => {
   return Model;
 };
 
+const instancesExcludingCallingInstance = (className, instanceToCheck) => {
+  return className
+    .all()
+    .filter((instance) => instance.data.id !== instanceToCheck.data.id);
+};
+
 const exists = (className, propertyToCheck, instanceToCheck) => {
-  const found = className.all().filter((instance) => {
+  let instances;
+  if (instanceToCheck.data.id) {
+    instances = instancesExcludingCallingInstance(className, instanceToCheck);
+  } else {
+    instances = className.all();
+  }
+
+  const found = instances.find((instance) => {
     return (
       instance.data[propertyToCheck] === instanceToCheck.data[propertyToCheck]
     );
   });
-  return found.length > 0 ? true : false;
+  return found;
 };
 
 export { createModel, exists };
