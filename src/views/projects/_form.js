@@ -41,6 +41,8 @@ const form = (project) => {
     } else {
       createProject(event);
     }
+
+    event.preventDefault();
   };
 
   const setupUI = () => {

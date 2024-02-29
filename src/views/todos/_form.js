@@ -196,7 +196,7 @@ const form = (todo) => {
     }
     // built-in form submitting behaviour will not run afterwards due to
     // form being removed from DOM, so no need for below preventDefault()
-    // event.preventDefault();
+    event.preventDefault();
   };
 
   const setupUI = () => {

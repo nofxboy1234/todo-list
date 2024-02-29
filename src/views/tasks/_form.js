@@ -45,6 +45,8 @@ const form = (task) => {
     } else {
       createTask(event);
     }
+
+    event.preventDefault();
   };
 
   const setupUI = () => {
