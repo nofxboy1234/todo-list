@@ -56,7 +56,12 @@ const createRouter = (instanceProperties = {}, staticProperties = {}) => {
           const resourceParams = getParameters(resourcePlural);
           resourceParams.merge(data);
         },
-        redirectTo: function (method, path, resourceData = {}) {
+        redirectTo: function (
+          method,
+          path,
+          resourceData = {},
+          viewToRender = {}
+        ) {
           let resolvedPath;
           if (isPathHelper(path)) {
             resolvedPath = path(resourceData);
@@ -83,6 +88,11 @@ const createRouter = (instanceProperties = {}, staticProperties = {}) => {
               if (method === 'GET') {
                 const resourceParams = getParameters(resourcePlural);
                 resourceParams.reset();
+
+                if (viewToRender.data) {
+                  saveToParameters(resourcePlural, viewToRender);
+                }
+
                 controller.new();
               }
               break;

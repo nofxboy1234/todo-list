@@ -37,23 +37,70 @@ const updateProjectInTodoParams = (project) => {
   Object.assign(todoParamsProject.data, project.data);
 };
 
+const cloneResource = (resource) => {
+  const clone = Object.assign({}, resource);
+  clone.data = {};
+  Object.assign(clone.data, resource.data);
+
+  return clone;
+};
+
+const addAllProjectsToTodoParams = () => {
+  const existingProjects = [];
+  Project.all().forEach((storedProject, index) => {
+    const clonedProject = cloneResource(storedProject);
+    clonedProject.data.projectInputValue = index.toString();
+    existingProjects.push(clonedProject);
+  });
+  todoParams.data.projects = existingProjects;
+};
+
 const Controller = createController('projects', Project, params);
 
 const ProjectsController = Object.create(Controller);
 const instanceProperties = {
+  new: function () {
+    this.resourceSingular = this.resourceClass.new(params);
+
+    addAllProjectsToTodoParams();
+
+    render(`${this.resourcePluralName}/new`, this.resourceSingular);
+  },
   create: function () {
     this.resourceSingular = this.resourceClass.new(this.params);
     this.resourceSingular.data.validated = false;
     this.resourceSingular.validate();
 
     if (this.resourceSingular.errors.length === 0) {
-      const projectInputValue = createProjectInTodoParams(
-        this.resourceSingular
-      );
-      setProjectInputValueOfTodo(projectInputValue);
-      params.reset();
-      popCachedView();
-      render('todos/edit', Todo.new(todoParams));
+      if (this.resourceSingular.data.viewToRender) {
+        const viewToRender = Object.assign(
+          {},
+          this.resourceSingular.data.viewToRender
+        );
+
+        if (this.resourceSingular.save()) {
+          const viewString = viewToRender.viewString;
+          const viewData = viewToRender.viewData;
+
+          redirectTo('GET', projectsPath);
+          render(viewString, viewData);
+
+          params.reset();
+          popCachedView();
+        } else {
+          render(`${this.resourcePluralName}/new`, this.resourceSingular);
+        }
+      } else {
+        const projectInputValue = createProjectInTodoParams(
+          this.resourceSingular
+        );
+        setProjectInputValueOfTodo(projectInputValue);
+
+        render('todos/edit', Todo.new(todoParams));
+
+        params.reset();
+        popCachedView();
+      }
     } else {
       render(`${this.resourcePluralName}/new`, this.resourceSingular);
     }

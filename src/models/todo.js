@@ -1,5 +1,5 @@
 import { Project } from './project';
-import { createModel as Model, exists } from './model';
+import { createModel as Model, existsInStorage } from './model';
 import { Task } from './task';
 import { params } from '../parameters/todoParameters';
 
@@ -129,11 +129,11 @@ const instanceProperties = {
     if (this.data.dueDate === '') {
       this.errors.push('Date cannot be blank');
     }
-    if (!this.data.id) {
-      if (exists(Todo, 'title', this)) {
-        this.errors.push('A Todo already exists with this title');
-      }
+    if (existsInStorage(Todo, 'title', this)) {
+      this.errors.push('A Todo already exists with this title');
     }
+    // if (!this.data.id) {
+    // }
 
     if (this.errors.length === 0) {
       this.data.validated = true;

@@ -1,5 +1,5 @@
 import { Todo } from './todo';
-import { createModel as Model, exists } from './model';
+import { createModel as Model, existsInStorage } from './model';
 
 const instanceProperties = {
   todo: function () {

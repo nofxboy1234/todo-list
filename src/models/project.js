@@ -1,11 +1,23 @@
 import { Todo } from './todo';
-import { createModel as Model, exists } from './model';
+import { createModel as Model, existsInStorage } from './model';
 import { params as todoParams } from '../parameters/todoParameters';
 
 const updateInstanceInStorage = (instance, updatedData) => {
   Object.assign(instance.data, updatedData.data);
 };
 
+// const hasCollidingName = (project) => {
+//   const paramsProjects = todoParams.data.projects;
+//   const indexInProjects = project.data.indexInProjects;
+//   let found;
+//   const projectsExcludingThisInstance = paramsProjects.filter(
+//     (project, index) => index !== indexInProjects
+//   );
+//   found = projectsExcludingThisInstance.find((otherProject) => {
+//     return otherProject.data.name === project.data.name;
+//   });
+//   return found;
+// };
 const hasCollidingName = (project) => {
   const paramsProjects = todoParams.data.projects;
   const indexInProjects = project.data.indexInProjects;
@@ -14,16 +26,15 @@ const hasCollidingName = (project) => {
     const otherProjects = paramsProjects.filter(
       (project, index) => index !== indexInProjects
     );
-    found = otherProjects.find(
-      (otherProject) => otherProject.data.name === project.data.name
-    );
-    return found;
+    found = otherProjects.find((otherProject) => {
+      return otherProject.data.name === project.data.name;
+    });
   } else {
-    found = paramsProjects.find(
-      (otherProject) => otherProject.data.name === project.data.name
-    );
-    return found;
+    found = paramsProjects.find((otherProject) => {
+      return otherProject.data.name === project.data.name;
+    });
   }
+  return found ? true : false;
 };
 
 const instanceProperties = {
@@ -51,7 +62,10 @@ const instanceProperties = {
     }
   },
   update: function (validationInstance) {
-    validationInstance.validate();
+    if (!validationInstance.data.validated) {
+      validationInstance.validate();
+    }
+
     if (validationInstance.errors.length > 0) {
       return false;
     } else {

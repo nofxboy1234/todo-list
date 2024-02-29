@@ -1,6 +1,37 @@
 import { createButton } from '../helpers';
-import { redirectTo, projectPath, todosPath } from '../../router';
-import { setProjectForTodosIndex } from '../todos';
+import {
+  redirectTo,
+  projectPath,
+  todosPath,
+  newProjectPath,
+} from '../../router';
+import { getProjectForTodosIndex, setProjectForTodosIndex } from '../todos';
+import { cacheView, indexTodo } from '../../renderer';
+
+const getView = () => {
+  const view = indexTodo;
+  return view;
+};
+
+const cacheCurrentView = () => {
+  const view = getView();
+  const project = getProjectForTodosIndex();
+
+  cacheView(view(project.todos()));
+};
+
+const newProject = () => {
+  cacheCurrentView();
+
+  // const view = getView();
+  const project = getProjectForTodosIndex();
+  const viewToRender = {
+    data: {
+      viewToRender: { viewString: 'todos/index', viewData: project.todos() },
+    },
+  };
+  redirectTo('GET', newProjectPath, {}, viewToRender);
+};
 
 const render = (projects) => {
   const projectsDiv = document.createElement('div');
@@ -8,6 +39,10 @@ const render = (projects) => {
   const header = document.createElement('h2');
   header.textContent = 'Projects:';
   projectsDiv.appendChild(header);
+
+  const newButton = createButton('button', 'New Project', 'newProjectButtonID');
+  newButton.addEventListener('click', newProject);
+  projectsDiv.appendChild(newButton);
 
   projects.forEach((project) => {
     const destroyProject = () => {

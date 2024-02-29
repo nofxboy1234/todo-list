@@ -1,3 +1,5 @@
+import { Project } from './project';
+
 const createModel = (instanceProperties) => {
   const Model = {
     instances: [],
@@ -85,7 +87,10 @@ const createModel = (instanceProperties) => {
           }
         },
         update: function (validationInstance) {
-          validationInstance.validate();
+          if (!validationInstance.data.validated) {
+            validationInstance.validate();
+          }
+
           if (validationInstance.errors.length > 0) {
             return false;
           } else {
@@ -138,13 +143,37 @@ const createModel = (instanceProperties) => {
   return Model;
 };
 
-const exists = (className, propertyToCheck, instanceToCheck) => {
-  const found = className.all().filter((instance) => {
-    return (
-      instance.data[propertyToCheck] === instanceToCheck.data[propertyToCheck]
-    );
-  });
-  return found.length > 0 ? true : false;
+const existsInStorage = (className, propertyToCheck, instanceToCheck) => {
+  const storedInstances = className.all();
+  const persisted = instanceToCheck.data.id;
+  let found;
+  if (persisted) {
+    const otherInstances = storedInstances.filter((instance) => {
+      return (
+        instance.data[propertyToCheck] !== instanceToCheck.data[propertyToCheck]
+      );
+    });
+    found = otherInstances.find((instance) => {
+      return (
+        instance.data[propertyToCheck] === instanceToCheck.data[propertyToCheck]
+      );
+    });
+  } else {
+    found = storedInstances.find((instance) => {
+      return (
+        instance.data[propertyToCheck] === instanceToCheck.data[propertyToCheck]
+      );
+    });
+  }
+  return found ? true : false;
 };
+// const existsInStorage = (className, propertyToCheck, instanceToCheck) => {
+//   const found = className.all().filter((instance) => {
+//     return (
+//       instance.data[propertyToCheck] === instanceToCheck.data[propertyToCheck]
+//     );
+//   });
+//   return found.length > 0 ? true : false;
+// };
 
-export { createModel, exists };
+export { createModel, existsInStorage };

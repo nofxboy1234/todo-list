@@ -26,7 +26,7 @@ const form = (project) => {
       data: {
         id: project.data.id,
         name: name.input.value,
-        // onTodoForm: true,
+        viewToRender: project.data.viewToRender,
       },
     };
   };
@@ -41,6 +41,8 @@ const form = (project) => {
     } else {
       createProject(event);
     }
+
+    event.preventDefault();
   };
 
   const setupUI = () => {
