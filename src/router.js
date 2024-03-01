@@ -1,5 +1,5 @@
 import { TodosController as todosController } from './controllers/todosController';
-import { ProjectsController as projectsController } from './controllers/todoProjectsController';
+import { TodoProjectsController as todoProjectsController } from './controllers/todoProjectsController';
 import { TasksController as tasksController } from './controllers/todoTasksController';
 
 import { params as todoParams } from './parameters/todoParameters';
@@ -21,7 +21,7 @@ const routes = {};
 const controllers = () => {
   const data = {
     todos: todosController,
-    projects: projectsController,
+    projects: todoProjectsController,
     tasks: tasksController,
   };
   return data;

@@ -39,7 +39,7 @@ const updateProjectInTodoParams = (project) => {
 
 const Controller = createController('projects', Project, params);
 
-const ProjectsController = Object.create(Controller);
+const TodoProjectsController = Object.create(Controller);
 const instanceProperties = {
   create: function () {
     this.resourceSingular = this.resourceClass.new(this.params);
@@ -90,6 +90,6 @@ const instanceProperties = {
     }
   },
 };
-Object.assign(ProjectsController, instanceProperties);
+Object.assign(TodoProjectsController, instanceProperties);
 
-export { ProjectsController };
+export { TodoProjectsController };
