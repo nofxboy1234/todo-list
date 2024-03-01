@@ -1,6 +1,6 @@
 import { TodosController as todosController } from './controllers/todosController';
 import { ProjectsController as projectsController } from './controllers/todoProjectsController';
-import { TasksController as tasksController } from './controllers/tasksController';
+import { TasksController as tasksController } from './controllers/todoTasksController';
 
 import { params as todoParams } from './parameters/todoParameters';
 import { params as projectParams } from './parameters/projectParameters';
