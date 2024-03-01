@@ -36,7 +36,7 @@ const destroyTaskInTodoParams = (task) => {
 
 const Controller = createController('tasks', Task, params);
 
-const TasksController = Object.create(Controller);
+const TodoTasksController = Object.create(Controller);
 const instanceProperties = {
   create: function () {
     this.resourceSingular = this.resourceClass.new(this.params);
@@ -79,6 +79,6 @@ const instanceProperties = {
     render('todos/edit', Todo.new(todoParams));
   },
 };
-Object.assign(TasksController, instanceProperties);
+Object.assign(TodoTasksController, instanceProperties);
 
-export { TasksController };
+export { TodoTasksController };

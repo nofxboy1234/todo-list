@@ -1,6 +1,6 @@
 import { TodosController as todosController } from './controllers/todosController';
 import { TodoProjectsController as todoProjectsController } from './controllers/todoProjectsController';
-import { TasksController as tasksController } from './controllers/todoTasksController';
+import { TodoTasksController as todoTasksController } from './controllers/todoTasksController';
 
 import { params as todoParams } from './parameters/todoParameters';
 import { params as projectParams } from './parameters/projectParameters';
@@ -22,7 +22,7 @@ const controllers = () => {
   const data = {
     todos: todosController,
     projects: todoProjectsController,
-    tasks: tasksController,
+    tasks: todoTasksController,
   };
   return data;
 };
