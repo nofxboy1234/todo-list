@@ -1,5 +1,5 @@
 import { createButton } from '../helpers';
-import { redirectTo, editTodoPath, todoPath, todosPath } from '../../router';
+import { redirectTo, editTodoPath, todoPath, todosPath } from '../../routers/router';
 import { cacheView, showTodo } from '../../renderer';
 
 const Partial = (todo) => {

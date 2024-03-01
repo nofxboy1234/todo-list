@@ -1,5 +1,5 @@
 import { createButton } from '../helpers';
-import { redirectTo, todoPath } from '../../router';
+import { redirectTo, todoPath } from '../../routers/router';
 
 let project;
 

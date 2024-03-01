@@ -4,7 +4,7 @@ import { params as todoParams } from '../parameters/todoParameters';
 import { createController } from './controller';
 import { popCachedView, render } from '../renderer';
 
-import { editTodoPath, redirectTo } from '../router';
+import { editTodoPath, redirectTo } from '../routers/router';
 import { Todo } from '../models/todo';
 
 const createTaskInTodoParams = (task) => {

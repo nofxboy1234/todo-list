@@ -6,7 +6,7 @@ import {
   projectPath,
   tasksPath,
   taskPath,
-} from '../../router';
+} from '../../routers/router';
 import { renderCachedView } from '../../renderer';
 import { params } from '../../parameters/taskParameters';
 

@@ -1,5 +1,5 @@
 import { createButton } from '../helpers';
-import { redirectTo, projectPath, todosPath } from '../../router';
+import { redirectTo, projectPath, todosPath } from '../../routers/router';
 import { setProjectForTodosIndex } from '../todos';
 
 const render = (projects) => {

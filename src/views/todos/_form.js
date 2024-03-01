@@ -18,7 +18,7 @@ import {
   newTaskPath,
   editTaskPath,
   taskPath,
-} from '../../router';
+} from '../../routers/router';
 import { cacheView, editTodo, newTodo, renderCachedView } from '../../renderer';
 import { params } from '../../parameters/todoParameters';
 import { Todo } from '../../models/todo';

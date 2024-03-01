@@ -1,10 +1,10 @@
-import { TodosController as todosController } from './controllers/todosController';
-import { TodoProjectsController as todoProjectsController } from './controllers/todoProjectsController';
-import { TodoTasksController as todoTasksController } from './controllers/todoTasksController';
+import { TodosController as todosController } from '../controllers/todosController';
+import { TodoProjectsController as todoProjectsController } from '../controllers/todoProjectsController';
+import { TodoTasksController as todoTasksController } from '../controllers/todoTasksController';
 
-import { params as todoParams } from './parameters/todoParameters';
-import { params as projectParams } from './parameters/projectParameters';
-import { params as taskParams } from './parameters/taskParameters';
+import { params as todoParams } from '../parameters/todoParameters';
+import { params as projectParams } from '../parameters/projectParameters';
+import { params as taskParams } from '../parameters/taskParameters';
 //     Prefix Verb   URI Pattern                 Controller#Action
 //     kittens GET    /kittens(.:format)          kittens#index
 //             POST   /kittens(.:format)          kittens#create

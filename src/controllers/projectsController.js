@@ -5,7 +5,7 @@ import { createController } from './controller';
 import { popCachedView, render } from '../renderer';
 
 import { Todo } from '../models/todo';
-import { projectsPath, redirectTo, todosPath } from '../router';
+import { projectsPath, redirectTo, todosPath } from '../routers/router';
 import {
   getProjectForTodosIndex,
   setProjectForTodosIndex,

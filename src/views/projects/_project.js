@@ -4,7 +4,7 @@ import {
   projectsPath,
   editProjectPath,
   projectPath,
-} from '../../router';
+} from '../../routers/router';
 
 const Partial = (project) => {
   const projectParagraph = document.createElement('p');

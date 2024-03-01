@@ -1,6 +1,6 @@
 import { createLabel, createInput, createButton } from '../helpers';
 
-import { redirectTo, projectsPath, projectPath } from '../../router';
+import { redirectTo, projectsPath, projectPath } from '../../routers/router';
 import { renderCachedView } from '../../renderer';
 import { params } from '../../parameters/projectParameters';
 

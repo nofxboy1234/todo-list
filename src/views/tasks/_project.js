@@ -7,7 +7,7 @@ import {
   taskPath,
   editTaskPath,
   tasksPath,
-} from '../../router';
+} from '../../routers/router';
 
 const Partial = (task) => {
   const taskParagraph = document.createElement('p');

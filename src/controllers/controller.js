@@ -10,7 +10,7 @@ import {
   newProjectPath,
   editProjectPath,
   projectPath,
-} from '../router';
+} from '../routers/router';
 
 const pathHelpers = () => {
   const helpers = {
