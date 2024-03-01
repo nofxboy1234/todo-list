@@ -11,32 +11,6 @@ import {
   setProjectForTodosIndex,
 } from '../views/todos';
 
-const setProjectInputValueOfTodo = (projectInputValue) => {
-  todoParams.data.projectInputValue = projectInputValue;
-};
-
-const todosIndexProjectDestroyedFromStorage = () => {
-  return !Project.all().includes(getProjectForTodosIndex());
-};
-
-const createProjectInTodoParams = (project) => {
-  const projects = todoParams.data.projects;
-  projects.push(project);
-  const index = projects.length - 1;
-  const projectInputValue = `undefined-${index}`;
-  project.data.projectInputValue = projectInputValue;
-  project.data.onTodoForm = true;
-
-  return projectInputValue;
-};
-
-const updateProjectInTodoParams = (project) => {
-  const projects = todoParams.data.projects;
-  const indexOfProject = project.data.indexInProjects;
-  const todoParamsProject = projects.at(indexOfProject);
-  Object.assign(todoParamsProject.data, project.data);
-};
-
 const Controller = createController('projects', Project, params);
 
 const ProjectsController = Object.create(Controller);
@@ -45,18 +19,11 @@ const instanceProperties = {
     this.resourceSingular = this.resourceClass.new(this.params);
     this.resourceSingular.data.validated = false;
 
-    if (!this.resourceSingular.data.validated) {
-      this.resourceSingular.validate();
-    }
-
-    if (this.resourceSingular.errors.length === 0) {
-      const projectInputValue = createProjectInTodoParams(
-        this.resourceSingular
-      );
-      setProjectInputValueOfTodo(projectInputValue);
+    if (this.resourceSingular.save()) {
       params.reset();
       popCachedView();
-      render('todos/edit', Todo.new(todoParams));
+      redirectTo('GET', projectsPath);
+      redirectTo('GET', todosPath);
     } else {
       render(`${this.resourcePluralName}/new`, this.resourceSingular);
     }
@@ -65,29 +32,21 @@ const instanceProperties = {
     this.resourceSingular = this.resourceClass.new(this.params);
     this.resourceSingular.data.validated = false;
 
-    if (!this.resourceSingular.data.validated) {
-      this.resourceSingular.validate();
-    }
-
-    if (this.resourceSingular.errors.length === 0) {
-      updateProjectInTodoParams(this.resourceSingular);
+    const validationInstance = Project.new(this.params);
+    if (this.resourceSingular.update(validationInstance)) {
       params.reset();
       popCachedView();
-      render('todos/edit', Todo.new(todoParams));
+      redirectTo('GET', projectsPath);
+      redirectTo('GET', todosPath);
     } else {
-      render(`${this.resourcePluralName}/new`, this.resourceSingular);
+      render(`${this.resourcePluralName}/edit`, validationInstance);
     }
   },
   destroy: function () {
     this.setResourceSingular();
     this.resourceSingular.destroy();
-    params.reset();
-    redirectTo('GET', projectsPath);
 
-    if (todosIndexProjectDestroyedFromStorage()) {
-      setProjectForTodosIndex(Project.first());
-      redirectTo('GET', todosPath);
-    }
+    redirectTo('GET', projectsPath);
   },
 };
 Object.assign(ProjectsController, instanceProperties);
