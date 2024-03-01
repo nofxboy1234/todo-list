@@ -5,16 +5,6 @@ import { TodoTasksController as todoTasksController } from '../controllers/todoT
 import { params as todoParams } from '../parameters/todoParameters';
 import { params as projectParams } from '../parameters/projectParameters';
 import { params as taskParams } from '../parameters/taskParameters';
-//     Prefix Verb   URI Pattern                 Controller#Action
-//     kittens GET    /kittens(.:format)          kittens#index
-//             POST   /kittens(.:format)          kittens#create
-//  new_kitten GET    /kittens/new(.:format)      kittens#new
-// edit_kitten GET    /kittens/:id/edit(.:format) kittens#edit
-//      kitten GET    /kittens/:id(.:format)      kittens#show
-//             PATCH  /kittens/:id(.:format)      kittens#update
-//             PUT    /kittens/:id(.:format)      kittens#update
-//             DELETE /kittens/:id(.:format)      kittens#destroy
-//        root GET    /                           kittens#index
 
 const routes = {};
 
