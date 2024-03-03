@@ -1,3 +1,7 @@
+const capitalize = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};
+
 function createRoutes(resourceSingular, resourcePlural, routes) {
   const entries = new Map([
     [

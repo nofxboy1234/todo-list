@@ -44,11 +44,6 @@ function redirectTo(method, path, taskData = {}) {
         todoTasksController.destroy();
       }
       break;
-    case '/':
-      if (method === 'GET') {
-        todoTasksController.index();
-      }
-      break;
     default:
       break;
   }

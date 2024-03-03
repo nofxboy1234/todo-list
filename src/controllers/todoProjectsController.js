@@ -2,7 +2,7 @@ import { Project } from '../models/project';
 import { params } from '../parameters/projectParameters';
 import { params as todoParams } from '../parameters/todoParameters';
 import { createController } from './controller';
-import { popCachedView, render } from '../renderer';
+import { popCachedView, render } from '../renderers/renderer';
 
 import { Todo } from '../models/todo';
 import { projectsPath, redirectTo, todosPath } from '../routers/router';

@@ -1,6 +1,6 @@
 import { createButton } from '../helpers';
 import { redirectTo, editTodoPath, todoPath, todosPath } from '../../routers/router';
-import { cacheView, showTodo } from '../../renderer';
+import { cacheView } from '../../renderers/renderer';
 
 const Partial = (todo) => {
   const todoParagraph = document.createElement('p');

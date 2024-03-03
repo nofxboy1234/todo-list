@@ -1,7 +1,8 @@
 import { Todo } from '../models/todo';
 import { params } from '../parameters/todoParameters';
 import { createController } from './controller';
-import { popCachedView, render } from '../renderer';
+import { popCachedView, render } from '../renderers/renderer';
+
 
 import { todosPath, projectsPath, redirectTo, todoPath } from '../routers/router';
 import { getProjectForTodosIndex } from '../views/todos';

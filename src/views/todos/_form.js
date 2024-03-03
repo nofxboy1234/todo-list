@@ -15,11 +15,16 @@ import {
   todoPath,
   newProjectPath,
   editProjectPath,
-  newTaskPath,
-  editTaskPath,
-  taskPath,
 } from '../../routers/router';
-import { cacheView, editTodo, newTodo, renderCachedView } from '../../renderer';
+
+import { redirectTo as todoTaskRedirectTo } from '../../routers/todoTasksRouter';
+import {
+  newTodoTaskPath,
+  editTodoTaskPath,
+  todoTaskPath,
+} from '../../routes/todoTaskRoutes';
+
+import { cacheView, editTodo, newTodo, renderCachedView } from '../../renderers/renderer';
 import { params } from '../../parameters/todoParameters';
 import { Todo } from '../../models/todo';
 import { Task } from '../../models/task';
@@ -72,7 +77,7 @@ const form = (todo) => {
     mergeCurrentDataIntoParams();
     cacheCurrentView();
 
-    redirectTo('GET', newTaskPath);
+    todoTaskRedirectTo('GET', newTodoTaskPath);
   };
 
   const editTask = (event) => {
@@ -81,7 +86,7 @@ const form = (todo) => {
     const taskInputValue = event.target.dataset.taskInputValue;
     const task = getClonedTaskFromParams(taskInputValue);
 
-    redirectTo('GET', editTaskPath, task);
+    todoTaskRedirectTo('GET', editTodoTaskPath, task);
   };
 
   const destroyTask = (event) => {
@@ -89,7 +94,7 @@ const form = (todo) => {
     const formTaskID = event.target.dataset.taskInputValue;
     const task = getClonedTaskFromParams(formTaskID);
 
-    redirectTo('DELETE', taskPath, task);
+    todoTaskRedirectTo('DELETE', todoTaskPath, task);
   };
 
   const createTodo = (event) => {

@@ -1,9 +1,15 @@
-import { TodoTasksController as todoTasksController } from '../controllers/todoTasksController';
+import { todoTasksController } from '../controllers/todoTasksController';
 import { params as taskParams } from '../parameters/taskParameters';
+import {
+  todoTasksPath,
+  newTodoTaskPath,
+  editTodoTaskPath,
+  todoTaskPath,
+} from '../routes/todoTaskRoutes';
 
 function redirectTo(method, path, taskData = {}) {
   switch (path) {
-    case '/todoTasks':
+    case todoTasksPath:
       if (method === 'GET') {
         taskParams.merge(taskData);
         todoTasksController.index();
@@ -13,20 +19,20 @@ function redirectTo(method, path, taskData = {}) {
         todoTasksController.create();
       }
       break;
-    case `/todoTasks/new`:
+    case newTodoTaskPath:
       if (method === 'GET') {
         taskParams.reset();
         todoTasksController.new();
       }
       break;
-    case `/todoTasks/${taskData.data.id}/edit`:
+    case editTodoTaskPath:
       if (method === 'GET') {
         taskParams.reset();
         taskParams.merge(taskData);
         todoTasksController.edit();
       }
       break;
-    case `/todoTasks/${taskData.data.id}`:
+    case todoTaskPath:
       if (method === 'GET') {
         taskParams.merge(taskData);
         todoTasksController.show();
@@ -42,11 +48,6 @@ function redirectTo(method, path, taskData = {}) {
       if (method === 'DELETE') {
         taskParams.merge(taskData);
         todoTasksController.destroy();
-      }
-      break;
-    case '/':
-      if (method === 'GET') {
-        todoTasksController.index();
       }
       break;
     default:

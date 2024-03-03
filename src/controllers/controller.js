@@ -1,4 +1,4 @@
-import { render } from '../renderer';
+import { render } from '../renderers/renderer';
 import {
   redirectTo,
   rootPath,

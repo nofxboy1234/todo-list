@@ -1,20 +1,20 @@
-import { render as showProject } from './views/projects/show';
-import { render as indexProject } from './views/projects/index';
-import { render as newProject } from './views/projects/new';
-import { render as editProject } from './views/projects/edit';
+import { render as showProject } from '../views/projects/show';
+import { render as indexProject } from '../views/projects/index';
+import { render as newProject } from '../views/projects/new';
+import { render as editProject } from '../views/projects/edit';
 
-import { render as showTodo } from './views/todos/show';
-import { render as indexTodo } from './views/todos/index';
-import { render as newTodo } from './views/todos/new';
-import { render as editTodo } from './views/todos/edit';
+import { render as showTodo } from '../views/todos/show';
+import { render as indexTodo } from '../views/todos/index';
+import { render as newTodo } from '../views/todos/new';
+import { render as editTodo } from '../views/todos/edit';
 
-import { render as showTask } from './views/tasks/show';
-import { render as indexTask } from './views/tasks/index';
-import { render as newTask } from './views/tasks/new';
-import { render as editTask } from './views/tasks/edit';
+import { render as showTask } from '../views/tasks/show';
+import { render as indexTask } from '../views/tasks/index';
+import { render as newTask } from '../views/tasks/new';
+import { render as editTask } from '../views/tasks/edit';
 
-import { contentContainer, projectIndex } from './views/layouts/application';
-import { clearContent, clearProjectIndex } from './views/helpers';
+import { contentContainer, projectIndex } from '../views/layouts/application';
+import { clearContent, clearProjectIndex } from '../views/helpers';
 
 const cache = [];
 

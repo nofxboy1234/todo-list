@@ -1,16 +1,15 @@
-import { Task } from '../models/task';
 import { params } from '../parameters/taskParameters';
 import { params as todoParams } from '../parameters/todoParameters';
-import { createController } from './controller';
-import { popCachedView, render } from '../renderer';
+import { popCachedView, render } from '../renderers/renderer';
+import { render as todoTaskRender } from '../renderers/todoTasksRenderer';
 
-import { editTodoPath, redirectTo } from '../routers/router';
 import { Todo } from '../models/todo';
+import { Task } from '../models/task';
+import { edit, index, new_, show } from '../symbols/todoTaskSymbols';
 
 const createTaskInTodoParams = (task) => {
-  const tempTodoParams = todoParams;
   task.data.onTodoForm = true;
-  tempTodoParams.data.tasks.push(task);
+  todoParams.data.tasks.push(task);
 };
 
 const addTaskToDestroyedTasks = (todoParamsTask) => {
@@ -34,51 +33,69 @@ const destroyTaskInTodoParams = (task) => {
   tasks.splice(indexOfTask, 1);
 };
 
-const Controller = createController('tasks', Task, params);
+const setTodoTask = (controller) => {
+  const id = params.data.id;
+  const instance = Task.find(id);
+  controller.todoTask = instance;
+};
 
-const TodoTasksController = Object.create(Controller);
-const instanceProperties = {
+const todoTasksController = {
+  new: function () {
+    this.todoTask = Task.new(params);
+    todoTaskRender(new_, this.todoTask);
+  },
   create: function () {
-    this.resourceSingular = this.resourceClass.new(this.params);
-    this.resourceSingular.data.validated = false;
+    this.todoTask = Task.new(params);
+    this.todoTask.data.validated = false;
 
-    if (!this.resourceSingular.data.validated) {
-      this.resourceSingular.validate();
+    if (!this.todoTask.data.validated) {
+      this.todoTask.validate();
     }
 
-    if (this.resourceSingular.errors.length === 0) {
-      createTaskInTodoParams(this.resourceSingular);
+    if (this.todoTask.errors.length === 0) {
+      createTaskInTodoParams(this.todoTask);
       params.reset();
       popCachedView();
       render('todos/edit', Todo.new(todoParams));
     } else {
-      render(`${this.resourcePluralName}/new`, this.resourceSingular);
+      render(new_, this.todoTask);
     }
   },
+  index: function () {
+    this.todoTasks = Task.all();
+    render(index, this.todoTasks);
+  },
+  show: function () {
+    setTodoTask(this);
+    render(show, this.todoTask);
+  },
+  edit: function () {
+    this.todoTask = Task.new(params);
+    render(edit, this.todoTask);
+  },
   update: function () {
-    this.resourceSingular = this.resourceClass.new(this.params);
-    this.resourceSingular.data.validated = false;
-    
-    if (!this.resourceSingular.data.validated) {
-      this.resourceSingular.validate();
+    this.todoTask = Task.new(params);
+    this.todoTask.data.validated = false;
+
+    if (!this.todoTask.data.validated) {
+      this.todoTask.validate();
     }
 
-    if (this.resourceSingular.errors.length === 0) {
-      updateTaskInTodoParams(this.resourceSingular);
+    if (this.todoTask.errors.length === 0) {
+      updateTaskInTodoParams(this.todoTask);
       params.reset();
       popCachedView();
       render('todos/edit', Todo.new(todoParams));
     } else {
-      render(`${this.resourcePluralName}/new`, this.resourceSingular);
+      render(edit, this.todoTask);
     }
   },
   destroy: function () {
-    this.resourceSingular = this.resourceClass.new(this.params);
-    destroyTaskInTodoParams(this.resourceSingular);
+    this.todoTask = Task.new(params);
+    destroyTaskInTodoParams(this.todoTask);
     params.reset();
     render('todos/edit', Todo.new(todoParams));
   },
 };
-Object.assign(TodoTasksController, instanceProperties);
 
-export { TodoTasksController };
+export { todoTasksController };

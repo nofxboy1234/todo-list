@@ -7,7 +7,7 @@ import {
   tasksPath,
   taskPath,
 } from '../../routers/router';
-import { renderCachedView } from '../../renderer';
+import { renderCachedView } from '../../renderers/renderer';
 import { params } from '../../parameters/taskParameters';
 
 const form = (task) => {
