@@ -14,7 +14,7 @@ import { render as newTask } from '../views/tasks/new';
 import { render as editTask } from '../views/tasks/edit';
 
 import { contentContainer, projectIndex } from '../views/layouts/application';
-import { clearContent, clearProjectIndex } from '../views/helpers';
+import { clearContainer, clearProjectIndex } from '../views/helpers';
 
 const cache = [];
 
@@ -32,7 +32,7 @@ const renderCachedView = () => {
 };
 
 const renderView = (view) => {
-  clearContent();
+  clearContainer(contentContainer);
   contentContainer.appendChild(view);
 };
 

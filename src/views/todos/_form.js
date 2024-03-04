@@ -18,16 +18,23 @@ import {
 } from '../../routers/router';
 
 import { redirectTo as todoTaskRedirectTo } from '../../routers/todoTasksRouter';
+import { redirectTo as todoProjectRedirectTo } from '../../routers/todoProjectsRouter';
 import {
   newTodoTaskPath,
   editTodoTaskPath,
   todoTaskPath,
 } from '../../routes/todoTaskRoutes';
 
-import { cacheView, editTodo, newTodo, renderCachedView } from '../../renderers/renderer';
+import {
+  cacheView,
+  editTodo,
+  newTodo,
+  renderCachedView,
+} from '../../renderers/renderer';
 import { params } from '../../parameters/todoParameters';
 import { Todo } from '../../models/todo';
 import { Task } from '../../models/task';
+import { editTodoProjectPath, newTodoProjectPath } from '../../routes/todoProjectRoutes';
 
 const form = (todo) => {
   const persisted = todo.data.id ? true : false;
@@ -60,7 +67,7 @@ const form = (todo) => {
     mergeCurrentDataIntoParams();
     cacheCurrentView();
 
-    redirectTo('GET', newProjectPath);
+    todoProjectRedirectTo('GET', newTodoProjectPath);
   };
 
   const editProject = (event) => {
@@ -70,7 +77,7 @@ const form = (todo) => {
     const projectInputValue = event.target.dataset.projectInputValue;
     const project = getClonedProjectFromParams(projectInputValue);
 
-    redirectTo('GET', editProjectPath, project);
+    todoProjectRedirectTo('GET', editTodoProjectPath, project);
   };
 
   const newTask = () => {

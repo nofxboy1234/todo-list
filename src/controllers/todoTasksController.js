@@ -39,7 +39,7 @@ const setTodoTask = (controller) => {
   controller.todoTask = instance;
 };
 
-const todoTasksController = {
+const controller = {
   new: function () {
     this.todoTask = Task.new(params);
     todoTaskRender(new_, this.todoTask);
@@ -58,20 +58,20 @@ const todoTasksController = {
       popCachedView();
       render('todos/edit', Todo.new(todoParams));
     } else {
-      render(new_, this.todoTask);
+      todoTaskRender(new_, this.todoTask);
     }
   },
   index: function () {
     this.todoTasks = Task.all();
-    render(index, this.todoTasks);
+    todoTaskRender(index, this.todoTasks);
   },
   show: function () {
     setTodoTask(this);
-    render(show, this.todoTask);
+    todoTaskRender(show, this.todoTask);
   },
   edit: function () {
     this.todoTask = Task.new(params);
-    render(edit, this.todoTask);
+    todoTaskRender(edit, this.todoTask);
   },
   update: function () {
     this.todoTask = Task.new(params);
@@ -87,7 +87,7 @@ const todoTasksController = {
       popCachedView();
       render('todos/edit', Todo.new(todoParams));
     } else {
-      render(edit, this.todoTask);
+      todoTaskRender(edit, this.todoTask);
     }
   },
   destroy: function () {
@@ -98,4 +98,4 @@ const todoTasksController = {
   },
 };
 
-export { todoTasksController };
+export { controller };

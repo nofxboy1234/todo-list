@@ -1,5 +1,5 @@
-import { todoTasksController } from '../controllers/todoTasksController';
-import { params as taskParams } from '../parameters/taskParameters';
+import { controller } from '../controllers/todoTasksController';
+import { params } from '../parameters/taskParameters';
 import {
   todoTasksPath,
   newTodoTaskPath,
@@ -11,43 +11,43 @@ function redirectTo(method, path, taskData = {}) {
   switch (path) {
     case todoTasksPath:
       if (method === 'GET') {
-        taskParams.merge(taskData);
-        todoTasksController.index();
+        params.merge(taskData);
+        controller.index();
       }
       if (method === 'POST') {
-        taskParams.merge(taskData);
-        todoTasksController.create();
+        params.merge(taskData);
+        controller.create();
       }
       break;
     case newTodoTaskPath:
       if (method === 'GET') {
-        taskParams.reset();
-        todoTasksController.new();
+        params.reset();
+        controller.new();
       }
       break;
     case editTodoTaskPath:
       if (method === 'GET') {
-        taskParams.reset();
-        taskParams.merge(taskData);
-        todoTasksController.edit();
+        params.reset();
+        params.merge(taskData);
+        controller.edit();
       }
       break;
     case todoTaskPath:
       if (method === 'GET') {
-        taskParams.merge(taskData);
-        todoTasksController.show();
+        params.merge(taskData);
+        controller.show();
       }
       if (method === 'PATCH') {
-        taskParams.merge(taskData);
-        todoTasksController.update();
+        params.merge(taskData);
+        controller.update();
       }
       if (method === 'PUT') {
-        taskParams.merge(taskData);
-        todoTasksController.update();
+        params.merge(taskData);
+        controller.update();
       }
       if (method === 'DELETE') {
-        taskParams.merge(taskData);
-        todoTasksController.destroy();
+        params.merge(taskData);
+        controller.destroy();
       }
       break;
     default:

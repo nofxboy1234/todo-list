@@ -1,47 +1,53 @@
-import { TodoTasksController as todoTasksController } from '../controllers/todoTasksController';
-import { params as taskParams } from '../parameters/taskParameters';
+import { controller } from '../controllers/todoProjectsController';
+import { params } from '../parameters/projectParameters';
+import {
+  todoProjectsPath,
+  newTodoProjectPath,
+  editTodoProjectPath,
+  todoProjectPath,
+} from '../routes/todoProjectRoutes';
 
-function redirectTo(method, path, taskData = {}) {
+function redirectTo(method, path, projectData = {}) {
   switch (path) {
-    case '/todoProjects':
+    case todoProjectsPath:
       if (method === 'GET') {
-        taskParams.merge(taskData);
-        todoTasksController.index();
+        params.merge(projectData);
+        controller.index();
       }
       if (method === 'POST') {
-        taskParams.merge(taskData);
-        todoTasksController.create();
+        params.merge(projectData);
+        controller.create();
       }
       break;
-    case `/todoProjects/new`:
+    case newTodoProjectPath:
       if (method === 'GET') {
-        taskParams.reset();
-        todoTasksController.new();
+        params.reset();
+        controller.new();
       }
       break;
-    case `/todoProjects/${taskData.data.id}/edit`:
+    case editTodoProjectPath:
       if (method === 'GET') {
-        taskParams.reset();
-        taskParams.merge(taskData);
-        todoTasksController.edit();
+        params.reset();
+        params.merge(projectData);
+        controller.edit();
       }
       break;
-    case `/todoProjects/${taskData.data.id}`:
+    case todoProjectPath:
       if (method === 'GET') {
-        taskParams.merge(taskData);
-        todoTasksController.show();
+        params.merge(projectData);
+        controller.show();
       }
       if (method === 'PATCH') {
-        taskParams.merge(taskData);
-        todoTasksController.update();
+        params.merge(projectData);
+        controller.update();
       }
       if (method === 'PUT') {
-        taskParams.merge(taskData);
-        todoTasksController.update();
+        params.merge(projectData);
+        controller.update();
       }
       if (method === 'DELETE') {
-        taskParams.merge(taskData);
-        todoTasksController.destroy();
+        params.merge(projectData);
+        controller.destroy();
       }
       break;
     default:

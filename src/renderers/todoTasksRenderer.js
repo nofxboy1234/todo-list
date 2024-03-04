@@ -4,7 +4,7 @@ import { render as newTodoTask } from '../views/tasks/new';
 import { render as editTodoTask } from '../views/tasks/edit';
 
 import { contentContainer } from '../views/layouts/application';
-import { clearContent } from '../views/helpers';
+import { clearContainer } from '../views/helpers';
 import { edit, index, new_, show } from '../symbols/resourceSymbols';
 
 const cache = [];
@@ -22,25 +22,25 @@ const renderCachedView = () => {
   renderView(view);
 };
 
-const renderView = (view) => {
-  clearContent();
-  contentContainer.appendChild(view);
+const renderView = (view, container) => {
+  clearContainer(container);
+  container.appendChild(view);
 };
 
 const render = (path, data) => {
   switch (path) {
     case new_ || 'tasks/new':
-      renderView(newTodoTask(data));
+      renderView(newTodoTask(data), contentContainer);
       document.getElementById('descriptionID').focus();
       break;
     case index || 'tasks/index':
-      renderView(indexTodoTask(data));
+      renderView(indexTodoTask(data), contentContainer);
       break;
     case show || 'tasks/show':
-      renderView(showTodoTask(data));
+      renderView(showTodoTask(data), contentContainer);
       break;
     case edit || 'tasks/edit':
-      renderView(editTodoTask(data));
+      renderView(editTodoTask(data), contentContainer);
       document.getElementById('descriptionID').focus();
       break;
     default:

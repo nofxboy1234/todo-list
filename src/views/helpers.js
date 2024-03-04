@@ -1,9 +1,13 @@
-import { contentContainer, projectIndex } from './layouts/application';
+import {
+  contentContainer,
+  menuContainer,
+  projectIndex,
+} from './layouts/application';
 
-const clearContent = () => {
-  while (contentContainer.firstChild) {
-    const lastChild = contentContainer.lastChild;
-    contentContainer.removeChild(lastChild);
+const clearContainer = (container) => {
+  while (container.firstChild) {
+    const lastChild = container.lastChild;
+    container.removeChild(lastChild);
   }
 };
 
@@ -74,12 +78,12 @@ const createCheckbox = (checked, cssClass) => {
   const checkbox = document.createElement('input');
   checkbox.type = 'checkbox';
   checkbox.checked = checked;
-  checkbox.classList.add(cssClass)
+  checkbox.classList.add(cssClass);
   return checkbox;
 };
 
 export {
-  clearContent,
+  clearContainer,
   clearProjectIndex,
   createLabel,
   createInput,
