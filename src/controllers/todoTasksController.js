@@ -5,7 +5,7 @@ import { render as todoTaskRender } from '../renderers/todoTasksRenderer';
 
 import { Todo } from '../models/todo';
 import { Task } from '../models/task';
-import { edit, index, new_, show } from '../symbols/todoTaskSymbols';
+import { edit, index, new_, show } from '../symbols/resourceSymbols';
 
 const createTaskInTodoParams = (task) => {
   task.data.onTodoForm = true;

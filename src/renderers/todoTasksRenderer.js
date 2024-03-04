@@ -5,7 +5,7 @@ import { render as editTodoTask } from '../views/tasks/edit';
 
 import { contentContainer } from '../views/layouts/application';
 import { clearContent } from '../views/helpers';
-import { edit, index, new_, show } from '../symbols/todoTaskSymbols';
+import { edit, index, new_, show } from '../symbols/resourceSymbols';
 
 const cache = [];
 
