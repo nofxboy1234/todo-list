@@ -1,13 +1,19 @@
+import { projectsRouter } from '../../routers/projectsRouter';
 import {
-  redirectTo,
-  todosPath,
-  newTodoPath,
   projectsPath,
-} from '../../routers/router';
+  newProjectPath,
+  editProjectPath,
+  projectPath,
+} from '../../routes/projectRoutes';
 
 import { Project } from '../../models/project';
 import { getProjectForTodosIndex, setProjectForTodosIndex } from '../todos';
-import { cacheView, indexTodo } from '../../renderers/renderer';
+import { cacheView } from '../../renderers/renderer';
+import { indexTodo } from '../../renderers/todosRenderer';
+
+import { redirectTo } from '../../routers/router';
+
+import { newTodoPath } from '../../routes/todoRoutes';
 
 const newTodo = () => {
   const project = getProjectForTodosIndex();
@@ -50,7 +56,7 @@ const createLayout = () => {
 
   menuContainer.appendChild(projectIndex);
 
-  redirectTo('GET', projectsPath);
+  projectsRedirectTo('GET', projectsPath);
 
   setProjectForTodosIndex(Project.first());
   redirectTo('GET', todosPath);

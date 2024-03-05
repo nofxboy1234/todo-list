@@ -1,10 +1,12 @@
-import { Todo } from '../models/todo';
 import { params } from '../parameters/todoParameters';
-import { createController } from './controller';
-import { popCachedView, render } from '../renderers/renderer';
+import { Todo } from '../models/todo';
+import { render, popCachedView } from '../renderers/todosRenderer';
+import { edit, index, new_, show } from '../symbols/resourceSymbols';
 
-
-import { todosPath, projectsPath, redirectTo, todoPath } from '../routers/router';
+import { todosPath, todoPath } from '../routes/todoRoutes';
+import { projectsPath } from '../routes/projectRoutes';
+import { redirectTo } from '../routers/todosRouter';
+import { redirectTo as projectsRedirectTo } from '../routers/projectsRouter';
 import { getProjectForTodosIndex } from '../views/todos';
 import { Project } from '../models/project';
 
@@ -38,71 +40,76 @@ const addAllProjectsToParams = () => {
   });
   params.data.projects = existingProjects;
 };
+const setTodo = (controller) => {
+  const id = params.data.id;
+  const instance = Task.find(id);
+  controller.todoTask = instance;
+};
 
-const Controller = createController('todos', Todo, params);
-const TodosController = Object.create(Controller);
-const instanceProperties = {
+const controller = {
   new: function () {
-    this.resourceSingular = this.resourceClass.new(params);
+    this.todo = Todo.new(params);
 
-    addTodoTasksToParams(this.resourceSingular);
+    addTodoTasksToParams(this.todo);
     addAllProjectsToParams();
     createDestroyedTasksInParams();
 
-    render(`${this.resourcePluralName}/new`, this.resourceSingular);
+    render(new_, this.todo);
   },
   create: function () {
-    this.resourceSingular = this.resourceClass.new(this.params);
-    this.resourceSingular.data.validated = false;
+    this.todo = Todo.new(this.params);
+    this.todo.data.validated = false;
 
-    if (this.resourceSingular.save()) {
+    if (this.todo.save()) {
       this.params.reset();
       popCachedView();
-      redirectTo('GET', projectsPath);
+      projectsRedirectTo('GET', projectsPath);
       redirectTo('GET', todosPath);
     } else {
-      render(`${this.resourcePluralName}/new`, this.resourceSingular);
+      render(new_, this.todo);
     }
   },
   index: function () {
     const project = getProjectForTodosIndex();
     const todos = project.todos();
-    render('todos/index', todos);
+    render(index, todos);
+  },
+  show: function () {
+    setTodo(this);
+    render(show, this.todo);
   },
   edit: function () {
-    this.resourceSingular = this.resourceClass.new(params);
+    this.todo = Todo.new(params);
 
-    addTodoTasksToParams(this.resourceSingular);
+    addTodoTasksToParams(this.todo);
     addAllProjectsToParams();
     createDestroyedTasksInParams();
 
-    render(`${this.resourcePluralName}/edit`, this.resourceSingular);
+    render(edit, this.todo);
   },
   update: function () {
-    this.setResourceSingular();
-    this.resourceSingular.data.validated = false;
+    setTodo(this);
+    this.todo.data.validated = false;
 
-    this.resourceSingular.data.projectInputValue =
-      this.params.data.projectInputValue;
+    this.todo.data.projectInputValue = this.params.data.projectInputValue;
 
     const validationInstance = Todo.new(this.params);
-    if (this.resourceSingular.update(validationInstance)) {
+    if (this.todo.update(validationInstance)) {
       this.params.reset();
       popCachedView();
-      redirectTo('GET', projectsPath);
-      redirectTo('GET', todoPath, this.resourceSingular);
+      projectsRedirectTo('GET', projectsPath);
+      redirectTo('GET', todoPath, this.todo);
     } else {
-      render(`${this.resourcePluralName}/edit`, validationInstance);
+      render(edit, validationInstance);
     }
   },
   destroy: function () {
-    this.setResourceSingular();
-    this.resourceSingular.destroy();
+    setTodo(this);
+    this.todo.destroy();
 
-    redirectTo('GET', projectsPath);
+    projectsRedirectTo('GET', projectsPath);
     redirectTo('GET', todosPath);
   },
 };
-Object.assign(TodosController, instanceProperties);
 
-export { TodosController };
+export { controller };

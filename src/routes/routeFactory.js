@@ -1,31 +1,46 @@
+import { newPath } from '../httpPaths/newPath';
+
 const capitalize = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
-function createRoutes(resourceSingular, resourcePlural, routes) {
+function createRoutes(
+  resourceSingular,
+  resourcePlural,
+  routes,
+  controller,
+  params
+) {
   const entries = new Map([
     [
       `${resourcePlural}Path`,
-      function () {
-        return `/${resourcePlural}`;
+      {
+        resolvedPath: function () {
+          return `/${resourcePlural}`;
+        },
+        controller,
+        params,
       },
     ],
-    [
-      `new${capitalize(resourceSingular)}Path`,
-      function () {
-        return `/${resourcePlural}/new`;
-      },
-    ],
+    [`new${capitalize(resourceSingular)}Path`, newPath(controller, params)],
     [
       `edit${capitalize(resourceSingular)}Path`,
-      function (resource) {
-        return `/${resourcePlural}/${resource.data.id}/edit`;
+      {
+        resolvedPath: function (resource) {
+          return `/${resourcePlural}/${resource.data.id}/edit`;
+        },
+        controller,
+        params,
       },
     ],
     [
       `${resourceSingular}Path`,
-      function (resource) {
-        return `/${resourcePlural}/${resource.data.id}`;
+      {
+        resolvedPath: function (resource) {
+          return `/${resourcePlural}/${resource.data.id}`;
+        },
+        controller,
+        params,
       },
     ],
   ]);

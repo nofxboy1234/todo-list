@@ -1,54 +1,68 @@
 import { Project } from '../models/project';
 import { params } from '../parameters/projectParameters';
-import { params as todoParams } from '../parameters/todoParameters';
-import { createController } from './controller';
-import { popCachedView, render } from '../renderer';
+import { projectsPath } from '../routes/projectRoutes';
+import { render, popCachedView } from '../renderers/projectsRenderer';
+import { todosPath } from '../routes/todoRoutes';
+import { edit, index, new_, show } from '../symbols/resourceSymbols';
+import { redirectTo } from '../routers/projectsRouter';
+import { redirectTo as todoRedirectTo } from '../routers/todosRouter';
 
-import { Todo } from '../models/todo';
-import { projectsPath, redirectTo, todosPath } from '../routers/router';
-import {
-  getProjectForTodosIndex,
-  setProjectForTodosIndex,
-} from '../views/todos';
+const setProject = (controller) => {
+  const id = params.data.id;
+  const instance = Project.find(id);
+  controller.todoProject = instance;
+};
 
-const Controller = createController('projects', Project, params);
-
-const ProjectsController = Object.create(Controller);
-const instanceProperties = {
+const controller = {
+  new: function () {
+    this.project = Project.new(params);
+    render(new_, this.project);
+  },
   create: function () {
-    this.resourceSingular = this.resourceClass.new(this.params);
-    this.resourceSingular.data.validated = false;
+    this.project = this.Project.new(this.params);
+    this.project.data.validated = false;
 
-    if (this.resourceSingular.save()) {
+    if (this.project.save()) {
       params.reset();
       popCachedView();
       redirectTo('GET', projectsPath);
-      redirectTo('GET', todosPath);
+      todoRedirectTo('GET', todosPath);
     } else {
-      render(`${this.resourcePluralName}/new`, this.resourceSingular);
+      render(new_, this.project);
     }
   },
+  index: function () {
+    this.projects = Project.all();
+    render(index, this.projects);
+  },
+  show: function () {
+    setProject(this);
+    render(show, this.project);
+  },
+  edit: function () {
+    this.project = Project.new(params);
+    render(edit, this.project);
+  },
   update: function () {
-    this.resourceSingular = this.resourceClass.new(this.params);
-    this.resourceSingular.data.validated = false;
+    this.project = this.Project.new(this.params);
+    this.project.data.validated = false;
 
     const validationInstance = Project.new(this.params);
-    if (this.resourceSingular.update(validationInstance)) {
+    if (this.project.update(validationInstance)) {
       params.reset();
       popCachedView();
       redirectTo('GET', projectsPath);
-      redirectTo('GET', todosPath);
+      todoRedirectTo('GET', todosPath);
     } else {
       render(`${this.resourcePluralName}/edit`, validationInstance);
     }
   },
   destroy: function () {
-    this.setResourceSingular();
-    this.resourceSingular.destroy();
+    setProject(this);
+    this.project.destroy();
 
     redirectTo('GET', projectsPath);
   },
 };
-Object.assign(ProjectsController, instanceProperties);
 
-export { ProjectsController };
+export { controller };

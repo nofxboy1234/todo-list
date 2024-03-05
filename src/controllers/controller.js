@@ -1,91 +1,11 @@
-import { render } from '../renderers/renderer';
-import {
-  redirectTo,
-  rootPath,
-  todosPath,
-  newTodoPath,
-  editTodoPath,
-  todoPath,
-  projectsPath,
-  newProjectPath,
-  editProjectPath,
-  projectPath,
-} from '../routers/router';
+import { controller as todoProjectsController } from './todoProjectsController';
+import { controller as projectsController } from './projectsController';
+import { controller as todosController } from './todosController';
+import { controller as projectsController } from './projectsController';
 
-const pathHelpers = () => {
-  const helpers = {
-    rootPath,
-    todos: {
-      resourcePluralPath: todosPath,
-      newResourceSingularPath: newTodoPath,
-      editResourceSingularPath: editTodoPath,
-      resourceSingularPath: todoPath,
-    },
-    projects: {
-      resourcePluralPath: projectsPath,
-      newResourceSingularPath: newProjectPath,
-      editResourceSingularPath: editProjectPath,
-      resourceSingularPath: projectPath,
-    },
-  };
-
-  return helpers;
+export {
+  todoProjectsController,
+  projectsController,
+  todosController,
+  projectsController,
 };
-
-const createController = (resourcePluralName, resourceClass, params) => {
-  const ResourcePluralController = {
-    resourcePluralName,
-    resourceClass,
-    params,
-    resourceSingular: {},
-    resourcePlural: {},
-    setResourceSingular: function () {
-      const id = params.data.id;
-      const model = resourceClass.find(id);
-      this.resourceSingular = model;
-    },
-    new: function () {
-      this.resourceSingular = resourceClass.new(params);
-      render(`${resourcePluralName}/new`, this.resourceSingular);
-    },
-    create: function () {
-      this.resourceSingular = resourceClass.new(params);
-
-      if (this.resourceSingular.save()) {
-        redirectTo('GET', pathHelpers()[resourcePluralName].resourcePluralPath);
-      } else {
-        render(`${resourcePluralName}/new`, this.resourceSingular);
-      }
-    },
-    index: function () {
-      this.resourcePlural = resourceClass.all();
-      render(`${resourcePluralName}/index`, this.resourcePlural);
-    },
-    show: function () {
-      this.setResourceSingular();
-      render(`${resourcePluralName}/show`, this.resourceSingular);
-    },
-    edit: function () {
-      this.resourceSingular = resourceClass.new(params);
-      render(`${resourcePluralName}/edit`, this.resourceSingular);
-    },
-    update: function () {
-      this.setResourceSingular();
-
-      if (this.resourceSingular.update(resourceClass.new(params))) {
-        redirectTo('GET', pathHelpers()[resourcePluralName].resourcePluralPath);
-      } else {
-        render(`${resourcePluralName}/edit`, this.resourceSingular);
-      }
-    },
-    destroy: function () {
-      this.setResourceSingular();
-      this.resourceSingular.destroy();
-      redirectTo('GET', pathHelpers()[resourcePluralName].resourcePluralPath);
-    },
-  };
-
-  return ResourcePluralController;
-};
-
-export { createController };

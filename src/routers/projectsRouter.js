@@ -1,52 +1,65 @@
-import { TodoTasksController as todoTasksController } from '../controllers/todoTasksController';
-import { params as taskParams } from '../parameters/taskParameters';
+import { controller } from '../controllers/projectsController';
+import { params } from '../parameters/projectParameters';
 
-function redirectTo(method, path, taskData = {}) {
-  switch (path) {
-    case '/projects':
-      if (method === 'GET') {
-        taskParams.merge(taskData);
-        todoTasksController.index();
-      }
-      if (method === 'POST') {
-        taskParams.merge(taskData);
-        todoTasksController.create();
-      }
-      break;
-    case `/projects/new`:
-      if (method === 'GET') {
-        taskParams.reset();
-        todoTasksController.new();
-      }
-      break;
-    case `/projects/${taskData.data.id}/edit`:
-      if (method === 'GET') {
-        taskParams.reset();
-        taskParams.merge(taskData);
-        todoTasksController.edit();
-      }
-      break;
-    case `/projects/${taskData.data.id}`:
-      if (method === 'GET') {
-        taskParams.merge(taskData);
-        todoTasksController.show();
-      }
-      if (method === 'PATCH') {
-        taskParams.merge(taskData);
-        todoTasksController.update();
-      }
-      if (method === 'PUT') {
-        taskParams.merge(taskData);
-        todoTasksController.update();
-      }
-      if (method === 'DELETE') {
-        taskParams.merge(taskData);
-        todoTasksController.destroy();
-      }
-      break;
-    default:
-      break;
-  }
-}
+import {
+  projectsPath,
+  newProjectPath,
+  editProjectPath,
+  projectPath,
+} from '../routes/projectRoutes';
 
-export { redirectTo };
+
+
+const projectsRouter = {
+  redirectTo: function (method, path, taskData) {
+    httpGetMethod.redirectTo(path, taskData);
+
+    switch (path) {
+      case projectsPath: // indexPath
+        if (method === 'GET') {
+          params.merge(taskData);
+          controller.index();
+        }
+        if (method === 'POST') {
+          params.merge(taskData);
+          controller.create();
+        }
+        break;
+      case newProjectPath: // newPath
+        if (method === 'GET') {
+          params.reset();
+          controller.new();
+        }
+        break;
+      case editProjectPath: // editPath
+        if (method === 'GET') {
+          params.reset();
+          params.merge(taskData);
+          controller.edit();
+        }
+        break;
+      case projectPath: // path
+        if (method === 'GET') {
+          params.merge(taskData);
+          controller.show();
+        }
+        if (method === 'PATCH') {
+          params.merge(taskData);
+          controller.update();
+        }
+        if (method === 'PUT') {
+          params.merge(taskData);
+          controller.update();
+        }
+        if (method === 'DELETE') {
+          params.merge(taskData);
+          controller.destroy();
+        }
+        break;
+      default:
+        break;
+    }
+  },
+};
+
+export { projectsRouter };

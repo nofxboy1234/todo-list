@@ -2,11 +2,12 @@ import { Project } from '../models/project';
 import { params } from '../parameters/projectParameters';
 import { params as todoParams } from '../parameters/todoParameters';
 import { popCachedView, render } from '../renderers/renderer';
-import { render as todoProjectRender } from '../renderers/todoProjectsRenderer';
+import { render } from '../renderers/todoProjectsRenderer';
+import { render as todoRender } from '../renderers/todosRenderer';
 
 import { Todo } from '../models/todo';
-import { projectsPath, redirectTo, todosPath } from '../routers/router';
-import { redirectTo as todoProjectsRedirectTo } from '../routers/todoProjectsRouter';
+import { todosPath } from '../routes/todoRoutes';
+import { redirectTo, todoProjectsPath } from '../routers/todoProjectsRouter';
 import {
   getProjectForTodosIndex,
   setProjectForTodosIndex,
@@ -49,7 +50,7 @@ const setTodoProject = (controller) => {
 const controller = {
   new: function () {
     this.todoProject = Project.new(params);
-    todoProjectRender(new_, this.todoProject);
+    render(new_, this.todoProject);
   },
   create: function () {
     this.todoProject = Project.new(params);
@@ -60,28 +61,26 @@ const controller = {
     }
 
     if (this.todoProject.errors.length === 0) {
-      const projectInputValue = createProjectInTodoParams(
-        this.todoProject
-      );
+      const projectInputValue = createProjectInTodoParams(this.todoProject);
       setProjectInputValueOfTodo(projectInputValue);
       params.reset();
       popCachedView();
-      render('todos/edit', Todo.new(todoParams));
+      todoRender('todos/edit', Todo.new(todoParams));
     } else {
-      todoProjectRender(new_, this.todoProject);
+      render(new_, this.todoProject);
     }
   },
   index: function () {
     this.todoProjects = Project.all();
-    todoProjectRender(index, this.todoProjects);
+    render(index, this.todoProjects);
   },
   show: function () {
     setTodoProject(this);
-    todoProjectRender(show, this.todoProject);
+    render(show, this.todoProject);
   },
   edit: function () {
     this.todoProject = Project.new(params);
-    todoProjectRender(edit, this.todoProject);
+    render(edit, this.todoProject);
   },
   update: function () {
     this.todoProject = Project.new(params);
@@ -95,9 +94,9 @@ const controller = {
       updateProjectInTodoParams(this.todoProject);
       params.reset();
       popCachedView();
-      render('todos/edit', Todo.new(todoParams));
+      todoRender('todos/edit', Todo.new(todoParams));
     } else {
-      todoProjectRender(edit, this.todoProject);
+      render(edit, this.todoProject);
     }
   },
   destroy: function () {

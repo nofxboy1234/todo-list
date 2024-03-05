@@ -3,29 +3,9 @@ import { render as indexTodoProject } from '../views/projects/index';
 import { render as newTodoProject } from '../views/projects/new';
 import { render as editTodoProject } from '../views/projects/edit';
 
-import { contentContainer, menuContainer, projectIndex } from '../views/layouts/application';
-import { clearContainer } from '../views/helpers';
+import { contentContainer, projectIndex } from '../views/layouts/application';
 import { edit, index, new_, show } from '../symbols/resourceSymbols';
-
-const cache = [];
-
-const cacheView = (view) => {
-  cache.push(view);
-};
-
-const popCachedView = () => {
-  return cache.pop();
-};
-
-const renderCachedView = () => {
-  const view = popCachedView();
-  renderView(view);
-};
-
-const renderView = (view, container) => {
-  clearContainer(container);
-  container.appendChild(view);
-};
+import { renderView } from './renderer';
 
 const render = (path, data) => {
   switch (path) {
@@ -50,9 +30,6 @@ const render = (path, data) => {
 
 export {
   render,
-  cacheView,
-  popCachedView,
-  renderCachedView,
   showTodoProject,
   indexTodoProject,
   newTodoProject,

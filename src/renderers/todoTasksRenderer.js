@@ -4,28 +4,7 @@ import { render as newTodoTask } from '../views/tasks/new';
 import { render as editTodoTask } from '../views/tasks/edit';
 
 import { contentContainer } from '../views/layouts/application';
-import { clearContainer } from '../views/helpers';
 import { edit, index, new_, show } from '../symbols/resourceSymbols';
-
-const cache = [];
-
-const cacheView = (view) => {
-  cache.push(view);
-};
-
-const popCachedView = () => {
-  return cache.pop();
-};
-
-const renderCachedView = () => {
-  const view = popCachedView();
-  renderView(view);
-};
-
-const renderView = (view, container) => {
-  clearContainer(container);
-  container.appendChild(view);
-};
 
 const render = (path, data) => {
   switch (path) {
@@ -48,13 +27,4 @@ const render = (path, data) => {
   }
 };
 
-export {
-  render,
-  cacheView,
-  popCachedView,
-  renderCachedView,
-  showTodoTask,
-  indexTodoTask,
-  newTodoTask,
-  editTodoTask,
-};
+export { render, showTodoTask, indexTodoTask, newTodoTask, editTodoTask };

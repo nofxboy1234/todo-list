@@ -1,20 +1,33 @@
-import { render as showProject } from '../views/projects/show';
-import { render as indexProject } from '../views/projects/index';
-import { render as newProject } from '../views/projects/new';
-import { render as editProject } from '../views/projects/edit';
+import { clearContainer } from '../views/helpers';
 
-import { render as showTodo } from '../views/todos/show';
-import { render as indexTodo } from '../views/todos/index';
-import { render as newTodo } from '../views/todos/new';
-import { render as editTodo } from '../views/todos/edit';
-
-import { render as showTask } from '../views/tasks/show';
-import { render as indexTask } from '../views/tasks/index';
-import { render as newTask } from '../views/tasks/new';
-import { render as editTask } from '../views/tasks/edit';
-
-import { contentContainer, projectIndex } from '../views/layouts/application';
-import { clearContainer, clearProjectIndex } from '../views/helpers';
+import {
+  render as todosRender,
+  showTodo,
+  indexTodo,
+  newTodo,
+  editTodo,
+} from './todosRenderer';
+import {
+  render as projectsRender,
+  showProject,
+  indexProject,
+  newProject,
+  editProject,
+} from './projectsRenderer';
+import {
+  render as todoTasksRender,
+  showTodoTask,
+  indexTodoTask,
+  newTodoTask,
+  editTodoTask,
+} from './todoTasksRenderer';
+import {
+  render as todoProjectsRender,
+  showTodoProject,
+  indexTodoProject,
+  newTodoProject,
+  editTodoProject,
+} from './todoProjectsRenderer';
 
 const cache = [];
 
@@ -31,69 +44,20 @@ const renderCachedView = () => {
   renderView(view);
 };
 
-const renderView = (view) => {
-  clearContainer(contentContainer);
-  contentContainer.appendChild(view);
-};
-
-const render = (path, data) => {
-  switch (path) {
-    case 'projects/new':
-      renderView(newProject(data));
-      document.getElementById('nameID').focus();
-      break;
-    case 'projects/index':
-      clearProjectIndex();
-      projectIndex.appendChild(indexProject(data));
-      break;
-    case 'projects/show':
-      renderView(showProject(data));
-      break;
-    case 'projects/edit':
-      renderView(editProject(data));
-      document.getElementById('nameID').focus();
-      break;
-
-    case 'todos/new':
-      renderView(newTodo(data));
-      document.getElementById('titleID').focus();
-      break;
-    case 'todos/index':
-      renderView(indexTodo(data));
-      break;
-    case 'todos/show':
-      renderView(showTodo(data));
-      break;
-    case 'todos/edit':
-      renderView(editTodo(data));
-      document.getElementById('titleID').focus();
-      break;
-
-    case 'tasks/new':
-      renderView(newTask(data));
-      document.getElementById('descriptionID').focus();
-      break;
-    case 'tasks/index':
-      renderView(indexTask(data));
-      break;
-    case 'tasks/show':
-      renderView(showTask(data));
-      break;
-    case 'tasks/edit':
-      renderView(editTask(data));
-      document.getElementById('descriptionID').focus();
-      break;
-
-    default:
-      break;
-  }
+const renderView = (view, container) => {
+  clearContainer(container);
+  container.appendChild(view);
 };
 
 export {
-  render,
   cacheView,
   popCachedView,
   renderCachedView,
+  renderView,
+  todosRender,
+  projectsRender,
+  todoTasksRender,
+  todoProjectsRender,
   showTodo,
   indexTodo,
   newTodo,
@@ -102,8 +66,12 @@ export {
   indexProject,
   newProject,
   editProject,
-  showTask,
-  indexTask,
-  newTask,
-  editTask,
+  showTodoTask,
+  indexTodoTask,
+  newTodoTask,
+  editTodoTask,
+  showTodoProject,
+  indexTodoProject,
+  newTodoProject,
+  editTodoProject,
 };
