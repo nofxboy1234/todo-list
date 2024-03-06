@@ -40,7 +40,7 @@ nestContainer(flexContainer, menuContainer);
 const contentContainer = createFlexContainer('flex-item', 'flex-item-right');
 nestContainer(flexContainer, contentContainer);
 
-const projectIndex = document.createElement('div');
+const projectContainer = document.createElement('div');
 
 const createLayout = () => {
   const headingItem = document.createElement('div');
@@ -54,7 +54,7 @@ const createLayout = () => {
   newTodoButton.addEventListener('click', newTodo);
   menuContainer.appendChild(newTodoButton);
 
-  menuContainer.appendChild(projectIndex);
+  menuContainer.appendChild(projectContainer);
 
   projectsRedirectTo('GET', projectsPath);
 
@@ -62,4 +62,4 @@ const createLayout = () => {
   redirectTo('GET', todosPath);
 };
 
-export { createLayout, menuContainer, contentContainer, projectIndex };
+export { createLayout, contentContainer, projectContainer };

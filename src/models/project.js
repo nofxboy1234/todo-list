@@ -1,6 +1,6 @@
 import { Todo } from './todo';
 import { createModel as Model, exists } from './model';
-import { params as todoParams } from '../parameters/todoParameters';
+import { todoParams as todoParams } from '../parameters/todoParameters';
 
 const updateInstanceInStorage = (instance, updatedData) => {
   Object.assign(instance.data, updatedData.data);

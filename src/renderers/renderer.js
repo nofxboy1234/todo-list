@@ -1,34 +1,5 @@
 import { clearContainer } from '../views/helpers';
 
-import {
-  render as todosRender,
-  showTodo,
-  indexTodo,
-  newTodo,
-  editTodo,
-} from './todosRenderer';
-import {
-  render as projectsRender,
-  showProject,
-  indexProject,
-  newProject,
-  editProject,
-} from './projectsRenderer';
-import {
-  render as todoTasksRender,
-  showTodoTask,
-  indexTodoTask,
-  newTodoTask,
-  editTodoTask,
-} from './todoTasksRenderer';
-import {
-  render as todoProjectsRender,
-  showTodoProject,
-  indexTodoProject,
-  newTodoProject,
-  editTodoProject,
-} from './todoProjectsRenderer';
-
 const cache = [];
 
 const cacheView = (view) => {
@@ -41,37 +12,49 @@ const popCachedView = () => {
 
 const renderCachedView = () => {
   const view = popCachedView();
-  renderView(view);
+  addViewToLayout(view);
 };
 
-const renderView = (view, container) => {
+const addViewToLayout = (view, container) => {
   clearContainer(container);
   container.appendChild(view);
 };
+
+const render = (viewRenderer, resourceData) => {
+  const renderedView = viewRenderer.render(resourceData);
+  const container = viewRenderer.container();
+  addViewToLayout(renderedView, container);
+  const focusID = viewRenderer.focusID();
+  document.getElementById(focusID).focus();
+};
+
+const renderer = {
+  init: function (resourceView) {
+    this.resourceView = resourceView;
+  },
+  view: function () {
+    this.resourceView.view;
+  },
+  container: function () {
+    return this.resourceView.container;
+  },
+  focusID: function () {
+    return this.resourceView.focusID;
+  },
+  render: function (resourceData) {
+    return this.view().render(resourceData);
+  },
+};
+
+// import { projectsView } from '../views/helpers/projectViews';
+// const index = projectsView;
+// render(index, this.projects);
 
 export {
   cacheView,
   popCachedView,
   renderCachedView,
-  renderView,
-  todosRender,
-  projectsRender,
-  todoTasksRender,
-  todoProjectsRender,
-  showTodo,
-  indexTodo,
-  newTodo,
-  editTodo,
-  showProject,
-  indexProject,
-  newProject,
-  editProject,
-  showTodoTask,
-  indexTodoTask,
-  newTodoTask,
-  editTodoTask,
-  showTodoProject,
-  indexTodoProject,
-  newTodoProject,
-  editTodoProject,
+  addViewToLayout,
+  render,
+  renderer,
 };

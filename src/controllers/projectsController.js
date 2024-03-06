@@ -1,32 +1,31 @@
 import { Project } from '../models/project';
-import { params } from '../parameters/projectParameters';
-import { projectsPath } from '../routes/projectRoutes';
-import { render, popCachedView } from '../renderers/projectsRenderer';
-import { todosPath } from '../routes/todoRoutes';
+import { projectParams as params } from '../parameters/projectParameters';
 import { edit, index, new_, show } from '../symbols/resourceSymbols';
-import { redirectTo } from '../routers/projectsRouter';
-import { redirectTo as todoRedirectTo } from '../routers/todosRouter';
+import { projectsPath } from '../routes/projectRoutes';
+import { todosPath } from '../routes/todoRoutes';
+import { redirectTo } from '../routers/router';
+import { render, popCachedView } from '../renderers/projectsRenderer';
 
 const setProject = (controller) => {
   const id = params.data.id;
   const instance = Project.find(id);
-  controller.todoProject = instance;
+  controller.project = instance;
 };
 
-const controller = {
+const projectsController = {
   new: function () {
     this.project = Project.new(params);
     render(new_, this.project);
   },
   create: function () {
-    this.project = this.Project.new(this.params);
+    this.project = Project.new(params);
     this.project.data.validated = false;
 
     if (this.project.save()) {
       params.reset();
       popCachedView();
       redirectTo('GET', projectsPath);
-      todoRedirectTo('GET', todosPath);
+      redirectTo('GET', todosPath);
     } else {
       render(new_, this.project);
     }
@@ -44,25 +43,24 @@ const controller = {
     render(edit, this.project);
   },
   update: function () {
-    this.project = this.Project.new(this.params);
+    this.project = Project.new(params);
     this.project.data.validated = false;
 
-    const validationInstance = Project.new(this.params);
+    const validationInstance = Project.new(params);
     if (this.project.update(validationInstance)) {
       params.reset();
       popCachedView();
       redirectTo('GET', projectsPath);
-      todoRedirectTo('GET', todosPath);
+      redirectTo('GET', todosPath);
     } else {
-      render(`${this.resourcePluralName}/edit`, validationInstance);
+      render(edit, validationInstance);
     }
   },
   destroy: function () {
     setProject(this);
     this.project.destroy();
-
     redirectTo('GET', projectsPath);
   },
 };
 
-export { controller };
+export { projectsController };

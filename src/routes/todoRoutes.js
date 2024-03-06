@@ -1,6 +1,6 @@
 import { createRoutes } from './routeFactory';
-import { controller } from '../controllers/todosController';
-import { params } from '../parameters/todoParameters';
+import { todosController as controller } from '../controllers/todosController';
+import { todoParams as params } from '../parameters/todoParameters';
 
 const routes = {};
 createRoutes('todo', 'todos', routes, controller, params);

@@ -1,28 +1,27 @@
-import { params } from '../parameters/todoParameters';
 import { Todo } from '../models/todo';
-import { render, popCachedView } from '../renderers/todosRenderer';
+import { Project } from '../models/project';
+import { todoParams as params } from '../parameters/todoParameters';
 import { edit, index, new_, show } from '../symbols/resourceSymbols';
-
 import { todosPath, todoPath } from '../routes/todoRoutes';
 import { projectsPath } from '../routes/projectRoutes';
-import { redirectTo } from '../routers/todosRouter';
-import { redirectTo as projectsRedirectTo } from '../routers/projectsRouter';
+import { redirectTo } from '../routers/router';
+import { render, popCachedView } from '../renderers/todosRenderer';
 import { getProjectForTodosIndex } from '../views/todos';
-import { Project } from '../models/project';
 
 const cloneResource = (resource) => {
   const clone = Object.assign({}, resource);
   clone.data = {};
   Object.assign(clone.data, resource.data);
-
   return clone;
 };
 
 const addTodoTasksToParams = (todo) => {
   const existingTasks = [];
+
   todo.tasks().forEach((storedTask) => {
     existingTasks.push(cloneResource(storedTask));
   });
+
   params.data.tasks = existingTasks;
 };
 
@@ -32,38 +31,39 @@ const createDestroyedTasksInParams = () => {
 
 const addAllProjectsToParams = () => {
   const existingProjects = [];
+
   Project.all().forEach((storedProject, index) => {
     const clonedProject = cloneResource(storedProject);
     clonedProject.data.projectInputValue = index.toString();
     clonedProject.data.validated = true;
     existingProjects.push(clonedProject);
   });
+
   params.data.projects = existingProjects;
 };
+
 const setTodo = (controller) => {
   const id = params.data.id;
   const instance = Task.find(id);
-  controller.todoTask = instance;
+  controller.todo = instance;
 };
 
-const controller = {
+const todosController = {
   new: function () {
     this.todo = Todo.new(params);
-
     addTodoTasksToParams(this.todo);
     addAllProjectsToParams();
     createDestroyedTasksInParams();
-
     render(new_, this.todo);
   },
   create: function () {
-    this.todo = Todo.new(this.params);
+    this.todo = Todo.new(params);
     this.todo.data.validated = false;
 
     if (this.todo.save()) {
-      this.params.reset();
+      params.reset();
       popCachedView();
-      projectsRedirectTo('GET', projectsPath);
+      redirectTo('GET', projectsPath);
       redirectTo('GET', todosPath);
     } else {
       render(new_, this.todo);
@@ -80,24 +80,21 @@ const controller = {
   },
   edit: function () {
     this.todo = Todo.new(params);
-
     addTodoTasksToParams(this.todo);
     addAllProjectsToParams();
     createDestroyedTasksInParams();
-
     render(edit, this.todo);
   },
   update: function () {
     setTodo(this);
     this.todo.data.validated = false;
+    this.todo.data.projectInputValue = params.data.projectInputValue;
+    const validationInstance = Todo.new(params);
 
-    this.todo.data.projectInputValue = this.params.data.projectInputValue;
-
-    const validationInstance = Todo.new(this.params);
     if (this.todo.update(validationInstance)) {
-      this.params.reset();
+      params.reset();
       popCachedView();
-      projectsRedirectTo('GET', projectsPath);
+      redirectTo('GET', projectsPath);
       redirectTo('GET', todoPath, this.todo);
     } else {
       render(edit, validationInstance);
@@ -106,10 +103,9 @@ const controller = {
   destroy: function () {
     setTodo(this);
     this.todo.destroy();
-
-    projectsRedirectTo('GET', projectsPath);
+    redirectTo('GET', projectsPath);
     redirectTo('GET', todosPath);
   },
 };
 
-export { controller };
+export { todosController };

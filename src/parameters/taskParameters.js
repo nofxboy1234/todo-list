@@ -13,6 +13,6 @@ const initialParams = {
     todoID: undefined,
   },
 };
-const params = TaskParameters.new(initialParams);
+const taskParams = TaskParameters.new(initialParams);
 
-export { params };
+export { taskParams };

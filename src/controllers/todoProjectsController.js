@@ -1,26 +1,14 @@
 import { Project } from '../models/project';
-import { params } from '../parameters/projectParameters';
-import { params as todoParams } from '../parameters/todoParameters';
-import { popCachedView, render } from '../renderers/renderer';
+import { Todo } from '../models/todo';
+import { projectParams as params } from '../parameters/projectParameters';
+import { todoParams as todoParams } from '../parameters/todoParameters';
+import { edit, index, new_, show } from '../symbols/resourceSymbols';
 import { render } from '../renderers/todoProjectsRenderer';
 import { render as todoRender } from '../renderers/todosRenderer';
-
-import { Todo } from '../models/todo';
-import { todosPath } from '../routes/todoRoutes';
-import { redirectTo, todoProjectsPath } from '../routers/todoProjectsRouter';
-import {
-  getProjectForTodosIndex,
-  setProjectForTodosIndex,
-} from '../views/todos';
-import { edit, index, new_, show } from '../symbols/resourceSymbols';
-import { todoProjectsPath } from '../routes/todoProjectRoutes';
+import { popCachedView, render } from '../renderers/renderer';
 
 const setProjectInputValueOfTodo = (projectInputValue) => {
   todoParams.data.projectInputValue = projectInputValue;
-};
-
-const todosIndexProjectDestroyedFromStorage = () => {
-  return !Project.all().includes(getProjectForTodosIndex());
 };
 
 const createProjectInTodoParams = (project) => {
@@ -47,7 +35,7 @@ const setTodoProject = (controller) => {
   controller.todoProject = instance;
 };
 
-const controller = {
+const todoProjectsController = {
   new: function () {
     this.todoProject = Project.new(params);
     render(new_, this.todoProject);
@@ -99,17 +87,6 @@ const controller = {
       render(edit, this.todoProject);
     }
   },
-  destroy: function () {
-    setTodoProject(this);
-    this.todoProject.destroy();
-    params.reset();
-    todoProjectsRedirectTo('GET', todoProjectsPath);
-
-    if (todosIndexProjectDestroyedFromStorage()) {
-      setProjectForTodosIndex(Project.first());
-      redirectTo('GET', todosPath);
-    }
-  },
 };
 
-export { controller };
+export { todoProjectsController };

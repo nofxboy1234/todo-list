@@ -2,14 +2,14 @@ import { createLabel, createInput, createButton } from '../helpers';
 
 import { redirectTo, projectsPath, projectPath } from '../../routers/router';
 import { renderCachedView } from '../../renderers/renderer';
-import { params } from '../../parameters/projectParameters';
+import { projectParams } from '../../parameters/projectParameters';
 
 const form = (project) => {
   const isOnTodoForm =
     project.data.onTodoForm || project.data.id ? true : false;
 
   const cancelForm = () => {
-    params.reset();
+    projectParams.reset();
     renderCachedView();
   };
 

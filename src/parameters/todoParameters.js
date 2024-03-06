@@ -15,6 +15,6 @@ const initialParams = {
     projectID: 1,
   },
 };
-const params = TodoParameters.new(initialParams);
+const todoParams = TodoParameters.new(initialParams);
 
-export { params };
+export { todoParams };

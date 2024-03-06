@@ -1,7 +1,7 @@
 import { Project } from './project';
 import { createModel as Model, exists } from './model';
 import { Task } from './task';
-import { params } from '../parameters/todoParameters';
+import { todoParams } from '../parameters/todoParameters';
 
 const isPersistedTask = (task) => {
   return task.data.id ? true : false;
@@ -34,7 +34,7 @@ const instanceProperties = {
     return Task.all().filter((task) => task.data.todoID === this.data.id);
   },
   saveDependent: function () {
-    params.data.tasks.forEach((paramsTask) => {
+    todoParams.data.tasks.forEach((paramsTask) => {
       if (!isPersistedTask(paramsTask)) {
         paramsTask.data.todoID = this.data.id;
         if (paramsTask.save()) {
@@ -50,7 +50,7 @@ const instanceProperties = {
     });
   },
   updateDependent: function () {
-    params.data.tasks.forEach((paramsTask) => {
+    todoParams.data.tasks.forEach((paramsTask) => {
       if (isPersistedTask(paramsTask)) {
         const storedTask = Task.find(paramsTask.data.id);
         if (storedTask.update(paramsTask)) {
@@ -64,7 +64,7 @@ const instanceProperties = {
     });
   },
   destroyDependent: function () {
-    const destroyedTasks = params.data.destroyedTasks;
+    const destroyedTasks = todoParams.data.destroyedTasks;
     if (!destroyedTasks) return;
 
     destroyedTasks.forEach((paramsTask) => {
@@ -76,7 +76,7 @@ const instanceProperties = {
     });
   },
   saveParents: function () {
-    params.data.projects.forEach((paramsProject) => {
+    todoParams.data.projects.forEach((paramsProject) => {
       if (!isPersistedProject(paramsProject)) {
         if (paramsProject.save()) {
           console.log(`saved project with id:${paramsProject.data.id}`);
@@ -89,7 +89,7 @@ const instanceProperties = {
     });
   },
   updateParents: function () {
-    params.data.projects.forEach((paramsProject) => {
+    todoParams.data.projects.forEach((paramsProject) => {
       if (isPersistedProject(paramsProject)) {
         const storedProject = Project.find(paramsProject.data.id);
         if (storedProject.update(paramsProject)) {
@@ -103,7 +103,7 @@ const instanceProperties = {
     });
   },
   linkToParents: function (updatedData) {
-    params.data.projects.forEach((paramsProject, index) => {
+    todoParams.data.projects.forEach((paramsProject, index) => {
       if (isProjectOfTodo(this, index)) {
         this.data.projectID = paramsProject.data.id;
         if (updatedData) {

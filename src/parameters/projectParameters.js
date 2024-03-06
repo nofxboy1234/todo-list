@@ -11,6 +11,6 @@ const initialParams = {
     name: '',
   },
 };
-const params = ProjectParameters.new(initialParams);
+const projectParams = ProjectParameters.new(initialParams);
 
-export { params };
+export { projectParams };

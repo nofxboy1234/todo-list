@@ -1,7 +1,13 @@
 import { Partial } from './_project';
 
-const render = (project) => {
-  return Partial(project);
+const view = {
+  render: function (project) {
+    return Partial(project);
+  },
 };
 
-export { render };
+const showView = () => {
+  return Object.create(view);
+};
+
+export { showView };

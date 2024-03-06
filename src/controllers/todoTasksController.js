@@ -1,11 +1,10 @@
-import { params } from '../parameters/taskParameters';
-import { params as todoParams } from '../parameters/todoParameters';
-import { popCachedView, render } from '../renderers/renderer';
-import { render as todoTaskRender } from '../renderers/todoTasksRenderer';
-
-import { Todo } from '../models/todo';
 import { Task } from '../models/task';
+import { Todo } from '../models/todo';
+import { taskParams as params } from '../parameters/taskParameters';
+import { todoParams } from '../parameters/todoParameters';
 import { edit, index, new_, show } from '../symbols/resourceSymbols';
+import { render } from '../renderers/todoTasksRenderer';
+import { popCachedView, render } from '../renderers/renderer';
 
 const createTaskInTodoParams = (task) => {
   task.data.onTodoForm = true;
@@ -39,10 +38,10 @@ const setTodoTask = (controller) => {
   controller.todoTask = instance;
 };
 
-const controller = {
+const todoTasksController = {
   new: function () {
     this.todoTask = Task.new(params);
-    todoTaskRender(new_, this.todoTask);
+    render(new_, this.todoTask);
   },
   create: function () {
     this.todoTask = Task.new(params);
@@ -58,20 +57,20 @@ const controller = {
       popCachedView();
       render('todos/edit', Todo.new(todoParams));
     } else {
-      todoTaskRender(new_, this.todoTask);
+      render(new_, this.todoTask);
     }
   },
   index: function () {
     this.todoTasks = Task.all();
-    todoTaskRender(index, this.todoTasks);
+    render(index, this.todoTasks);
   },
   show: function () {
     setTodoTask(this);
-    todoTaskRender(show, this.todoTask);
+    render(show, this.todoTask);
   },
   edit: function () {
     this.todoTask = Task.new(params);
-    todoTaskRender(edit, this.todoTask);
+    render(edit, this.todoTask);
   },
   update: function () {
     this.todoTask = Task.new(params);
@@ -87,7 +86,7 @@ const controller = {
       popCachedView();
       render('todos/edit', Todo.new(todoParams));
     } else {
-      todoTaskRender(edit, this.todoTask);
+      render(edit, this.todoTask);
     }
   },
   destroy: function () {
@@ -98,4 +97,4 @@ const controller = {
   },
 };
 
-export { controller };
+export { todoTasksController };

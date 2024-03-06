@@ -8,13 +8,13 @@ import {
   taskPath,
 } from '../../routers/router';
 import { renderCachedView } from '../../renderers/renderer';
-import { params } from '../../parameters/taskParameters';
+import { taskParams } from '../../parameters/taskParameters';
 
 const form = (task) => {
   const isOnTodoForm = task.data.onTodoForm || task.data.id ? true : false;
 
   const cancelForm = () => {
-    params.reset();
+    taskParams.reset();
     renderCachedView();
   };
 

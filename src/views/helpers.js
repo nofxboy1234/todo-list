@@ -1,7 +1,5 @@
 import {
-  contentContainer,
-  menuContainer,
-  projectIndex,
+  projectContainer,
 } from './layouts/application';
 
 const clearContainer = (container) => {
@@ -12,9 +10,9 @@ const clearContainer = (container) => {
 };
 
 const clearProjectIndex = () => {
-  while (projectIndex.firstChild) {
-    const lastChild = projectIndex.lastChild;
-    projectIndex.removeChild(lastChild);
+  while (projectContainer.firstChild) {
+    const lastChild = projectContainer.lastChild;
+    projectContainer.removeChild(lastChild);
   }
 };
 
