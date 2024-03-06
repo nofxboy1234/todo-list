@@ -1,3 +1,4 @@
+import { indexPath } from '../httpPaths/indexPath';
 import { newPath } from '../httpPaths/newPath';
 
 const capitalize = (string) => {
@@ -12,16 +13,7 @@ function createRoutes(
   params
 ) {
   const entries = new Map([
-    [
-      `${resourcePlural}Path`,
-      {
-        resolvedPath: function () {
-          return `/${resourcePlural}`;
-        },
-        controller,
-        params,
-      },
-    ],
+    [`${resourcePlural}Path`, indexPath(controller, params)],
     [`new${capitalize(resourceSingular)}Path`, newPath(controller, params)],
     [
       `edit${capitalize(resourceSingular)}Path`,

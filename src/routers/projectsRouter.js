@@ -15,22 +15,22 @@ const projectsRouter = {
     httpGetMethod.redirectTo(path, taskData);
 
     switch (path) {
-      case projectsPath: // indexPath
-        if (method === 'GET') {
-          params.merge(taskData);
-          controller.index();
-        }
-        if (method === 'POST') {
-          params.merge(taskData);
-          controller.create();
-        }
-        break;
-      case newProjectPath: // newPath
-        if (method === 'GET') {
-          params.reset();
-          controller.new();
-        }
-        break;
+      // case projectsPath: // indexPath
+      //   if (method === 'GET') {
+      //     params.merge(taskData);
+      //     controller.index();
+      //   }
+      //   if (method === 'POST') {
+      //     params.merge(taskData);
+      //     controller.create();
+      //   }
+      //   break;
+      // case newProjectPath: // newPath
+      //   if (method === 'GET') {
+      //     params.reset();
+      //     controller.new();
+      //   }
+      //   break;
       case editProjectPath: // editPath
         if (method === 'GET') {
           params.reset();
