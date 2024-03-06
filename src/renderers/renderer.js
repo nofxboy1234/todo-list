@@ -46,6 +46,10 @@ const renderer = {
   },
 };
 
+const createRenderer = (resourceView) => {
+  return Object.create(renderer).init(resourceView);
+};
+
 // import { projectsView } from '../views/helpers/projectViews';
 // const index = projectsView;
 // render(index, this.projects);
@@ -56,5 +60,5 @@ export {
   renderCachedView,
   addViewToLayout,
   render,
-  renderer,
+  createRenderer,
 };
