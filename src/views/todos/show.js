@@ -1,7 +1,13 @@
 import { Partial } from './_todo';
 
-const render = (todo) => {
-  return Partial(todo);
+const view = {
+  render: function (todo) {
+    return Partial(todo);
+  },
 };
 
-export { render };
+const showView = () => {
+  return Object.create(view);
+};
+
+export { showView };

@@ -1,7 +1,13 @@
 import { form } from './_form';
 
-const render = (task) => {
-  return form(task);
+const view = {
+  render: function (task) {
+    return form(task);
+  },
 };
 
-export { render };
+const editView = () => {
+  return Object.create(view);
+};
+
+export { editView };

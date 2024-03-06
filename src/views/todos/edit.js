@@ -1,7 +1,13 @@
 import { form } from './_form';
 
-const render = (todo) => {
-  return form(todo);
+const view = {
+  render: function (todo) {
+    return form(todo);
+  },
 };
 
-export { render };
+const editView = () => {
+  return Object.create(view);
+};
+
+export { editView };
