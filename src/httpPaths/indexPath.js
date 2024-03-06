@@ -11,7 +11,7 @@ const path = {
     this.params.merge(resourceData);
     this.controller.create();
   },
-  resolvedPath: function () {
+  resolvedPath: function (resource) {
     return `/${resourcePlural}`;
   },
 };

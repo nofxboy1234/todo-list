@@ -4,16 +4,17 @@ const path = {
     this.params = params;
   },
   get: function (resourceData) {
-    this.params.reset();
-    this.controller.new();
+    params.reset();
+    params.merge(resourceData);
+    controller.edit();
   },
   resolvedPath: function (resource) {
-    return `/${resourcePlural}/new`;
+    return `/${resourcePlural}/${resource.data.id}/edit`;
   },
 };
 
-const newPath = (controller, params) => {
+const editPath = (controller, params) => {
   return Object.create(path).init(controller, params);
 };
 
-export { newPath };
+export { editPath };
