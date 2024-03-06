@@ -1,11 +1,16 @@
 import { Project } from '../models/project';
 import { Todo } from '../models/todo';
 import { projectParams as params } from '../parameters/projectParameters';
-import { todoParams as todoParams } from '../parameters/todoParameters';
-import { edit, index, new_, show } from '../symbols/resourceSymbols';
-import { render } from '../renderers/todoProjectsRenderer';
-import { render as todoRender } from '../renderers/todosRenderer';
+import { todoParams } from '../parameters/todoParameters';
 import { popCachedView, render } from '../renderers/renderer';
+
+import {
+  todoProjectsView as index,
+  newTodoProjectView as new_,
+  editTodoProjectView as edit,
+  todoProjectView as show,
+} from '../views/helpers/todoProjectViews';
+import { editTodoView as editTodo } from '../views/helpers/todoViews';
 
 const setProjectInputValueOfTodo = (projectInputValue) => {
   todoParams.data.projectInputValue = projectInputValue;
@@ -53,7 +58,7 @@ const todoProjectsController = {
       setProjectInputValueOfTodo(projectInputValue);
       params.reset();
       popCachedView();
-      todoRender('todos/edit', Todo.new(todoParams));
+      render(editTodo, Todo.new(todoParams));
     } else {
       render(new_, this.todoProject);
     }
@@ -82,7 +87,7 @@ const todoProjectsController = {
       updateProjectInTodoParams(this.todoProject);
       params.reset();
       popCachedView();
-      todoRender('todos/edit', Todo.new(todoParams));
+      render(editTodo, Todo.new(todoParams));
     } else {
       render(edit, this.todoProject);
     }

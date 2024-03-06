@@ -1,10 +1,16 @@
 import { Project } from '../models/project';
 import { projectParams as params } from '../parameters/projectParameters';
-import { edit, index, new_, show } from '../symbols/resourceSymbols';
 import { projectsPath } from '../routes/projectRoutes';
 import { todosPath } from '../routes/todoRoutes';
 import { redirectTo } from '../routers/router';
-import { render, popCachedView } from '../renderers/projectsRenderer';
+import { render, popCachedView } from '../renderers/renderer';
+
+import {
+  projectsView as index,
+  newProjectView as new_,
+  editProjectView as edit,
+  projectView as show,
+} from '../views/helpers/projectViews';
 
 const setProject = (controller) => {
   const id = params.data.id;

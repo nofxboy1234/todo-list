@@ -2,9 +2,16 @@ import { Task } from '../models/task';
 import { Todo } from '../models/todo';
 import { taskParams as params } from '../parameters/taskParameters';
 import { todoParams } from '../parameters/todoParameters';
-import { edit, index, new_, show } from '../symbols/resourceSymbols';
-import { render } from '../renderers/todoTasksRenderer';
 import { popCachedView, render } from '../renderers/renderer';
+
+import {
+  todoTasksView as index,
+  newTodoTaskView as new_,
+  editTodoTaskView as edit,
+  todoTaskView as show,
+} from '../views/helpers/todoTaskViews';
+
+import { editTodoView as editTodo } from '../views/helpers/todoViews';
 
 const createTaskInTodoParams = (task) => {
   task.data.onTodoForm = true;
@@ -55,7 +62,7 @@ const todoTasksController = {
       createTaskInTodoParams(this.todoTask);
       params.reset();
       popCachedView();
-      render('todos/edit', Todo.new(todoParams));
+      render(editTodo, Todo.new(todoParams));
     } else {
       render(new_, this.todoTask);
     }
@@ -84,7 +91,7 @@ const todoTasksController = {
       updateTaskInTodoParams(this.todoTask);
       params.reset();
       popCachedView();
-      render('todos/edit', Todo.new(todoParams));
+      render(editTodo, Todo.new(todoParams));
     } else {
       render(edit, this.todoTask);
     }
@@ -93,7 +100,7 @@ const todoTasksController = {
     this.todoTask = Task.new(params);
     destroyTaskInTodoParams(this.todoTask);
     params.reset();
-    render('todos/edit', Todo.new(todoParams));
+    render(editTodo, Todo.new(todoParams));
   },
 };
 
