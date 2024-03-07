@@ -24,8 +24,8 @@ const path = {
   },
 };
 
-const resourcePath = (controller, params) => {
+const showPath = (controller, params) => {
   return Object.create(path).init(controller, params);
 };
 
-export { resourcePath };
+export { showPath };

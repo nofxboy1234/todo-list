@@ -45,7 +45,7 @@ const setTodoTask = (controller) => {
   controller.todoTask = instance;
 };
 
-const todoTasksController = {
+const controller = {
   new: function () {
     this.todoTask = Task.new(params);
     render(new_, this.todoTask);
@@ -104,4 +104,4 @@ const todoTasksController = {
   },
 };
 
-export { todoTasksController };
+export { controller };

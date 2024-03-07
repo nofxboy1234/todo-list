@@ -1,5 +1,5 @@
 import { Todo } from './todo';
-import { createModel as Model, exists } from './model';
+import { createModel } from './model';
 import { todoParams as todoParams } from '../parameters/todoParameters';
 
 const updateInstanceInStorage = (instance, updatedData) => {
@@ -10,6 +10,7 @@ const hasCollidingName = (project) => {
   const paramsProjects = todoParams.data.projects;
   const indexInProjects = project.data.indexInProjects;
   let found;
+
   if (indexInProjects) {
     const otherProjects = paramsProjects.filter(
       (project, index) => index !== indexInProjects
@@ -39,9 +40,11 @@ const instanceProperties = {
     if (this.data.name === '') {
       this.errors.push('Name cannot be blank');
     }
+
     if (this.data.name.length < 2) {
       this.errors.push('Name must be 2 or more characters');
     }
+
     if (hasCollidingName(this)) {
       this.errors.push('A Project already exists with this name');
     }
@@ -54,7 +57,7 @@ const instanceProperties = {
     if (!validationInstance.data.validated) {
       validationInstance.validate();
     }
-    
+
     if (validationInstance.errors.length > 0) {
       return false;
     } else {
@@ -68,13 +71,11 @@ const instanceProperties = {
 
       updateInstanceInStorage(this, validationInstance);
       this.cleanData();
-
       return true;
     }
   },
 };
-const Project = Object.assign({}, Model(instanceProperties));
-const staticProperties = {};
-Object.assign(Project, staticProperties);
+
+const Project = createModel(instanceProperties);
 
 export { Project };

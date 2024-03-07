@@ -54,7 +54,7 @@ const setTodo = (controller) => {
   controller.todo = instance;
 };
 
-const todosController = {
+const controller = {
   new: function () {
     this.todo = Todo.new(params);
     addTodoTasksToParams(this.todo);
@@ -114,4 +114,4 @@ const todosController = {
   },
 };
 
-export { todosController };
+export { controller };

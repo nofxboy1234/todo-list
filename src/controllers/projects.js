@@ -18,7 +18,7 @@ const setProject = (controller) => {
   controller.project = instance;
 };
 
-const projectsController = {
+const controller = {
   new: function () {
     this.project = Project.new(params);
     render(new_, this.project);
@@ -69,4 +69,4 @@ const projectsController = {
   },
 };
 
-export { projectsController };
+export { controller };

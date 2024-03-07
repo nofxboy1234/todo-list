@@ -40,7 +40,7 @@ const setTodoProject = (controller) => {
   controller.todoProject = instance;
 };
 
-const todoProjectsController = {
+const controller = {
   new: function () {
     this.todoProject = Project.new(params);
     render(new_, this.todoProject);
@@ -94,4 +94,4 @@ const todoProjectsController = {
   },
 };
 
-export { todoProjectsController };
+export { controller };

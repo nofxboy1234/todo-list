@@ -1,28 +1,23 @@
-const createParameters = (instanceProperties) => {
-  const Parameters = {
-    new: function (initialParams) {
-      const instance = {
-        initialParams,
-        data: {},
-        clear: function () {
-          this.data = {};
-        },
-        merge: function (params) {
-          Object.assign(this.data, params.data);
-        },
-        reset: function () {
-          this.clear();
-          this.merge(initialParams);
-        },
-      };
-      Object.assign(instance, instanceProperties);
-      instance.reset();
+const parameters = {
+  init: function (initialParams) {
+    this.initialParams = initialParams;
+    this.reset();
+  },
+  data: {},
+  clear: function () {
+    this.data = {};
+  },
+  merge: function (params) {
+    Object.assign(this.data, params.data);
+  },
+  reset: function () {
+    this.clear();
+    this.merge(this.initialParams);
+  },
+};
 
-      return instance;
-    },
-  };
-
-  return Parameters;
+const createParameters = (initialParams) => {
+  return Object.create(parameters).init(initialParams);
 };
 
 export { createParameters };

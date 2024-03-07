@@ -1,5 +1,5 @@
 import { Todo } from './todo';
-import { createModel as Model, exists } from './model';
+import { createModel, exists } from './model';
 
 const instanceProperties = {
   todo: function () {
@@ -18,8 +18,6 @@ const instanceProperties = {
     }
   },
 };
-const Task = Object.assign({}, Model(instanceProperties));
-const staticProperties = {};
-Object.assign(Task, staticProperties);
+const Task = createModel(instanceProperties);
 
 export { Task };
