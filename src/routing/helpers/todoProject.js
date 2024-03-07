@@ -1,9 +1,9 @@
 import { createRouteHelpers } from './factory';
 
-import { todoProjectsController as controller } from '../controllers/todoProjectsController';
-import { projectParams as params } from '../parameters/projectParameters';
+import { controller } from '../../controllers/todoProjects';
+import { params } from '../../parameters/project';
 
-import { createResourceNameInfo } from '../../resourceNames/resourceName';
+import { createResourceNameInfo } from '../../resourceNameInfo/resourceNameInfo';
 
 const nameInfo = createResourceNameInfo('todoProject', 'todoProjects');
 const routeHelpers = createRouteHelpers(nameInfo, controller, params);
