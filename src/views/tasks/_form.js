@@ -1,9 +1,11 @@
 import { createLabel, createInput, createButton } from '../helpers';
 
-import { redirectTo } from '../../routers/router';
-import { renderCachedView } from '../../renderers/renderer';
 import { taskParams } from '../../parameters/taskParameters';
+
+import { redirectTo } from '../../routers/router';
 import { todoTasksPath, todoTaskPath } from '../../routes/todoTaskRoutes';
+
+import { renderCachedView } from '../../renderers/renderer';
 
 const form = (task) => {
   const isOnTodoForm = task.data.onTodoForm || task.data.id ? true : false;

@@ -1,7 +1,7 @@
 import { Project } from '../models/project';
 import { projectParams as params } from '../parameters/projectParameters';
-import { projectsPath } from '../routes/projectRoutes';
-import { todosPath } from '../routes/todoRoutes';
+import { projectsPath } from '../routers/projectRouteHelpers';
+import { todosPath } from '../routers/todoRoutes';
 import { redirectTo } from '../routers/router';
 import { render, popCachedView } from '../renderers/renderer';
 
@@ -10,7 +10,7 @@ import {
   newProjectView as new_,
   editProjectView as edit,
   projectView as show,
-} from '../views/helpers/projectViews';
+} from '../renderers/projectRenderers';
 
 const setProject = (controller) => {
   const id = params.data.id;

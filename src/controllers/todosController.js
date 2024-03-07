@@ -1,7 +1,7 @@
 import { Todo } from '../models/todo';
 import { Project } from '../models/project';
 import { todoParams as params } from '../parameters/todoParameters';
-import { todosPath, todoPath } from '../routes/todoRoutes';
+import { todosPath, todoPath } from '../routers/todoRoutes';
 import { projectsPath } from '../routes/projectRoutes';
 import { redirectTo } from '../routers/router';
 import { render, popCachedView } from '../renderers/renderer';
@@ -12,7 +12,7 @@ import {
   newTodoView as new_,
   editTodoView as edit,
   todoView as show,
-} from '../views/helpers/todoViews';
+} from '../renderers/todoRenderers';
 
 const cloneResource = (resource) => {
   const clone = Object.assign({}, resource);

@@ -1,10 +1,12 @@
 import { createLabel, createInput, createButton } from '../helpers';
 
-import { redirectTo } from '../../routers/router';
-import { renderCachedView } from '../../renderers/renderer';
 import { projectParams } from '../../parameters/projectParameters';
 
-import { projectPath, projectsPath } from '../../routes/projectRoutes';
+import { redirectTo } from '../../routers/router';
+import { projectPath, projectsPath } from '../../routers/projectRouteHelpers';
+
+import { renderCachedView } from '../../renderers/renderer';
+
 
 const form = (project) => {
   const isOnTodoForm =
@@ -28,7 +30,6 @@ const form = (project) => {
       data: {
         id: project.data.id,
         name: name.input.value,
-        // onTodoForm: true,
       },
     };
   };

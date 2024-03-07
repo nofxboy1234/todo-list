@@ -1,4 +1,4 @@
-import { createRenderer } from '../../renderers/renderer';
+import { createRenderer } from './renderer';
 
 const capitalize = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);

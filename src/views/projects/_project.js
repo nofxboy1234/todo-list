@@ -1,11 +1,11 @@
 import { createButton } from '../helpers';
-import { redirectTo } from '../../routers/router';
 
+import { redirectTo } from '../../routers/router';
 import {
   projectsPath,
   editProjectPath,
   projectPath,
-} from '../../routes/projectRoutes';
+} from '../../routers/projectRouteHelpers';
 
 const Partial = (project) => {
   const projectParagraph = document.createElement('p');

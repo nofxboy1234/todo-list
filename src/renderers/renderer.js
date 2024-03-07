@@ -20,11 +20,11 @@ const addViewToLayout = (view, container) => {
   container.appendChild(view);
 };
 
-const render = (viewRenderer, resourceData) => {
-  const renderedView = viewRenderer.render(resourceData);
-  const container = viewRenderer.container();
+const render = (renderer, resourceData) => {
+  const renderedView = renderer.render(resourceData);
+  const container = renderer.container();
   addViewToLayout(renderedView, container);
-  const focusID = viewRenderer.focusID();
+  const focusID = renderer.focusID();
   document.getElementById(focusID).focus();
 };
 
@@ -49,10 +49,6 @@ const renderer = {
 const createRenderer = (resourceView) => {
   return Object.create(renderer).init(resourceView);
 };
-
-// import { projectsView } from '../views/helpers/projectViews';
-// const index = projectsView;
-// render(index, this.projects);
 
 export {
   cacheView,

@@ -7,35 +7,33 @@ import {
   createOption,
   createCheckbox,
 } from '../helpers';
+
+import { Todo } from '../../models/todo';
 import { Project } from '../../models/project';
+import { Task } from '../../models/task';
+
+import { todoParams } from '../../parameters/todoParameters';
 
 import { redirectTo } from '../../routers/router';
-
 import {
   newTodoTaskPath,
   editTodoTaskPath,
   todoTaskPath,
-} from '../../routes/todoTaskRoutes';
+} from '../../routers/todoTaskRoutes';
+import {
+  editTodoProjectPath,
+  newTodoProjectPath,
+} from '../../routers/todoProjectRouteHelpers';
 
 import {
   cacheView,
-  editTodo,
-  newTodo,
   renderCachedView,
 } from '../../renderers/renderer';
-
 import {
   newTodoView as new_,
   editTodoView as edit,
 } from '../helpers/todoViews';
 
-import { todoParams } from '../../parameters/todoParameters';
-import { Todo } from '../../models/todo';
-import { Task } from '../../models/task';
-import {
-  editTodoProjectPath,
-  newTodoProjectPath,
-} from '../../routes/todoProjectRoutes';
 
 const form = (todo) => {
   const persisted = todo.data.id ? true : false;

@@ -1,8 +1,10 @@
 import { createButton } from '../helpers';
+
 import { redirectTo } from '../../routers/router';
+import { todosPath } from '../../routers/todoRoutes';
+import { projectPath } from '../../routers/projectRouteHelpers';
+
 import { setProjectForTodosIndex } from '../todos';
-import { todosPath } from '../../routes/todoRoutes';
-import { projectPath } from '../../routes/projectRoutes';
 
 const view = {
   render: function (projects) {

@@ -1,8 +1,8 @@
-import { httpDelete } from '../httpMethods/httpDeleteMethod';
-import { httpGet } from '../httpMethods/httpGetMethod';
-import { httpPatch } from '../httpMethods/httpPatchMethod';
-import { httpPost } from '../httpMethods/httpPostMethod';
-import { httpPut } from '../httpMethods/httpPutMethod';
+import { httpDelete } from '../routeMethods/httpDeleteMethod';
+import { httpGet } from '../routeMethods/httpGetMethod';
+import { httpPatch } from '../routeMethods/httpPatchMethod';
+import { httpPost } from '../routeMethods/httpPostMethod';
+import { httpPut } from '../routeMethods/httpPutMethod';
 
 const httpMethods = {
   GET: httpGet,

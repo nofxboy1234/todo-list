@@ -1,18 +1,13 @@
-import {
-  projectsPath,
-  newProjectPath,
-  editProjectPath,
-  projectPath,
-} from '../../routes/projectRoutes';
-
 import { Project } from '../../models/project';
-import { getProjectForTodosIndex, setProjectForTodosIndex } from '../todos';
-import { cacheView } from '../../renderers/renderer';
-import { todosView } from '../helpers/todoViews';
 
 import { redirectTo } from '../../routers/router';
+import { newTodoPath, todosPath } from '../../routers/todoRoutes';
+import { projectsPath } from '../../routers/projectRouteHelpers';
 
-import { newTodoPath } from '../../routes/todoRoutes';
+import { cacheView } from '../../renderers/renderer';
+import { todosView } from '../../renderers/todoRenderers';
+
+import { getProjectForTodosIndex, setProjectForTodosIndex } from '../todos';
 
 const newTodo = () => {
   const project = getProjectForTodosIndex();

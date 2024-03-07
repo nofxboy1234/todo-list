@@ -1,7 +1,7 @@
-import { editPath } from '../httpPaths/editPath';
-import { indexPath } from '../httpPaths/indexPath';
-import { newPath } from '../httpPaths/newPath';
-import { resourcePath } from '../httpPaths/resourcePath';
+import { editPath } from '../routePaths/editPath';
+import { indexPath } from '../routePaths/indexPath';
+import { newPath } from '../routePaths/newPath';
+import { resourcePath } from '../routePaths/resourcePath';
 
 const capitalize = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -10,7 +10,7 @@ const capitalize = (string) => {
 function createRoutes(
   resourceSingular,
   resourcePlural,
-  routes,
+  routeHelpers,
   controller,
   params
 ) {
@@ -20,7 +20,7 @@ function createRoutes(
     [`edit${capitalize(resourceSingular)}Path`, editPath(controller, params)],
     [`${resourceSingular}Path`, resourcePath(controller, params)],
   ]);
-  Object.assign(routes, Object.fromEntries(entries));
+  Object.assign(routeHelpers, Object.fromEntries(entries));
 }
 
 export { createRoutes };

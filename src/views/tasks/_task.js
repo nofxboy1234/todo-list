@@ -1,6 +1,6 @@
 import { createButton } from '../helpers';
-import { redirectTo } from '../../routers/router';
 
+import { redirectTo } from '../../routers/router';
 import { todoTaskPath, editTodoTaskPath } from '../../routes/todoTaskRoutes';
 
 const Partial = (task) => {
