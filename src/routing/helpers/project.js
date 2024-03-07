@@ -3,7 +3,7 @@ import { createRouteHelpers } from './factory';
 import { controller } from '../../controllers/projects';
 import { params } from '../../parameters/project';
 
-import { createResourceNameInfo } from '../../resourceNames/resourceName';
+import { createResourceNameInfo } from '../../resourceNameInfo/resourceNameInfo';
 
 const nameInfo = createResourceNameInfo('project', 'projects');
 const routeHelpers = createRouteHelpers(nameInfo, controller, params);
