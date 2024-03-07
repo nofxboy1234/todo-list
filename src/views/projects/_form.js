@@ -1,8 +1,10 @@
 import { createLabel, createInput, createButton } from '../helpers';
 
-import { redirectTo, projectsPath, projectPath } from '../../routers/router';
+import { redirectTo } from '../../routers/router';
 import { renderCachedView } from '../../renderers/renderer';
 import { projectParams } from '../../parameters/projectParameters';
+
+import { projectPath, projectsPath } from '../../routes/projectRoutes';
 
 const form = (project) => {
   const isOnTodoForm =

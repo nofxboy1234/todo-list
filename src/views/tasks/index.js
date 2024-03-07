@@ -1,12 +1,13 @@
 import { createButton } from '../helpers';
-import { redirectTo, taskPath } from '../../routers/router';
+import { redirectTo } from '../../routers/router';
+import { todoTaskPath } from '../../routes/todoTaskRoutes';
 
 const view = {
   render: function (tasks) {
     const taskParagraph = document.createElement('p');
     tasks.forEach((task) => {
       const destroyTask = () => {
-        redirectTo('DELETE', taskPath, task);
+        redirectTo('DELETE', todoTaskPath, task);
       };
 
       const descriptionDiv = document.createElement('div');

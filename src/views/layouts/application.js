@@ -1,4 +1,3 @@
-import { projectsRouter } from '../../routers/projectsRouter';
 import {
   projectsPath,
   newProjectPath,
@@ -9,7 +8,7 @@ import {
 import { Project } from '../../models/project';
 import { getProjectForTodosIndex, setProjectForTodosIndex } from '../todos';
 import { cacheView } from '../../renderers/renderer';
-import { indexTodo } from '../../renderers/todosRenderer';
+import { todosView } from '../helpers/todoViews';
 
 import { redirectTo } from '../../routers/router';
 
@@ -18,7 +17,7 @@ import { newTodoPath } from '../../routes/todoRoutes';
 const newTodo = () => {
   const project = getProjectForTodosIndex();
   const todos = project.todos();
-  cacheView(indexTodo(todos));
+  cacheView(todosView(todos));
 
   redirectTo('GET', newTodoPath);
 };

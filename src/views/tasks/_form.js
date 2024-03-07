@@ -1,14 +1,9 @@
 import { createLabel, createInput, createButton } from '../helpers';
 
-import {
-  redirectTo,
-  projectsPath,
-  projectPath,
-  tasksPath,
-  taskPath,
-} from '../../routers/router';
+import { redirectTo } from '../../routers/router';
 import { renderCachedView } from '../../renderers/renderer';
 import { taskParams } from '../../parameters/taskParameters';
+import { todoTasksPath, todoTaskPath } from '../../routes/todoTaskRoutes';
 
 const form = (task) => {
   const isOnTodoForm = task.data.onTodoForm || task.data.id ? true : false;
@@ -19,11 +14,11 @@ const form = (task) => {
   };
 
   const createTask = (event) => {
-    redirectTo('POST', tasksPath, currentData());
+    redirectTo('POST', todoTasksPath, currentData());
   };
 
   const updateTask = (event) => {
-    redirectTo('PATCH', taskPath, currentData());
+    redirectTo('PATCH', todoTaskPath, currentData());
   };
 
   const currentData = () => {

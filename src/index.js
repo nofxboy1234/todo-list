@@ -1,8 +1,8 @@
 import { createLayout } from './views/layouts/application';
 import './style.css';
 import { Project } from './models/project';
-import { params as projectParams } from './parameters/projectParameters';
-import { params as todoParams } from './parameters/todoParameters';
+import { projectParams } from './parameters/projectParameters';
+import { todoParams } from './parameters/todoParameters';
 
 function createDefaultProject() {
   updateProjectParams();

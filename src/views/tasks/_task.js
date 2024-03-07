@@ -1,13 +1,7 @@
 import { createButton } from '../helpers';
-import {
-  redirectTo,
-  projectsPath,
-  editProjectPath,
-  projectPath,
-  taskPath,
-  editTaskPath,
-  tasksPath,
-} from '../../routers/router';
+import { redirectTo } from '../../routers/router';
+
+import { todoTaskPath, editTodoTaskPath } from '../../routes/todoTaskRoutes';
 
 const Partial = (task) => {
   const taskParagraph = document.createElement('p');
@@ -17,15 +11,15 @@ const Partial = (task) => {
   taskParagraph.appendChild(descriptionDiv);
 
   const destroyTask = () => {
-    redirectTo('DELETE', taskPath, task);
+    redirectTo('DELETE', todoTaskPath, task);
   };
 
   const editTask = () => {
-    redirectTo('GET', editTaskPath, task);
+    redirectTo('GET', editTodoTaskPath, task);
   };
 
   const closeTask = () => {
-    redirectTo('GET', tasksPath);
+    redirectTo('GET', todoTaskPath);
   };
 
   const destroyButton = createButton('button', 'DESTROY', 'deleteButtonID');

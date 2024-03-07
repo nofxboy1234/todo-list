@@ -9,16 +9,8 @@ import {
 } from '../helpers';
 import { Project } from '../../models/project';
 
-import {
-  redirectTo,
-  todosPath,
-  todoPath,
-  newProjectPath,
-  editProjectPath,
-} from '../../routers/router';
+import { redirectTo } from '../../routers/router';
 
-import { redirectTo as todoTaskRedirectTo } from '../../routers/todoTasksRouter';
-import { redirectTo as todoProjectRedirectTo } from '../../routers/todoProjectsRouter';
 import {
   newTodoTaskPath,
   editTodoTaskPath,
@@ -31,10 +23,19 @@ import {
   newTodo,
   renderCachedView,
 } from '../../renderers/renderer';
+
+import {
+  newTodoView as new_,
+  editTodoView as edit,
+} from '../helpers/todoViews';
+
 import { todoParams } from '../../parameters/todoParameters';
 import { Todo } from '../../models/todo';
 import { Task } from '../../models/task';
-import { editTodoProjectPath, newTodoProjectPath } from '../../routes/todoProjectRoutes';
+import {
+  editTodoProjectPath,
+  newTodoProjectPath,
+} from '../../routes/todoProjectRoutes';
 
 const form = (todo) => {
   const persisted = todo.data.id ? true : false;
@@ -47,9 +48,9 @@ const form = (todo) => {
   const getView = () => {
     let view;
     if (persisted) {
-      view = editTodo;
+      view = edit;
     } else {
-      view = newTodo;
+      view = new_;
     }
     return view;
   };
