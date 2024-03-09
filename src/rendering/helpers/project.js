@@ -1,14 +1,14 @@
-import { createViews } from './rendererFactory';
+import { createViewHelpers } from './factory';
 
-import { indexView } from '../views/projects';
-import { editView } from '../views/projects/edit';
-import { newView } from '../views/projects/new';
-import { showView } from '../views/projects/show';
+import { indexView } from '../../views/projects';
+import { editView } from '../../views/projects/edit';
+import { newView } from '../../views/projects/new';
+import { showView } from '../../views/projects/show';
 
 import {
   contentContainer,
   projectContainer,
-} from '../views/layouts/application';
+} from '../../views/layouts/application';
 
 const views = {
   index: { view: indexView, container: projectContainer },
@@ -17,8 +17,9 @@ const views = {
   show: { view: showView, container: contentContainer },
 };
 
-const viewHelpers = {};
-createViews('project', 'projects', viewHelpers, views);
+const nameInfo = createResourceNameInfo('project', 'projects');
+const viewHelpers = createViewHelpers(nameInfo, views);
+
 const projectsView = viewHelpers.projectsView;
 const newProjectView = viewHelpers.newProjectView;
 const editProjectView = viewHelpers.editProjectView;
