@@ -1,10 +1,8 @@
-import { createRenderer } from './renderer';
-
 const capitalize = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
-function createViewHelpers(resourceNameInfo, resourceViews) {
+function createPathHelpers(resourceNameInfo, helperTargets) {
   const resourceSingular = resourceNameInfo.singular;
   const resourcePlural = resourceNameInfo.plural;
   const viewHelpers = {};
@@ -15,25 +13,25 @@ function createViewHelpers(resourceNameInfo, resourceViews) {
 
   const createIndexViewHelper = () => {
     const name = `${resourcePlural}Path`;
-    const path = createRenderer(resourceViews.index);
+    const path = createRenderer(helperTargets.index);
     addToViewHelpers(name, path);
   };
 
   const createEditViewHelper = () => {
     const name = `edit${capitalize(resourceSingular)}Path`;
-    const path = createRenderer(resourceViews.edit);
+    const path = createRenderer(helperTargets.edit);
     addToViewHelpers(name, path);
   };
 
   const createShowViewHelper = () => {
     const name = `${resourceSingular}Path`;
-    const path = createRenderer(resourceViews.show);
+    const path = createRenderer(helperTargets.show);
     addToViewHelpers(name, path);
   };
 
   const createNewViewHelper = () => {
     const name = `new${capitalize(resourceSingular)}Path`;
-    const path = createRenderer(resourceViews.new_);
+    const path = createRenderer(helperTargets.new_);
     addToViewHelpers(name, path);
   };
 
@@ -45,4 +43,4 @@ function createViewHelpers(resourceNameInfo, resourceViews) {
   return viewHelpers;
 }
 
-export { createViewHelpers };
+export { createPathHelpers };

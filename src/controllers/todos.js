@@ -1,20 +1,23 @@
 import { Todo } from '../models/todo';
 import { Project } from '../models/project';
-import { todoParams as params } from '../parameters/todoParameters';
-import { todosPath, todoPath } from '../routers/todoRoutes';
-import { projectsPath } from '../routes/projectRoutes';
-import { redirectTo } from '../routers/router';
-import { render, popCachedView } from '../renderers/renderer';
-import { getProjectForTodosIndex } from '../views/todos';
 
+import { params } from '../parameters/todo';
+
+import { redirectTo } from '../routing/routers/router';
+import { todosPath, todoPath } from '../routing/helpers/todo';
+import { projectsPath } from '../routing/helpers/project';
+
+import { render, popCachedView } from '../rendering/renderers/renderer';
 import {
   todosView as index,
   newTodoView as new_,
   editTodoView as edit,
   todoView as show,
-} from '../renderers/todoRenderers';
+} from '../rendering/helpers/todo';
 
-const cloneResource = (resource) => {
+import { getProjectForTodosIndex } from '../views/todos';
+
+const clone = (resource) => {
   const clone = Object.assign({}, resource);
   clone.data = {};
   Object.assign(clone.data, resource.data);
@@ -25,7 +28,7 @@ const addTodoTasksToParams = (todo) => {
   const existingTasks = [];
 
   todo.tasks().forEach((storedTask) => {
-    existingTasks.push(cloneResource(storedTask));
+    existingTasks.push(clone(storedTask));
   });
 
   params.data.tasks = existingTasks;
@@ -39,7 +42,7 @@ const addAllProjectsToParams = () => {
   const existingProjects = [];
 
   Project.all().forEach((storedProject, index) => {
-    const clonedProject = cloneResource(storedProject);
+    const clonedProject = clone(storedProject);
     clonedProject.data.projectInputValue = index.toString();
     clonedProject.data.validated = true;
     existingProjects.push(clonedProject);
@@ -57,7 +60,7 @@ const setTodo = (controller) => {
 const controller = {
   new: function () {
     this.todo = Todo.new(params);
-    addTodoTasksToParams(this.todo);
+    // addTodoTasksToParams(this.todo);
     addAllProjectsToParams();
     createDestroyedTasksInParams();
     render(new_, this.todo);
@@ -77,8 +80,8 @@ const controller = {
   },
   index: function () {
     const project = getProjectForTodosIndex();
-    const todos = project.todos();
-    render(index, todos);
+    this.todos = project.todos();
+    render(index, this.todos);
   },
   show: function () {
     setTodo(this);

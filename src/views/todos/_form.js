@@ -12,34 +12,33 @@ import { Todo } from '../../models/todo';
 import { Project } from '../../models/project';
 import { Task } from '../../models/task';
 
-import { todoParams } from '../../parameters/todoParameters';
+import { params } from '../../parameters/todo';
 
-import { redirectTo } from '../../routers/router';
+import { redirectTo } from '../../routing/routers/router';
 import {
   newTodoTaskPath,
   editTodoTaskPath,
   todoTaskPath,
-} from '../../routers/todoTaskRoutes';
+} from '../../routing/helpers/todoTask';
 import {
   editTodoProjectPath,
   newTodoProjectPath,
-} from '../../routers/todoProjectRouteHelpers';
+} from '../../routing/helpers/todoProject';
 
 import {
   cacheView,
   renderCachedView,
-} from '../../renderers/renderer';
+} from '../../rendering/renderers/renderer';
 import {
   newTodoView as new_,
   editTodoView as edit,
-} from '../helpers/todoViews';
-
+} from '../../rendering/helpers/todo';
 
 const form = (todo) => {
   const persisted = todo.data.id ? true : false;
 
   const cancelForm = () => {
-    todoParams.reset();
+    params.reset();
     renderCachedView();
   };
 
@@ -54,12 +53,12 @@ const form = (todo) => {
   };
 
   const mergeCurrentDataIntoParams = () => {
-    todoParams.merge(currentData());
+    params.merge(currentData());
   };
 
   const cacheCurrentView = () => {
     const view = getView();
-    cacheView(view(Todo.new(todoParams)));
+    cacheView(view(Todo.new(params)));
   };
 
   const newProject = () => {
@@ -130,7 +129,7 @@ const form = (todo) => {
     } else {
       index = Number(formTaskID);
     }
-    const task = todoParams.data.tasks.at(index);
+    const task = params.data.tasks.at(index);
 
     const cloneOfTask = Object.assign({}, task);
     cloneOfTask.data = Object.assign({}, task.data);
@@ -146,7 +145,7 @@ const form = (todo) => {
     } else {
       index = Number(projectInputValue);
     }
-    const project = todoParams.data.projects.at(index);
+    const project = params.data.projects.at(index);
 
     const cloneOfProject = Object.assign({}, project);
     cloneOfProject.data = Object.assign({}, project.data);
@@ -181,7 +180,7 @@ const form = (todo) => {
         index = Number(formTaskID);
       }
       const complete = taskCheckbox.checked;
-      const paramsTask = todoParams.data.tasks.at(index);
+      const paramsTask = params.data.tasks.at(index);
       paramsTask.data.complete = complete;
     });
   };
@@ -293,7 +292,7 @@ const form = (todo) => {
   };
 
   const setupTaskListData = () => {
-    todoParams.data.tasks.forEach((task, indexInParams) => {
+    params.data.tasks.forEach((task, indexInParams) => {
       addTaskToDOM(task, indexInParams);
     });
   };
@@ -303,12 +302,12 @@ const form = (todo) => {
   };
 
   const getProjectInputValue = () => {
-    if (todoParams.data.projectInputValue) {
-      return todoParams.data.projectInputValue;
+    if (params.data.projectInputValue) {
+      return params.data.projectInputValue;
     }
 
     let projectInputValue;
-    todoParams.data.projects.forEach((project) => {
+    params.data.projects.forEach((project) => {
       if (project.data.id === todo.data.projectID) {
         projectInputValue = project.data.projectInputValue;
       }
@@ -317,7 +316,7 @@ const form = (todo) => {
   };
 
   const setupProjectData = () => {
-    todoParams.data.projects.forEach((project, index) => {
+    params.data.projects.forEach((project, index) => {
       addProjectToDOM(project, index);
     });
   };

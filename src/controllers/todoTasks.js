@@ -1,25 +1,27 @@
 import { Task } from '../models/task';
 import { Todo } from '../models/todo';
-import { taskParams as params } from '../parameters/taskParameters';
-import { todoParams } from '../parameters/todoParameters';
-import { popCachedView, render } from '../renderers/renderer';
 
+import { params } from '../parameters/task';
+import { params as todoParams } from '../parameters/todo';
+
+import { render, popCachedView } from '../rendering/renderers/renderer';
 import {
   todoTasksView as index,
   newTodoTaskView as new_,
   editTodoTaskView as edit,
   todoTaskView as show,
-} from '../views/helpers/todoTaskViews';
-
-import { editTodoView as editTodo } from '../views/helpers/todoViews';
+} from '../rendering/helpers/todoTask';
+import { editTodoView as editTodo } from '../rendering/helpers/todo';
 
 const createTaskInTodoParams = (task) => {
   task.data.onTodoForm = true;
-  todoParams.data.tasks.push(task);
+  const tasks = todoParams.data.tasks;
+  tasks.push(task);
 };
 
 const addTaskToDestroyedTasks = (todoParamsTask) => {
-  todoParams.data.destroyedTasks.push(todoParamsTask);
+  const destroyedTasks = todoParams.data.destroyedTasks;
+  destroyedTasks.push(todoParamsTask);
 };
 
 const updateTaskInTodoParams = (task) => {
@@ -32,11 +34,12 @@ const updateTaskInTodoParams = (task) => {
 const destroyTaskInTodoParams = (task) => {
   const tasks = todoParams.data.tasks;
   const indexOfTask = task.data.indexInTasks;
+  tasks.splice(indexOfTask, 1);
   const todoParamsTask = tasks.at(indexOfTask);
+
   if (todoParamsTask.data.id) {
     addTaskToDestroyedTasks(todoParamsTask);
   }
-  tasks.splice(indexOfTask, 1);
 };
 
 const setTodoTask = (controller) => {
@@ -54,9 +57,10 @@ const controller = {
     this.todoTask = Task.new(params);
     this.todoTask.data.validated = false;
 
-    if (!this.todoTask.data.validated) {
-      this.todoTask.validate();
-    }
+    this.todoTask.validate();
+    // if (!this.todoTask.data.validated) {
+    //   this.todoTask.validate();
+    // }
 
     if (this.todoTask.errors.length === 0) {
       createTaskInTodoParams(this.todoTask);
@@ -67,14 +71,14 @@ const controller = {
       render(new_, this.todoTask);
     }
   },
-  index: function () {
-    this.todoTasks = Task.all();
-    render(index, this.todoTasks);
-  },
-  show: function () {
-    setTodoTask(this);
-    render(show, this.todoTask);
-  },
+  // index: function () {
+  //   this.todoTasks = Task.all();
+  //   render(index, this.todoTasks);
+  // },
+  // show: function () {
+  //   setTodoTask(this);
+  //   render(show, this.todoTask);
+  // },
   edit: function () {
     this.todoTask = Task.new(params);
     render(edit, this.todoTask);
@@ -83,9 +87,10 @@ const controller = {
     this.todoTask = Task.new(params);
     this.todoTask.data.validated = false;
 
-    if (!this.todoTask.data.validated) {
-      this.todoTask.validate();
-    }
+    this.todoTask.validate();
+    // if (!this.todoTask.data.validated) {
+    //   this.todoTask.validate();
+    // }
 
     if (this.todoTask.errors.length === 0) {
       updateTaskInTodoParams(this.todoTask);

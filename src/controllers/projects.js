@@ -1,16 +1,18 @@
 import { Project } from '../models/project';
-import { projectParams as params } from '../parameters/projectParameters';
-import { projectsPath } from '../routers/projectRouteHelpers';
-import { todosPath } from '../routers/todoRoutes';
-import { redirectTo } from '../routers/router';
-import { render, popCachedView } from '../renderers/renderer';
 
+import { params } from '../parameters/project';
+
+import { redirectTo } from '../routing/routers/router';
+import { projectsPath } from '../routing/helpers/project';
+import { todosPath } from '../routing/helpers/todo';
+
+import { render, popCachedView } from '../rendering/renderers/renderer';
 import {
   projectsView as index,
   newProjectView as new_,
   editProjectView as edit,
   projectView as show,
-} from '../renderers/projectRenderers';
+} from '../rendering/helpers/project';
 
 const setProject = (controller) => {
   const id = params.data.id;
@@ -51,8 +53,8 @@ const controller = {
   update: function () {
     this.project = Project.new(params);
     this.project.data.validated = false;
-
     const validationInstance = Project.new(params);
+
     if (this.project.update(validationInstance)) {
       params.reset();
       popCachedView();

@@ -1,4 +1,4 @@
-import { createViewHelpers } from './factory';
+import { createPathHelpers } from '../../pathHelpers/factory';
 
 import { indexView } from '../../views/projects';
 import { editView } from '../../views/projects/edit';
@@ -10,19 +10,34 @@ import {
   projectContainer,
 } from '../../views/layouts/application';
 
-const views = {
-  index: { view: indexView, container: projectContainer },
-  edit: { view: editView, container: contentContainer, focusID: 'nameID' },
-  new_: { view: newView, container: contentContainer, focusID: 'nameID' },
-  show: { view: showView, container: contentContainer },
+import { createResourceNameInfo } from '../../resourceNameInfo/resourceNameInfo';
+
+import { createRenderer } from '../renderers/renderer';
+
+const helperTargets = {
+  index: createRenderer({
+    view: indexView,
+    container: projectContainer,
+  }),
+  edit: createRenderer({
+    view: editView,
+    container: contentContainer,
+    focusID: 'nameID',
+  }),
+  new_: createRenderer({
+    view: newView,
+    container: contentContainer,
+    focusID: 'nameID',
+  }),
+  show: createRenderer({ view: showView, container: contentContainer }),
 };
 
 const nameInfo = createResourceNameInfo('project', 'projects');
-const viewHelpers = createViewHelpers(nameInfo, views);
+const pathHelpers = createPathHelpers(nameInfo, helperTargets);
 
-const projectsView = viewHelpers.projectsView;
-const newProjectView = viewHelpers.newProjectView;
-const editProjectView = viewHelpers.editProjectView;
-const projectView = viewHelpers.projectView;
+const projectsView = pathHelpers.projectsView;
+const newProjectView = pathHelpers.newProjectView;
+const editProjectView = pathHelpers.editProjectView;
+const projectView = pathHelpers.projectView;
 
 export { projectsView, newProjectView, editProjectView, projectView };
