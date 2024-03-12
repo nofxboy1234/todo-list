@@ -7,7 +7,7 @@
     {
       "type": "chrome",
       "request": "launch",
-      "name": "Open index.html",
+      "name": "Open index.html!",
       "file": "/home/dylan/repos/todo-list/dist/index.html"
     }
   ]
