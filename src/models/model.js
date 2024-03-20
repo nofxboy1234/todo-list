@@ -4,15 +4,6 @@ const model = {
     this.instanceProperties = instanceProperties;
   },
   new: function (parameters) {
-    const addToInstances = (instance) => {
-      this.instances.push(instance);
-    };
-
-    const removeFromInstances = (instance) => {
-      const removeIndex = this.instances.indexOf(instance);
-      this.instances.splice(removeIndex, 1);
-    };
-
     const lastID = () => {
       const instance = this.last();
       if (instance) {
@@ -27,7 +18,7 @@ const model = {
     };
 
     const saveInstanceToStorage = (instance) => {
-      addToInstances(instance);
+      this.instances.push(instance);
     };
 
     const updateInstanceInStorage = (instance, updatedData) => {
@@ -35,7 +26,8 @@ const model = {
     };
 
     const removeInstanceFromStorage = (instance) => {
-      removeFromInstances(instance);
+      const removeIndex = this.instances.indexOf(instance);
+      this.instances.splice(removeIndex, 1);
     };
 
     const assignID = (instance) => {
@@ -117,7 +109,6 @@ const model = {
   },
   all: function () {
     return this.instances;
-    model;
   },
   last: function () {
     return this.instances.at(-1);

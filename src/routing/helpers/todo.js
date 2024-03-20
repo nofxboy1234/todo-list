@@ -1,11 +1,11 @@
-import { createPathHelpers } from '../../pathHelpers/factory';
+import { createRendererHelpers } from '../../pathHelpers/factory';
 
 import { controller } from '../../controllers/todos';
 import { params } from '../../parameters/todo';
 
 import { createResourceNameInfo } from '../../resourceNameInfo/resourceNameInfo';
 
-import { indexPath } from '../paths';
+import { indexPath } from '../paths/index';
 import { editPath } from '../paths/edit';
 import { newPath } from '../paths/new';
 import { showPath } from '../paths/show';
@@ -18,7 +18,7 @@ const helperTargets = {
 };
 
 const nameInfo = createResourceNameInfo('todo', 'todos');
-const routeHelpers = createPathHelpers(nameInfo, helperTargets);
+const routeHelpers = createRendererHelpers(nameInfo, helperTargets);
 
 const todosPath = routeHelpers.todosPath;
 const newTodoPath = routeHelpers.newTodoPath;

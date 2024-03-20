@@ -1,4 +1,4 @@
-import { createPathHelpers } from '../../pathHelpers/factory';
+import { createRendererHelpers } from '../../pathHelpers/factory';
 
 import { indexView } from '../../views/todoProjects';
 import { editView } from '../../views/todoProjects/edit';
@@ -30,7 +30,7 @@ const helperTargets = {
 };
 
 const nameInfo = createResourceNameInfo('todoProject', 'todoProjects');
-const pathHelpers = createPathHelpers(nameInfo, helperTargets);
+const pathHelpers = createRendererHelpers(nameInfo, helperTargets);
 
 const todoProjectsView = pathHelpers.todoProjectsView;
 const newTodoProjectView = pathHelpers.newTodoProjectView;

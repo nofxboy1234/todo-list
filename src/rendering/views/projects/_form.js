@@ -2,12 +2,12 @@ import { createLabel, createInput, createButton } from '../helpers';
 
 import { projectParams } from '../../parameters/projectParameters';
 
-import { redirectTo } from '../../routers/router';
-import { projectPath, projectsPath } from '../../routers/projectRouteHelpers';
+import { redirectTo } from '../../../routing/router';
+// import { projectPath, projectsPath } from '../../../routing/helpers/project';
 
-import { renderCachedView } from '../../renderers/renderer';
+import { renderCachedView } from '../../renderer';
 
-const form = (project) => {
+function createForm(project) {
   const exists = project.data.onTodoForm || project.data.id ? true : false;
 
   const cancelForm = () => {
@@ -16,11 +16,13 @@ const form = (project) => {
   };
 
   const createProject = (event) => {
-    redirectTo('POST', projectsPath, currentData());
+    redirectTo('POST', project.pathHelpers.projectsPath, currentData());
+    // redirectTo('POST', projectsPath, currentData());
   };
 
   const updateProject = (event) => {
-    redirectTo('PATCH', projectPath, currentData());
+    redirectTo('PATCH', project.pathHelpers.projectPath, currentData());
+    // redirectTo('PATCH', projectPath, currentData());
   };
 
   const currentData = () => {
@@ -143,6 +145,6 @@ const form = (project) => {
   }
 
   return projectForm;
-};
+}
 
-export { form };
+export { createForm };

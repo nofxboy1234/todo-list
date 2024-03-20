@@ -1,7 +1,7 @@
 import { httpDelete } from '../routeMethods/httpDeleteMethod';
 import { httpGet } from '../routeMethods/httpGetMethod';
 import { httpPatch } from '../routeMethods/httpPatchMethod';
-import { httpPost } from '../routeMethods/httpPostMethod';
+import { httpPost } from './methods/post';
 import { httpPut } from '../routeMethods/httpPutMethod';
 
 const httpMethods = {

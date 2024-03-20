@@ -2,6 +2,8 @@ import { Todo } from './todo';
 import { createModel } from './model';
 import { todoParams as todoParams } from '../parameters/todoParameters';
 
+import { pathHelpers } from '../routing/helpers/project';
+
 const updateInstanceInStorage = (instance, updatedData) => {
   Object.assign(instance.data, updatedData.data);
 };
@@ -28,6 +30,7 @@ const hasCollidingName = (project) => {
 };
 
 const instanceProperties = {
+  pathHelpers: pathHelpers,
   todos: function () {
     return Todo.all().filter((todo) => todo.data.projectID === this.data.id);
   },

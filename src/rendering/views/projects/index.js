@@ -7,6 +7,9 @@ import { projectPath } from '../../routers/projectRouteHelpers';
 import { setProjectForTodosIndex } from '../todos';
 
 const view = {
+  init: function (container) {
+    this.container = container;
+  },
   render: function (projects) {
     const projectsDiv = document.createElement('div');
 
@@ -51,8 +54,8 @@ const view = {
   },
 };
 
-const indexView = () => {
-  return Object.create(view);
+const createIndexView = (container) => {
+  return Object.create(view).init(container);
 };
 
-export { indexView };
+export { createIndexView };

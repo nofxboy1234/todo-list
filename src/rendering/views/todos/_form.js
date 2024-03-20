@@ -33,6 +33,7 @@ import {
   newTodoView as new_,
   editTodoView as edit,
 } from '../../rendering/helpers/todo';
+import { TodoProject } from '../../../models/todoProject';
 
 const form = (todo) => {
   const persisted = todo.data.id ? true : false;
@@ -65,7 +66,7 @@ const form = (todo) => {
     mergeCurrentDataIntoParams();
     cacheCurrentView();
 
-    todoProjectRedirectTo('GET', newTodoProjectPath);
+    redirectTo('GET', TodoProject.pathHelpers.newProjectPath);
   };
 
   const editProject = (event) => {

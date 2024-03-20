@@ -6,7 +6,7 @@ import { redirectTo } from '../routing/routers/router';
 import { projectsPath } from '../routing/helpers/project';
 import { todosPath } from '../routing/helpers/todo';
 
-import { render, popCachedView } from '../rendering/renderers/renderer';
+import { render, popCachedView } from '../rendering/renderer';
 import {
   projectsView as index,
   newProjectView as new_,

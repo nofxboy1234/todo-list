@@ -7,7 +7,7 @@ import {
   projectPath,
 } from '../../routers/projectRouteHelpers';
 
-const Partial = (project) => {
+const partial = (project) => {
   const projectParagraph = document.createElement('p');
 
   const nameDiv = document.createElement('div');
@@ -41,4 +41,4 @@ const Partial = (project) => {
   return projectParagraph;
 };
 
-export { Partial };
+export { partial };

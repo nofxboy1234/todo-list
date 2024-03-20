@@ -1,4 +1,4 @@
-import { createPathHelpers } from '../../pathHelpers/factory';
+import { createRendererHelpers } from '../../pathHelpers/factory';
 
 import { indexView } from '../../views/todoTasks';
 import { editView } from '../../views/todoTasks/edit';
@@ -30,7 +30,7 @@ const helperTargets = {
 };
 
 const nameInfo = createResourceNameInfo('todoTask', 'todoTasks');
-const pathHelpers = createPathHelpers(nameInfo, helperTargets);
+const pathHelpers = createRendererHelpers(nameInfo, helperTargets);
 
 const todoTasksView = pathHelpers.todoTasksView;
 const newTodoTaskView = pathHelpers.newTodoTaskView;

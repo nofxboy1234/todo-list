@@ -1,9 +1,9 @@
-import { createPathHelpers } from '../../pathHelpers/factory';
+import { createHelpers } from './createHelpers';
 
-import { indexView } from '../../views/projects';
-import { editView } from '../../views/projects/edit';
-import { newView } from '../../views/projects/new';
-import { showView } from '../../views/projects/show';
+import { createIndexView } from '../views/projects/index';
+import { createEditView } from '../views/projects/edit';
+import { createNewView } from '../views/projects/new';
+import { createShowView } from '../views/projects/show';
 
 import {
   contentContainer,
@@ -12,28 +12,20 @@ import {
 
 import { createResourceNameInfo } from '../../resourceNameInfo/resourceNameInfo';
 
-import { createRenderer } from '../renderers/renderer';
+const indexView = createIndexView(projectContainer);
+const editView = createEditView(contentContainer, 'nameID');
+const newView = createNewView(contentContainer, 'nameID');
+const showView = createShowView(contentContainer);
 
 const helperTargets = {
-  index: createRenderer({
-    view: indexView,
-    container: projectContainer,
-  }),
-  edit: createRenderer({
-    view: editView,
-    container: contentContainer,
-    focusID: 'nameID',
-  }),
-  new_: createRenderer({
-    view: newView,
-    container: contentContainer,
-    focusID: 'nameID',
-  }),
-  show: createRenderer({ view: showView, container: contentContainer }),
+  index: indexView,
+  edit: editView,
+  new_: newView,
+  show: showView,
 };
 
 const nameInfo = createResourceNameInfo('project', 'projects');
-const pathHelpers = createPathHelpers(nameInfo, helperTargets);
+const pathHelpers = createHelpers(nameInfo, helperTargets);
 
 const projectsView = pathHelpers.projectsView;
 const newProjectView = pathHelpers.newProjectView;
