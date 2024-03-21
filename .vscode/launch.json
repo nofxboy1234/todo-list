@@ -5,6 +5,22 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "PubSub",
+      "program": "${workspaceFolder}/src/pubsub/index.mjs",
+      "request": "launch",
+      "skipFiles": ["<node_internals>/**"],
+      "type": "node",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Observer",
+      "program": "${workspaceFolder}/src/observer/index.mjs",
+      "request": "launch",
+      "skipFiles": ["<node_internals>/**"],
+      "type": "node",
+      "console": "integratedTerminal"
+    },
+    {
       "type": "chrome",
       "request": "launch",
       "name": "Open index.html!",

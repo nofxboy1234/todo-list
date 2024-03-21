@@ -1,16 +1,7 @@
-import { addObserver, notifyObservers } from './observers.mjs';
+import { subject } from './subject.mjs';
+import { updateSidebarUsername as observer1 } from './observer1.mjs';
+import { updateHeaderUsername } from './observer2.mjs';
 
-const updateSidebarUsername = (data) => {
-  console.log(`Sidebar user name: ${data}`);
-};
+subject.click();
 
-const updateHeaderUsername = (data) => {
-  console.log(`Header user name: ${data}`);
-};
 
-addObserver(updateSidebarUsername);
-addObserver(updateHeaderUsername);
-
-notifyObservers('Diona');
-// const btn = document.querySelector('button');
-// btn.addEventListener('click', () => notifyObservers('Diona'));
