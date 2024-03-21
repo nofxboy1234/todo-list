@@ -1,5 +1,3 @@
-import { addObserver } from './subject.mjs';
-
 // Observers are aware of the Subject/Observable.
 const observer = {
   update(data) {
@@ -9,7 +7,5 @@ const observer = {
     console.log(`Header user name: ${data}`);
   },
 };
-
-addObserver(observer);
 
 export { observer };
