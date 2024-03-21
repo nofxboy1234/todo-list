@@ -16,7 +16,7 @@ export const removeObserver = (observer) => {
 };
 
 const notifyObservers = (data) => {
-  observers.forEach((observer) => observer(data));
+  observers.forEach((observer) => observer.update(data));
 };
 
 export const subject = {

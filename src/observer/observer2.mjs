@@ -1,10 +1,15 @@
 import { addObserver } from './subject.mjs';
 
 // Observers are aware of the Subject/Observable.
-const updateHeaderUsername = (data) => {
-  console.log(`Header user name: ${data}`);
+const observer = {
+  update(data) {
+    this.updateHeaderUsername(data);
+  },
+  updateHeaderUsername(data) {
+    console.log(`Header user name: ${data}`);
+  },
 };
 
-addObserver(updateHeaderUsername);
+addObserver(observer);
 
-export { updateHeaderUsername };
+export { observer };
