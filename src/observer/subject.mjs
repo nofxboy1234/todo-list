@@ -15,7 +15,7 @@ export const removeObserver = (observer) => {
   observers = observers.filter((obs) => obs !== observer);
 };
 
-export const notifyObservers = (data) => {
+const notifyObservers = (data) => {
   observers.forEach((observer) => observer(data));
 };
 
