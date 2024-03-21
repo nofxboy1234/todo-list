@@ -4,10 +4,6 @@ import { todoParams as todoParams } from '../parameters/todoParameters';
 
 import { pathHelpers } from '../routing/helpers/project';
 
-const updateInstanceInStorage = (instance, updatedData) => {
-  Object.assign(instance.data, updatedData.data);
-};
-
 const hasCollidingName = (project) => {
   const paramsProjects = todoParams.data.projects;
   const indexInProjects = project.data.indexInProjects;
@@ -38,23 +34,6 @@ const instanceProperties = {
     this.todos().forEach((todo) => {
       todo.destroy();
     });
-  },
-  validate: function () {
-    if (this.data.name === '') {
-      this.errors.push('Name cannot be blank');
-    }
-
-    if (this.data.name.length < 2) {
-      this.errors.push('Name must be 2 or more characters');
-    }
-
-    if (hasCollidingName(this)) {
-      this.errors.push('A Project already exists with this name');
-    }
-
-    if (this.errors.length === 0) {
-      this.data.validated = true;
-    }
   },
   update: function (validationInstance) {
     if (!validationInstance.data.validated) {

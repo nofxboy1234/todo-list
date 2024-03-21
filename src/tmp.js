@@ -1,61 +1,81 @@
-// const cat = {
-//   init: function (sound) {
-//     this.sound = sound;
-//     return this;
-//   },
-//   makeSound: function () {
-//     sound = this.sound ? this.sound : 'bark';
-//     console.log(sound);
-//   },
-//   hello: () => {
-//     console.log('hello!');
-//   },
-// };
+const instances = [];
 
-// const mark = Object.create(cat);
-// mark.makeSound();
-// const waffles = Object.create(cat).init('meow');
-// waffles.makeSound();
-// waffles.hello();
-
-// model.js
-
-function createModel() {
-  const instances = [];
-
-  const all = () => instances;
-  const last = () => instances.at(-1);
-  const first = () => instances.at(0);
-
-  const init = () => {
-    const instance = {
-      save() {
-        instances.push(this);
-      },
-      update() {},
-      destroy() {},
-    };
-    return instance;
-  };
-
-  return { all, last, first, init };
-}
-
-// const model = createModel().init();
-
-// export { createModel };
-
-// project.js
-// import { model } from './model';
+const all = () => instances;
+const first = () => instances.at(0);
+const last = () => instances.at(-1);
 
 function createProject(name) {
-  const model = createModel();
+  let id;
+  let errors = [];
 
-  const todos = () => {};
+  const lastID = () => {
+    const lastInstance = last();
+    if (lastInstance) {
+      return lastInstance.id;
+    }
 
-  return Object.assign({}, model, { name, todos });
+    return 0;
+  };
+
+  const nextID = () => {
+    return lastID() + 1;
+  };
+
+  const save = () => {
+    validate();
+    if (errors.length === 0) {
+      id = nextID();
+      instances.push(instance);
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const validate = () => {
+    if (name === '') {
+      errors.push('Name cannot be blank');
+    }
+
+    if (name.length < 2) {
+      errors.push('Name must be 2 or more characters');
+    }
+
+    if (instances.find((project) => project.name === name)) {
+      errors.push('A Project already exists with this name');
+    }
+  };
+
+  // const todos = () => todo.all().filter((todo) => todo.projectID === id);
+
+  const instance = {
+    name,
+    save,
+    // errors,
+    get errors() {
+      return errors;
+    },
+    // set errors(value) {
+    //   errors = value;
+    // },
+  };
+
+  return instance;
 }
 
-const project = createProject('project 1');
-console.log(project.all());
-const project1 = project.init();
+// export { all, first, last, createProject };
+
+const project1 = createProject('project 1');
+console.log(project1.errors);
+project1.errors.push('a');
+console.log(project1.errors);
+project1.errors = ['error!'];
+console.log(project1.errors);
+// project1.save();
+
+// const project2 = createProject('project 2');
+// project2.save();
+
+// console.log(all());
+// console.log(first());
+// console.log(last());
