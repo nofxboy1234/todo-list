@@ -107,3 +107,13 @@ project4.errors.forEach((error) => console.log(error.description));
 project4.name = 'p4';
 project4.validate();
 project4.errors.forEach((error) => console.log(error.description));
+project4.save();
+
+const project5 = createProject('p4');
+project5.validate();
+if (project5.save()) {
+  console.log(`Saved ${project5.name}!`);
+} else {
+  console.log(`Did not save ${project5.name}!`);
+  project5.errors.forEach((error) => console.log(error.description));
+}
