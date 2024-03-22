@@ -57,6 +57,7 @@ function createProject(name) {
   const instance = {
     name,
     save,
+    validate,
     get errors() {
       return errors;
     },
@@ -65,7 +66,10 @@ function createProject(name) {
     },
     set name(value) {
       name = value;
-    }
+    },
+    get id() {
+      return id;
+    },
   };
 
   return instance;
@@ -82,6 +86,7 @@ project1.errors.forEach((error) => console.log(error.description));
 
 const project2 = createProject('p2');
 project2.save();
+console.log(project1.id);
 console.log(all());
 console.log(first());
 console.log(last());
@@ -91,3 +96,4 @@ const project3 = createProject('p3');
 console.log(project3.name);
 project3.name = 'p3333333333333333';
 console.log(project3.name);
+project3.save();
