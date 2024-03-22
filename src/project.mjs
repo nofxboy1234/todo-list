@@ -60,6 +60,12 @@ function createProject(name) {
     get errors() {
       return errors;
     },
+    get name() {
+      return name;
+    },
+    set name(value) {
+      name = value;
+    }
   };
 
   return instance;
@@ -80,3 +86,8 @@ console.log(all());
 console.log(first());
 console.log(last());
 project2.errors.forEach((error) => console.log(error.description));
+
+const project3 = createProject('p3');
+console.log(project3.name);
+project3.name = 'p3333333333333333';
+console.log(project3.name);
