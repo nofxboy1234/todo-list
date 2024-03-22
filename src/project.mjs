@@ -117,3 +117,7 @@ if (project5.save()) {
   console.log(`Did not save ${project5.name}!`);
   project5.errors.forEach((error) => console.log(error.description));
 }
+
+console.log(all().map((project) => project.name));
+console.log(first().name);
+console.log(last().name);
