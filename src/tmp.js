@@ -7,7 +7,6 @@ const last = () => instances.at(-1);
 function createProject(name) {
   let id;
   const errors = [];
-  // Object.freeze(errors);
 
   const lastID = () => {
     const lastInstance = last();
@@ -52,7 +51,7 @@ function createProject(name) {
   const instance = {
     name,
     save,
-    errors,
+    // errors,
     get errors() {
       return errors;
     },
