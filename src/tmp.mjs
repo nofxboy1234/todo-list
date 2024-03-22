@@ -1,3 +1,6 @@
+import { createErrorCollection } from './errorCollection.mjs';
+import { createModelError } from './modelError.mjs';
+
 const instances = [];
 
 const all = () => instances;
@@ -6,7 +9,7 @@ const last = () => instances.at(-1);
 
 function createProject(name) {
   let id;
-  const errors = [];
+  const errors = createErrorCollection();
 
   const lastID = () => {
     const lastInstance = last();
@@ -23,7 +26,7 @@ function createProject(name) {
 
   const save = () => {
     validate();
-    if (errors.length === 0) {
+    if (errors.size() === 0) {
       id = nextID();
       instances.push(instance);
       return true;
@@ -34,15 +37,18 @@ function createProject(name) {
 
   const validate = () => {
     if (name === '') {
-      errors.push('Name cannot be blank');
+      const error = createModelError('Name cannot be blank');
+      errors.add(error);
     }
 
     if (name.length < 2) {
-      errors.push('Name must be 2 or more characters');
+      const error = createModelError('Name must be 2 or more characters');
+      errors.add(error);
     }
 
     if (instances.find((project) => project.name === name)) {
-      errors.push('A Project already exists with this name');
+      const error = createModelError('A Project already exists with this name');
+      errors.add(error);
     }
   };
 
@@ -62,10 +68,15 @@ function createProject(name) {
 // export { all, first, last, createProject };
 
 const project1 = createProject('p');
-console.log(project1.errors);
+project1.save();
+console.log(all());
+console.log(first());
+console.log(last());
+project1.errors.forEach((error) => console.log(error.description));
 
-project1.errors.push('a');
-console.log(project1.errors);
-
-project1.errors = ['error!'];
-console.log(project1.errors);
+const project2 = createProject('p2');
+project2.save();
+console.log(all());
+console.log(first());
+console.log(last());
+project2.errors.forEach((error) => console.log(error.description));
