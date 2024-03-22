@@ -15,10 +15,15 @@ function createErrorCollection() {
     return errors.length;
   };
 
+  const clear = () => {
+    errors.length = 0;
+  };
+
   const instance = {
     add,
     forEach,
     size,
+    clear,
   };
 
   return instance;

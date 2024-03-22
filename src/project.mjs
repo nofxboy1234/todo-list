@@ -36,6 +36,7 @@ function createProject(name) {
   };
 
   const validate = () => {
+    errors.clear();
     if (name === '') {
       const error = createModelError('Name cannot be blank');
       errors.add(error);
@@ -96,4 +97,13 @@ const project3 = createProject('p3');
 console.log(project3.name);
 project3.name = 'p3333333333333333';
 console.log(project3.name);
+console.log(project3.id);
 project3.save();
+console.log(project3.id);
+
+const project4 = createProject('');
+project4.validate();
+project4.errors.forEach((error) => console.log(error.description));
+project4.name = 'p4';
+project4.validate();
+project4.errors.forEach((error) => console.log(error.description));
