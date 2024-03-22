@@ -55,15 +55,7 @@ function createProject(name) {
     get errors() {
       return errors;
     },
-    // set errors(value) {
-    //   errors = value;
-    // },
   };
-
-  // Object.defineProperty(instance, 'errors', {
-  //   value: [],
-  //   writable: false,
-  // });
 
   return instance;
 }
