@@ -6,7 +6,8 @@ const last = () => instances.at(-1);
 
 function createProject(name) {
   let id;
-  let errors = [];
+  const errors = [];
+  // Object.freeze(errors);
 
   const lastID = () => {
     const lastInstance = last();
@@ -51,7 +52,7 @@ function createProject(name) {
   const instance = {
     name,
     save,
-    // errors,
+    errors,
     get errors() {
       return errors;
     },
@@ -60,22 +61,21 @@ function createProject(name) {
     // },
   };
 
+  // Object.defineProperty(instance, 'errors', {
+  //   value: [],
+  //   writable: false,
+  // });
+
   return instance;
 }
 
 // export { all, first, last, createProject };
 
-const project1 = createProject('project 1');
+const project1 = createProject('p');
 console.log(project1.errors);
+
 project1.errors.push('a');
 console.log(project1.errors);
+
 project1.errors = ['error!'];
 console.log(project1.errors);
-// project1.save();
-
-// const project2 = createProject('project 2');
-// project2.save();
-
-// console.log(all());
-// console.log(first());
-// console.log(last());
