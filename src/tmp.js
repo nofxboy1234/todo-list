@@ -51,7 +51,6 @@ function createProject(name) {
   const instance = {
     name,
     save,
-    // errors,
     get errors() {
       return errors;
     },
