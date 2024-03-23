@@ -121,3 +121,10 @@ if (project5.save()) {
 console.log(all().map((project) => project.name));
 console.log(first().name);
 console.log(last().name);
+
+const instances2 = all();
+console.log(instances2);
+// instances2 = [];
+instances2[0] = 'z';
+console.log(instances2);
+console.log(instances);
