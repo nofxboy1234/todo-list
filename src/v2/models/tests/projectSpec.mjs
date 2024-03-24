@@ -23,5 +23,22 @@ if (project1.save()) {
   }
 }
 
-const allProjects = Project.all().map((project) => project.name);
+let allProjects = Project.all().map((project) => project.name);
 console.log(allProjects);
+
+console.log(`First project is ${Project.first().name}`);
+console.log(`Last project is ${Project.last().name}`);
+
+console.log('Creating p2');
+const project2 = createProject('p2');
+project2.save();
+
+console.log('Creating p3');
+const project3 = createProject('p3');
+project3.save();
+
+allProjects = Project.all().map((project) => project.name);
+console.log(allProjects);
+
+console.log(`First project is ${Project.first().name}`);
+console.log(`Last project is ${Project.last().name}`);
