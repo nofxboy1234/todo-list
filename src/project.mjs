@@ -56,12 +56,6 @@ function createProject(name) {
   // const todos = () => todo.all().filter((todo) => todo.projectID === id);
 
   const instance = {
-    name,
-    save,
-    validate,
-    get errors() {
-      return errors;
-    },
     get name() {
       return name;
     },
@@ -71,60 +65,37 @@ function createProject(name) {
     get id() {
       return id;
     },
+    get errors() {
+      return errors;
+    },
+    save,
+    validate,
   };
 
   return instance;
 }
 
-// export { all, first, last, createProject };
+export { all, first, last, createProject };
 
 const project1 = createProject('p');
-project1.save();
-console.log(all());
-console.log(first());
-console.log(last());
-project1.errors.forEach((error) => console.log(error.description));
+project1.validate();
+project1.errors.forEach((error) => {
+  console.log(error.description);
+});
 
-const project2 = createProject('p2');
-project2.save();
-console.log(project1.id);
-console.log(all());
-console.log(first());
-console.log(last());
-project2.errors.forEach((error) => console.log(error.description));
-
-const project3 = createProject('p3');
-console.log(project3.name);
-project3.name = 'p3333333333333333';
-console.log(project3.name);
-console.log(project3.id);
-project3.save();
-console.log(project3.id);
-
-const project4 = createProject('');
-project4.validate();
-project4.errors.forEach((error) => console.log(error.description));
-project4.name = 'p4';
-project4.validate();
-project4.errors.forEach((error) => console.log(error.description));
-project4.save();
-
-const project5 = createProject('p4');
-project5.validate();
-if (project5.save()) {
-  console.log(`Saved ${project5.name}!`);
+if (project1.save()) {
+  console.log(`Saved ${project1.name}`);
+  console.log(`ID is ${project1.id}`);
 } else {
-  console.log(`Did not save ${project5.name}!`);
-  project5.errors.forEach((error) => console.log(error.description));
+  console.log(`Did not save ${project1.name}`);
+  project1.errors.forEach((error) => {
+    console.log(error.description);
+  });
+  console.log(`ID is ${project1.id}`);
+
+  project1.name = 'p1';
+  if (project1.save()) {
+    console.log(`Saved ${project1.name}`);
+    console.log(`ID is ${project1.id}`);
+  }
 }
-
-console.log(all().map((project) => project.name));
-console.log(first().name);
-console.log(last().name);
-
-const instances2 = all();
-console.log(instances2);
-// instances2 = [];
-instances2[0] = 'z';
-console.log(instances2);
-console.log(instances);
