@@ -1,18 +1,27 @@
 import { createErrorCollection } from './errorCollection.mjs';
-import { createModelError } from './modelError.mjs';
+import { createError } from './error.mjs';
 
 const instances = [];
 
-const all = () => instances;
-const first = () => instances.at(0);
-const last = () => instances.at(-1);
+// "Class" methods
+const Project = {
+  all() {
+    return instances;
+  },
+  first() {
+    return instances.at(0);
+  },
+  last() {
+    return instances.at(-1);
+  },
+};
 
 function createProject(name) {
   let id;
   const errors = createErrorCollection();
 
   const lastID = () => {
-    const lastInstance = last();
+    const lastInstance = Project.last();
     if (lastInstance) {
       return lastInstance.id;
     }
@@ -38,17 +47,17 @@ function createProject(name) {
   const validate = () => {
     errors.clear();
     if (name === '') {
-      const error = createModelError('Name cannot be blank');
+      const error = createError('Name cannot be blank');
       errors.add(error);
     }
 
     if (name.length < 2) {
-      const error = createModelError('Name must be 2 or more characters');
+      const error = createError('Name must be 2 or more characters');
       errors.add(error);
     }
 
     if (instances.find((project) => project.name === name)) {
-      const error = createModelError('A Project already exists with this name');
+      const error = createError('A Project already exists with this name');
       errors.add(error);
     }
   };
@@ -75,4 +84,4 @@ function createProject(name) {
   return instance;
 }
 
-export { all, first, last, createProject };
+export { Project, createProject };

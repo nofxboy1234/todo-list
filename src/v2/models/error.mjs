@@ -1,4 +1,4 @@
-function createModelError(description) {
+function createError(description) {
   const instance = {
     get description() {
       return description;
@@ -8,4 +8,4 @@ function createModelError(description) {
   return instance;
 }
 
-export { createModelError };
+export { createError };

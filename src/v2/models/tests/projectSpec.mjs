@@ -1,4 +1,4 @@
-import { all, first, last, createProject } from '../project.mjs';
+import { Project, createProject } from '../project.mjs';
 
 const project1 = createProject('p');
 project1.validate();
@@ -22,3 +22,6 @@ if (project1.save()) {
     console.log(`ID is ${project1.id}`);
   }
 }
+
+const allProjects = Project.all().map((project) => project.name);
+console.log(allProjects);
