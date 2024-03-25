@@ -6,6 +6,7 @@ project1.errors.forEach((error) => {
   console.log(error.description);
 });
 
+// project1.name;
 if (project1.save()) {
   console.log(`Saved ${project1.name}`);
   console.log(`ID is ${project1.id}`);
@@ -23,22 +24,22 @@ if (project1.save()) {
   }
 }
 
-let allProjects = Project.all().map((project) => project.name);
-console.log(allProjects);
+// let allProjects = Project.all().map((project) => project.name);
+// console.log(allProjects);
 
-console.log(`First project is ${Project.first().name}`);
-console.log(`Last project is ${Project.last().name}`);
+// console.log(`First project is ${Project.first().name}`);
+// console.log(`Last project is ${Project.last().name}`);
 
-console.log('Creating p2');
-const project2 = createProject('p2');
-project2.save();
+// console.log('Creating p2');
+// const project2 = createProject('p2');
+// project2.save();
 
-console.log('Creating p3');
-const project3 = createProject('p3');
-project3.save();
+// console.log('Creating p3');
+// const project3 = createProject('p3');
+// project3.save();
 
-allProjects = Project.all().map((project) => project.name);
-console.log(allProjects);
+// allProjects = Project.all().map((project) => project.name);
+// console.log(allProjects);
 
-console.log(`First project is ${Project.first().name}`);
-console.log(`Last project is ${Project.last().name}`);
+// console.log(`First project is ${Project.first().name}`);
+// console.log(`Last project is ${Project.last().name}`);
