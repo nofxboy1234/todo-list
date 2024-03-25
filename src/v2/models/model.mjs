@@ -25,9 +25,6 @@ function createModelStatic() {
   const nextID = () => {
     return lastID() + 1;
   };
-  const addToInstances = (instance) => {
-    instances.push(instance);
-  };
 
   const instance = {
     all,
@@ -45,26 +42,15 @@ function createModel() {
   let id;
   const errors = createErrorCollection();
 
-  const save = (modelStatic) => {
-    if (!modelStatic) {
-      console.log(
-        'Please override "save()" and specify a "modelStatic" argument'
-      );
-      return false;
-    }
-
+  const save = () => {
     validate();
     if (errors.size() === 0) {
       id = nextID();
-      modelStatic.addToInstances(instance);
+      instances.push(instance);
       return true;
     } else {
       return false;
     }
-  };
-
-  const validate = () => {
-    console.log('Please override "validate()"');
   };
 
   const instance = {
@@ -77,7 +63,4 @@ function createModel() {
   return instance;
 }
 
-// export { createModelStatic, createModel };
-
-const modelStatic = createModelStatic();
-modelStatic.nextID();
+export { createModelStatic, createModel };
