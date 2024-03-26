@@ -1,66 +1,49 @@
 import { createErrorCollection } from './errorCollection.mjs';
 
-function createModelStatic() {
-  // private "Class" variable
-  const instances = [];
+class Model {
+  id = undefined;
+  errors = createErrorCollection();
 
-  // "Class" methods
-  const all = () => {
-    return instances;
-  };
-  const first = () => {
-    return instances.at(0);
-  };
-  const last = () => {
-    return instances.at(-1);
-  };
-  const lastID = () => {
-    const lastInstance = last();
+  static instances = [];
+
+  static all() {
+    return this.instances;
+  }
+
+  static first() {
+    return this.instances.at(0);
+  }
+
+  static last() {
+    return this.instances.at(-1);
+  }
+
+  static lastID() {
+    const lastInstance = Model.last();
     if (lastInstance) {
       return lastInstance.id;
     }
 
     return 0;
-  };
-  const nextID = () => {
-    return lastID() + 1;
-  };
+  }
 
-  const instance = {
-    all,
-    first,
-    last,
-    lastID,
-    nextID,
-    addToInstances,
-  };
+  static nextID() {
+    return this.lastID() + 1;
+  }
 
-  return instance;
-}
-
-function createModel() {
-  let id;
-  const errors = createErrorCollection();
-
-  const save = () => {
-    validate();
-    if (errors.size() === 0) {
-      id = nextID();
-      instances.push(instance);
+  save() {
+    this.validate();
+    if (this.errors.size() === 0) {
+      this.id = Model.nextID();
+      // const type = typeof this;
+      Model.instances.push(this);
       return true;
     } else {
       return false;
     }
-  };
+  }
 
-  const instance = {
-    id,
-    errors,
-    save,
-    validate,
-  };
-
-  return instance;
+  validate() {}
 }
 
-export { createModelStatic, createModel };
+export { Model };
