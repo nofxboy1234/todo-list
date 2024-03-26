@@ -1,10 +1,50 @@
+import { createErrorCollection } from './errorCollection.mjs';
 import { createError } from './error.mjs';
-import { Model } from './model.mjs';
 
-class Project extends Model {
+class Project {
+  static instances = [];
+
+  id = undefined;
+  errors = createErrorCollection();
+
   constructor(name) {
-    super();
     this.name = name;
+  }
+
+  static all() {
+    return this.instances;
+  }
+
+  static first() {
+    return this.instances.at(0);
+  }
+
+  static last() {
+    return this.instances.at(-1);
+  }
+
+  static lastID() {
+    const lastInstance = this.last();
+    if (lastInstance) {
+      return lastInstance.id;
+    }
+
+    return 0;
+  }
+
+  static nextID() {
+    return this.lastID() + 1;
+  }
+
+  save() {
+    this.validate();
+    if (this.errors.size() === 0) {
+      this.id = Project.nextID();
+      Project.instances.push(this);
+      return true;
+    } else {
+      return false;
+    }
   }
 
   validate() {
