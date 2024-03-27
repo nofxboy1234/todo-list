@@ -74,7 +74,6 @@ class Todo extends Model {
   }
 
   project() {
-    // look through all projects and find project with id === projectID
     return projectStatic.all().find((project) => project.id === this.projectID);
   }
 }

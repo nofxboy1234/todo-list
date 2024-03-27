@@ -1,6 +1,7 @@
 import { Model, createModelStatic } from './model.mjs';
 import { createError } from '../errors/error.mjs';
 import { publish } from '../messageQueue/messageQueue.mjs';
+import { todoStatic } from './todo.mjs';
 
 const events = {
   create: 'taskCreated',
@@ -35,6 +36,10 @@ class Task extends Model {
       const error = createError('Description must be 2 or more characters');
       this.errors.add(error);
     }
+  }
+
+  todo() {
+    return todoStatic.all().find((todo) => todo.id === this.todoID);
   }
 }
 
