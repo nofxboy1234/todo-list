@@ -1,5 +1,10 @@
 import { Model, createModelStatic } from './model.mjs';
 import { createError } from '../errors/error.mjs';
+import { publish } from '../messageQueue/messageQueue.mjs';
+
+const events = {
+  create: 'taskCreated',
+};
 
 const taskStatic = createModelStatic('task');
 
@@ -11,7 +16,12 @@ class Task extends Model {
   }
 
   save() {
-    return super.save(taskStatic);
+    const success = super.save(taskStatic);
+    if (success) {
+      publish(events.create, this);
+    }
+
+    return success;
   }
 
   validate() {

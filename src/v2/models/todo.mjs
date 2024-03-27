@@ -1,6 +1,13 @@
 import { Model, createModelStatic } from './model.mjs';
 import { createError } from '../errors/error.mjs';
 import { taskStatic } from './task.mjs';
+import { publish } from '../messageQueue/messageQueue.mjs';
+
+const events = {
+  create: 'todoCreated',
+  update: 'todoUpdated',
+  destroy: 'todoDestroyed',
+};
 
 const todoStatic = createModelStatic('todo');
 
@@ -15,11 +22,22 @@ class Todo extends Model {
   }
 
   save() {
-    return super.save(todoStatic);
+    const success = super.save(todoStatic);
+    if (success) {
+      publish(events.create, this);
+    }
+
+    return success;
+  }
+
+  update(data) {
+    super.update(data);
+    publish(events.update, this);
   }
 
   destroy() {
     super.destroy(todoStatic);
+    publish(events.destroy, this);
   }
 
   validate() {
