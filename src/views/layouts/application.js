@@ -1,43 +1,47 @@
 // import { Project } from '../../models/project.mjs';
-import { createFlexContainer } from "../helpers";
+import { createFlexContainer } from '../helpers';
 
-const newTodo = () => {
-  console.log('show new todo view');
+const newProject = () => {
+  console.log('show new project view');
   // append new todo view to layout
 
   // this.todo = Todo.new(params);
   // render(new_, this.todo);
 };
 
-const nestContainer = (parent, child) => parent.appendChild(child);
-
 const flexContainer = createFlexContainer('flex-container');
-nestContainer(document.body, flexContainer);
+document.body.appendChild(flexContainer);
 
 const menuContainer = createFlexContainer('flex-item', 'flex-item-left');
-nestContainer(flexContainer, menuContainer);
+flexContainer.appendChild(menuContainer);
 
 const contentContainer = createFlexContainer('flex-item', 'flex-item-right');
-nestContainer(flexContainer, contentContainer);
+flexContainer.appendChild(contentContainer);
 
-const projectContainer = document.createElement('div');
+const projectIndexContainer = document.createElement('div');
 
-const createLayout = () => {
+const setupHeading = () => {
   const headingItem = document.createElement('div');
   headingItem.classList.add('heading');
   headingItem.textContent = 'TODO LIST';
   menuContainer.appendChild(headingItem);
+};
 
-  const newTodoButton = document.createElement('button');
-  newTodoButton.classList.add('new-todo-button');
-  newTodoButton.textContent = 'New Todo';
-  newTodoButton.addEventListener('click', newTodo);
-  menuContainer.appendChild(newTodoButton);
+const setupNewProjectButton = () => {
+  const newProjectButton = document.createElement('button');
+  newProjectButton.classList.add('new-project-button');
+  newProjectButton.textContent = 'New Project';
+  newProjectButton.addEventListener('click', newProject);
+  menuContainer.appendChild(newProjectButton);
+};
 
-  menuContainer.appendChild(projectContainer);
+const createLayout = () => {
+  setupHeading();
+  setupNewProjectButton();
+  menuContainer.appendChild(projectIndexContainer);
 
-  // append index project view to layout
+  // append index project view to projectIndexContainer
   // show todos for Default project
 };
 
-export { createLayout, contentContainer, projectContainer };
+export { createLayout, projectIndexContainer, contentContainer };

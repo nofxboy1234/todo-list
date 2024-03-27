@@ -1,4 +1,4 @@
-import { projectContainer } from './layouts/application';
+import { projectIndexContainer } from './layouts/application';
 
 const createFlexContainer = (...classList) => {
   const flexContainer = document.createElement('div');
@@ -14,9 +14,9 @@ const clearContainer = (container) => {
 };
 
 const clearProjectIndex = () => {
-  while (projectContainer.firstChild) {
-    const lastChild = projectContainer.lastChild;
-    projectContainer.removeChild(lastChild);
+  while (projectIndexContainer.firstChild) {
+    const lastChild = projectIndexContainer.lastChild;
+    projectIndexContainer.removeChild(lastChild);
   }
 };
 
