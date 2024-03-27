@@ -1,51 +1,17 @@
-import { createErrorCollection } from './errorCollection.mjs';
+import { Model, createModelStatic } from './model.mjs';
 import { createError } from './error.mjs';
 
-class Task {
-  static instances = [];
+const taskStatic = createModelStatic('task');
 
-  id = undefined;
-  errors = createErrorCollection();
-
+class Task extends Model {
   constructor(description, todoID) {
+    super();
     this.description = description;
     this.todoID = todoID;
   }
 
-  static all() {
-    return this.instances;
-  }
-
-  static first() {
-    return this.instances.at(0);
-  }
-
-  static last() {
-    return this.instances.at(-1);
-  }
-
-  static lastID() {
-    const lastInstance = this.last();
-    if (lastInstance) {
-      return lastInstance.id;
-    }
-
-    return 0;
-  }
-
-  static nextID() {
-    return this.lastID() + 1;
-  }
-
   save() {
-    this.validate();
-    if (this.errors.size() === 0) {
-      this.id = Task.nextID();
-      Task.instances.push(this);
-      return true;
-    } else {
-      return false;
-    }
+    return super.save(taskStatic);
   }
 
   validate() {
@@ -62,4 +28,9 @@ class Task {
   }
 }
 
-export { Task };
+export { taskStatic, Task };
+
+const task1 = new Task('task1 description', 1);
+if (task1.save()) {
+  console.log(`Saved ${task1.description} successfully`);
+}

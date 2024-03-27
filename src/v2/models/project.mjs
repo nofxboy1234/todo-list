@@ -39,7 +39,7 @@ class Project extends Model {
 
 export { projectStatic, Project };
 
-const project1 = new Project('project1');
-if (project1.save()) {
-  console.log(`Saved ${project1.name} successfully`);
-}
+// const project1 = new Project('project1');
+// if (project1.save()) {
+//   console.log(`Saved ${project1.name} successfully`);
+// }
