@@ -1,4 +1,5 @@
 // import { Project } from '../../models/project.mjs';
+import { createFlexContainer } from "../helpers";
 
 const newTodo = () => {
   console.log('show new todo view');
@@ -6,12 +7,6 @@ const newTodo = () => {
 
   // this.todo = Todo.new(params);
   // render(new_, this.todo);
-};
-
-const createFlexContainer = (...classList) => {
-  const flexContainer = document.createElement('div');
-  flexContainer.classList.add(...classList);
-  return flexContainer;
 };
 
 const nestContainer = (parent, child) => parent.appendChild(child);

@@ -1,6 +1,10 @@
-import {
-  projectContainer,
-} from './layouts/application';
+import { projectContainer } from './layouts/application';
+
+const createFlexContainer = (...classList) => {
+  const flexContainer = document.createElement('div');
+  flexContainer.classList.add(...classList);
+  return flexContainer;
+};
 
 const clearContainer = (container) => {
   while (container.firstChild) {
@@ -81,6 +85,7 @@ const createCheckbox = (checked, cssClass) => {
 };
 
 export {
+  createFlexContainer,
   clearContainer,
   clearProjectIndex,
   createLabel,
