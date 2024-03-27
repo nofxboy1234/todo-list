@@ -5,6 +5,14 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Test",
+      "program": "${workspaceFolder}/src/v2/models/test.mjs",
+      "request": "launch",
+      "skipFiles": ["<node_internals>/**"],
+      "type": "node",
+      "console": "integratedTerminal"
+    },
+    {
       "name": "PubSub",
       "program": "${workspaceFolder}/src/pubsub/index.mjs",
       "request": "launch",
