@@ -46,7 +46,6 @@ class Model {
 
   update(data) {
     Object.assign(this, data);
-    return true;
   }
 
   destroy(modelStatic) {
