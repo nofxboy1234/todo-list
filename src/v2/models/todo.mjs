@@ -2,6 +2,7 @@ import { Model, createModelStatic } from './model.mjs';
 import { createError } from '../errors/error.mjs';
 import { taskStatic } from './task.mjs';
 import { publish } from '../messageQueue/messageQueue.mjs';
+import { projectStatic } from './project.mjs';
 
 const events = {
   create: 'todoCreated',
@@ -70,6 +71,11 @@ class Todo extends Model {
 
   tasks() {
     return taskStatic.all().filter((task) => task.todoID === this.id);
+  }
+
+  project() {
+    // look through all projects and find project with id === projectID
+    return projectStatic.all().find((project) => project.id === this.projectID);
   }
 }
 

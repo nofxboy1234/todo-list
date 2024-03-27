@@ -75,3 +75,5 @@ if (task3.save()) {
 }
 
 console.log(todo2.tasks());
+
+console.log(todo2.project());
