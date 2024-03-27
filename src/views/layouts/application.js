@@ -41,9 +41,8 @@ const createLayout = () => {
 
   menuContainer.appendChild(projectContainer);
 
-  // projectsRedirectTo('GET', projectsPath);
-  // setProjectForTodosIndex(Project.first());
-  // redirectTo('GET', todosPath);
+  // append index project view to layout
+  // show todos for Default project
 };
 
 export { createLayout, contentContainer, projectContainer };
