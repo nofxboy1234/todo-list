@@ -1,34 +1,14 @@
-import { createLayout } from './views/layouts/application';
 import './style.css';
-import { Project } from './models/project';
-import { projectParams } from './parameters/projectParameters';
-import { todoParams } from './parameters/todoParameters';
+import { createLayout } from './views/layouts/application';
+import { Project } from './models/project.mjs';
 
 function createDefaultProject() {
-  updateProjectParams();
-  todoParams.data.projects = [];
-  const project = Project.new(projectParams);
+  const project = new Project('Default');
   if (project.save()) {
-    console.log('saved Default project');
+    console.log(`Saved ${project.name} successfully`);
   } else {
-    project.errors.forEach((error) => {
-      console.log(error);
-    });
+    project.errors.forEach((error) => console.log(error.description));
   }
-}
-
-function defaultProjectData() {
-  return {
-    data: {
-      id: 1,
-      name: 'Default',
-    },
-  };
-}
-
-function updateProjectParams() {
-  const updatedData = defaultProjectData();
-  projectParams.merge(updatedData);
 }
 
 createDefaultProject();
