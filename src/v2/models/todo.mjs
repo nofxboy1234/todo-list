@@ -56,32 +56,3 @@ class Todo extends Model {
 }
 
 export { todoStatic, Todo };
-
-// const todo1 = new Todo('todo1', 'todo1 description', '2024-03-27', 'high', 1);
-// if (todo1.save()) {
-//   console.log(`Saved ${todo1.name} successfully`);
-// }
-
-// const updateData = {
-//   title: 'todo1 updated',
-//   description: 'todo1 description updated',
-//   dueDate: '2024-03-28',
-//   priority: 'low',
-//   projectID: 2,
-// };
-// todo1.update(updateData);
-
-// console.log(todoStatic.all());
-// console.log(todoStatic.first());
-// console.log(todoStatic.last());
-// console.log(todoStatic.lastID());
-// console.log(todoStatic.nextID());
-
-
-// todo1.destroy();
-
-// console.log(todoStatic.all());
-// console.log(todoStatic.first());
-// console.log(todoStatic.last());
-// console.log(todoStatic.lastID());
-// console.log(todoStatic.nextID());

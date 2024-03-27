@@ -48,8 +48,3 @@ class Project extends Model {
 }
 
 export { events, projectStatic, Project };
-
-// const project1 = new Project('project1');
-// if (project1.save()) {
-//   console.log(`Saved ${project1.name} successfully`);
-// }

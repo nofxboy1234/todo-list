@@ -1,5 +1,3 @@
-import { events as projectEvents } from '../../models/project.mjs';
-
 // Publishers and subscribers don't need to know each other.
 // They simply communicate with the help of message queues.
 const index = {
