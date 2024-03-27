@@ -1,12 +1,16 @@
-import { createError } from './error.mjs';
 import { Model, createModelStatic } from './model.mjs';
+import { createError } from './error.mjs';
 
-const modelStatic = createModelStatic();
+const projectStatic = createModelStatic('project');
 
 class Project extends Model {
   constructor(name) {
     super();
     this.name = name;
+  }
+
+  save() {
+    return super.save(projectStatic);
   }
 
   validate() {
@@ -21,7 +25,7 @@ class Project extends Model {
       this.errors.add(error);
     }
 
-    if (modelStatic.all().find((project) => project.name === this.name)) {
+    if (projectStatic.all().find((project) => project.name === this.name)) {
       const error = createError('A project already exists with this name');
       this.errors.add(error);
     }
@@ -33,7 +37,9 @@ class Project extends Model {
   }
 }
 
-export { modelStatic as projectStatic, Project };
+export { projectStatic, Project };
 
 const project1 = new Project('project1');
-project1.save();
+if (project1.save()) {
+  console.log(`Saved ${project1.name} successfully`);
+}
