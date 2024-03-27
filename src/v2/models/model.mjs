@@ -44,6 +44,16 @@ class Model {
     }
   }
 
+  update(data) {
+    Object.assign(this, data);
+    return true;
+  }
+
+  destroy(modelStatic) {
+    const index = modelStatic.instances.indexOf(this);
+    modelStatic.instances.splice(index, 1);
+  }
+
   validate() {}
 }
 

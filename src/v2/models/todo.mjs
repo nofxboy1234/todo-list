@@ -1,13 +1,11 @@
-import { createErrorCollection } from './errorCollection.mjs';
+import { Model, createModelStatic } from './model.mjs';
 import { createError } from './error.mjs';
 
-class Todo {
-  static instances = [];
+const todoStatic = createModelStatic('todo');
 
-  id = undefined;
-  errors = createErrorCollection();
-
+class Todo extends Model {
   constructor(title, description, dueDate, priority, projectID) {
+    super();
     this.title = title;
     this.description = description;
     this.dueDate = dueDate;
@@ -15,50 +13,8 @@ class Todo {
     this.projectID = projectID;
   }
 
-  static all() {
-    return this.instances;
-  }
-
-  static first() {
-    return this.instances.at(0);
-  }
-
-  static last() {
-    return this.instances.at(-1);
-  }
-
-  static lastID() {
-    const lastInstance = this.last();
-    if (lastInstance) {
-      return lastInstance.id;
-    }
-
-    return 0;
-  }
-
-  static nextID() {
-    return this.lastID() + 1;
-  }
-
   save() {
-    this.validate();
-    if (this.errors.size() === 0) {
-      this.id = Todo.nextID();
-      Todo.instances.push(this);
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  update(data) {
-    Object.assign(this, data);
-    return true;
-  }
-
-  destroy() {
-    const index = Todo.instances.indexOf(this);
-    Todo.instances.splice(index, 1);
+    return super.save(todoStatic);
   }
 
   validate() {
@@ -83,7 +39,7 @@ class Todo {
       this.errors.add(error);
     }
 
-    if (Todo.all().find((todo) => todo.title === this.title)) {
+    if (todoStatic.all().find((todo) => todo.title === this.title)) {
       const error = createError('A todo already exists with this title');
       this.errors.add(error);
     }
@@ -95,4 +51,9 @@ class Todo {
   }
 }
 
-export { Todo };
+export { todoStatic, Todo };
+
+const todo1 = new Todo('todo1', 'todo1 description', '2024-03-27', 'high', 1);
+if (todo1.save()) {
+  console.log(`Saved ${todo1.name} successfully`);
+}
