@@ -1,3 +1,5 @@
+import { createErrorCollection } from './errorCollection.mjs';
+
 function createModelStatic() {
   const instance = {
     instances: [],
@@ -26,4 +28,24 @@ function createModelStatic() {
   return instance;
 }
 
-export { createModelStatic };
+const modelStatic = createModelStatic();
+
+class Model {
+  id = undefined;
+  errors = createErrorCollection();
+
+  save() {
+    this.validate();
+    if (this.errors.size() === 0) {
+      this.id = modelStatic.nextID();
+      modelStatic.instances.push(this);
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  validate() {}
+}
+
+export { createModelStatic, Model };
