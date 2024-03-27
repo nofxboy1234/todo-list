@@ -1,4 +1,4 @@
-import { createErrorCollection } from './errorCollection.mjs';
+import { createErrorCollection } from '../errors/errorCollection.mjs';
 
 function createModelStatic(modelName) {
   const instance = {

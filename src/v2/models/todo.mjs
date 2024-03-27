@@ -1,5 +1,5 @@
 import { Model, createModelStatic } from './model.mjs';
-import { createError } from './error.mjs';
+import { createError } from '../errors/error.mjs';
 
 const todoStatic = createModelStatic('todo');
 

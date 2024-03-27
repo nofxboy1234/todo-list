@@ -1,5 +1,10 @@
 import { Model, createModelStatic } from './model.mjs';
-import { createError } from './error.mjs';
+import { createError } from '../errors/error.mjs';
+import { publish } from '../messageQueue/messageQueue.mjs';
+
+const events = {
+  create: 'projectCreated',
+};
 
 const projectStatic = createModelStatic('project');
 
@@ -10,7 +15,12 @@ class Project extends Model {
   }
 
   save() {
-    return super.save(projectStatic);
+    const success = super.save(projectStatic);
+    if (success) {
+      publish(events.create, this);
+    }
+
+    return success;
   }
 
   validate() {
@@ -37,7 +47,7 @@ class Project extends Model {
   }
 }
 
-export { projectStatic, Project };
+export { events, projectStatic, Project };
 
 // const project1 = new Project('project1');
 // if (project1.save()) {

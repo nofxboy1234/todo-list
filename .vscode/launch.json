@@ -6,7 +6,7 @@
   "configurations": [
     {
       "name": "Test",
-      "program": "${workspaceFolder}/src/v2/models/task.mjs",
+      "program": "${workspaceFolder}/src/v2/index.mjs",
       "request": "launch",
       "skipFiles": ["<node_internals>/**"],
       "type": "node",
