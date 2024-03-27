@@ -30,7 +30,7 @@ class Task extends Model {
 
 export { taskStatic, Task };
 
-const task1 = new Task('task1 description', 1);
-if (task1.save()) {
-  console.log(`Saved ${task1.description} successfully`);
-}
+// const task1 = new Task('task1 description', 1);
+// if (task1.save()) {
+//   console.log(`Saved ${task1.description} successfully`);
+// }

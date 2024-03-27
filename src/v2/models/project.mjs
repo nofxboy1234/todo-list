@@ -1,5 +1,6 @@
 import { Model, createModelStatic } from './model.mjs';
 import { createError } from '../errors/error.mjs';
+import { todoStatic } from './todo.mjs';
 import { publish } from '../messageQueue/messageQueue.mjs';
 
 const events = {
@@ -42,8 +43,7 @@ class Project extends Model {
   }
 
   todos() {
-    console.log('Return all todos pointing to this project');
-    // return Todo.all().filter((todo) => todo.projectID === id);
+    return todoStatic.all().filter((todo) => todo.projectID === this.id);
   }
 }
 

@@ -1,5 +1,6 @@
 import { Model, createModelStatic } from './model.mjs';
 import { createError } from '../errors/error.mjs';
+import { taskStatic } from './task.mjs';
 
 const todoStatic = createModelStatic('todo');
 
@@ -50,8 +51,7 @@ class Todo extends Model {
   }
 
   tasks() {
-    console.log('Return all tasks pointing to this todo');
-    // return Todo.all().filter((todo) => todo.projectID === id);
+    return taskStatic.all().filter((task) => task.todoID === this.id);
   }
 }
 
