@@ -18,7 +18,12 @@ const createIndexView = () => {
   };
 
   const renderTodosOfProject = (project) => {
+    clearContainer(contentContainer);
+
     const todos = project.todos();
+    if (todos.length === 0) {
+      return;
+    }
 
     const todosDiv = document.createElement('div');
     todos.forEach((todo) => {
@@ -26,7 +31,6 @@ const createIndexView = () => {
       todoDiv.textContent = todo.title;
       todosDiv.appendChild(todoDiv);
     });
-    clearContainer(contentContainer);
     contentContainer.appendChild(todosDiv);
   };
 
