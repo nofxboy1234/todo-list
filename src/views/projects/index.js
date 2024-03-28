@@ -19,15 +19,6 @@ const createIndexView = () => {
     );
   };
 
-  const destroyProject = (project) => {
-    if (!window.confirm('Are you sure?')) {
-      return;
-    }
-
-    console.log(`destroy ${project.name}`);
-    project.destroy();
-  };
-
   const update = (eventName, data) => {
     if (eventName === projectEvents.create) render(data);
   };
