@@ -24,6 +24,10 @@ class Project extends Model {
     return success;
   }
 
+  destroy() {
+    super.destroy(projectStatic);
+  }
+
   validate() {
     this.errors.clear();
     if (this.name === '') {

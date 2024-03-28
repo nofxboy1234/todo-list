@@ -25,7 +25,7 @@ const createIndexView = () => {
     }
 
     console.log(`destroy ${project.name}`);
-    // project.destroy();
+    project.destroy();
   };
 
   const createDestroyButton = (project) => {
