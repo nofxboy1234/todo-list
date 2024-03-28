@@ -1,4 +1,4 @@
-import { events as projectEvents } from '../../models/project.mjs';
+import { events as projectEvents, projectStatic } from '../../models/project.mjs';
 import { createButton } from '../helpers';
 
 const createIndexView = () => {
@@ -20,7 +20,8 @@ const createIndexView = () => {
   };
 
   const update = (eventName, data) => {
-    if (eventName === projectEvents.create) render(data);
+    const allProjects = projectStatic.all();
+    if (eventName === projectEvents.create) render(allProjects);
   };
 
   const render = (projects) => {
@@ -35,7 +36,7 @@ const createIndexView = () => {
     return projectsContainer;
   };
 
-  return { update, render };
+  return { update, render, renderTodosOfProject };
 };
 
 export { createIndexView };

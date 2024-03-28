@@ -1,6 +1,9 @@
 // import { Project } from '../../models/project.mjs';
 import { subscribe } from '../../messageQueue/messageQueue.mjs';
-import { events as projectEvents, projectStatic } from '../../models/project.mjs';
+import {
+  events as projectEvents,
+  projectStatic,
+} from '../../models/project.mjs';
 import { createFlexContainer } from '../helpers';
 import { createIndexView } from '../projects/index';
 
@@ -14,6 +17,8 @@ const contentContainer = createFlexContainer('flex-item', 'flex-item-right');
 flexContainer.appendChild(contentContainer);
 
 const projectIndexContainer = document.createElement('div');
+
+const projectsIndexView = createIndexView();
 
 const newProject = () => {
   console.log('show new project view');
@@ -49,10 +54,9 @@ const addProjectIndexContainer = () => {
 };
 
 const addProjectIndexView = () => {
-  const projectsIndexView = createIndexView();
-  subscribe(projectEvents.create, projectsIndexView)
   const allProjects = projectStatic.all();
   projectIndexContainer.appendChild(projectsIndexView.render(allProjects));
+  subscribe(projectEvents.create, projectsIndexView);
 };
 
 const createLayout = () => {
@@ -61,8 +65,11 @@ const createLayout = () => {
   addProjectsHeading();
   addProjectIndexContainer();
   addProjectIndexView();
-
   // show todos for Default project
+  const defaultProject = projectStatic
+    .all()
+    .find((project) => project.name === 'Default');
+  projectsIndexView.renderTodosOfProject(defaultProject);
 };
 
 export { createLayout, projectIndexContainer, contentContainer };
