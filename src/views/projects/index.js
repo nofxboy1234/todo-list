@@ -1,5 +1,9 @@
-import { events as projectEvents, projectStatic } from '../../models/project.mjs';
-import { createButton } from '../helpers';
+import {
+  events as projectEvents,
+  projectStatic,
+} from '../../models/project.mjs';
+import { clearContainer, createButton } from '../helpers';
+import { contentContainer } from '../layouts/application';
 
 const createIndexView = () => {
   const createProjectContainer = (project) => {
@@ -14,9 +18,16 @@ const createIndexView = () => {
   };
 
   const renderTodosOfProject = (project) => {
-    console.log(
-      `append ${project.todos()} of ${project.name} to contentContainer`
-    );
+    const todos = project.todos();
+
+    const todosDiv = document.createElement('div');
+    todos.forEach((todo) => {
+      const todoDiv = document.createElement('div');
+      todoDiv.textContent = todo.title;
+      todosDiv.appendChild(todoDiv);
+    });
+    clearContainer(contentContainer);
+    contentContainer.appendChild(todosDiv);
   };
 
   const update = (eventName, data) => {
