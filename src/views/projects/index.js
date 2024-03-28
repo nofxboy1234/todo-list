@@ -28,16 +28,6 @@ const createIndexView = () => {
     project.destroy();
   };
 
-  const createDestroyButton = (project) => {
-    const destroyButton = createButton('button', 'DESTROY', 'deleteButtonID');
-    destroyButton.addEventListener('click', (event) => {
-      destroyProject(project);
-      event.stopPropagation();
-    });
-
-    return destroyButton;
-  };
-
   const update = (eventName, data) => {
     if (eventName === projectEvents.create) render(data);
   };
@@ -47,11 +37,6 @@ const createIndexView = () => {
 
     projects.forEach((project) => {
       const projectContainer = createProjectContainer(project);
-
-      if (project.id > 1) {
-        const destroyButton = createDestroyButton(project);
-        projectContainer.appendChild(destroyButton);
-      }
 
       projectsContainer.appendChild(projectContainer);
     });
@@ -63,7 +48,3 @@ const createIndexView = () => {
 };
 
 export { createIndexView };
-
-const indexView = createIndexView();
-const projects = ['a', 'b', 'c'];
-indexView.update(projects);

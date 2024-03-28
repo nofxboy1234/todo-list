@@ -1,5 +1,6 @@
 // import { Project } from '../../models/project.mjs';
-import { projectStatic } from '../../models/project.mjs';
+import { subscribe } from '../../messageQueue/messageQueue.mjs';
+import { events as projectEvents, projectStatic } from '../../models/project.mjs';
 import { createFlexContainer } from '../helpers';
 import { createIndexView } from '../projects/index';
 
@@ -49,6 +50,7 @@ const addProjectIndexContainer = () => {
 
 const addProjectIndexView = () => {
   const projectsIndexView = createIndexView();
+  subscribe(projectEvents.create, projectsIndexView)
   const allProjects = projectStatic.all();
   projectIndexContainer.appendChild(projectsIndexView.render(allProjects));
 };
