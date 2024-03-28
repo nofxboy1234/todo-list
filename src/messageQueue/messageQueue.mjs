@@ -22,7 +22,9 @@ const unsubscribe = (eventName, subscriberToUnsubscribe) => {
 
 const publish = (eventName, data) => {
   if (messages[eventName]) {
-    messages[eventName].forEach((subscriber) => subscriber.update(data));
+    messages[eventName].forEach((subscriber) =>
+      subscriber.update(eventName, data)
+    );
   }
 };
 

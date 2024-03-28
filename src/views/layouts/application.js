@@ -1,13 +1,7 @@
 // import { Project } from '../../models/project.mjs';
+import { projectStatic } from '../../models/project.mjs';
 import { createFlexContainer } from '../helpers';
-
-const newProject = () => {
-  console.log('show new project view');
-  // append new todo view to layout
-
-  // this.todo = Todo.new(params);
-  // render(new_, this.todo);
-};
+import { createIndexView } from '../projects/index';
 
 const flexContainer = createFlexContainer('flex-container');
 document.body.appendChild(flexContainer);
@@ -20,14 +14,22 @@ flexContainer.appendChild(contentContainer);
 
 const projectIndexContainer = document.createElement('div');
 
-const setupHeading = () => {
+const newProject = () => {
+  console.log('show new project view');
+  // append new todo view to layout
+
+  // this.todo = Todo.new(params);
+  // render(new_, this.todo);
+};
+
+const addAppTitle = () => {
   const headingItem = document.createElement('div');
   headingItem.classList.add('heading');
   headingItem.textContent = 'TODO LIST';
   menuContainer.appendChild(headingItem);
 };
 
-const setupNewProjectButton = () => {
+const addNewProjectButton = () => {
   const newProjectButton = document.createElement('button');
   newProjectButton.classList.add('new-project-button');
   newProjectButton.textContent = 'New Project';
@@ -35,12 +37,29 @@ const setupNewProjectButton = () => {
   menuContainer.appendChild(newProjectButton);
 };
 
-const createLayout = () => {
-  setupHeading();
-  setupNewProjectButton();
-  menuContainer.appendChild(projectIndexContainer);
+const addProjectsHeading = () => {
+  const header = document.createElement('h2');
+  header.textContent = 'Projects:';
+  menuContainer.appendChild(header);
+};
 
-  // append index project view to projectIndexContainer
+const addProjectIndexContainer = () => {
+  menuContainer.appendChild(projectIndexContainer);
+};
+
+const addProjectIndexView = () => {
+  const projectsIndexView = createIndexView();
+  const allProjects = projectStatic.all();
+  projectIndexContainer.appendChild(projectsIndexView.render(allProjects));
+};
+
+const createLayout = () => {
+  addAppTitle();
+  addNewProjectButton();
+  addProjectsHeading();
+  addProjectIndexContainer();
+  addProjectIndexView();
+
   // show todos for Default project
 };
 
