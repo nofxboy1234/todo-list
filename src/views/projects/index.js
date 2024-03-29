@@ -2,36 +2,24 @@ import {
   events as projectEvents,
   projectStatic,
 } from '../../models/project.mjs';
-import { clearContainer, createButton } from '../helpers';
 import { contentContainer } from '../layouts/application';
+import { createShowView as createProjectShowView } from './show';
 
 const createIndexView = () => {
   const createProjectContainer = (project) => {
     const projectContainer = document.createElement('div');
     projectContainer.textContent = project.name;
     projectContainer.addEventListener('click', (event) => {
-      renderTodosOfProject(project);
+      const projectShowView = createProjectShowView();
+
+      const render = projectShowView.render(project);
+      if (render) {
+        contentContainer.appendChild(projectShowView.render(project));
+      }
       event.stopPropagation();
     });
 
     return projectContainer;
-  };
-
-  const renderTodosOfProject = (project) => {
-    clearContainer(contentContainer);
-
-    const todos = project.todos();
-    if (todos.length === 0) {
-      return;
-    }
-
-    const todosDiv = document.createElement('div');
-    todos.forEach((todo) => {
-      const todoDiv = document.createElement('div');
-      todoDiv.textContent = todo.title;
-      todosDiv.appendChild(todoDiv);
-    });
-    contentContainer.appendChild(todosDiv);
   };
 
   const update = (eventName, data) => {
@@ -44,14 +32,13 @@ const createIndexView = () => {
 
     projects.forEach((project) => {
       const projectContainer = createProjectContainer(project);
-
       projectsContainer.appendChild(projectContainer);
     });
 
     return projectsContainer;
   };
 
-  return { update, render, renderTodosOfProject };
+  return { update, render };
 };
 
 export { createIndexView };

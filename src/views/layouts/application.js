@@ -6,6 +6,7 @@ import {
 } from '../../models/project.mjs';
 import { createFlexContainer } from '../helpers';
 import { createIndexView } from '../projects/index';
+import { createShowView } from '../projects/show';
 
 const flexContainer = createFlexContainer('flex-container');
 document.body.appendChild(flexContainer);
@@ -59,17 +60,22 @@ const addProjectIndexView = () => {
   subscribe(projectEvents.create, projectsIndexView);
 };
 
+const showDefaultProjectView = () => {
+  const defaultProject = projectStatic
+    .all()
+    .find((project) => project.name === 'Default');
+
+  const projectShowView = createShowView();
+  contentContainer.appendChild(projectShowView.render(defaultProject));
+};
+
 const createLayout = () => {
   addAppTitle();
   addNewProjectButton();
   addProjectsHeading();
   addProjectIndexContainer();
   addProjectIndexView();
-  // show todos for Default project
-  const defaultProject = projectStatic
-    .all()
-    .find((project) => project.name === 'Default');
-  projectsIndexView.renderTodosOfProject(defaultProject);
+  showDefaultProjectView();
 };
 
 export { createLayout, projectIndexContainer, contentContainer };
