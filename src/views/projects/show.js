@@ -4,7 +4,7 @@ import { contentContainer } from '../layouts/application';
 import { createNewView as createTodoNewView } from '../todos/new';
 import { createShowView as createTodoShowView } from '../todos/show';
 
-const createShowView = () => {
+function createShowView() {
   const createNewTodoButton = (project) => {
     const newTodoButton = document.createElement('button');
     newTodoButton.textContent = 'New Todo';
@@ -33,7 +33,7 @@ const createShowView = () => {
     }
   };
 
-  const update = (eventName, data) => {};
+  const update = (eventName, data) => { };
 
   const render = (project) => {
     clearContainer(contentContainer);
@@ -65,6 +65,6 @@ const createShowView = () => {
   };
 
   return { update, render };
-};
+}
 
 export { createShowView };

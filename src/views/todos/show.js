@@ -3,7 +3,7 @@ import { clearContainer } from '../helpers';
 import { contentContainer } from '../layouts/application';
 import { createNewView as createTodoNewView } from '../todos/new';
 
-const createShowView = () => {
+function createShowView() {
   // const createNewTodoButton = (project) => {
   //   const newTodoButton = document.createElement('button');
   //   newTodoButton.textContent = 'New Todo';
@@ -11,10 +11,8 @@ const createShowView = () => {
   //     newTodo(project);
   //     event.stopPropagation();
   //   });
-
   //   return newTodoButton;
   // };
-
   // const newTodo = (project) => {
   //   console.log(`Show new todo form for project: ${project.name}`);
   //   const todoNewView = createTodoNewView();
@@ -24,8 +22,7 @@ const createShowView = () => {
   //     contentContainer.appendChild(render);
   //   }
   // };
-
-  const update = (eventName, data) => {};
+  const update = (eventName, data) => { };
 
   const render = (todo) => {
     clearContainer(contentContainer);
@@ -55,25 +52,21 @@ const createShowView = () => {
 
     // const newTodoButton = createNewTodoButton(todo);
     // showTodoDiv.appendChild(newTodoButton);
-
     // const tasks = todo.tasks();
     // if (tasks.length === 0) {
     //   return showTodoDiv;
     // }
-
     // const tasksDiv = document.createElement('div');
     // tasks.forEach((todo) => {
     //   const todoDiv = document.createElement('div');
     //   todoDiv.textContent = todo.title;
     //   tasksDiv.appendChild(todoDiv);
     // });
-
     // showTodoDiv.appendChild(tasksDiv);
-
     return showTodoDiv;
   };
 
   return { update, render };
-};
+}
 
 export { createShowView };

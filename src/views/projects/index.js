@@ -5,7 +5,7 @@ import {
 import { contentContainer } from '../layouts/application';
 import { createShowView as createProjectShowView } from './show';
 
-const createIndexView = () => {
+function createIndexView() {
   const createProjectContainer = (project) => {
     const projectContainer = document.createElement('div');
     projectContainer.textContent = project.name;
@@ -38,6 +38,6 @@ const createIndexView = () => {
   };
 
   return { update, render };
-};
+}
 
 export { createIndexView };
