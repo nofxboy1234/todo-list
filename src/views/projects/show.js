@@ -1,11 +1,8 @@
-import {
-  events as projectEvents,
-  projectStatic,
-} from '../../models/project.mjs';
 import { Todo } from '../../models/todo.mjs';
 import { clearContainer } from '../helpers';
 import { contentContainer } from '../layouts/application';
 import { createNewView as createTodoNewView } from '../todos/new';
+import { createShowView as createTodoShowView } from '../todos/show';
 
 const createShowView = () => {
   const createNewTodoButton = (project) => {
@@ -20,10 +17,17 @@ const createShowView = () => {
   };
 
   const newTodo = (project) => {
-    console.log(`Show new todo form for project: ${project.name}`);
     const todoNewView = createTodoNewView();
     const todo = new Todo();
     const render = todoNewView.render(todo);
+    if (render) {
+      contentContainer.appendChild(render);
+    }
+  };
+
+  const showTodo = (todo) => {
+    const todoShowView = createTodoShowView();
+    const render = todoShowView.render(todo);
     if (render) {
       contentContainer.appendChild(render);
     }
@@ -48,6 +52,10 @@ const createShowView = () => {
     todos.forEach((todo) => {
       const todoDiv = document.createElement('div');
       todoDiv.textContent = todo.title;
+      todoDiv.addEventListener('click', (event) => {
+        showTodo(todo);
+        event.stopPropagation();
+      });
       todosDiv.appendChild(todoDiv);
     });
 
