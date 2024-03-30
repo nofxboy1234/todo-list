@@ -24,8 +24,6 @@ const projectIndexContainer = document.createElement('div');
 const projectsIndexView = createIndexView();
 
 const newProject = (event) => {
-  console.log('show new project view');
-
   const projectNewView = createProjectNewView();
   const project = new Project('');
   const render = projectNewView.render(project);
