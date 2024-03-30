@@ -4,13 +4,13 @@ import { contentContainer } from '../layouts/application';
 const createNewView = () => {
   const update = (eventName, data) => {};
 
-  const render = (project) => {
+  const render = (todo) => {
     clearContainer(contentContainer);
 
-    const newProjectDiv = document.createElement('div');
-    newProjectDiv.textContent = 'New Project Form';
+    const newTodoDiv = document.createElement('div');
+    newTodoDiv.textContent = 'New Todo Form';
 
-    return newProjectDiv;
+    return newTodoDiv;
   };
 
   return { update, render };

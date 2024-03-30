@@ -13,7 +13,13 @@ const events = {
 const todoStatic = createModelStatic('todo');
 
 class Todo extends Model {
-  constructor(title, description, dueDate, priority, projectID) {
+  constructor(
+    title = '',
+    description = '',
+    dueDate = '',
+    priority = 'low',
+    projectID = 1
+  ) {
     super();
     this.title = title;
     this.description = description;

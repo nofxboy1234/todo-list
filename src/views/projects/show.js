@@ -2,21 +2,12 @@ import {
   events as projectEvents,
   projectStatic,
 } from '../../models/project.mjs';
+import { Todo } from '../../models/todo.mjs';
 import { clearContainer } from '../helpers';
 import { contentContainer } from '../layouts/application';
+import { createNewView as createTodoNewView } from '../todos/new';
 
 const createShowView = () => {
-  // const createProjectContainer = (project) => {
-  //   const projectContainer = document.createElement('div');
-  //   projectContainer.textContent = project.name;
-  //   projectContainer.addEventListener('click', (event) => {
-  //     renderTodosOfProject(project);
-  //     event.stopPropagation();
-  //   });
-
-  //   return projectContainer;
-  // };
-
   const createNewTodoButton = (project) => {
     const newTodoButton = document.createElement('button');
     newTodoButton.textContent = 'New Todo';
@@ -30,12 +21,15 @@ const createShowView = () => {
 
   const newTodo = (project) => {
     console.log(`Show new todo form for project: ${project.name}`);
+    const todoNewView = createTodoNewView();
+    const todo = new Todo();
+    const render = todoNewView.render(todo);
+    if (render) {
+      contentContainer.appendChild(render);
+    }
   };
 
-  const update = (eventName, data) => {
-    // const allProjects = projectStatic.all();
-    // if (eventName === projectEvents.create) render(allProjects);
-  };
+  const update = (eventName, data) => {};
 
   const render = (project) => {
     clearContainer(contentContainer);
