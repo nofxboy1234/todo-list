@@ -1,22 +1,34 @@
-import { Todo } from '../../models/todo.mjs';
+import { Todo, todoStatic } from '../../models/todo.mjs';
 import { clearContainer } from '../helpers';
 import { contentContainer } from '../layouts/application';
-import { createEditView } from './edit';
+import { createShowView } from './show';
 
-function createShowView() {
-  const createEditButton = (todo) => {
-    const editButton = document.createElement('button');
-    editButton.textContent = 'Edit';
-    editButton.addEventListener('click', (event) => {
-      edit(todo);
+function createEditView() {
+  const createUpdateButton = (todo) => {
+    const updateButton = document.createElement('button');
+    updateButton.textContent = 'Update';
+    updateButton.addEventListener('click', (event) => {
+      updateTodo(todo);
+      todoStatic.all();
+      renderShowView(todo);
       event.stopPropagation();
     });
-    return editButton;
+    return updateButton;
   };
 
-  const edit = (todo) => {
-    const editView = createEditView();
-    const render = editView.render(todo);
+  const updateTodo = (todo) => {
+    const updateData = {
+      title: `${todo.title} updated`,
+      description: `${todo.description} updated`,
+      dueDate: `${todo.dueDate} updated`,
+      priority: `${todo.priority} updated`,
+    };
+    todo.update(updateData);
+  };
+
+  const renderShowView = (todo) => {
+    const showView = createShowView();
+    const render = showView.render(todo);
     if (render) {
       contentContainer.appendChild(render);
     }
@@ -50,8 +62,8 @@ function createShowView() {
     projectIDDiv.textContent = todo.projectID;
     showTodoDiv.appendChild(projectIDDiv);
 
-    const editButton = createEditButton(todo);
-    showTodoDiv.appendChild(editButton);
+    const updateButton = createUpdateButton(todo);
+    showTodoDiv.appendChild(updateButton);
 
     // const tasks = todo.tasks();
     // if (tasks.length === 0) {
@@ -67,7 +79,7 @@ function createShowView() {
     return showTodoDiv;
   };
 
-  return { update, render };
+  return { update: updateTodo, render };
 }
 
-export { createShowView };
+export { createEditView };
