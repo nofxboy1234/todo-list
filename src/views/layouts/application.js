@@ -1,12 +1,14 @@
 // import { Project } from '../../models/project.mjs';
 import { subscribe } from '../../messageQueue/messageQueue.mjs';
 import {
+  Project,
   events as projectEvents,
   projectStatic,
 } from '../../models/project.mjs';
 import { createFlexContainer } from '../helpers';
 import { createIndexView } from '../projects/index';
-import { createShowView } from '../projects/show';
+import { createNewView as createProjectNewView } from '../projects/new';
+import { createShowView as createProjectShowView } from '../projects/show';
 
 const flexContainer = createFlexContainer('flex-container');
 document.body.appendChild(flexContainer);
@@ -21,12 +23,17 @@ const projectIndexContainer = document.createElement('div');
 
 const projectsIndexView = createIndexView();
 
-const newProject = () => {
+const newProject = (event) => {
   console.log('show new project view');
-  // append new todo view to layout
 
-  // this.todo = Todo.new(params);
-  // render(new_, this.todo);
+  const projectNewView = createProjectNewView();
+  const project = new Project('');
+  const render = projectNewView.render(project);
+  if (render) {
+    contentContainer.appendChild(render);
+  }
+
+  event.stopPropagation();
 };
 
 const addAppTitle = () => {
@@ -65,7 +72,7 @@ const showDefaultProjectView = () => {
     .all()
     .find((project) => project.name === 'Default');
 
-  const projectShowView = createShowView();
+  const projectShowView = createProjectShowView();
   contentContainer.appendChild(projectShowView.render(defaultProject));
 };
 

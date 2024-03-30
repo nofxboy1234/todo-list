@@ -11,10 +11,9 @@ const createIndexView = () => {
     projectContainer.textContent = project.name;
     projectContainer.addEventListener('click', (event) => {
       const projectShowView = createProjectShowView();
-
       const render = projectShowView.render(project);
       if (render) {
-        contentContainer.appendChild(projectShowView.render(project));
+        contentContainer.appendChild(render);
       }
       event.stopPropagation();
     });

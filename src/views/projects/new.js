@@ -5,7 +5,7 @@ import {
 import { clearContainer } from '../helpers';
 import { contentContainer } from '../layouts/application';
 
-const createShowView = () => {
+const createNewView = () => {
   // const createProjectContainer = (project) => {
   //   const projectContainer = document.createElement('div');
   //   projectContainer.textContent = project.name;
@@ -25,22 +25,13 @@ const createShowView = () => {
   const render = (project) => {
     clearContainer(contentContainer);
 
-    const todos = project.todos();
-    if (todos.length === 0) {
-      return;
-    }
+    const newProjectDiv = document.createElement('div');
+    newProjectDiv.textContent = 'New Project Form';
 
-    const todosDiv = document.createElement('div');
-    todos.forEach((todo) => {
-      const todoDiv = document.createElement('div');
-      todoDiv.textContent = todo.title;
-      todosDiv.appendChild(todoDiv);
-    });
-
-    return todosDiv;
+    return newProjectDiv;
   };
 
   return { update, render };
 };
 
-export { createShowView };
+export { createNewView };
