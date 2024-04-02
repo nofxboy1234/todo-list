@@ -24,6 +24,9 @@ function createModelStatic(modelName) {
     nextID() {
       return this.lastID() + 1;
     },
+    find(callback) {
+      return this.instances.find(callback);
+    },
   };
 
   return instance;

@@ -1,16 +1,16 @@
 import { clearContainer } from '../helpers';
 import { contentContainer } from '../layouts/application';
+import { createForm } from './_form';
 
 function createNewView() {
-  const update = (eventName, data) => { };
+  const update = (eventName, data) => {};
 
   const render = (project) => {
     clearContainer(contentContainer);
 
-    const newProjectDiv = document.createElement('div');
-    newProjectDiv.textContent = 'New Project Form';
+    const form = createForm(project);
 
-    return newProjectDiv;
+    return form;
   };
 
   return { update, render };

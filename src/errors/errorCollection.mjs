@@ -6,8 +6,8 @@ function createErrorCollection() {
   };
 
   const forEach = (callback) => {
-    errors.forEach((element) => {
-      callback(element);
+    errors.forEach((error) => {
+      callback(error);
     });
   };
 
