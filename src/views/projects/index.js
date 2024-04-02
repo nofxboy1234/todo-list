@@ -2,7 +2,11 @@ import {
   events as projectEvents,
   projectStatic,
 } from '../../models/project.mjs';
-import { contentContainer } from '../layouts/application';
+import { clearContainer } from '../helpers';
+import {
+  contentContainer,
+  projectIndexContainer,
+} from '../layouts/application';
 import { createShowView as createProjectShowView } from './show';
 
 function createIndexView() {
@@ -22,8 +26,14 @@ function createIndexView() {
   };
 
   const update = (eventName, data) => {
-    const allProjects = projectStatic.all();
-    if (eventName === projectEvents.create) render(allProjects);
+    if (eventName === projectEvents.create) {
+      const allProjects = projectStatic.all();
+      const rendered = render(allProjects);
+      if (rendered) {
+        clearContainer(projectIndexContainer);
+        projectIndexContainer.appendChild(rendered);
+      }
+    }
   };
 
   const render = (projects) => {

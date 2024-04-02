@@ -13,13 +13,6 @@ const clearContainer = (container) => {
   }
 };
 
-const clearProjectIndex = () => {
-  while (projectIndexContainer.firstChild) {
-    const lastChild = projectIndexContainer.lastChild;
-    projectIndexContainer.removeChild(lastChild);
-  }
-};
-
 const createLabel = (text, forID) => {
   const label = document.createElement('label');
   label.textContent = text;
@@ -87,7 +80,6 @@ const createCheckbox = (checked, cssClass) => {
 export {
   createFlexContainer,
   clearContainer,
-  clearProjectIndex,
   createLabel,
   createInput,
   createTextArea,
