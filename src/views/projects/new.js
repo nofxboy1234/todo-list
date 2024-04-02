@@ -1,6 +1,8 @@
 import { createForm } from './_form';
 
 function createNewView() {
+  const focusID = 'nameID';
+
   const update = (eventName, data) => {};
 
   const render = (project) => {
@@ -9,7 +11,7 @@ function createNewView() {
     return form;
   };
 
-  return { update, render };
+  return { update, render, focusID };
 }
 
 export { createNewView };
