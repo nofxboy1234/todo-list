@@ -10,14 +10,14 @@ import { createIndexView } from '../projects/index';
 import { createNewView as createProjectNewView } from '../projects/new';
 import { createShowView as createProjectShowView } from '../projects/show';
 
-const flexContainer = createFlexContainer('flex-container');
-document.body.appendChild(flexContainer);
+const mainContainer = createFlexContainer('main-container');
+document.body.appendChild(mainContainer);
 
-const menuContainer = createFlexContainer('flex-item', 'flex-item-left');
-flexContainer.appendChild(menuContainer);
+const menuContainer = createFlexContainer('flex-item', 'menu-container');
+mainContainer.appendChild(menuContainer);
 
-const contentContainer = createFlexContainer('flex-item', 'flex-item-right');
-flexContainer.appendChild(contentContainer);
+const contentContainer = createFlexContainer('flex-item', 'content-container');
+mainContainer.appendChild(contentContainer);
 
 const projectIndexContainer = document.createElement('div');
 

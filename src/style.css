@@ -3,7 +3,7 @@
   src: url('./HussarBold-7mRE.otf');
 }
 
-.flex-container {
+.main-container {
   display: flex;
 }
 
@@ -11,14 +11,14 @@
   border: 2px solid rgb(0, 255, 13);
 }
 
-.flex-item-left {
+.menu-container {
   display: flex;
   flex-direction: column;
 
   width: 200px;
 }
 
-.flex-item-right {
+.content-container {
   display: flex;
   justify-content: center;
   align-items: center;
