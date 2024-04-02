@@ -29,9 +29,8 @@ const newProject = (event) => {
   const render = projectNewView.render(project);
   if (render) {
     clearContainer(contentContainer);
-    contentContainer.appendChild(render);
-    const focusID = projectNewView.focusID;
-    document.getElementById(focusID).focus();
+    contentContainer.appendChild(render.form);
+    render.focus();
   }
 
   event.stopPropagation();

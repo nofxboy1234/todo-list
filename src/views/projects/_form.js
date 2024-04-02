@@ -30,7 +30,8 @@ function createForm(project) {
       const render = newView.render(project);
       if (render) {
         clearContainer(contentContainer);
-        contentContainer.appendChild(render);
+        contentContainer.appendChild(render.form);
+        render.focus();
       }
     }
   };
@@ -91,6 +92,10 @@ function createForm(project) {
       errorsElement.div.appendChild(errorDiv);
     });
     clearErrors();
+  };
+
+  const focus = () => {
+    nameElement.input.focus();
   };
 
   const headerElement = (() => {
@@ -156,7 +161,7 @@ function createForm(project) {
     displayErrors();
   }
 
-  return form;
+  return { form, focus };
 }
 
 export { createForm };
