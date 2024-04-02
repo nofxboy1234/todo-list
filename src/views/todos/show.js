@@ -18,7 +18,7 @@ function createShowView() {
     const editView = createEditView();
     const render = editView.render(todo);
     if (render) {
-      clearContainer(contentContainer);
+      contentContainer.clear();
       contentContainer.appendChild(render);
     }
   };

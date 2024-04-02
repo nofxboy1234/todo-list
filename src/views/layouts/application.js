@@ -10,14 +10,15 @@ import { createIndexView } from '../projects/index';
 import { createNewView as createProjectNewView } from '../projects/new';
 import { createShowView as createProjectShowView } from '../projects/show';
 
+import { contentContainer } from './contentContainer';
+
 const mainContainer = createFlexContainer('main-container');
 document.body.appendChild(mainContainer);
 
 const menuContainer = createFlexContainer('flex-item', 'menu-container');
 mainContainer.appendChild(menuContainer);
 
-const contentContainer = createFlexContainer('flex-item', 'content-container');
-mainContainer.appendChild(contentContainer);
+mainContainer.appendChild(contentContainer.domElement);
 
 const projectIndexContainer = document.createElement('div');
 
@@ -28,7 +29,7 @@ const newProject = (event) => {
   const project = new Project('');
   const render = projectNewView.render(project);
   if (render) {
-    clearContainer(contentContainer);
+    contentContainer.clear();
     contentContainer.appendChild(render.form);
     render.focus();
   }
@@ -74,7 +75,7 @@ const showDefaultProjectView = () => {
     .find((project) => project.name === 'Default');
 
   const projectShowView = createProjectShowView();
-  clearContainer(contentContainer);
+  contentContainer.clear();
   contentContainer.appendChild(projectShowView.render(defaultProject));
 };
 

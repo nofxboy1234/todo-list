@@ -14,6 +14,8 @@ function createForm(project) {
 
   const cancel = (event) => {
     console.log('cancel');
+    contentContainer.clear();
+    contentContainer.appendPrevious();
   };
 
   const create = (event) => {
@@ -22,14 +24,14 @@ function createForm(project) {
       const showView = createShowView();
       const render = showView.render(project);
       if (render) {
-        clearContainer(contentContainer);
+        contentContainer.clear();
         contentContainer.appendChild(render);
       }
     } else {
       const newView = createNewView();
       const render = newView.render(project);
       if (render) {
-        clearContainer(contentContainer);
+        contentContainer.clear();
         contentContainer.appendChild(render.form);
         render.focus();
       }
