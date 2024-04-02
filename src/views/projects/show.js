@@ -16,6 +16,17 @@ function createShowView() {
     return newTodoButton;
   };
 
+  const createDestroyTodoButton = (todo) => {
+    const destroyTodoButton = document.createElement('button');
+    destroyTodoButton.textContent = 'Destroy';
+    destroyTodoButton.addEventListener('click', (event) => {
+      destroyTodo(todo);
+      event.stopPropagation();
+    });
+
+    return destroyTodoButton;
+  };
+
   const newTodo = (project) => {
     const todoNewView = createTodoNewView();
     const todo = new Todo();
@@ -23,6 +34,10 @@ function createShowView() {
     if (render) {
       contentContainer.appendChild(render);
     }
+  };
+
+  const destroyTodo = (todo) => {
+    todo.destroy();
   };
 
   const showTodo = (todo) => {
@@ -33,7 +48,7 @@ function createShowView() {
     }
   };
 
-  const update = (eventName, data) => { };
+  const update = (eventName, data) => {};
 
   const render = (project) => {
     clearContainer(contentContainer);
@@ -50,13 +65,24 @@ function createShowView() {
 
     const todosDiv = document.createElement('div');
     todos.forEach((todo) => {
-      const todoDiv = document.createElement('div');
-      todoDiv.textContent = todo.title;
-      todoDiv.addEventListener('click', (event) => {
+      const todoParagraph = document.createElement('p');
+
+      const titleDiv = document.createElement('div');
+      titleDiv.textContent = todo.title;
+      titleDiv.addEventListener('click', (event) => {
         showTodo(todo);
         event.stopPropagation();
       });
-      todosDiv.appendChild(todoDiv);
+      todoParagraph.appendChild(titleDiv);
+
+      const dueDateDiv = document.createElement('div');
+      dueDateDiv.textContent = todo.dueDate;
+      todoParagraph.appendChild(dueDateDiv);
+
+      const destroyTodoButton = createDestroyTodoButton(todo);
+      todoParagraph.appendChild(destroyTodoButton);
+
+      todosDiv.appendChild(todoParagraph);
     });
 
     showProjectDiv.appendChild(todosDiv);
