@@ -50,20 +50,19 @@ function createShowView() {
     projectIDDiv.textContent = todo.projectID;
     showTodoDiv.appendChild(projectIDDiv);
 
+    const tasks = todo.tasks();
+
+    const tasksDiv = document.createElement('div');
+    tasks.forEach((task) => {
+      const taskDiv = document.createElement('div');
+      taskDiv.textContent = task.description;
+      tasksDiv.appendChild(taskDiv);
+    });
+    showTodoDiv.appendChild(tasksDiv);
+
     const editButton = createEditButton(todo);
     showTodoDiv.appendChild(editButton);
 
-    // const tasks = todo.tasks();
-    // if (tasks.length === 0) {
-    //   return showTodoDiv;
-    // }
-    // const tasksDiv = document.createElement('div');
-    // tasks.forEach((todo) => {
-    //   const todoDiv = document.createElement('div');
-    //   todoDiv.textContent = todo.title;
-    //   tasksDiv.appendChild(todoDiv);
-    // });
-    // showTodoDiv.appendChild(tasksDiv);
     return showTodoDiv;
   };
 
