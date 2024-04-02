@@ -18,6 +18,7 @@ function createShowView() {
     const editView = createEditView();
     const render = editView.render(todo);
     if (render) {
+      clearContainer(contentContainer);
       contentContainer.appendChild(render);
     }
   };
@@ -25,8 +26,6 @@ function createShowView() {
   const update = (eventName, data) => {};
 
   const render = (todo) => {
-    clearContainer(contentContainer);
-
     const showTodoDiv = document.createElement('div');
     showTodoDiv.textContent = 'show todo view';
 
@@ -50,7 +49,6 @@ function createShowView() {
     projectIDDiv.textContent = todo.projectID;
     showTodoDiv.appendChild(projectIDDiv);
 
-    
     const tasksDiv = document.createElement('div');
     const tasks = todo.tasks();
     tasks.forEach((task) => {

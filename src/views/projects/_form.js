@@ -1,5 +1,10 @@
 import { Project, projectStatic } from '../../models/project.mjs';
-import { createLabel, createInput, createButton } from '../helpers';
+import {
+  createLabel,
+  createInput,
+  createButton,
+  clearContainer,
+} from '../helpers';
 import { contentContainer } from '../layouts/application';
 import { createNewView } from './new';
 import { createShowView } from './show';
@@ -17,12 +22,14 @@ function createForm(project) {
       const showView = createShowView();
       const render = showView.render(project);
       if (render) {
+        clearContainer(contentContainer);
         contentContainer.appendChild(render);
       }
     } else {
       const newView = createNewView();
       const render = newView.render(project);
       if (render) {
+        clearContainer(contentContainer);
         contentContainer.appendChild(render);
       }
     }

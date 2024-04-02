@@ -5,7 +5,7 @@ import {
   events as projectEvents,
   projectStatic,
 } from '../../models/project.mjs';
-import { createFlexContainer } from '../helpers';
+import { clearContainer, createFlexContainer } from '../helpers';
 import { createIndexView } from '../projects/index';
 import { createNewView as createProjectNewView } from '../projects/new';
 import { createShowView as createProjectShowView } from '../projects/show';
@@ -28,6 +28,7 @@ const newProject = (event) => {
   const project = new Project('');
   const render = projectNewView.render(project);
   if (render) {
+    clearContainer(contentContainer);
     contentContainer.appendChild(render);
   }
 
@@ -61,6 +62,7 @@ const addProjectIndexContainer = () => {
 
 const addProjectIndexView = () => {
   const allProjects = projectStatic.all();
+  clearContainer(projectIndexContainer);
   projectIndexContainer.appendChild(projectsIndexView.render(allProjects));
   subscribe(projectEvents.create, projectsIndexView);
 };
@@ -71,6 +73,7 @@ const showDefaultProjectView = () => {
     .find((project) => project.name === 'Default');
 
   const projectShowView = createProjectShowView();
+  clearContainer(contentContainer);
   contentContainer.appendChild(projectShowView.render(defaultProject));
 };
 

@@ -17,6 +17,7 @@ function createIndexView() {
       const projectShowView = createProjectShowView();
       const render = projectShowView.render(project);
       if (render) {
+        clearContainer(contentContainer);
         contentContainer.appendChild(render);
       }
       event.stopPropagation();

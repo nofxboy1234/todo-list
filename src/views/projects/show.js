@@ -32,6 +32,7 @@ function createShowView() {
     const todo = new Todo();
     const render = todoNewView.render(todo);
     if (render) {
+      clearContainer(contentContainer);
       contentContainer.appendChild(render);
     }
   };
@@ -44,6 +45,7 @@ function createShowView() {
     const todoShowView = createTodoShowView();
     const render = todoShowView.render(todo);
     if (render) {
+      clearContainer(contentContainer);
       contentContainer.appendChild(render);
     }
   };
@@ -51,8 +53,6 @@ function createShowView() {
   const update = (eventName, data) => {};
 
   const render = (project) => {
-    clearContainer(contentContainer);
-
     const showProjectDiv = document.createElement('div');
 
     const newTodoButton = createNewTodoButton(project);

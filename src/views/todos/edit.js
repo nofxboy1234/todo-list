@@ -42,6 +42,7 @@ function createEditView() {
     const showView = createShowView();
     const render = showView.render(todo);
     if (render) {
+      clearContainer(contentContainer);
       contentContainer.appendChild(render);
     }
   };
@@ -51,6 +52,7 @@ function createEditView() {
     const task = new Task('Task 1', 1);
     const render = todoNewView.render(task);
     if (render) {
+      clearContainer(contentContainer);
       contentContainer.appendChild(render);
     }
   };
@@ -58,8 +60,6 @@ function createEditView() {
   const update = (eventName, data) => {};
 
   const render = (todo) => {
-    clearContainer(contentContainer);
-
     const showTodoDiv = document.createElement('div');
     showTodoDiv.textContent = 'show todo view';
 
