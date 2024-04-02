@@ -55,6 +55,10 @@ function createShowView() {
   const render = (project) => {
     const showProjectDiv = document.createElement('div');
 
+    const header = document.createElement('h1');
+    header.textContent = project.name;
+    showProjectDiv.appendChild(header);
+
     const newTodoButton = createNewTodoButton(project);
     showProjectDiv.appendChild(newTodoButton);
 
