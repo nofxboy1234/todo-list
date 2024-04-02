@@ -2,6 +2,8 @@ import { Todo, todoStatic } from '../../models/todo.mjs';
 import { clearContainer } from '../helpers';
 import { contentContainer } from '../layouts/application';
 import { createShowView } from './show';
+import { createNewView as createTaskNewView } from '../tasks/new';
+import { Task } from '../../models/task.mjs';
 
 function createEditView() {
   const createUpdateButton = (todo) => {
@@ -14,6 +16,16 @@ function createEditView() {
       event.stopPropagation();
     });
     return updateButton;
+  };
+
+  const createNewTaskButton = (todo) => {
+    const newTaskButton = document.createElement('button');
+    newTaskButton.textContent = 'New Task';
+    newTaskButton.addEventListener('click', (event) => {
+      newTask(todo);
+      event.stopPropagation();
+    });
+    return newTaskButton;
   };
 
   const updateTodo = (todo) => {
@@ -29,6 +41,15 @@ function createEditView() {
   const renderShowView = (todo) => {
     const showView = createShowView();
     const render = showView.render(todo);
+    if (render) {
+      contentContainer.appendChild(render);
+    }
+  };
+
+  const newTask = (project) => {
+    const todoNewView = createTaskNewView();
+    const task = new Task('Task 1', 1);
+    const render = todoNewView.render(task);
     if (render) {
       contentContainer.appendChild(render);
     }
@@ -62,20 +83,21 @@ function createEditView() {
     projectIDDiv.textContent = todo.projectID;
     showTodoDiv.appendChild(projectIDDiv);
 
+    const newTaskButton = createNewTaskButton(todo);
+    showTodoDiv.appendChild(newTaskButton);
+
+    const tasksDiv = document.createElement('div');
+    const tasks = todo.tasks();
+    tasks.forEach((task) => {
+      const taskDiv = document.createElement('div');
+      taskDiv.textContent = task.description;
+      tasksDiv.appendChild(taskDiv);
+    });
+    showTodoDiv.appendChild(tasksDiv);
+
     const updateButton = createUpdateButton(todo);
     showTodoDiv.appendChild(updateButton);
 
-    // const tasks = todo.tasks();
-    // if (tasks.length === 0) {
-    //   return showTodoDiv;
-    // }
-    // const tasksDiv = document.createElement('div');
-    // tasks.forEach((todo) => {
-    //   const todoDiv = document.createElement('div');
-    //   todoDiv.textContent = todo.title;
-    //   tasksDiv.appendChild(todoDiv);
-    // });
-    // showTodoDiv.appendChild(tasksDiv);
     return showTodoDiv;
   };
 

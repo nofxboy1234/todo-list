@@ -50,9 +50,9 @@ function createShowView() {
     projectIDDiv.textContent = todo.projectID;
     showTodoDiv.appendChild(projectIDDiv);
 
-    const tasks = todo.tasks();
-
+    
     const tasksDiv = document.createElement('div');
+    const tasks = todo.tasks();
     tasks.forEach((task) => {
       const taskDiv = document.createElement('div');
       taskDiv.textContent = task.description;
