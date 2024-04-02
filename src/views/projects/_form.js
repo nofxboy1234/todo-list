@@ -14,14 +14,12 @@ function createForm(project) {
   const create = (event) => {
     const project = new Project(formData().name);
     if (project.save()) {
-      // show project view for created project
       const showView = createShowView();
       const render = showView.render(project);
       if (render) {
         contentContainer.appendChild(render);
       }
     } else {
-      // render this form again with the project with errors
       const newView = createNewView();
       const render = newView.render(project);
       if (render) {
