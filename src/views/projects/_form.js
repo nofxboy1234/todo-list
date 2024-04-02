@@ -1,24 +1,40 @@
-import { projectStatic } from '../../models/project.mjs';
+import { Project, projectStatic } from '../../models/project.mjs';
 import { createLabel, createInput, createButton } from '../helpers';
+import { contentContainer } from '../layouts/application';
+import { createNewView } from './new';
+import { createShowView } from './show';
 
 function createForm(project) {
-  const exists = projectStatic.find(
-    (existingProject) => existingProject.name === project.name
-  );
+  const exists = project.id ? true : false;
 
   const cancel = (event) => {
     console.log('cancel');
   };
 
   const create = (event) => {
-    currentData();
+    const project = new Project(formData().name);
+    if (project.save()) {
+      // show project view for created project
+      const showView = createShowView();
+      const render = showView.render(project);
+      if (render) {
+        contentContainer.appendChild(render);
+      }
+    } else {
+      // render this form again with the project with errors
+      const newView = createNewView();
+      const render = newView.render(project);
+      if (render) {
+        contentContainer.appendChild(render);
+      }
+    }
   };
 
   const update = (event) => {
-    currentData();
+    formData();
   };
 
-  const currentData = () => {
+  const formData = () => {
     return {
       id: project.id,
       name: nameElement.input.value,
@@ -131,7 +147,7 @@ function createForm(project) {
   const form = setupUI();
   setupData();
   setupEventListeners();
-  if (project.errors.size > 0) {
+  if (project.errors.size() > 0) {
     displayErrors();
   }
 
