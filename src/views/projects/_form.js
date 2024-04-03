@@ -13,7 +13,6 @@ function createForm(project) {
   const exists = project.id ? true : false;
 
   const cancel = (event) => {
-    console.log('cancel');
     contentContainer.clear();
     contentContainer.appendPrevious();
   };

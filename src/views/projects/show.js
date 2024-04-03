@@ -31,11 +31,12 @@ function createShowView() {
 
   const newTodo = (project) => {
     const todoNewView = createTodoNewView();
-    const todo = new Todo();
+    const todo = new Todo('', '', '', 'low', project.id);
     const render = todoNewView.render(todo);
     if (render) {
       contentContainer.clear();
-      contentContainer.appendChild(render);
+      contentContainer.appendChild(render.form);
+      render.focus();
     }
   };
 
