@@ -18,15 +18,17 @@ class Project extends Model {
   save() {
     const success = super.save(projectStatic);
     if (success) {
+      // Subscriber could use `this` project instance to only appendChild that element to the DOM
+      // At the moment it re-renders all projects in the index
       publish(events.create, this);
     }
 
     return success;
   }
 
-  destroy() {
-    super.destroy(projectStatic);
-  }
+  // destroy() {
+  //   super.destroy(projectStatic);
+  // }
 
   validate() {
     this.errors.clear();

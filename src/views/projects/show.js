@@ -1,3 +1,5 @@
+import { subscribe } from '../../messageQueue/messageQueue.mjs';
+import { events as todoEvents } from '../../models/todo.mjs';
 import { Todo } from '../../models/todo.mjs';
 import { clearContainer } from '../helpers';
 import { contentContainer } from '../layouts/application';
@@ -50,7 +52,17 @@ function createShowView() {
     }
   };
 
-  const update = (eventName, data) => {};
+  const update = (eventName, data) => {
+    if (eventName === todoEvents.destroy) {
+      const todo = data;
+      const project = todo.project();
+      const rendered = render(project);
+      if (rendered) {
+        contentContainer.clear();
+        contentContainer.appendChild(rendered);
+      }
+    }
+  };
 
   const render = (project) => {
     contentContainer.clearViewCache();
@@ -95,7 +107,10 @@ function createShowView() {
     return showProjectDiv;
   };
 
-  return { update, render };
+  const instance = { update, render };
+  subscribe(todoEvents.destroy, instance);
+
+  return instance;
 }
 
 export { createShowView };

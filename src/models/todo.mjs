@@ -84,4 +84,4 @@ class Todo extends Model {
   }
 }
 
-export { todoStatic, Todo };
+export { events, todoStatic, Todo };
