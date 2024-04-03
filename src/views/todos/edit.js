@@ -61,7 +61,7 @@ function createEditView() {
 
   const render = (todo) => {
     const showTodoDiv = document.createElement('div');
-    showTodoDiv.textContent = 'show todo view';
+    showTodoDiv.textContent = 'Edit todo view';
 
     const titleDiv = document.createElement('div');
     titleDiv.textContent = todo.title;
