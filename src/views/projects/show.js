@@ -53,6 +53,7 @@ function createShowView() {
   const update = (eventName, data) => {};
 
   const render = (project) => {
+    contentContainer.clearViewCache();
     const showProjectDiv = document.createElement('div');
 
     const header = document.createElement('h2');

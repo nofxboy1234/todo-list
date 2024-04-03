@@ -23,6 +23,9 @@ const contentContainer = {
       this.domElement.removeChild(lastChild);
     }
   },
+  clearViewCache() {
+    this.viewCache.length = 0;
+  },
 };
 
 export { contentContainer };
