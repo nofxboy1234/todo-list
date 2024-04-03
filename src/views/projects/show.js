@@ -54,6 +54,16 @@ function createShowView() {
   };
 
   const update = (eventName, data) => {
+    if (eventName === todoEvents.create) {
+      const todo = data;
+      const project = todo.project();
+      const rendered = render(project);
+      if (rendered) {
+        contentContainer.clear();
+        contentContainer.appendChild(rendered);
+      }
+    }
+
     if (eventName === todoEvents.destroy) {
       const todo = data;
       const project = todo.project();
@@ -109,6 +119,7 @@ function createShowView() {
   };
 
   const instance = { update, render };
+  subscribe(todoEvents.create, instance);
   subscribe(todoEvents.destroy, instance);
 
   return instance;

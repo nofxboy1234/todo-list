@@ -22,20 +22,21 @@ function createForm(todo) {
   };
 
   const create = (event) => {
+    const data = formData();
     const todo = new Todo(
-      formData().title,
-      formData().description,
-      formData().dueDate,
-      formData().priority,
-      formData().projectID
+      data.title,
+      data.description,
+      data.dueDate,
+      data.priority,
+      data.projectID
     );
     if (todo.save()) {
-      const showView = createShowView();
-      const render = showView.render(todo);
-      if (render) {
-        contentContainer.clear();
-        contentContainer.appendChild(render);
-      }
+      // const showView = createShowView();
+      // const render = showView.render(todo);
+      // if (render) {
+      //   contentContainer.clear();
+      //   contentContainer.appendChild(render);
+      // }
     } else {
       const newView = createNewView();
       const render = newView.render(todo);
@@ -54,7 +55,11 @@ function createForm(todo) {
   const formData = () => {
     return {
       id: todo.id,
-      name: nameElement.input.value,
+      title: titleElement.input.value,
+      description: descriptionElement.input.value,
+      dueDate: dueDateElement.input.value,
+      priority: priorityElement.input.value,
+      projectID: todo.projectID,
     };
   };
 
