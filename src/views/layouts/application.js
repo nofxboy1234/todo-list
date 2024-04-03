@@ -65,8 +65,8 @@ const addProjectIndexContainer = () => {
 const addProjectIndexView = () => {
   const allProjects = projectStatic.all();
   clearContainer(projectIndexContainer);
-  projectIndexContainer.appendChild(projectsIndexView.render(allProjects));
-  subscribe(projectEvents.create, projectsIndexView);
+  const render = projectsIndexView.render(allProjects);
+  projectIndexContainer.appendChild(render);
 };
 
 const showDefaultProjectView = () => {

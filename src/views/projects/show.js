@@ -1,4 +1,5 @@
 import { subscribe } from '../../messageQueue/messageQueue.mjs';
+import { events } from '../../models/project.mjs';
 import { events as todoEvents } from '../../models/todo.mjs';
 import { Todo } from '../../models/todo.mjs';
 import { clearContainer } from '../helpers';
@@ -73,6 +74,15 @@ function createShowView() {
         contentContainer.appendChild(rendered);
       }
     }
+
+    if (eventName === events.create) {
+      const project = data;
+      const rendered = render(project);
+      if (rendered) {
+        contentContainer.clear();
+        contentContainer.appendChild(rendered);
+      }
+    }
   };
 
   const render = (project) => {
@@ -119,6 +129,7 @@ function createShowView() {
   };
 
   const instance = { update, render };
+  subscribe(events.create, instance);
   subscribe(todoEvents.create, instance);
   subscribe(todoEvents.destroy, instance);
 

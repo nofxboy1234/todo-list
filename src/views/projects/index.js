@@ -1,4 +1,6 @@
+import { subscribe } from '../../messageQueue/messageQueue.mjs';
 import {
+  events,
   events as projectEvents,
   projectStatic,
 } from '../../models/project.mjs';
@@ -48,7 +50,10 @@ function createIndexView() {
     return projectsContainer;
   };
 
-  return { update, render };
+  const instance = { update, render };
+  subscribe(events.create, instance);
+
+  return instance;
 }
 
 export { createIndexView };

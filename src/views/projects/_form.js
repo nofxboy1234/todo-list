@@ -19,27 +19,10 @@ function createForm(project) {
 
   const create = (event) => {
     const project = new Project(formData().name);
-    if (project.save()) {
-      const showView = createShowView();
-      const render = showView.render(project);
-      if (render) {
-        contentContainer.clear();
-        contentContainer.appendChild(render);
-      }
-    } else {
-      const newView = createNewView();
-      const render = newView.render(project);
-      if (render) {
-        contentContainer.clear();
-        contentContainer.appendChild(render.form);
-        render.focus();
-      }
-    }
+    project.save();
   };
 
-  const update = (event) => {
-    formData();
-  };
+  const update = (event) => {};
 
   const formData = () => {
     return {

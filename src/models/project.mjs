@@ -5,6 +5,7 @@ import { publish } from '../messageQueue/messageQueue.mjs';
 
 const events = {
   create: 'projectCreated',
+  createFailed: 'projectCreateFailed',
 };
 
 const projectStatic = createModelStatic('project');
@@ -21,6 +22,8 @@ class Project extends Model {
       // Subscriber could use `this` project instance to only appendChild that element to the DOM
       // At the moment it re-renders all projects in the index
       publish(events.create, this);
+    } else {
+      publish(events.createFailed, this);
     }
 
     return success;
