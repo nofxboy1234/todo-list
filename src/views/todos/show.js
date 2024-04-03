@@ -14,6 +14,17 @@ function createShowView() {
     return editButton;
   };
 
+  const createCloseButton = () => {
+    const closeButton = document.createElement('button');
+    closeButton.textContent = 'Close';
+    closeButton.addEventListener('click', (event) => {
+      contentContainer.clear();
+      contentContainer.appendPrevious();
+      event.stopPropagation();
+    });
+    return closeButton;
+  };
+
   const edit = (todo) => {
     const editView = createEditView();
     const render = editView.render(todo);
@@ -60,6 +71,9 @@ function createShowView() {
 
     const editButton = createEditButton(todo);
     showTodoDiv.appendChild(editButton);
+
+    const closeButton = createCloseButton();
+    showTodoDiv.appendChild(closeButton);
 
     return showTodoDiv;
   };
