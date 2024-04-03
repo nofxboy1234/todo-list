@@ -7,10 +7,15 @@ const contentContainer = {
     this.viewCache.push(view);
     this.domElement.appendChild(view);
   },
-  appendPrevious() {
+  removeCurrentViewFromCache() {
     this.viewCache.pop();
-    const previousView = this.viewCache.pop();
-    this.appendChild(previousView);
+  },
+  previousView() {
+    return this.viewCache.pop();
+  },
+  appendPrevious() {
+    this.removeCurrentViewFromCache();
+    this.appendChild(this.previousView());
   },
   clear() {
     while (this.domElement.firstChild) {
