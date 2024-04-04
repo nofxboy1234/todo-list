@@ -19,6 +19,7 @@ function createForm(todo) {
   const cancel = (event) => {
     contentContainer.clear();
     contentContainer.appendPrevious();
+    event.stopPropagation();
   };
 
   const create = (event) => {
@@ -58,6 +59,7 @@ function createForm(todo) {
     }
 
     event.preventDefault();
+    event.stopPropagation();
   };
 
   const setupUI = () => {

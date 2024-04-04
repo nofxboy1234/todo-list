@@ -15,6 +15,7 @@ function createForm(project) {
   const cancel = (event) => {
     contentContainer.clear();
     contentContainer.appendPrevious();
+    event.stopPropagation();
   };
 
   const create = (event) => {
@@ -43,6 +44,7 @@ function createForm(project) {
     }
 
     event.preventDefault();
+    event.stopPropagation();
   };
 
   const setupUI = () => {
