@@ -32,7 +32,10 @@ function createForm(todo) {
     todo.save();
   };
 
-  const update = (event) => {};
+  const update = (event) => {
+    const data = formData();
+    todo.update(data);
+  };
 
   const formData = () => {
     return {

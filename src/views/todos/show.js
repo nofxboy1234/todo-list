@@ -1,4 +1,5 @@
-import { Todo } from '../../models/todo.mjs';
+import { subscribe } from '../../messageQueue/messageQueue.mjs';
+import { Todo, events } from '../../models/todo.mjs';
 import { clearContainer } from '../helpers';
 import { contentContainer } from '../layouts/application';
 import { editView } from './edit';
@@ -29,11 +30,21 @@ function createShowView() {
     const render = editView.render(todo);
     if (render) {
       contentContainer.clear();
-      contentContainer.appendChild(render);
+      contentContainer.appendChild(render.form);
+      render.focus();
     }
   };
 
-  const update = (eventName, data) => {};
+  const update = (eventName, data) => {
+    if (eventName === events.update) {
+      const todo = data;
+      const rendered = render(todo);
+      if (rendered) {
+        contentContainer.clear();
+        contentContainer.appendChild(rendered);
+      }
+    }
+  };
 
   const render = (todo) => {
     const showTodoDiv = document.createElement('div');
@@ -77,7 +88,10 @@ function createShowView() {
     return showTodoDiv;
   };
 
-  return { update, render };
+  const instance = { update, render };
+  subscribe(events.update, instance);
+
+  return instance;
 }
 
 const showView = createShowView();

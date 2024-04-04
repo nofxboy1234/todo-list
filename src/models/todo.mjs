@@ -81,9 +81,11 @@ class Todo extends Model {
       this.errors.add(error);
     }
 
-    if (todoStatic.all().find((todo) => todo.title === this.title)) {
-      const error = createError('A todo already exists with this title');
-      this.errors.add(error);
+    if (!this.id) {
+      if (todoStatic.all().find((todo) => todo.title === this.title)) {
+        const error = createError('A todo already exists with this title');
+        this.errors.add(error);
+      }
     }
   }
 
