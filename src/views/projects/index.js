@@ -52,4 +52,6 @@ function createIndexView() {
   return instance;
 }
 
-export { createIndexView };
+const indexView = createIndexView();
+
+export { indexView };

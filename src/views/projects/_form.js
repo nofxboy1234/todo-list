@@ -1,13 +1,6 @@
-import { Project, projectStatic } from '../../models/project.mjs';
-import {
-  createLabel,
-  createInput,
-  createButton,
-  clearContainer,
-} from '../helpers';
+import { Project } from '../../models/project.mjs';
+import { createLabel, createInput, createButton } from '../helpers';
 import { contentContainer } from '../layouts/application';
-import { createNewView } from './new';
-import { createShowView } from './show';
 
 function createForm(project) {
   const exists = project.id ? true : false;

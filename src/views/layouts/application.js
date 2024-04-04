@@ -1,13 +1,7 @@
-// import { Project } from '../../models/project.mjs';
-import { subscribe } from '../../messageQueue/messageQueue.mjs';
-import {
-  Project,
-  events as projectEvents,
-  projectStatic,
-} from '../../models/project.mjs';
+import { Project, projectStatic } from '../../models/project.mjs';
 import { clearContainer, createFlexContainer } from '../helpers';
-import { createIndexView } from '../projects/index';
-import { createNewView as createProjectNewView } from '../projects/new';
+import { indexView as projectsIndexView } from '../projects/index';
+import { newView as projectNewView } from '../projects/new';
 import { createShowView as createProjectShowView } from '../projects/show';
 
 import { contentContainer } from './contentContainer';
@@ -22,10 +16,7 @@ mainContainer.appendChild(contentContainer.domElement);
 
 const projectIndexContainer = document.createElement('div');
 
-const projectsIndexView = createIndexView();
-
 const newProject = (event) => {
-  const projectNewView = createProjectNewView();
   const project = new Project('');
   const render = projectNewView.render(project);
   if (render) {
