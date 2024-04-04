@@ -140,7 +140,6 @@ function createForm(todo) {
       errorDiv.textContent = error.description;
       errorsElement.div.appendChild(errorDiv);
     });
-    clearErrors();
   };
 
   const focus = () => {
@@ -260,6 +259,7 @@ function createForm(todo) {
   setupEventListeners();
   if (todo.errors.size() > 0) {
     displayErrors();
+    clearErrors();
   }
 
   return { form, focus };

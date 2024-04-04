@@ -48,12 +48,23 @@ class Model {
   }
 
   update(data) {
-    Object.assign(this, data);
+    this.validate();
+    if (this.errors.size() === 0) {
+      Object.assign(this, data);
+      return true;
+    } else {
+      return false;
+    }
   }
 
   destroy(modelStatic) {
     const index = modelStatic.instances.indexOf(this);
-    modelStatic.instances.splice(index, 1);
+    if (index >= 0) {
+      modelStatic.instances.splice(index, 1);
+      return true;
+    } else {
+      return false;
+    }
   }
 
   validate() {}

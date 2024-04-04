@@ -5,6 +5,11 @@ import { todoStatic } from './todo.mjs';
 
 const events = {
   create: 'taskCreated',
+  createFailed: 'taskCreateFailed',
+  update: 'taskUpdated',
+  updateFailed: 'taskUpdateFailed',
+  destroy: 'taskDestroyed',
+  destroyFailed: 'taskDestroyFailed',
 };
 
 const taskStatic = createModelStatic('task');
@@ -26,7 +31,6 @@ class Task extends Model {
   }
 
   validate() {
-    this.errors.clear();
     if (this.description === '') {
       const error = createError('Description cannot be blank');
       this.errors.add(error);

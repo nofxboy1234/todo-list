@@ -1,9 +1,5 @@
 import { subscribe } from '../../messageQueue/messageQueue.mjs';
-import {
-  events,
-  events as projectEvents,
-  projectStatic,
-} from '../../models/project.mjs';
+import { events, projectStatic } from '../../models/project.mjs';
 import { clearContainer } from '../helpers';
 import {
   contentContainer,
@@ -29,7 +25,7 @@ function createIndexView() {
   };
 
   const update = (eventName, data) => {
-    if (eventName === projectEvents.create) {
+    if (eventName === events.create) {
       const allProjects = projectStatic.all();
       const rendered = render(allProjects);
       if (rendered) {

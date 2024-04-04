@@ -6,8 +6,11 @@ import { projectStatic } from './project.mjs';
 
 const events = {
   create: 'todoCreated',
+  createFailed: 'todoCreateFailed',
   update: 'todoUpdated',
+  updateFailed: 'todoUpdateFailed',
   destroy: 'todoDestroyed',
+  destroyFailed: 'todoDestroyFailed',
 };
 
 const todoStatic = createModelStatic('todo');
@@ -32,23 +35,32 @@ class Todo extends Model {
     const success = super.save(todoStatic);
     if (success) {
       publish(events.create, this);
+    } else {
+      publish(events.createFailed, this);
     }
 
     return success;
   }
 
   update(data) {
-    super.update(data);
-    publish(events.update, this);
+    const success = super.update(data);
+    if (success) {
+      publish(events.update, this);
+    } else {
+      publish(events.updateFailed, this);
+    }
   }
 
   destroy() {
-    super.destroy(todoStatic);
-    publish(events.destroy, this);
+    const success = super.destroy(todoStatic);
+    if (success) {
+      publish(events.destroy, this);
+    } else {
+      publish(events.destroyFailed, this);
+    }
   }
 
   validate() {
-    this.errors.clear();
     if (this.title === '') {
       const error = createError('Title cannot be blank');
       this.errors.add(error);

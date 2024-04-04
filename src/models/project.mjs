@@ -34,7 +34,6 @@ class Project extends Model {
   // }
 
   validate() {
-    this.errors.clear();
     if (this.name === '') {
       const error = createError('Name cannot be blank');
       this.errors.add(error);
