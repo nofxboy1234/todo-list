@@ -2,7 +2,7 @@ import { Project, projectStatic } from '../../models/project.mjs';
 import { clearContainer, createFlexContainer } from '../helpers';
 import { indexView as projectsIndexView } from '../projects/index';
 import { newView as projectNewView } from '../projects/new';
-import { createShowView as createProjectShowView } from '../projects/show';
+import { showView as projectShowView } from '../projects/show';
 
 import { contentContainer } from './contentContainer';
 
@@ -65,9 +65,9 @@ const showDefaultProjectView = () => {
     .all()
     .find((project) => project.name === 'Default');
 
-  const projectShowView = createProjectShowView();
   contentContainer.clear();
-  contentContainer.appendChild(projectShowView.render(defaultProject));
+  const render = projectShowView.render(defaultProject);
+  contentContainer.appendChild(render);
 };
 
 const createLayout = () => {

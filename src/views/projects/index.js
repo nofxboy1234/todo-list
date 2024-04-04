@@ -5,15 +5,14 @@ import {
   contentContainer,
   projectIndexContainer,
 } from '../layouts/application';
-import { createShowView as createProjectShowView } from './show';
+import { showView } from './show';
 
 function createIndexView() {
   const createProjectContainer = (project) => {
     const projectContainer = document.createElement('div');
     projectContainer.textContent = project.name;
     projectContainer.addEventListener('click', (event) => {
-      const projectShowView = createProjectShowView();
-      const render = projectShowView.render(project);
+      const render = showView.render(project);
       if (render) {
         contentContainer.clear();
         contentContainer.appendChild(render);

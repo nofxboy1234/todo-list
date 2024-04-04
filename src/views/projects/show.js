@@ -147,4 +147,6 @@ function createShowView() {
   return instance;
 }
 
-export { createShowView };
+const showView = createShowView();
+
+export { showView };
