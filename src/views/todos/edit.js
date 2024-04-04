@@ -104,4 +104,6 @@ function createEditView() {
   return { update: updateTodo, render };
 }
 
-export { createEditView };
+const editView = createEditView();
+
+export { editView };

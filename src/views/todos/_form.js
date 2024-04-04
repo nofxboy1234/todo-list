@@ -99,12 +99,6 @@ function createForm(todo) {
     project.input.add(createOption(option.value, option.text));
   };
 
-  const setupProjectData = () => {
-    params.data.projects.forEach((project, index) => {
-      addProjectToDOM(project, index);
-    });
-  };
-
   const setupData = () => {
     setupSimpleData();
     // setupTaskListData();

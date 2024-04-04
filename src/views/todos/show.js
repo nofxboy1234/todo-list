@@ -1,7 +1,7 @@
 import { Todo } from '../../models/todo.mjs';
 import { clearContainer } from '../helpers';
 import { contentContainer } from '../layouts/application';
-import { createEditView } from './edit';
+import { editView } from './edit';
 
 function createShowView() {
   const createEditButton = (todo) => {
@@ -26,7 +26,6 @@ function createShowView() {
   };
 
   const edit = (todo) => {
-    const editView = createEditView();
     const render = editView.render(todo);
     if (render) {
       contentContainer.clear();
