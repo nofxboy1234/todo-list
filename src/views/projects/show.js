@@ -2,9 +2,8 @@ import { subscribe } from '../../messageQueue/messageQueue.mjs';
 import { events } from '../../models/project.mjs';
 import { events as todoEvents } from '../../models/todo.mjs';
 import { Todo } from '../../models/todo.mjs';
-import { clearContainer } from '../helpers';
 import { contentContainer } from '../layouts/application';
-import { createNewView as createTodoNewView } from '../todos/new';
+import { newView as todoNewView } from '../todos/new';
 import { createShowView as createTodoShowView } from '../todos/show';
 
 function createShowView() {
@@ -31,7 +30,6 @@ function createShowView() {
   };
 
   const newTodo = (project) => {
-    const todoNewView = createTodoNewView();
     const todo = new Todo('', '', '', 'low', project.id);
     const render = todoNewView.render(todo);
     if (render) {

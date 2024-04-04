@@ -10,8 +10,6 @@ import {
   createSelect,
 } from '../helpers';
 import { contentContainer } from '../layouts/application';
-import { createNewView } from './new';
-import { createShowView } from './show';
 
 function createForm(todo) {
   const exists = todo.id ? true : false;

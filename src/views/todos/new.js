@@ -26,4 +26,6 @@ function createNewView() {
   return instance;
 }
 
-export { createNewView };
+const newView = createNewView();
+
+export { newView };
