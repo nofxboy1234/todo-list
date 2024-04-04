@@ -1,21 +1,22 @@
 import { createFlexContainer } from '../helpers';
 
+const viewCache = [];
+const previousView = () => {
+  return viewCache.pop();
+};
+
 const contentContainer = {
-  viewCache: [],
   domElement: createFlexContainer('flex-item', 'content-container'),
   appendChild(view) {
-    this.viewCache.push(view);
+    viewCache.push(view);
     this.domElement.appendChild(view);
   },
   removeCurrentViewFromCache() {
-    this.viewCache.pop();
-  },
-  previousView() {
-    return this.viewCache.pop();
+    viewCache.pop();
   },
   appendPrevious() {
     this.removeCurrentViewFromCache();
-    this.appendChild(this.previousView());
+    this.appendChild(previousView());
   },
   clear() {
     while (this.domElement.firstChild) {
@@ -24,7 +25,7 @@ const contentContainer = {
     }
   },
   clearViewCache() {
-    this.viewCache.length = 0;
+    viewCache.length = 0;
   },
 };
 
