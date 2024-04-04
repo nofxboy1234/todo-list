@@ -2,6 +2,7 @@ import { todoStatic } from '../../models/todo.mjs';
 import { contentContainer } from '../layouts/application';
 import { createNewView as createTaskNewView } from '../tasks/new';
 import { Task } from '../../models/task.mjs';
+import { showView } from './show';
 
 function createEditView() {
   const createUpdateButton = (todo) => {
@@ -37,7 +38,6 @@ function createEditView() {
   };
 
   const renderShowView = (todo) => {
-    const showView = showView();
     const render = showView.render(todo);
     if (render) {
       contentContainer.clear();
