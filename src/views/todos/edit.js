@@ -1,7 +1,5 @@
-import { Todo, todoStatic } from '../../models/todo.mjs';
-import { clearContainer } from '../helpers';
+import { todoStatic } from '../../models/todo.mjs';
 import { contentContainer } from '../layouts/application';
-import { createShowView } from './show';
 import { createNewView as createTaskNewView } from '../tasks/new';
 import { Task } from '../../models/task.mjs';
 
@@ -39,7 +37,7 @@ function createEditView() {
   };
 
   const renderShowView = (todo) => {
-    const showView = createShowView();
+    const showView = showView();
     const render = showView.render(todo);
     if (render) {
       contentContainer.clear();

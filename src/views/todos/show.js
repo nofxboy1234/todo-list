@@ -80,4 +80,6 @@ function createShowView() {
   return { update, render };
 }
 
-export { createShowView };
+const showView = createShowView();
+
+export { showView };

@@ -4,7 +4,7 @@ import { events as todoEvents } from '../../models/todo.mjs';
 import { Todo } from '../../models/todo.mjs';
 import { contentContainer } from '../layouts/application';
 import { newView as todoNewView } from '../todos/new';
-import { createShowView as createTodoShowView } from '../todos/show';
+import { showView as todoShowView } from '../todos/show';
 
 function createShowView() {
   const createNewTodoButton = (project) => {
@@ -44,7 +44,6 @@ function createShowView() {
   };
 
   const showTodo = (todo) => {
-    const todoShowView = createTodoShowView();
     const render = todoShowView.render(todo);
     if (render) {
       contentContainer.clear();
