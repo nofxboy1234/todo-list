@@ -30,27 +30,10 @@ function createForm(todo) {
       data.priority,
       data.projectID
     );
-    if (todo.save()) {
-      // const showView = createShowView();
-      // const render = showView.render(todo);
-      // if (render) {
-      //   contentContainer.clear();
-      //   contentContainer.appendChild(render);
-      // }
-    } else {
-      const newView = createNewView();
-      const render = newView.render(todo);
-      if (render) {
-        contentContainer.clear();
-        contentContainer.appendChild(render.form);
-        render.focus();
-      }
-    }
+    todo.save();
   };
 
-  const update = (event) => {
-    formData();
-  };
+  const update = (event) => {};
 
   const formData = () => {
     return {
