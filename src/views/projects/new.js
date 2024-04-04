@@ -1,4 +1,6 @@
+import { subscribe } from '../../messageQueue/messageQueue.mjs';
 import { events } from '../../models/project.mjs';
+import { contentContainer } from '../layouts/contentContainer';
 import { createForm } from './_form';
 
 function createNewView() {
@@ -18,7 +20,10 @@ function createNewView() {
     return createForm(project);
   };
 
-  return { update, render };
+  const instance = { update, render };
+  subscribe(events.createFailed, instance);
+
+  return instance;
 }
 
 export { createNewView };
