@@ -1,10 +1,8 @@
-import { Project, projectStatic } from '../../models/project.mjs';
 import { Todo } from '../../models/todo.mjs';
 import {
   createLabel,
   createInput,
   createButton,
-  clearContainer,
   createOption,
   createTextArea,
   createSelect,
@@ -72,7 +70,7 @@ function createForm(todo) {
     form.appendChild(descriptionElement.div);
     form.appendChild(dueDateElement.div);
     form.appendChild(priorityElement.div);
-    // form.appendChild(taskList.div);
+    form.appendChild(taskListElement.div);
     form.appendChild(cancelElement.div);
     form.appendChild(submitElement.div);
 
@@ -197,18 +195,18 @@ function createForm(todo) {
     return { div, input };
   })();
 
-  // const taskListElement = (() => {
-  //   const div = document.createElement('div');
+  const taskListElement = (() => {
+    const div = document.createElement('div');
 
-  //   const checkListLabelDiv = document.createElement('div');
-  //   checkListLabelDiv.textContent = 'Tasks:';
-  //   div.appendChild(checkListLabelDiv);
+    const checkListLabelDiv = document.createElement('div');
+    checkListLabelDiv.textContent = 'Tasks:';
+    div.appendChild(checkListLabelDiv);
 
-  //   const newButton = createButton('button', 'New task', 'newTaskButtonID');
-  //   div.appendChild(newButton);
+    const newButton = createButton('button', 'New task', 'newTaskButtonID');
+    div.appendChild(newButton);
 
-  //   return { div, newButton };
-  // })();
+    return { div, newButton };
+  })();
 
   const cancelElement = (() => {
     const div = document.createElement('div');
