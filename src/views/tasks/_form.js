@@ -1,4 +1,4 @@
-import { Project } from '../../models/project.mjs';
+import { Task } from '../../models/task.mjs';
 import { createLabel, createInput, createButton } from '../helpers';
 import { contentContainer } from '../layouts/application';
 
@@ -12,8 +12,9 @@ function createForm(task) {
   };
 
   const create = (event) => {
-    const project = new Project(formData().name);
-    project.save();
+    const data = formData();
+    const task = new Task(data.description, data.todoID);
+    task.save();
   };
 
   const update = (event) => {};
@@ -21,7 +22,8 @@ function createForm(task) {
   const formData = () => {
     return {
       id: task.id,
-      name: nameElement.input.value,
+      description: descriptionElement.input.value,
+      todoID: task.todoID,
     };
   };
 
@@ -44,7 +46,7 @@ function createForm(task) {
     const form = document.createElement('form');
     form.appendChild(headerElement.div);
     form.appendChild(errorsElement.div);
-    form.appendChild(nameElement.div);
+    form.appendChild(descriptionElement.div);
     form.appendChild(cancelElement.div);
     form.appendChild(submitElement.div);
 
@@ -52,7 +54,7 @@ function createForm(task) {
   };
 
   const setupData = () => {
-    nameElement.input.value = task.name;
+    descriptionElement.input.value = task.description;
   };
 
   const setupEventListeners = () => {
@@ -74,7 +76,7 @@ function createForm(task) {
   };
 
   const focus = () => {
-    nameElement.input.focus();
+    descriptionElement.input.focus();
   };
 
   const headerElement = (() => {
@@ -96,10 +98,10 @@ function createForm(task) {
     return { div };
   })();
 
-  const nameElement = (() => {
+  const descriptionElement = (() => {
     const div = document.createElement('div');
-    div.appendChild(createLabel('name:', 'nameID'));
-    const input = createInput('text', 'nameID', 'name');
+    div.appendChild(createLabel('description:', 'descriptionID'));
+    const input = createInput('text', 'descriptionID', 'description');
 
     input.setAttribute('required', true);
     input.setAttribute('minlength', 2);

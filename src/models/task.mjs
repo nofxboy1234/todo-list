@@ -11,10 +11,10 @@ const events = {
 const taskStatic = createModelStatic('task');
 
 class Task extends Model {
-  constructor(description, todoID) {
+  constructor(description, todoID, complete = false) {
     super();
     this.description = description;
-    this.complete = false;
+    this.complete = complete;
     this.todoID = todoID;
   }
 

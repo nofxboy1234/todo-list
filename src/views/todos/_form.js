@@ -39,7 +39,7 @@ function createForm(todo) {
   };
 
   const newTask = (event) => {
-    const task = new Task('Task 1', todo.id);
+    const task = new Task('', todo.id);
     const render = taskNewView.render(task);
     if (render) {
       contentContainer.clear();
