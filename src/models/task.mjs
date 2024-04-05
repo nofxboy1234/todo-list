@@ -14,6 +14,7 @@ class Task extends Model {
   constructor(description, todoID) {
     super();
     this.description = description;
+    this.complete = false;
     this.todoID = todoID;
   }
 

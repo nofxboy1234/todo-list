@@ -6,6 +6,7 @@ import {
   createOption,
   createTextArea,
   createSelect,
+  createCheckbox,
 } from '../helpers';
 import { contentContainer } from '../layouts/application';
 
@@ -34,6 +35,10 @@ function createForm(todo) {
     const data = formData();
     todo.update(data);
   };
+
+  const newTask = (event) => {
+    //
+  }
 
   const formData = () => {
     return {
@@ -84,26 +89,59 @@ function createForm(todo) {
     priorityElement.input.value = todo.priority;
   };
 
-  // const setupTaskListData = () => {
-  //   params.data.tasks.forEach((task, indexInParams) => {
-  //     addTaskToDOM(task, indexInParams);
-  //   });
-  // };
+  const addTaskToDOM = (task, index) => {
+    const taskDiv = document.createElement('div');
 
-  const addProjectToDOM = (projectToAdd, indexInParams) => {
-    const option = {
-      value: generateProjectInputValue(projectToAdd, indexInParams),
-      text: projectToAdd.data.name,
-    };
-    project.input.add(createOption(option.value, option.text));
+    const descriptionSpan = document.createElement('span');
+    descriptionSpan.textContent = task.description;
+    taskDiv.appendChild(descriptionSpan);
+
+    const checkbox = createCheckbox(task.complete, 'task-checkbox');
+    // checkbox.dataset.taskInputValue = generateTaskInputValue(
+    //   task,
+    //   index
+    // );
+    taskDiv.appendChild(checkbox);
+
+    // const editButton = createButton('button', 'Edit', 'editTaskButtonID');
+    // editButton.addEventListener('click', editTask);
+    // editButton.dataset.taskInputValue = generateTaskInputValue(
+    //   task,
+    //   index
+    // );
+    // taskDiv.appendChild(editButton);
+
+    // const destroyButton = createButton(
+    //   'button',
+    //   'Remove',
+    //   'destroyTaskButtonID'
+    // );
+    // destroyButton.addEventListener('click', destroyTask);
+    // destroyButton.dataset.taskInputValue = generateTaskInputValue(
+    //   task,
+    //   index
+    // );
+    // taskDiv.appendChild(destroyButton);
+
+    taskListElement.div.appendChild(taskDiv);
+  };
+
+
+
+  const setupTaskListData = () => {
+    todo.tasks().forEach((task, index) => {
+      addTaskToDOM(task, index);
+    });
   };
 
   const setupData = () => {
     setupSimpleData();
-    // setupTaskListData();
+    setupTaskListData();
   };
 
   const setupEventListeners = () => {
+    taskListElement.newButton.addEventListener('click', newTask);
+
     submitElement.button.addEventListener('click', submitButtonCallback);
     cancelElement.button.addEventListener('click', cancel);
   };
