@@ -83,9 +83,9 @@ function createForm(task) {
     const div = document.createElement('div');
     const heading = document.createElement('h2');
     if (exists) {
-      heading.textContent = 'Edit Project';
+      heading.textContent = 'Edit Task';
     } else {
-      heading.textContent = 'New Project';
+      heading.textContent = 'New Task';
     }
 
     div.appendChild(heading);

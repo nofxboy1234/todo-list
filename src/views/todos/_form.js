@@ -1,4 +1,3 @@
-import { Task } from '../../models/task.mjs';
 import { Todo } from '../../models/todo.mjs';
 import {
   createLabel,
@@ -10,7 +9,6 @@ import {
   createCheckbox,
 } from '../helpers';
 import { contentContainer } from '../layouts/application';
-import { newView as taskNewView } from '../tasks/new';
 
 function createForm(todo) {
   const exists = todo.id ? true : false;
@@ -36,16 +34,6 @@ function createForm(todo) {
   const update = (event) => {
     const data = formData();
     todo.update(data);
-  };
-
-  const newTask = (event) => {
-    const task = new Task('', todo.id);
-    const render = taskNewView.render(task);
-    if (render) {
-      contentContainer.clear();
-      contentContainer.appendChild(render.form);
-      render.focus();
-    }
   };
 
   const formData = () => {
@@ -83,7 +71,6 @@ function createForm(todo) {
     form.appendChild(descriptionElement.div);
     form.appendChild(dueDateElement.div);
     form.appendChild(priorityElement.div);
-    form.appendChild(taskListElement.div);
     form.appendChild(cancelElement.div);
     form.appendChild(submitElement.div);
 
@@ -97,57 +84,11 @@ function createForm(todo) {
     priorityElement.input.value = todo.priority;
   };
 
-  const addTaskToDOM = (task, index) => {
-    const taskDiv = document.createElement('div');
-
-    const descriptionSpan = document.createElement('span');
-    descriptionSpan.textContent = task.description;
-    taskDiv.appendChild(descriptionSpan);
-
-    const checkbox = createCheckbox(task.complete, 'task-checkbox');
-    // checkbox.dataset.taskInputValue = generateTaskInputValue(
-    //   task,
-    //   index
-    // );
-    taskDiv.appendChild(checkbox);
-
-    // const editButton = createButton('button', 'Edit', 'editTaskButtonID');
-    // editButton.addEventListener('click', editTask);
-    // editButton.dataset.taskInputValue = generateTaskInputValue(
-    //   task,
-    //   index
-    // );
-    // taskDiv.appendChild(editButton);
-
-    // const destroyButton = createButton(
-    //   'button',
-    //   'Remove',
-    //   'destroyTaskButtonID'
-    // );
-    // destroyButton.addEventListener('click', destroyTask);
-    // destroyButton.dataset.taskInputValue = generateTaskInputValue(
-    //   task,
-    //   index
-    // );
-    // taskDiv.appendChild(destroyButton);
-
-    taskListElement.div.appendChild(taskDiv);
-  };
-
-  const setupTaskListData = () => {
-    todo.tasks().forEach((task, index) => {
-      addTaskToDOM(task, index);
-    });
-  };
-
   const setupData = () => {
     setupSimpleData();
-    setupTaskListData();
   };
 
   const setupEventListeners = () => {
-    taskListElement.newButton.addEventListener('click', newTask);
-
     submitElement.button.addEventListener('click', submitButtonCallback);
     cancelElement.button.addEventListener('click', cancel);
   };
@@ -237,19 +178,6 @@ function createForm(todo) {
     div.appendChild(input);
 
     return { div, input };
-  })();
-
-  const taskListElement = (() => {
-    const div = document.createElement('div');
-
-    const checkListLabelDiv = document.createElement('div');
-    checkListLabelDiv.textContent = 'Tasks:';
-    div.appendChild(checkListLabelDiv);
-
-    const newButton = createButton('button', 'New task', 'newTaskButtonID');
-    div.appendChild(newButton);
-
-    return { div, newButton };
   })();
 
   const cancelElement = (() => {

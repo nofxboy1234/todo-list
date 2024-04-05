@@ -1,8 +1,11 @@
 import { subscribe } from '../../messageQueue/messageQueue.mjs';
 import { Todo, events } from '../../models/todo.mjs';
-import { clearContainer } from '../helpers';
+import { clearContainer, createButton, createCheckbox } from '../helpers';
 import { contentContainer } from '../layouts/application';
 import { editView } from './edit';
+import { events as taskEvents } from '../../models/task.mjs';
+import { Task } from '../../models/task.mjs';
+import { newView as taskNewView } from '../tasks/new';
 
 function createShowView() {
   const createEditButton = (todo) => {
@@ -26,6 +29,72 @@ function createShowView() {
     return closeButton;
   };
 
+  const newTask = (event, todo) => {
+    const task = new Task('', todo.id);
+    const render = taskNewView.render(task);
+    if (render) {
+      contentContainer.clear();
+      contentContainer.appendChild(render.form);
+      render.focus();
+    }
+  };
+
+  const createTaskListElement = () => {
+    const div = document.createElement('div');
+
+    const checkListLabelDiv = document.createElement('div');
+    checkListLabelDiv.textContent = 'Tasks:';
+    div.appendChild(checkListLabelDiv);
+
+    const newButton = createButton('button', 'New task', 'newTaskButtonID');
+    div.appendChild(newButton);
+
+    return { div, newButton };
+  };
+
+  const addTaskToDOM = (task, index, taskListElement) => {
+    const taskDiv = document.createElement('div');
+
+    const descriptionSpan = document.createElement('span');
+    descriptionSpan.textContent = task.description;
+    taskDiv.appendChild(descriptionSpan);
+
+    const checkbox = createCheckbox(task.complete, 'task-checkbox');
+    // checkbox.dataset.taskInputValue = generateTaskInputValue(
+    //   task,
+    //   index
+    // );
+    taskDiv.appendChild(checkbox);
+
+    // const editButton = createButton('button', 'Edit', 'editTaskButtonID');
+    // editButton.addEventListener('click', editTask);
+    // editButton.dataset.taskInputValue = generateTaskInputValue(
+    //   task,
+    //   index
+    // );
+    // taskDiv.appendChild(editButton);
+
+    // const destroyButton = createButton(
+    //   'button',
+    //   'Remove',
+    //   'destroyTaskButtonID'
+    // );
+    // destroyButton.addEventListener('click', destroyTask);
+    // destroyButton.dataset.taskInputValue = generateTaskInputValue(
+    //   task,
+    //   index
+    // );
+    // taskDiv.appendChild(destroyButton);
+
+    taskListElement.div.appendChild(taskDiv);
+  };
+
+  const setupTaskListData = (todo, taskListElement) => {
+    todo.tasks().forEach((task, index) => {
+      addTaskToDOM(task, index, taskListElement);
+    });
+  };
+
   const edit = (todo) => {
     const render = editView.render(todo);
     if (render) {
@@ -42,6 +111,16 @@ function createShowView() {
       if (rendered) {
         contentContainer.clear();
         contentContainer.appendChild(rendered);
+      }
+    }
+
+    if (eventName === taskEvents.create) {
+      const task = data;
+      const rendered = render(task.todo());
+      if (rendered) {
+        contentContainer.clear();
+        contentContainer.appendChild(rendered);
+        // rendered.focus();
       }
     }
   };
@@ -66,18 +145,25 @@ function createShowView() {
     priorityDiv.textContent = todo.priority;
     showTodoDiv.appendChild(priorityDiv);
 
-    const projectIDDiv = document.createElement('div');
-    projectIDDiv.textContent = todo.projectID;
-    showTodoDiv.appendChild(projectIDDiv);
+    // const projectIDDiv = document.createElement('div');
+    // projectIDDiv.textContent = todo.projectID;
+    // showTodoDiv.appendChild(projectIDDiv);
 
-    const tasksDiv = document.createElement('div');
-    const tasks = todo.tasks();
-    tasks.forEach((task) => {
-      const taskDiv = document.createElement('div');
-      taskDiv.textContent = task.description;
-      tasksDiv.appendChild(taskDiv);
+    // const tasksDiv = document.createElement('div');
+    // const tasks = todo.tasks();
+    // tasks.forEach((task) => {
+    //   const taskDiv = document.createElement('div');
+    //   taskDiv.textContent = task.description;
+    //   tasksDiv.appendChild(taskDiv);
+    // });
+    // showTodoDiv.appendChild(tasksDiv);
+
+    const taskListElement = createTaskListElement();
+    showTodoDiv.appendChild(taskListElement.div);
+    setupTaskListData(todo, taskListElement);
+    taskListElement.newButton.addEventListener('click', (event) => {
+      newTask(event, todo);
     });
-    showTodoDiv.appendChild(tasksDiv);
 
     const editButton = createEditButton(todo);
     showTodoDiv.appendChild(editButton);
@@ -90,6 +176,7 @@ function createShowView() {
 
   const instance = { update, render };
   subscribe(events.update, instance);
+  subscribe(taskEvents.create, instance);
 
   return instance;
 }
