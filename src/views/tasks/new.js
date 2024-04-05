@@ -1,14 +1,31 @@
+import { subscribe } from '../../messageQueue/messageQueue.mjs';
+import { events } from '../../models/task.mjs';
+import { contentContainer } from '../layouts/contentContainer';
+import { createForm } from './_form';
+
 function createNewView() {
-  const update = (eventName, data) => { };
-
-  const render = (task) => {
-    const newTaskDiv = document.createElement('div');
-    newTaskDiv.textContent = 'New Task Form';
-
-    return newTaskDiv;
+  const update = (eventName, data) => {
+    if (eventName === events.createFailed) {
+      const task = data;
+      const rendered = render(task);
+      if (rendered) {
+        contentContainer.clear();
+        contentContainer.appendChild(rendered.form);
+        rendered.focus();
+      }
+    }
   };
 
-  return { update, render };
+  const render = (task) => {
+    return createForm(task);
+  };
+
+  const instance = { update, render };
+  subscribe(events.createFailed, instance);
+
+  return instance;
 }
 
-export { createNewView };
+const newView = createNewView();
+
+export { newView };

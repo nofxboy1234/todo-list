@@ -46,4 +46,4 @@ class Task extends Model {
   }
 }
 
-export { taskStatic, Task };
+export { events, taskStatic, Task };

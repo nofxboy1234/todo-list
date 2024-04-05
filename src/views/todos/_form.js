@@ -1,3 +1,4 @@
+import { Task } from '../../models/task.mjs';
 import { Todo } from '../../models/todo.mjs';
 import {
   createLabel,
@@ -9,6 +10,7 @@ import {
   createCheckbox,
 } from '../helpers';
 import { contentContainer } from '../layouts/application';
+import { newView as taskNewView } from '../tasks/new';
 
 function createForm(todo) {
   const exists = todo.id ? true : false;
@@ -37,8 +39,14 @@ function createForm(todo) {
   };
 
   const newTask = (event) => {
-    //
-  }
+    const task = new Task('Task 1', todo.id);
+    const render = taskNewView.render(task);
+    if (render) {
+      contentContainer.clear();
+      contentContainer.appendChild(render.form);
+      render.focus();
+    }
+  };
 
   const formData = () => {
     return {
@@ -125,8 +133,6 @@ function createForm(todo) {
 
     taskListElement.div.appendChild(taskDiv);
   };
-
-
 
   const setupTaskListData = () => {
     todo.tasks().forEach((task, index) => {
