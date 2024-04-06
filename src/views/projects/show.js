@@ -101,6 +101,22 @@ function createShowView() {
     const todosDiv = document.createElement('div');
     todos.forEach((todo) => {
       const todoParagraph = document.createElement('p');
+      let todoClass;
+      switch (todo.priority) {
+        case 'low':
+          todoClass = 'todo-low-priority';
+          break;
+        case 'medium':
+          todoClass = 'todo-medium-priority';
+          break;
+        case 'high':
+          todoClass = 'todo-high-priority';
+          break;
+        default:
+          break;
+      }
+
+      todoParagraph.classList.add('todo', todoClass);
 
       const titleDiv = document.createElement('div');
       titleDiv.textContent = todo.title;

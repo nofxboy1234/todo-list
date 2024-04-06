@@ -27,11 +27,24 @@ function createTestProjects() {
     todo1.errors.forEach((error) => console.log(error.description));
   }
 
-  const todo2 = new Todo('Todo 2', 'This is Todo 2.', '2024-03-29', 'medium', 1);
+  const todo2 = new Todo(
+    'Todo 2',
+    'This is Todo 2.',
+    '2024-03-29',
+    'medium',
+    1
+  );
   if (todo2.save()) {
     console.log(`Saved ${todo2.title} successfully`);
   } else {
     todo2.errors.forEach((error) => console.log(error.description));
+  }
+
+  const todo3 = new Todo('Todo 3', 'This is Todo 3.', '2024-03-29', 'high', 1);
+  if (todo3.save()) {
+    console.log(`Saved ${todo3.title} successfully`);
+  } else {
+    todo3.errors.forEach((error) => console.log(error.description));
   }
 
   const project2 = new Project('Project 2');

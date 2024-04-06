@@ -42,3 +42,29 @@
   height: 360px;
   margin: 50px;
 }
+
+.todo {
+  border: 1px solid black;
+  padding: 0.5rem;
+}
+
+.todo-low-priority {
+  background-color: rgb(130, 255, 47);
+}
+
+.todo-medium-priority {
+  background-color: rgb(255, 196, 0);
+}
+
+.todo-high-priority {
+  background-color: rgb(255, 34, 108);
+  color: white;
+}
+
+button {
+  cursor: pointer;
+}
+
+.clickable {
+  cursor: pointer;
+}
