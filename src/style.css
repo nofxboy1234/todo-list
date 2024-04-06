@@ -43,6 +43,16 @@
   margin: 50px;
 }
 
+.project {
+  border: 1px solid black;
+  padding: 0.5rem;
+}
+
+.project:hover {
+  background-color: rgb(0, 119, 255);
+  color: white;
+}
+
 .todo {
   border: 1px solid black;
   padding: 0.5rem;

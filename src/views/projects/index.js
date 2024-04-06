@@ -39,6 +39,7 @@ function createIndexView() {
 
     projects.forEach((project) => {
       const projectContainer = createProjectContainer(project);
+      projectContainer.classList.add('project');
       projectContainer.classList.add('clickable');
       projectsContainer.appendChild(projectContainer);
     });
