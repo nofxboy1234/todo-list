@@ -64,7 +64,8 @@ function createForm(todo) {
 
   const setupUI = () => {
     const form = document.createElement('form');
-    form.classList.add('new-todo-form');
+    form.classList.add('todo-form');
+
     form.appendChild(headerElement.div);
     form.appendChild(errorsElement.div);
     form.appendChild(titleElement.div);

@@ -44,6 +44,8 @@ function createForm(task) {
 
   const setupUI = () => {
     const form = document.createElement('form');
+    form.classList.add('task-form');
+
     form.appendChild(headerElement.div);
     form.appendChild(errorsElement.div);
     form.appendChild(descriptionElement.div);

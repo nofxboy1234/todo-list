@@ -42,6 +42,8 @@ function createForm(project) {
 
   const setupUI = () => {
     const form = document.createElement('form');
+    form.classList.add('project-form');
+    
     form.appendChild(headerElement.div);
     form.appendChild(errorsElement.div);
     form.appendChild(nameElement.div);

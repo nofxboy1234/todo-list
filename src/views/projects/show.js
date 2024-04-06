@@ -84,7 +84,9 @@ function createShowView() {
 
   const render = (project) => {
     contentContainer.clearViewCache();
+    
     const showProjectDiv = document.createElement('div');
+    showProjectDiv.classList.add('project-show-view');
 
     const header = document.createElement('h2');
     header.textContent = project.name;

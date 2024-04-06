@@ -126,6 +126,8 @@ function createShowView() {
       const task = data;
       const rendered = render(task.todo());
       if (rendered) {
+        contentContainer.removeLastViewFromCache();
+        contentContainer.removeLastViewFromCache();
         contentContainer.clear();
         contentContainer.appendChild(rendered);
         // rendered.focus();
@@ -135,6 +137,8 @@ function createShowView() {
 
   const render = (todo) => {
     const showTodoDiv = document.createElement('div');
+    showTodoDiv.classList.add('todo-show-view');
+
     showTodoDiv.textContent = 'show todo view';
 
     const titleDiv = document.createElement('div');

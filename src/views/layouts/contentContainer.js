@@ -11,12 +11,12 @@ const contentContainer = {
     viewCache.push(view);
     this.domElement.appendChild(view);
   },
-  removeCurrentViewFromCache() {
-    viewCache.pop();
-  },
   appendPrevious() {
-    this.removeCurrentViewFromCache();
+    this.removeLastViewFromCache();
     this.appendChild(previousView());
+  },
+  removeLastViewFromCache() {
+    viewCache.pop();
   },
   clear() {
     while (this.domElement.firstChild) {

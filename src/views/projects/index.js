@@ -36,6 +36,7 @@ function createIndexView() {
 
   const render = (projects) => {
     const projectsContainer = document.createElement('div');
+    projectsContainer.classList.add('project-index-view');
 
     projects.forEach((project) => {
       const projectContainer = createProjectContainer(project);
