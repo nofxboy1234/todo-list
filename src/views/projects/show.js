@@ -116,14 +116,14 @@ function createShowView() {
           break;
       }
 
-      todoParagraph.classList.add('todo', todoClass);
-
-      const titleDiv = document.createElement('div');
-      titleDiv.textContent = todo.title;
-      titleDiv.addEventListener('click', (event) => {
+      todoParagraph.classList.add('todo', 'clickable', todoClass);
+      todoParagraph.addEventListener('click', (event) => {
         showTodo(todo);
         event.stopPropagation();
       });
+
+      const titleDiv = document.createElement('div');
+      titleDiv.textContent = todo.title;
       todoParagraph.appendChild(titleDiv);
 
       const dueDateDiv = document.createElement('div');
