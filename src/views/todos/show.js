@@ -52,6 +52,11 @@ function createShowView() {
     return { div, newButton };
   };
 
+  const updateTaskComplete = (event, task) => {
+    const updatedData = { complete: event.target.checked };
+    task.update(updatedData);
+  };
+
   const addTaskToDOM = (task, index, taskListElement) => {
     const taskDiv = document.createElement('div');
 
@@ -60,6 +65,9 @@ function createShowView() {
     taskDiv.appendChild(descriptionSpan);
 
     const checkbox = createCheckbox(task.complete, 'task-checkbox');
+    checkbox.addEventListener('change', (event) =>
+      updateTaskComplete(event, task)
+    );
     // checkbox.dataset.taskInputValue = generateTaskInputValue(
     //   task,
     //   index

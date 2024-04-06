@@ -6,6 +6,8 @@ import { todoStatic } from './todo.mjs';
 const events = {
   create: 'taskCreated',
   createFailed: 'taskCreateFailed',
+  update: 'taskUpdated',
+  updateFailed: 'taskUpdateFailed',
 };
 
 const taskStatic = createModelStatic('task');
@@ -27,6 +29,15 @@ class Task extends Model {
     }
 
     return success;
+  }
+
+  update(data) {
+    const success = super.update(data);
+    if (success) {
+      publish(events.update, this);
+    } else {
+      publish(events.updateFailed, this);
+    }
   }
 
   validate() {
