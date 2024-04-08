@@ -5,6 +5,7 @@ import { Todo } from '../../models/todo.mjs';
 import { contentContainer } from '../layouts/application';
 import { newView as todoNewView } from '../todos/new';
 import { showView as todoShowView } from '../todos/show';
+import { format } from '../../../node_modules/date-fns/format';
 
 function createShowView() {
   const createNewTodoButton = (project) => {
@@ -30,7 +31,8 @@ function createShowView() {
   };
 
   const newTodo = (project) => {
-    const todo = new Todo('', '', '', 'low', project.id);
+    const todayDate = format(new Date(), 'yyyy-MM-dd');
+    const todo = new Todo('', '', todayDate, 'low', project.id);
     const render = todoNewView.render(todo);
     if (render) {
       contentContainer.clearDomElement();
