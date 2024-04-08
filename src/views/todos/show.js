@@ -160,38 +160,38 @@ function createShowView() {
 
   const render = (todo) => {
     const showTodoDiv = document.createElement('div');
-    showTodoDiv.classList.add('todo-show-view');
-
-    showTodoDiv.textContent = 'show todo view';
+    showTodoDiv.classList.add('todo');
 
     const titleDiv = document.createElement('div');
-    titleDiv.textContent = todo.title;
+    titleDiv.textContent = `Title: ${todo.title}`;
     showTodoDiv.appendChild(titleDiv);
 
     const descriptionDiv = document.createElement('div');
-    descriptionDiv.textContent = todo.description;
+    descriptionDiv.textContent = `Description: ${todo.description}`;
     showTodoDiv.appendChild(descriptionDiv);
 
     const dueDateDiv = document.createElement('div');
-    dueDateDiv.textContent = todo.dueDate;
+    dueDateDiv.textContent = `Due Date: ${todo.dueDate}`;
     showTodoDiv.appendChild(dueDateDiv);
 
     const priorityDiv = document.createElement('div');
-    priorityDiv.textContent = todo.priority;
+    priorityDiv.textContent = `Priority: ${todo.priority}`;
+    let todoClass;
+    switch (todo.priority) {
+      case 'low':
+        todoClass = 'todo-low-priority';
+        break;
+      case 'medium':
+        todoClass = 'todo-medium-priority';
+        break;
+      case 'high':
+        todoClass = 'todo-high-priority';
+        break;
+      default:
+        break;
+    }
+    priorityDiv.classList.add(todoClass);
     showTodoDiv.appendChild(priorityDiv);
-
-    // const projectIDDiv = document.createElement('div');
-    // projectIDDiv.textContent = todo.projectID;
-    // showTodoDiv.appendChild(projectIDDiv);
-
-    // const tasksDiv = document.createElement('div');
-    // const tasks = todo.tasks();
-    // tasks.forEach((task) => {
-    //   const taskDiv = document.createElement('div');
-    //   taskDiv.textContent = task.description;
-    //   tasksDiv.appendChild(taskDiv);
-    // });
-    // showTodoDiv.appendChild(tasksDiv);
 
     const taskListElement = createTaskListElement();
     showTodoDiv.appendChild(taskListElement.div);
