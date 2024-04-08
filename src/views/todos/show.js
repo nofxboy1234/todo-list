@@ -22,8 +22,8 @@ function createShowView() {
     const closeButton = document.createElement('button');
     closeButton.textContent = 'Close';
     closeButton.addEventListener('click', (event) => {
-      contentContainer.clear();
-      contentContainer.appendPrevious();
+      contentContainer.clearDomElement();
+      contentContainer.appendPreviousRender();
       event.stopPropagation();
     });
     return closeButton;
@@ -33,8 +33,8 @@ function createShowView() {
     const task = new Task('', todo.id);
     const render = taskNewView.render(task);
     if (render) {
-      contentContainer.clear();
-      contentContainer.appendChild(render.form);
+      contentContainer.clearDomElement();
+      contentContainer.appendRender(render.form);
       render.focus();
     }
   };
@@ -106,8 +106,8 @@ function createShowView() {
   const edit = (todo) => {
     const render = editView.render(todo);
     if (render) {
-      contentContainer.clear();
-      contentContainer.appendChild(render.form);
+      contentContainer.clearDomElement();
+      contentContainer.appendRender(render.form);
       render.focus();
     }
   };
@@ -117,8 +117,8 @@ function createShowView() {
       const todo = data;
       const rendered = render(todo);
       if (rendered) {
-        contentContainer.clear();
-        contentContainer.appendChild(rendered);
+        contentContainer.clearDomElement();
+        contentContainer.appendRender(rendered);
       }
     }
 
@@ -126,11 +126,21 @@ function createShowView() {
       const task = data;
       const rendered = render(task.todo());
       if (rendered) {
-        contentContainer.removeLastViewFromCache();
-        contentContainer.removeLastViewFromCache();
-        contentContainer.clear();
-        contentContainer.appendChild(rendered);
-        // rendered.focus();
+        // contentContainer.removeLastViewFromCache();
+        // contentContainer.removeLastViewFromCache();
+        contentContainer.clearDomElement();
+        contentContainer.appendRender(rendered);
+      }
+    }
+
+    if (eventName === taskEvents.update) {
+      const task = data;
+      const rendered = render(task.todo());
+      if (rendered) {
+        // contentContainer.removeLastViewFromCache();
+        // contentContainer.removeLastViewFromCache();
+        contentContainer.clearDomElement();
+        contentContainer.appendRender(rendered);
       }
     }
   };
@@ -189,6 +199,7 @@ function createShowView() {
   const instance = { update, render };
   subscribe(events.update, instance);
   subscribe(taskEvents.create, instance);
+  subscribe(taskEvents.update, instance);
 
   return instance;
 }

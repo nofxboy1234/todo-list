@@ -14,8 +14,8 @@ function createIndexView() {
     projectContainer.addEventListener('click', (event) => {
       const render = showView.render(project);
       if (render) {
-        contentContainer.clear();
-        contentContainer.appendChild(render);
+        contentContainer.clearDomElement();
+        contentContainer.appendRender(render);
       }
       event.stopPropagation();
     });

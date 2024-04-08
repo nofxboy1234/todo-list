@@ -6,8 +6,8 @@ function createForm(project) {
   const exists = project.id ? true : false;
 
   const cancel = (event) => {
-    contentContainer.clear();
-    contentContainer.appendPrevious();
+    contentContainer.clearDomElement();
+    contentContainer.appendPreviousRender();
     event.stopPropagation();
   };
 

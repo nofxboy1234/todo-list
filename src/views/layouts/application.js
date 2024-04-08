@@ -20,8 +20,8 @@ const newProject = (event) => {
   const project = new Project('');
   const render = projectNewView.render(project);
   if (render) {
-    contentContainer.clear();
-    contentContainer.appendChild(render.form);
+    contentContainer.clearDomElement();
+    contentContainer.appendRender(render.form);
     render.focus();
   }
 
@@ -65,9 +65,9 @@ const showDefaultProjectView = () => {
     .all()
     .find((project) => project.name === 'Default');
 
-  contentContainer.clear();
   const render = projectShowView.render(defaultProject);
-  contentContainer.appendChild(render);
+  contentContainer.clearDomElement();
+  contentContainer.appendRender(render);
 };
 
 const createLayout = () => {

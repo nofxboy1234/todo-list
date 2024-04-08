@@ -14,8 +14,8 @@ function createForm(todo) {
   const exists = todo.id ? true : false;
 
   const cancel = (event) => {
-    contentContainer.clear();
-    contentContainer.appendPrevious();
+    contentContainer.clearDomElement();
+    contentContainer.appendPreviousRender();
     event.stopPropagation();
   };
 

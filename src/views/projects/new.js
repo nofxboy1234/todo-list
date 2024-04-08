@@ -9,8 +9,9 @@ function createNewView() {
       const project = data;
       const rendered = render(project);
       if (rendered) {
-        contentContainer.clear();
-        contentContainer.appendChild(rendered.form);
+        contentContainer.removeLastRenderFromCache();
+        contentContainer.clearDomElement();
+        contentContainer.appendRender(rendered.form);
         rendered.focus();
       }
     }

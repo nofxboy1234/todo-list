@@ -33,8 +33,8 @@ function createShowView() {
     const todo = new Todo('', '', '', 'low', project.id);
     const render = todoNewView.render(todo);
     if (render) {
-      contentContainer.clear();
-      contentContainer.appendChild(render.form);
+      contentContainer.clearDomElement();
+      contentContainer.appendRender(render.form);
       render.focus();
     }
   };
@@ -46,8 +46,8 @@ function createShowView() {
   const showTodo = (todo) => {
     const render = todoShowView.render(todo);
     if (render) {
-      contentContainer.clear();
-      contentContainer.appendChild(render);
+      contentContainer.clearDomElement();
+      contentContainer.appendRender(render);
     }
   };
 
@@ -56,8 +56,9 @@ function createShowView() {
       const project = data;
       const rendered = render(project);
       if (rendered) {
-        contentContainer.clear();
-        contentContainer.appendChild(rendered);
+        contentContainer.removeLastRenderFromCache();
+        contentContainer.clearDomElement();
+        contentContainer.appendRender(rendered);
       }
     }
 
@@ -66,8 +67,8 @@ function createShowView() {
       const project = todo.project();
       const rendered = render(project);
       if (rendered) {
-        contentContainer.clear();
-        contentContainer.appendChild(rendered);
+        contentContainer.clearDomElement();
+        contentContainer.appendRender(rendered);
       }
     }
 
@@ -76,15 +77,15 @@ function createShowView() {
       const project = todo.project();
       const rendered = render(project);
       if (rendered) {
-        contentContainer.clear();
-        contentContainer.appendChild(rendered);
+        contentContainer.clearDomElement();
+        contentContainer.appendRender(rendered);
       }
     }
   };
 
   const render = (project) => {
-    contentContainer.clearViewCache();
-    
+    contentContainer.clearCache();
+
     const showProjectDiv = document.createElement('div');
     showProjectDiv.classList.add('project-show-view');
 

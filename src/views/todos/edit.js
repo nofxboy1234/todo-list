@@ -9,8 +9,8 @@ function createEditView() {
       const todo = data;
       const rendered = render(todo);
       if (rendered) {
-        contentContainer.clear();
-        contentContainer.appendChild(rendered.form);
+        contentContainer.clearDomElement();
+        contentContainer.appendRender(rendered.form);
         rendered.focus();
       }
     }

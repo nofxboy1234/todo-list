@@ -3,6 +3,8 @@ Javascript
 17 April 2024 -> 14 May 2024
 React
 
-Cancelling and Closing using cached views
+Operation failed state - what happens with caching?
+Cancelling and Closing (render normally instead) using cached views
+
 date-fns to format and manipulate dates?
 Use LocalStorage instead of just storing in arrays
