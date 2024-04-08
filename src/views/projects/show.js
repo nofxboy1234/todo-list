@@ -67,12 +67,23 @@ function createShowView() {
       const project = todo.project();
       const rendered = render(project);
       if (rendered) {
+        contentContainer.removeLastRenderFromCache();
         contentContainer.clearDomElement();
         contentContainer.appendRender(rendered);
       }
     }
 
     if (eventName === todoEvents.destroy) {
+      const todo = data;
+      const project = todo.project();
+      const rendered = render(project);
+      if (rendered) {
+        contentContainer.clearDomElement();
+        contentContainer.appendRender(rendered);
+      }
+    }
+
+    if (eventName === todoEvents.destroyFailed) {
       const todo = data;
       const project = todo.project();
       const rendered = render(project);
@@ -148,6 +159,7 @@ function createShowView() {
   subscribe(events.create, instance);
   subscribe(todoEvents.create, instance);
   subscribe(todoEvents.destroy, instance);
+  subscribe(todoEvents.destroyFailed, instance);
 
   return instance;
 }

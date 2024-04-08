@@ -9,12 +9,12 @@ function createEditView() {
       const todo = data;
       const rendered = render(todo);
       if (rendered) {
+        contentContainer.removeLastRenderFromCache();
         contentContainer.clearDomElement();
         contentContainer.appendRender(rendered.form);
         rendered.focus();
       }
     }
-
   };
 
   const render = (todo) => {

@@ -1,3 +1,4 @@
+import { createError } from '../errors/error.mjs';
 import { createErrorCollection } from '../errors/errorCollection.mjs';
 
 function createModelStatic(modelName) {
@@ -63,6 +64,10 @@ class Model {
       modelStatic.instances.splice(index, 1);
       return true;
     } else {
+      const error = createError(
+        'Instance was not destroyed because it was not found in storage'
+      );
+      this.errors.add(error);
       return false;
     }
   }

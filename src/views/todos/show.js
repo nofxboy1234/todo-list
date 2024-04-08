@@ -6,6 +6,7 @@ import { editView } from './edit';
 import { events as taskEvents } from '../../models/task.mjs';
 import { Task } from '../../models/task.mjs';
 import { newView as taskNewView } from '../tasks/new';
+import { showView as projectShowView } from '../projects/show';
 
 function createShowView() {
   const createEditButton = (todo) => {
@@ -18,12 +19,17 @@ function createShowView() {
     return editButton;
   };
 
-  const createCloseButton = () => {
+  const createCloseButton = (todo) => {
     const closeButton = document.createElement('button');
     closeButton.textContent = 'Close';
     closeButton.addEventListener('click', (event) => {
-      contentContainer.clearDomElement();
-      contentContainer.appendPreviousRender();
+      const project = todo.project();
+      const render = projectShowView.render(project);
+      if (render) {
+        contentContainer.clearDomElement();
+        contentContainer.appendRender(render);
+      }
+
       event.stopPropagation();
     });
     return closeButton;
@@ -117,6 +123,7 @@ function createShowView() {
       const todo = data;
       const rendered = render(todo);
       if (rendered) {
+        contentContainer.removeLastRenderFromCache();
         contentContainer.clearDomElement();
         contentContainer.appendRender(rendered);
       }
@@ -126,8 +133,7 @@ function createShowView() {
       const task = data;
       const rendered = render(task.todo());
       if (rendered) {
-        // contentContainer.removeLastViewFromCache();
-        // contentContainer.removeLastViewFromCache();
+        contentContainer.removeLastRenderFromCache();
         contentContainer.clearDomElement();
         contentContainer.appendRender(rendered);
       }
@@ -137,8 +143,15 @@ function createShowView() {
       const task = data;
       const rendered = render(task.todo());
       if (rendered) {
-        // contentContainer.removeLastViewFromCache();
-        // contentContainer.removeLastViewFromCache();
+        contentContainer.clearDomElement();
+        contentContainer.appendRender(rendered);
+      }
+    }
+
+    if (eventName === taskEvents.updateFailed) {
+      const task = data;
+      const rendered = render(task.todo());
+      if (rendered) {
         contentContainer.clearDomElement();
         contentContainer.appendRender(rendered);
       }
@@ -190,7 +203,7 @@ function createShowView() {
     const editButton = createEditButton(todo);
     showTodoDiv.appendChild(editButton);
 
-    const closeButton = createCloseButton();
+    const closeButton = createCloseButton(todo);
     showTodoDiv.appendChild(closeButton);
 
     return showTodoDiv;
@@ -200,6 +213,7 @@ function createShowView() {
   subscribe(events.update, instance);
   subscribe(taskEvents.create, instance);
   subscribe(taskEvents.update, instance);
+  subscribe(taskEvents.updateFailed, instance);
 
   return instance;
 }

@@ -9,6 +9,7 @@ function createNewView() {
       const task = data;
       const rendered = render(task);
       if (rendered) {
+        contentContainer.removeLastRenderFromCache();
         contentContainer.clearDomElement();
         contentContainer.appendRender(rendered.form);
         rendered.focus();
