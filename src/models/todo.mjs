@@ -43,11 +43,11 @@ class Todo extends Model {
   }
 
   update(data) {
-    const success = super.update(data);
-    if (success) {
+    const resultsObject = super.update(data);
+    if (resultsObject.success) {
       publish(events.update, this);
     } else {
-      publish(events.updateFailed, this);
+      publish(events.updateFailed, resultsObject.validationInstance);
     }
   }
 

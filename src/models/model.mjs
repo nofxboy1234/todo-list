@@ -49,12 +49,15 @@ class Model {
   }
 
   update(data) {
-    this.validate();
-    if (this.errors.size() === 0) {
+    const validationInstance = Object.create(this);
+    Object.assign(validationInstance, data);
+    validationInstance.validate();
+
+    if (validationInstance.errors.size() === 0) {
       Object.assign(this, data);
-      return true;
+      return { success: true };
     } else {
-      return false;
+      return { success: false, validationInstance };
     }
   }
 
