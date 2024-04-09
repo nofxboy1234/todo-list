@@ -13,11 +13,12 @@ function createProjectStatic() {
 
   const addBehaviourToInstances = () => {
     // Add methods back onto each instance
-    modelStatic.instances.forEach((projectState, index) => {
+    const projectInstances = modelStatic.instances.map((projectState) => {
       const project = new Project(projectState.name);
       Object.assign(project, projectState);
-      modelStatic.instances[index] = project;
+      return project;
     });
+    modelStatic.instances = projectInstances;
   };
 
   const load = () => {
