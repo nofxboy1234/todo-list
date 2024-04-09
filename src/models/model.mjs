@@ -28,6 +28,15 @@ function createModelStatic(modelName) {
     find(callback) {
       return this.instances.find(callback);
     },
+    load() {
+      const data = localStorage.getItem('projects');
+      if (data) {
+        this.instances = JSON.parse(data);
+        return true;
+      } else {
+        return false;
+      }
+    },
   };
 
   return instance;

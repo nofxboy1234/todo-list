@@ -1,6 +1,6 @@
 import './style.css';
 import { createLayout } from './views/layouts/application';
-import { Project } from './models/project.mjs';
+import { Project, projectStatic } from './models/project.mjs';
 import { Todo } from './models/todo.mjs';
 
 function createDefaultProject() {
@@ -13,4 +13,13 @@ function createDefaultProject() {
 }
 
 createDefaultProject();
+console.log(projectStatic);
+if (projectStatic.load()) {
+  console.log(
+    'Data loaded successfully! All projects in localStorage were loaded.'
+  );
+} else {
+  console.log('Data loading failed! No projects found in localStorage.');
+}
+
 createLayout();

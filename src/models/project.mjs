@@ -8,7 +8,33 @@ const events = {
   createFailed: 'projectCreateFailed',
 };
 
-const projectStatic = createModelStatic('project');
+function createProjectStatic() {
+  const modelStatic = createModelStatic('project');
+
+  const addBehaviourToInstances = () => {
+    // Add methods back onto each instance
+    modelStatic.instances.forEach((projectState, index) => {
+      const project = new Project(projectState.name);
+      Object.assign(project, projectState);
+      modelStatic.instances[index] = project;
+    });
+  };
+
+  const load = () => {
+    // Call `base class` implementation in `override`
+    if (modelStatic.load()) {
+      addBehaviourToInstances();
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  return Object.assign({}, modelStatic, { load });
+}
+
+const projectStatic = createProjectStatic();
+// const projectStatic = createModelStatic('project');
 
 class Project extends Model {
   constructor(name) {
@@ -19,7 +45,8 @@ class Project extends Model {
   save() {
     const success = super.save(projectStatic);
     if (success) {
-      localStorage.setItem('projects', JSON.stringify(projectStatic.instances));
+      const data = JSON.stringify(projectStatic.instances);
+      localStorage.setItem('projects', data);
       publish(events.create, this);
     } else {
       publish(events.createFailed, this);
