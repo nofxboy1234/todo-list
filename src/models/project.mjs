@@ -19,6 +19,7 @@ class Project extends Model {
   save() {
     const success = super.save(projectStatic);
     if (success) {
+      localStorage.setItem('projects', JSON.stringify(projectStatic.instances));
       publish(events.create, this);
     } else {
       publish(events.createFailed, this);
