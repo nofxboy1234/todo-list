@@ -1,16 +1,27 @@
 import { createError } from '../errors/error.mjs';
 import { createErrorCollection } from '../errors/errorCollection.mjs';
+import { Project } from './project.mjs';
 
 function createModelStatic(modelName) {
-  const reviver = (key, value) => {
-    // check `this` value
+  let reviverModelInstance;
 
+  function reviver(key, value) {
     if (key === 'errors') {
       return createErrorCollection();
     }
 
+    if (key === 'id') {
+      reviverModelInstance = this;
+    }
+
+    if (value === reviverModelInstance) {
+      const project = new Project(reviverModelInstance.name);
+      Object.assign(project, reviverModelInstance);
+      return project;
+    }
+
     return value;
-  };
+  }
 
   const instance = {
     name: `${modelName}Static`,
