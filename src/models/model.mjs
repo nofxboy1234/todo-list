@@ -2,6 +2,16 @@ import { createError } from '../errors/error.mjs';
 import { createErrorCollection } from '../errors/errorCollection.mjs';
 
 function createModelStatic(modelName) {
+  const reviver = (key, value) => {
+    // check `this` value
+
+    if (key === 'errors') {
+      return createErrorCollection();
+    }
+
+    return value;
+  };
+
   const instance = {
     name: `${modelName}Static`,
     instances: [],
@@ -31,7 +41,7 @@ function createModelStatic(modelName) {
     load() {
       const data = localStorage.getItem('projects');
       if (data) {
-        this.instances = JSON.parse(data);
+        this.instances = JSON.parse(data, reviver);
         return true;
       } else {
         return false;
