@@ -1,5 +1,3 @@
-import { projectIndexContainer } from './layouts/application';
-
 const createFlexContainer = (...classList) => {
   const flexContainer = document.createElement('div');
   flexContainer.classList.add(...classList);

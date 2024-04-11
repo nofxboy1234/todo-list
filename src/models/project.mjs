@@ -11,20 +11,9 @@ const events = {
 function createProjectStatic() {
   const modelStatic = createModelStatic('project');
 
-  // const addBehaviourToInstances = () => {
-  //   // Add methods back onto each instance
-  //   const projectInstances = modelStatic.instances.map((projectState) => {
-  //     const project = new Project(projectState.name);
-  //     Object.assign(project, projectState);
-  //     return project;
-  //   });
-  //   modelStatic.instances = projectInstances;
-  // };
-
   function load() {
     // Call `base class` implementation in `override`
     if (modelStatic.load.call(this)) {
-      // addBehaviourToInstances();
       return true;
     } else {
       return false;
@@ -35,7 +24,6 @@ function createProjectStatic() {
 }
 
 const projectStatic = createProjectStatic();
-// const projectStatic = createModelStatic('project');
 
 class Project extends Model {
   constructor(name) {

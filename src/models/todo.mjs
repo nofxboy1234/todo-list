@@ -89,8 +89,6 @@ class Todo extends Model {
       const error = createError('A todo already exists with this title');
       this.errors.add(error);
     }
-    // if (!this.id) {
-    // }
   }
 
   tasks() {

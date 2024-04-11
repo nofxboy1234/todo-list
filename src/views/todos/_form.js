@@ -3,10 +3,8 @@ import {
   createLabel,
   createInput,
   createButton,
-  createOption,
   createTextArea,
   createSelect,
-  createCheckbox,
 } from '../helpers';
 import { contentContainer } from '../layouts/application';
 

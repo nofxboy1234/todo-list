@@ -1,6 +1,6 @@
 import { subscribe } from '../../messageQueue/messageQueue.mjs';
-import { Todo, events } from '../../models/todo.mjs';
-import { clearContainer, createButton, createCheckbox } from '../helpers';
+import { events } from '../../models/todo.mjs';
+import { createButton, createCheckbox } from '../helpers';
 import { contentContainer } from '../layouts/application';
 import { editView } from './edit';
 import { events as taskEvents } from '../../models/task.mjs';
@@ -74,31 +74,7 @@ function createShowView() {
     checkbox.addEventListener('change', (event) =>
       updateTaskComplete(event, task)
     );
-    // checkbox.dataset.taskInputValue = generateTaskInputValue(
-    //   task,
-    //   index
-    // );
     taskDiv.appendChild(checkbox);
-
-    // const editButton = createButton('button', 'Edit', 'editTaskButtonID');
-    // editButton.addEventListener('click', editTask);
-    // editButton.dataset.taskInputValue = generateTaskInputValue(
-    //   task,
-    //   index
-    // );
-    // taskDiv.appendChild(editButton);
-
-    // const destroyButton = createButton(
-    //   'button',
-    //   'Remove',
-    //   'destroyTaskButtonID'
-    // );
-    // destroyButton.addEventListener('click', destroyTask);
-    // destroyButton.dataset.taskInputValue = generateTaskInputValue(
-    //   task,
-    //   index
-    // );
-    // taskDiv.appendChild(destroyButton);
 
     taskListElement.div.appendChild(taskDiv);
   };
