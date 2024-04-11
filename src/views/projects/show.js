@@ -42,7 +42,9 @@ function createShowView() {
   };
 
   const destroyTodo = (todo) => {
-    todo.destroy();
+    if (window.confirm('Are you sure?')) {
+      todo.destroy();
+    }
   };
 
   const showTodo = (todo) => {
