@@ -2,6 +2,7 @@ import { Model, createModelStatic } from './model.mjs';
 import { createError } from '../errors/error.mjs';
 import { publish } from '../messageQueue/messageQueue.mjs';
 import { todoStatic } from './todo.mjs';
+import { createErrorCollection } from '../errors/errorCollection.mjs';
 
 const events = {
   create: 'taskCreated',
@@ -68,7 +69,7 @@ class Task extends Model {
   save() {
     const success = super.save(taskStatic);
     if (success) {
-      const data = JSON.stringify(projectStatic.instances);
+      const data = JSON.stringify(taskStatic.instances);
       localStorage.setItem('tasks', data);
       publish(events.create, this);
     } else {
@@ -81,6 +82,8 @@ class Task extends Model {
   update(data) {
     const success = super.update(data);
     if (success) {
+      const data = JSON.stringify(taskStatic.instances);
+      localStorage.setItem('tasks', data);
       publish(events.update, this);
     } else {
       publish(events.updateFailed, this);

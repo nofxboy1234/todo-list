@@ -3,6 +3,7 @@ import { createError } from '../errors/error.mjs';
 import { taskStatic } from './task.mjs';
 import { publish } from '../messageQueue/messageQueue.mjs';
 import { projectStatic } from './project.mjs';
+import { createErrorCollection } from '../errors/errorCollection.mjs';
 
 const events = {
   create: 'todoCreated',
@@ -81,7 +82,7 @@ class Todo extends Model {
   save() {
     const success = super.save(todoStatic);
     if (success) {
-      const data = JSON.stringify(projectStatic.instances);
+      const data = JSON.stringify(todoStatic.instances);
       localStorage.setItem('todos', data);
       publish(events.create, this);
     } else {
@@ -94,6 +95,8 @@ class Todo extends Model {
   update(data) {
     const resultsObject = super.update(data);
     if (resultsObject.success) {
+      const data = JSON.stringify(todoStatic.instances);
+      localStorage.setItem('todos', data);
       publish(events.update, this);
     } else {
       publish(events.updateFailed, resultsObject.validationInstance);
@@ -103,6 +106,8 @@ class Todo extends Model {
   destroy() {
     const success = super.destroy(todoStatic);
     if (success) {
+      const data = JSON.stringify(todoStatic.instances);
+      localStorage.setItem('todos', data);
       publish(events.destroy, this);
     } else {
       publish(events.destroyFailed, this);
