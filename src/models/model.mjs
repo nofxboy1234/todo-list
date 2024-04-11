@@ -15,8 +15,8 @@ function createModelStatic(modelName) {
     }
 
     if (value === reviverModelInstance) {
-      const project = new Project(reviverModelInstance.name);
-      Object.assign(project, reviverModelInstance);
+      const project = new Project(value.name);
+      Object.assign(project, value);
       return project;
     }
 
