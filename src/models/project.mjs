@@ -21,15 +21,15 @@ function createProjectStatic() {
   //   modelStatic.instances = projectInstances;
   // };
 
-  const load = () => {
+  function load() {
     // Call `base class` implementation in `override`
-    if (modelStatic.load()) {
+    if (modelStatic.load.call(this)) {
       // addBehaviourToInstances();
       return true;
     } else {
       return false;
     }
-  };
+  }
 
   return Object.assign({}, modelStatic, { load });
 }
