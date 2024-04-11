@@ -20,13 +20,6 @@ function createTodoStatic() {
     Object.assign(modelInstance, value);
   };
 
-  const createModelInstance = (value) => {
-    const className = Todo;
-    const modelInstance = new className(value.name);
-
-    return modelInstance;
-  };
-
   function reviver(key, value) {
     if (key === 'errors') {
       return createErrorCollection();
@@ -37,7 +30,13 @@ function createTodoStatic() {
     }
 
     if (value === reviverModelInstance) {
-      const modelInstance = createModelInstance(value);
+      const modelInstance = new Todo(
+        value.title,
+        value.description,
+        value.dueDate,
+        value.priority,
+        value.projectID
+      );
       addMethodsBackToModelInstance(modelInstance, value);
 
       return modelInstance;

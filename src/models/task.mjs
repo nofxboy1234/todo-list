@@ -17,13 +17,6 @@ function createTaskStatic() {
     Object.assign(modelInstance, value);
   };
 
-  const createModelInstance = (value) => {
-    const className = Task;
-    const modelInstance = new className(value.name);
-
-    return modelInstance;
-  };
-
   function reviver(key, value) {
     if (key === 'errors') {
       return createErrorCollection();
@@ -34,7 +27,11 @@ function createTaskStatic() {
     }
 
     if (value === reviverModelInstance) {
-      const modelInstance = createModelInstance(value);
+      const modelInstance = new Task(
+        value.description,
+        value.todoID,
+        value.complete
+      );
       addMethodsBackToModelInstance(modelInstance, value);
 
       return modelInstance;

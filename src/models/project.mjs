@@ -16,13 +16,6 @@ function createProjectStatic() {
     Object.assign(modelInstance, value);
   };
 
-  const createModelInstance = (value) => {
-    const className = Project;
-    const modelInstance = new className(value.name);
-
-    return modelInstance;
-  };
-
   function reviver(key, value) {
     if (key === 'errors') {
       return createErrorCollection();
@@ -33,7 +26,7 @@ function createProjectStatic() {
     }
 
     if (value === reviverModelInstance) {
-      const modelInstance = createModelInstance(value);
+      const modelInstance = new Project(value.name);
       addMethodsBackToModelInstance(modelInstance, value);
 
       return modelInstance;
