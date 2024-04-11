@@ -24,6 +24,17 @@ function createModelStatic(modelName) {
     }
   };
 
+  const addMethodsBackToModelInstance = (modelInstance, value) => {
+    Object.assign(modelInstance, value);
+  };
+
+  const createModelInstance = (value) => {
+    const className = getClassOfModelInstance(value);
+    const modelInstance = new className(value.name);
+
+    return modelInstance;
+  };
+
   function reviver(key, value) {
     if (key === 'errors') {
       return createErrorCollection();
@@ -34,9 +45,9 @@ function createModelStatic(modelName) {
     }
 
     if (value === reviverModelInstance) {
-      const className = getClassOfModelInstance(value);
-      const modelInstance = new className(value.name);
-      Object.assign(modelInstance, value);
+      const modelInstance = createModelInstance(value);
+      addMethodsBackToModelInstance(modelInstance, value);
+
       return modelInstance;
     }
 
