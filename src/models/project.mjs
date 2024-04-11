@@ -63,7 +63,6 @@ class Project extends Model {
   constructor(name) {
     super();
     this.name = name;
-    this.class = 'Project';
   }
 
   save() {
