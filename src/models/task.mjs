@@ -10,7 +10,55 @@ const events = {
   updateFailed: 'taskUpdateFailed',
 };
 
-const taskStatic = createModelStatic('task');
+function createTaskStatic() {
+  let reviverModelInstance;
+
+  const addMethodsBackToModelInstance = (modelInstance, value) => {
+    Object.assign(modelInstance, value);
+  };
+
+  const createModelInstance = (value) => {
+    const className = Task;
+    const modelInstance = new className(value.name);
+
+    return modelInstance;
+  };
+
+  function reviver(key, value) {
+    if (key === 'errors') {
+      return createErrorCollection();
+    }
+
+    if (key === 'id') {
+      reviverModelInstance = this;
+    }
+
+    if (value === reviverModelInstance) {
+      const modelInstance = createModelInstance(value);
+      addMethodsBackToModelInstance(modelInstance, value);
+
+      return modelInstance;
+    }
+
+    return value;
+  }
+
+  const modelStatic = createModelStatic('task');
+
+  function load() {
+    const data = localStorage.getItem('tasks');
+    if (data) {
+      this.instances = JSON.parse(data, reviver);
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  return Object.assign({}, modelStatic, { load });
+}
+
+const taskStatic = createTaskStatic();
 
 class Task extends Model {
   constructor(description, todoID, complete = false) {
@@ -23,6 +71,8 @@ class Task extends Model {
   save() {
     const success = super.save(taskStatic);
     if (success) {
+      const data = JSON.stringify(projectStatic.instances);
+      localStorage.setItem('tasks', data);
       publish(events.create, this);
     } else {
       publish(events.createFailed, this);

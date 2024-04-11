@@ -1,59 +1,7 @@
 import { createError } from '../errors/error.mjs';
 import { createErrorCollection } from '../errors/errorCollection.mjs';
-import { Project } from './project.mjs';
-// import { Todo } from './todo.mjs';
-// import { Task } from './task.mjs';
 
 function createModelStatic(modelName) {
-  let reviverModelInstance;
-
-  const getClassOfModelInstance = (value) => {
-    switch (value.class) {
-      case 'Project':
-        return Project;
-        break;
-      case 'Todo':
-        return Todo;
-        break;
-      case 'Task':
-        return Task;
-        break;
-
-      default:
-        break;
-    }
-  };
-
-  const addMethodsBackToModelInstance = (modelInstance, value) => {
-    Object.assign(modelInstance, value);
-  };
-
-  const createModelInstance = (value) => {
-    const className = getClassOfModelInstance(value);
-    const modelInstance = new className(value.name);
-
-    return modelInstance;
-  };
-
-  function reviver(key, value) {
-    if (key === 'errors') {
-      return createErrorCollection();
-    }
-
-    if (key === 'id') {
-      reviverModelInstance = this;
-    }
-
-    if (value === reviverModelInstance) {
-      const modelInstance = createModelInstance(value);
-      addMethodsBackToModelInstance(modelInstance, value);
-
-      return modelInstance;
-    }
-
-    return value;
-  }
-
   const instance = {
     name: `${modelName}Static`,
     instances: [],
@@ -79,15 +27,6 @@ function createModelStatic(modelName) {
     },
     find(callback) {
       return this.instances.find(callback);
-    },
-    load() {
-      const data = localStorage.getItem('projects');
-      if (data) {
-        this.instances = JSON.parse(data, reviver);
-        return true;
-      } else {
-        return false;
-      }
     },
   };
 

@@ -13,7 +13,55 @@ const events = {
   destroyFailed: 'todoDestroyFailed',
 };
 
-const todoStatic = createModelStatic('todo');
+function createTodoStatic() {
+  let reviverModelInstance;
+
+  const addMethodsBackToModelInstance = (modelInstance, value) => {
+    Object.assign(modelInstance, value);
+  };
+
+  const createModelInstance = (value) => {
+    const className = Todo;
+    const modelInstance = new className(value.name);
+
+    return modelInstance;
+  };
+
+  function reviver(key, value) {
+    if (key === 'errors') {
+      return createErrorCollection();
+    }
+
+    if (key === 'id') {
+      reviverModelInstance = this;
+    }
+
+    if (value === reviverModelInstance) {
+      const modelInstance = createModelInstance(value);
+      addMethodsBackToModelInstance(modelInstance, value);
+
+      return modelInstance;
+    }
+
+    return value;
+  }
+
+  const modelStatic = createModelStatic('todo');
+
+  function load() {
+    const data = localStorage.getItem('todos');
+    if (data) {
+      this.instances = JSON.parse(data, reviver);
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  return Object.assign({}, modelStatic, { load });
+}
+
+const todoStatic = createTodoStatic();
 
 class Todo extends Model {
   constructor(
@@ -34,6 +82,8 @@ class Todo extends Model {
   save() {
     const success = super.save(todoStatic);
     if (success) {
+      const data = JSON.stringify(projectStatic.instances);
+      localStorage.setItem('todos', data);
       publish(events.create, this);
     } else {
       publish(events.createFailed, this);

@@ -2,6 +2,7 @@ import { Model, createModelStatic } from './model.mjs';
 import { createError } from '../errors/error.mjs';
 import { todoStatic } from './todo.mjs';
 import { publish } from '../messageQueue/messageQueue.mjs';
+import { createErrorCollection } from '../errors/errorCollection.mjs';
 
 const events = {
   create: 'projectCreated',
@@ -9,11 +10,44 @@ const events = {
 };
 
 function createProjectStatic() {
+  let reviverModelInstance;
+
+  const addMethodsBackToModelInstance = (modelInstance, value) => {
+    Object.assign(modelInstance, value);
+  };
+
+  const createModelInstance = (value) => {
+    const className = Project;
+    const modelInstance = new className(value.name);
+
+    return modelInstance;
+  };
+
+  function reviver(key, value) {
+    if (key === 'errors') {
+      return createErrorCollection();
+    }
+
+    if (key === 'id') {
+      reviverModelInstance = this;
+    }
+
+    if (value === reviverModelInstance) {
+      const modelInstance = createModelInstance(value);
+      addMethodsBackToModelInstance(modelInstance, value);
+
+      return modelInstance;
+    }
+
+    return value;
+  }
+
   const modelStatic = createModelStatic('project');
 
   function load() {
-    // Call `base class` implementation in `override`
-    if (modelStatic.load.call(this)) {
+    const data = localStorage.getItem('projects');
+    if (data) {
+      this.instances = JSON.parse(data, reviver);
       return true;
     } else {
       return false;
