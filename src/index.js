@@ -26,9 +26,8 @@ if (todoStatic.load()) {
 if (taskStatic.load()) {
   console.log('Tasks in localStorage were loaded.');
 } else {
-  console.log('No Tasks found in localStojrage.');
+  console.log('No Tasks found in localStorage.');
   createDefaultProject();
 }
 
-// Create default project if "No Projects found in localStorage!"
 createLayout();
