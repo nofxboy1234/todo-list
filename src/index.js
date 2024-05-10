@@ -33,3 +33,7 @@ if (taskStatic.load()) {
 createLayout();
 
 const hello = () => console.log("hello world!");
+
+function test(x = "hello", { a, b }, ...args) {
+  console.log(x, a, b, args);
+}
