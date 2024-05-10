@@ -67,18 +67,18 @@ function createError(description) {
 ;// CONCATENATED MODULE: ./src/errors/errorCollection.mjs
 function createErrorCollection() {
   const errors = [];
-  const add = error => {
+  const add = function (error) {
     errors.push(error);
   };
-  const forEach = callback => {
-    errors.forEach(error => {
+  const forEach = function (callback) {
+    errors.forEach(function (error) {
       callback(error);
     });
   };
-  const size = () => {
+  const size = function () {
     return errors.length;
   };
-  const clear = () => {
+  const clear = function () {
     errors.length = 0;
   };
   const instance = {
@@ -172,20 +172,24 @@ class Model {
 // Abstractions, usually involving some "middle man" (such as a message queue)
 // who knows all parties, but the individual parties don't know about each other.
 const messages = {};
-const subscribe = (eventName, subscriber) => {
+const subscribe = function (eventName, subscriber) {
   if (!messages[eventName]) {
     messages[eventName] = [];
   }
   messages[eventName].push(subscriber);
 };
-const unsubscribe = (eventName, subscriberToUnsubscribe) => {
+const unsubscribe = function (eventName, subscriberToUnsubscribe) {
   if (messages[eventName]) {
-    messages[eventName] = messages[eventName].filter(subscriber => subscriber !== subscriberToUnsubscribe);
+    messages[eventName] = messages[eventName].filter(function (subscriber) {
+      return subscriber !== subscriberToUnsubscribe;
+    });
   }
 };
-const publish = (eventName, data) => {
+const publish = function (eventName, data) {
   if (messages[eventName]) {
-    messages[eventName].forEach(subscriber => subscriber.update(eventName, data));
+    messages[eventName].forEach(function (subscriber) {
+      return subscriber.update(eventName, data);
+    });
   }
 };
 
@@ -203,7 +207,7 @@ const events = {
 };
 function createTaskStatic() {
   let reviverModelInstance;
-  const addMethodsBackToModelInstance = (modelInstance, value) => {
+  const addMethodsBackToModelInstance = function (modelInstance, value) {
     Object.assign(modelInstance, value);
   };
   function reviver(key, value) {
@@ -275,7 +279,10 @@ class Task extends Model {
     }
   }
   todo() {
-    return todoStatic.all().find(todo => todo.id === this.todoID);
+    var _this = this;
+    return todoStatic.all().find(function (todo) {
+      return todo.id === _this.todoID;
+    });
   }
 }
 
@@ -296,7 +303,7 @@ const todo_events = {
 };
 function createTodoStatic() {
   let reviverModelInstance;
-  const addMethodsBackToModelInstance = (modelInstance, value) => {
+  const addMethodsBackToModelInstance = function (modelInstance, value) {
     Object.assign(modelInstance, value);
   };
   function reviver(key, value) {
@@ -374,6 +381,7 @@ class Todo extends Model {
     }
   }
   validate() {
+    var _this = this;
     if (this.title === '') {
       const error = createError('Title cannot be blank');
       this.errors.add(error);
@@ -390,16 +398,24 @@ class Todo extends Model {
       const error = createError('Description must be 2 or more characters');
       this.errors.add(error);
     }
-    if (todoStatic.all().find(todo => todo.id != this.id && todo.title === this.title)) {
+    if (todoStatic.all().find(function (todo) {
+      return todo.id != _this.id && todo.title === _this.title;
+    })) {
       const error = createError('A todo already exists with this title');
       this.errors.add(error);
     }
   }
   tasks() {
-    return taskStatic.all().filter(task => task.todoID === this.id);
+    var _this2 = this;
+    return taskStatic.all().filter(function (task) {
+      return task.todoID === _this2.id;
+    });
   }
   project() {
-    return projectStatic.all().find(project => project.id === this.projectID);
+    var _this3 = this;
+    return projectStatic.all().find(function (project) {
+      return project.id === _this3.projectID;
+    });
   }
 }
 
@@ -415,7 +431,7 @@ const project_events = {
 };
 function createProjectStatic() {
   let reviverModelInstance;
-  const addMethodsBackToModelInstance = (modelInstance, value) => {
+  const addMethodsBackToModelInstance = function (modelInstance, value) {
     Object.assign(modelInstance, value);
   };
   function reviver(key, value) {
@@ -464,6 +480,7 @@ class Project extends Model {
     return success;
   }
   validate() {
+    var _this = this;
     if (this.name === '') {
       const error = createError('Name cannot be blank');
       this.errors.add(error);
@@ -472,13 +489,18 @@ class Project extends Model {
       const error = createError('Name must be 2 or more characters');
       this.errors.add(error);
     }
-    if (projectStatic.all().find(project => project.name === this.name)) {
+    if (projectStatic.all().find(function (project) {
+      return project.name === _this.name;
+    })) {
       const error = createError('A project already exists with this name');
       this.errors.add(error);
     }
   }
   todos() {
-    return todoStatic.all().filter(todo => todo.projectID === this.id);
+    var _this2 = this;
+    return todoStatic.all().filter(function (todo) {
+      return todo.projectID === _this2.id;
+    });
   }
 }
 
@@ -488,32 +510,32 @@ const createFlexContainer = function () {
   flexContainer.classList.add(...arguments);
   return flexContainer;
 };
-const clearContainer = container => {
+const clearContainer = function (container) {
   while (container.firstChild) {
     const lastChild = container.lastChild;
     container.removeChild(lastChild);
   }
 };
-const createLabel = (text, forID) => {
+const createLabel = function (text, forID) {
   const label = document.createElement('label');
   label.textContent = text;
   label.htmlFor = forID;
   return label;
 };
-const createInput = (type, id, name) => {
+const createInput = function (type, id, name) {
   const input = document.createElement('input');
   input.type = type;
   if (id) input.id = id;
   input.name = name;
   return input;
 };
-const createTextArea = (id, name) => {
+const createTextArea = function (id, name) {
   const textArea = document.createElement('textarea');
   textArea.id = id;
   textArea.name = name;
   return textArea;
 };
-const createOption = (value, text) => {
+const createOption = function (value, text) {
   const option = document.createElement('option');
   option.value = value;
   option.text = text;
@@ -524,27 +546,27 @@ const createSelect = function (id, name) {
   const select = document.createElement('select');
   select.id = id;
   select.name = name;
-  options.forEach(option => {
+  options.forEach(function (option) {
     select.add(createOption(option.value, option.text));
   });
   return select;
 };
-const createDataList = (id, options) => {
+const createDataList = function (id, options) {
   const dataList = document.createElement('datalist');
   dataList.id = id;
-  options.forEach(option => {
+  options.forEach(function (option) {
     dataList.appendChild(createOption(option, option));
   });
   return dataList;
 };
-const createButton = (type, text, id) => {
+const createButton = function (type, text, id) {
   const button = document.createElement('button');
   button.type = type;
   button.textContent = text;
   button.id = id;
   return button;
 };
-const createCheckbox = (checked, cssClass) => {
+const createCheckbox = function (checked, cssClass) {
   const checkbox = document.createElement('input');
   checkbox.type = 'checkbox';
   checkbox.checked = checked;
@@ -555,7 +577,7 @@ const createCheckbox = (checked, cssClass) => {
 ;// CONCATENATED MODULE: ./src/views/layouts/contentContainer.js
 
 const renderCache = [];
-const cacheRender = render => {
+const cacheRender = function (render) {
   renderCache.push(render);
 };
 const contentContainer = {
@@ -589,21 +611,21 @@ const contentContainer = {
 
 function createForm(todo) {
   const exists = todo.id ? true : false;
-  const cancel = event => {
+  const cancel = function (event) {
     contentContainer.clearDomElement();
     contentContainer.appendPreviousRender();
     event.stopPropagation();
   };
-  const create = event => {
+  const create = function (event) {
     const data = formData();
     const todo = new Todo(data.title, data.description, data.dueDate, data.priority, data.projectID);
     todo.save();
   };
-  const update = event => {
+  const update = function (event) {
     const data = formData();
     todo.update(data);
   };
-  const formData = () => {
+  const formData = function () {
     return {
       id: todo.id,
       title: titleElement.input.value,
@@ -613,7 +635,7 @@ function createForm(todo) {
       projectID: todo.projectID
     };
   };
-  const submitButtonCallback = event => {
+  const submitButtonCallback = function (event) {
     if (!form.checkValidity()) {
       return;
     }
@@ -625,7 +647,7 @@ function createForm(todo) {
     event.preventDefault();
     event.stopPropagation();
   };
-  const setupUI = () => {
+  const setupUI = function () {
     const form = document.createElement('form');
     form.classList.add('todo-form');
     form.appendChild(headerElement.div);
@@ -638,33 +660,33 @@ function createForm(todo) {
     form.appendChild(submitElement.div);
     return form;
   };
-  const setupSimpleData = () => {
+  const setupSimpleData = function () {
     titleElement.input.value = todo.title;
     descriptionElement.input.value = todo.description;
     dueDateElement.input.value = todo.dueDate;
     priorityElement.input.value = todo.priority;
   };
-  const setupData = () => {
+  const setupData = function () {
     setupSimpleData();
   };
-  const setupEventListeners = () => {
+  const setupEventListeners = function () {
     submitElement.button.addEventListener('click', submitButtonCallback);
     cancelElement.button.addEventListener('click', cancel);
   };
-  const clearErrors = () => {
+  const clearErrors = function () {
     todo.errors.clear();
   };
-  const displayErrors = () => {
-    todo.errors.forEach(error => {
+  const displayErrors = function () {
+    todo.errors.forEach(function (error) {
       const errorDiv = document.createElement('div');
       errorDiv.textContent = error.description;
       errorsElement.div.appendChild(errorDiv);
     });
   };
-  const focus = () => {
+  const focus = function () {
     titleElement.input.focus();
   };
-  const headerElement = (() => {
+  const headerElement = function () {
     const div = document.createElement('div');
     const heading = document.createElement('h2');
     if (exists) {
@@ -676,14 +698,14 @@ function createForm(todo) {
     return {
       div
     };
-  })();
-  const errorsElement = (() => {
+  }();
+  const errorsElement = function () {
     const div = document.createElement('div');
     return {
       div
     };
-  })();
-  const titleElement = (() => {
+  }();
+  const titleElement = function () {
     const div = document.createElement('div');
     div.appendChild(createLabel('Title:', 'titleID'));
     const input = createInput('text', 'titleID', 'title');
@@ -694,8 +716,8 @@ function createForm(todo) {
       div,
       input
     };
-  })();
-  const descriptionElement = (() => {
+  }();
+  const descriptionElement = function () {
     const div = document.createElement('div');
     div.appendChild(createLabel('Description:', 'descriptionID'));
     const input = createTextArea('descriptionID', 'description');
@@ -706,8 +728,8 @@ function createForm(todo) {
       div,
       input
     };
-  })();
-  const dueDateElement = (() => {
+  }();
+  const dueDateElement = function () {
     const div = document.createElement('div');
     div.appendChild(createLabel('Due Date:', 'dueDateID'));
     const input = createInput('date', 'dueDateID', 'dueDate');
@@ -717,8 +739,8 @@ function createForm(todo) {
       div,
       input
     };
-  })();
-  const priorityElement = (() => {
+  }();
+  const priorityElement = function () {
     const div = document.createElement('div');
     div.appendChild(createLabel('Priority:', 'priorityID'));
     const options = [{
@@ -737,8 +759,8 @@ function createForm(todo) {
       div,
       input
     };
-  })();
-  const cancelElement = (() => {
+  }();
+  const cancelElement = function () {
     const div = document.createElement('div');
     const button = createButton('button', 'Cancel', 'cancelButtonID');
     div.appendChild(button);
@@ -746,8 +768,8 @@ function createForm(todo) {
       div,
       button
     };
-  })();
-  const submitElement = (() => {
+  }();
+  const submitElement = function () {
     const div = document.createElement('div');
     let buttonText;
     if (exists) {
@@ -761,7 +783,7 @@ function createForm(todo) {
       div,
       button
     };
-  })();
+  }();
   const form = setupUI();
   setupData();
   setupEventListeners();
@@ -781,7 +803,7 @@ function createForm(todo) {
 
 
 function createNewView() {
-  const update = (eventName, data) => {
+  const update = function (eventName, data) {
     if (eventName === todo_events.createFailed) {
       const todo = data;
       const rendered = render(todo);
@@ -793,7 +815,7 @@ function createNewView() {
       }
     }
   };
-  const render = todo => {
+  const render = function (todo) {
     return createForm(todo);
   };
   const instance = {
@@ -811,7 +833,7 @@ const newView = createNewView();
 
 
 function createEditView() {
-  const update = (eventName, data) => {
+  const update = function (eventName, data) {
     if (eventName === todo_events.updateFailed) {
       const todo = data;
       const rendered = render(todo);
@@ -823,7 +845,7 @@ function createEditView() {
       }
     }
   };
-  const render = todo => {
+  const render = function (todo) {
     return createForm(todo);
   };
   const instance = {
@@ -841,25 +863,25 @@ const editView = createEditView();
 
 function _form_createForm(task) {
   const exists = task.id ? true : false;
-  const cancel = event => {
+  const cancel = function (event) {
     contentContainer.clearDomElement();
     contentContainer.appendPreviousRender();
     event.stopPropagation();
   };
-  const create = event => {
+  const create = function (event) {
     const data = formData();
     const task = new Task(data.description, data.todoID);
     task.save();
   };
-  const update = event => {};
-  const formData = () => {
+  const update = function (event) {};
+  const formData = function () {
     return {
       id: task.id,
       description: descriptionElement.input.value,
       todoID: task.todoID
     };
   };
-  const submitButtonCallback = event => {
+  const submitButtonCallback = function (event) {
     if (!form.checkValidity()) {
       return;
     }
@@ -871,7 +893,7 @@ function _form_createForm(task) {
     event.preventDefault();
     event.stopPropagation();
   };
-  const setupUI = () => {
+  const setupUI = function () {
     const form = document.createElement('form');
     form.classList.add('task-form');
     form.appendChild(headerElement.div);
@@ -881,28 +903,28 @@ function _form_createForm(task) {
     form.appendChild(submitElement.div);
     return form;
   };
-  const setupData = () => {
+  const setupData = function () {
     descriptionElement.input.value = task.description;
   };
-  const setupEventListeners = () => {
+  const setupEventListeners = function () {
     submitElement.button.addEventListener('click', submitButtonCallback);
     cancelElement.button.addEventListener('click', cancel);
   };
-  const clearErrors = () => {
+  const clearErrors = function () {
     task.errors.clear();
   };
-  const displayErrors = () => {
-    task.errors.forEach(error => {
+  const displayErrors = function () {
+    task.errors.forEach(function (error) {
       const errorDiv = document.createElement('div');
       errorDiv.textContent = error.description;
       errorsElement.div.appendChild(errorDiv);
     });
     clearErrors();
   };
-  const focus = () => {
+  const focus = function () {
     descriptionElement.input.focus();
   };
-  const headerElement = (() => {
+  const headerElement = function () {
     const div = document.createElement('div');
     const heading = document.createElement('h2');
     if (exists) {
@@ -914,14 +936,14 @@ function _form_createForm(task) {
     return {
       div
     };
-  })();
-  const errorsElement = (() => {
+  }();
+  const errorsElement = function () {
     const div = document.createElement('div');
     return {
       div
     };
-  })();
-  const descriptionElement = (() => {
+  }();
+  const descriptionElement = function () {
     const div = document.createElement('div');
     div.appendChild(createLabel('description:', 'descriptionID'));
     const input = createInput('text', 'descriptionID', 'description');
@@ -932,8 +954,8 @@ function _form_createForm(task) {
       div,
       input
     };
-  })();
-  const cancelElement = (() => {
+  }();
+  const cancelElement = function () {
     const div = document.createElement('div');
     const button = createButton('button', 'Cancel', 'cancelButtonID');
     div.appendChild(button);
@@ -941,8 +963,8 @@ function _form_createForm(task) {
       div,
       button
     };
-  })();
-  const submitElement = (() => {
+  }();
+  const submitElement = function () {
     const div = document.createElement('div');
     let buttonText;
     if (exists) {
@@ -956,7 +978,7 @@ function _form_createForm(task) {
       div,
       button
     };
-  })();
+  }();
   const form = setupUI();
   setupData();
   setupEventListeners();
@@ -975,7 +997,7 @@ function _form_createForm(task) {
 
 
 function new_createNewView() {
-  const update = (eventName, data) => {
+  const update = function (eventName, data) {
     if (eventName === events.createFailed) {
       const task = data;
       const rendered = render(task);
@@ -987,7 +1009,7 @@ function new_createNewView() {
       }
     }
   };
-  const render = task => {
+  const render = function (task) {
     return _form_createForm(task);
   };
   const instance = {
@@ -1010,19 +1032,19 @@ const new_newView = new_createNewView();
 
 
 function createShowView() {
-  const createEditButton = todo => {
+  const createEditButton = function (todo) {
     const editButton = document.createElement('button');
     editButton.textContent = 'Edit';
-    editButton.addEventListener('click', event => {
+    editButton.addEventListener('click', function (event) {
       edit(todo);
       event.stopPropagation();
     });
     return editButton;
   };
-  const createCloseButton = todo => {
+  const createCloseButton = function (todo) {
     const closeButton = document.createElement('button');
     closeButton.textContent = 'Close';
-    closeButton.addEventListener('click', event => {
+    closeButton.addEventListener('click', function (event) {
       const project = todo.project();
       const render = show_showView.render(project);
       if (render) {
@@ -1033,7 +1055,7 @@ function createShowView() {
     });
     return closeButton;
   };
-  const newTask = (event, todo) => {
+  const newTask = function (event, todo) {
     const task = new Task('', todo.id);
     const render = new_newView.render(task);
     if (render) {
@@ -1042,7 +1064,7 @@ function createShowView() {
       render.focus();
     }
   };
-  const createTaskListElement = () => {
+  const createTaskListElement = function () {
     const div = document.createElement('div');
     const checkListLabelDiv = document.createElement('div');
     checkListLabelDiv.textContent = 'Tasks:';
@@ -1054,28 +1076,30 @@ function createShowView() {
       newButton
     };
   };
-  const updateTaskComplete = (event, task) => {
+  const updateTaskComplete = function (event, task) {
     const updatedData = {
       complete: event.target.checked
     };
     task.update(updatedData);
   };
-  const addTaskToDOM = (task, index, taskListElement) => {
+  const addTaskToDOM = function (task, index, taskListElement) {
     const taskDiv = document.createElement('div');
     const descriptionSpan = document.createElement('span');
     descriptionSpan.textContent = task.description;
     taskDiv.appendChild(descriptionSpan);
     const checkbox = createCheckbox(task.complete, 'task-checkbox');
-    checkbox.addEventListener('change', event => updateTaskComplete(event, task));
+    checkbox.addEventListener('change', function (event) {
+      return updateTaskComplete(event, task);
+    });
     taskDiv.appendChild(checkbox);
     taskListElement.div.appendChild(taskDiv);
   };
-  const setupTaskListData = (todo, taskListElement) => {
-    todo.tasks().forEach((task, index) => {
+  const setupTaskListData = function (todo, taskListElement) {
+    todo.tasks().forEach(function (task, index) {
       addTaskToDOM(task, index, taskListElement);
     });
   };
-  const edit = todo => {
+  const edit = function (todo) {
     const render = editView.render(todo);
     if (render) {
       contentContainer.clearDomElement();
@@ -1083,7 +1107,7 @@ function createShowView() {
       render.focus();
     }
   };
-  const update = (eventName, data) => {
+  const update = function (eventName, data) {
     if (eventName === todo_events.update) {
       const todo = data;
       const rendered = render(todo);
@@ -1119,7 +1143,7 @@ function createShowView() {
       }
     }
   };
-  const render = todo => {
+  const render = function (todo) {
     const showTodoDiv = document.createElement('div');
     showTodoDiv.classList.add('todo');
     const titleDiv = document.createElement('div');
@@ -1152,7 +1176,7 @@ function createShowView() {
     const taskListElement = createTaskListElement();
     showTodoDiv.appendChild(taskListElement.div);
     setupTaskListData(todo, taskListElement);
-    taskListElement.newButton.addEventListener('click', event => {
+    taskListElement.newButton.addEventListener('click', function (event) {
       newTask(event, todo);
     });
     const editButton = createEditButton(todo);
@@ -1185,25 +1209,25 @@ var format = __webpack_require__(242);
 
 
 function show_createShowView() {
-  const createNewTodoButton = project => {
+  const createNewTodoButton = function (project) {
     const newTodoButton = document.createElement('button');
     newTodoButton.textContent = 'New Todo';
-    newTodoButton.addEventListener('click', event => {
+    newTodoButton.addEventListener('click', function (event) {
       newTodo(project);
       event.stopPropagation();
     });
     return newTodoButton;
   };
-  const createDestroyTodoButton = todo => {
+  const createDestroyTodoButton = function (todo) {
     const destroyTodoButton = document.createElement('button');
     destroyTodoButton.textContent = 'Destroy';
-    destroyTodoButton.addEventListener('click', event => {
+    destroyTodoButton.addEventListener('click', function (event) {
       destroyTodo(todo);
       event.stopPropagation();
     });
     return destroyTodoButton;
   };
-  const newTodo = project => {
+  const newTodo = function (project) {
     const todayDate = (0,format/* format */.GP)(new Date(), 'yyyy-MM-dd');
     const todo = new Todo('', '', todayDate, 'low', project.id);
     const render = newView.render(todo);
@@ -1213,19 +1237,19 @@ function show_createShowView() {
       render.focus();
     }
   };
-  const destroyTodo = todo => {
+  const destroyTodo = function (todo) {
     if (window.confirm('Are you sure?')) {
       todo.destroy();
     }
   };
-  const showTodo = todo => {
+  const showTodo = function (todo) {
     const render = showView.render(todo);
     if (render) {
       contentContainer.clearDomElement();
       contentContainer.appendRender(render);
     }
   };
-  const update = (eventName, data) => {
+  const update = function (eventName, data) {
     if (eventName === project_events.create) {
       const project = data;
       const rendered = render(project);
@@ -1264,7 +1288,7 @@ function show_createShowView() {
       }
     }
   };
-  const render = project => {
+  const render = function (project) {
     contentContainer.clearCache();
     const showProjectDiv = document.createElement('div');
     showProjectDiv.classList.add('project-show-view');
@@ -1278,7 +1302,7 @@ function show_createShowView() {
       return showProjectDiv;
     }
     const todosDiv = document.createElement('div');
-    todos.forEach(todo => {
+    todos.forEach(function (todo) {
       const todoParagraph = document.createElement('p');
       let todoClass;
       switch (todo.priority) {
@@ -1295,7 +1319,7 @@ function show_createShowView() {
           break;
       }
       todoParagraph.classList.add('todo', 'clickable', todoClass);
-      todoParagraph.addEventListener('click', event => {
+      todoParagraph.addEventListener('click', function (event) {
         showTodo(todo);
         event.stopPropagation();
       });
@@ -1331,10 +1355,10 @@ const show_showView = show_createShowView();
 
 
 function createIndexView() {
-  const createProjectContainer = project => {
+  const createProjectContainer = function (project) {
     const projectContainer = document.createElement('div');
     projectContainer.textContent = project.name;
-    projectContainer.addEventListener('click', event => {
+    projectContainer.addEventListener('click', function (event) {
       const render = show_showView.render(project);
       if (render) {
         contentContainer.clearDomElement();
@@ -1344,7 +1368,7 @@ function createIndexView() {
     });
     return projectContainer;
   };
-  const update = (eventName, data) => {
+  const update = function (eventName, data) {
     if (eventName === project_events.create) {
       const allProjects = projectStatic.all();
       const rendered = render(allProjects);
@@ -1354,10 +1378,10 @@ function createIndexView() {
       }
     }
   };
-  const render = projects => {
+  const render = function (projects) {
     const projectsContainer = document.createElement('div');
     projectsContainer.classList.add('project-index-view');
-    projects.forEach(project => {
+    projects.forEach(function (project) {
       const projectContainer = createProjectContainer(project);
       projectContainer.classList.add('project');
       projectContainer.classList.add('clickable');
@@ -1380,23 +1404,23 @@ const indexView = createIndexView();
 
 function projects_form_createForm(project) {
   const exists = project.id ? true : false;
-  const cancel = event => {
+  const cancel = function (event) {
     contentContainer.clearDomElement();
     contentContainer.appendPreviousRender();
     event.stopPropagation();
   };
-  const create = event => {
+  const create = function (event) {
     const project = new Project(formData().name);
     project.save();
   };
-  const update = event => {};
-  const formData = () => {
+  const update = function (event) {};
+  const formData = function () {
     return {
       id: project.id,
       name: nameElement.input.value
     };
   };
-  const submitButtonCallback = event => {
+  const submitButtonCallback = function (event) {
     if (!form.checkValidity()) {
       return;
     }
@@ -1408,7 +1432,7 @@ function projects_form_createForm(project) {
     event.preventDefault();
     event.stopPropagation();
   };
-  const setupUI = () => {
+  const setupUI = function () {
     const form = document.createElement('form');
     form.classList.add('project-form');
     form.appendChild(headerElement.div);
@@ -1418,28 +1442,28 @@ function projects_form_createForm(project) {
     form.appendChild(submitElement.div);
     return form;
   };
-  const setupData = () => {
+  const setupData = function () {
     nameElement.input.value = project.name;
   };
-  const setupEventListeners = () => {
+  const setupEventListeners = function () {
     submitElement.button.addEventListener('click', submitButtonCallback);
     cancelElement.button.addEventListener('click', cancel);
   };
-  const clearErrors = () => {
+  const clearErrors = function () {
     project.errors.clear();
   };
-  const displayErrors = () => {
-    project.errors.forEach(error => {
+  const displayErrors = function () {
+    project.errors.forEach(function (error) {
       const errorDiv = document.createElement('div');
       errorDiv.textContent = error.description;
       errorsElement.div.appendChild(errorDiv);
     });
     clearErrors();
   };
-  const focus = () => {
+  const focus = function () {
     nameElement.input.focus();
   };
-  const headerElement = (() => {
+  const headerElement = function () {
     const div = document.createElement('div');
     const heading = document.createElement('h2');
     if (exists) {
@@ -1451,14 +1475,14 @@ function projects_form_createForm(project) {
     return {
       div
     };
-  })();
-  const errorsElement = (() => {
+  }();
+  const errorsElement = function () {
     const div = document.createElement('div');
     return {
       div
     };
-  })();
-  const nameElement = (() => {
+  }();
+  const nameElement = function () {
     const div = document.createElement('div');
     div.appendChild(createLabel('name:', 'nameID'));
     const input = createInput('text', 'nameID', 'name');
@@ -1469,8 +1493,8 @@ function projects_form_createForm(project) {
       div,
       input
     };
-  })();
-  const cancelElement = (() => {
+  }();
+  const cancelElement = function () {
     const div = document.createElement('div');
     const button = createButton('button', 'Cancel', 'cancelButtonID');
     div.appendChild(button);
@@ -1478,8 +1502,8 @@ function projects_form_createForm(project) {
       div,
       button
     };
-  })();
-  const submitElement = (() => {
+  }();
+  const submitElement = function () {
     const div = document.createElement('div');
     let buttonText;
     if (exists) {
@@ -1493,7 +1517,7 @@ function projects_form_createForm(project) {
       div,
       button
     };
-  })();
+  }();
   const form = setupUI();
   setupData();
   setupEventListeners();
@@ -1512,7 +1536,7 @@ function projects_form_createForm(project) {
 
 
 function projects_new_createNewView() {
-  const update = (eventName, data) => {
+  const update = function (eventName, data) {
     if (eventName === project_events.createFailed) {
       const project = data;
       const rendered = render(project);
@@ -1524,7 +1548,7 @@ function projects_new_createNewView() {
       }
     }
   };
-  const render = project => {
+  const render = function (project) {
     return projects_form_createForm(project);
   };
   const instance = {
@@ -1549,7 +1573,7 @@ const menuContainer = createFlexContainer('flex-item', 'menu-container');
 mainContainer.appendChild(menuContainer);
 mainContainer.appendChild(contentContainer.domElement);
 const projectIndexContainer = document.createElement('div');
-const newProject = event => {
+const newProject = function (event) {
   const project = new Project('');
   const render = projects_new_newView.render(project);
   if (render) {
@@ -1559,40 +1583,42 @@ const newProject = event => {
   }
   event.stopPropagation();
 };
-const addAppTitle = () => {
+const addAppTitle = function () {
   const headingItem = document.createElement('div');
   headingItem.classList.add('heading');
   headingItem.textContent = 'TODO LIST';
   menuContainer.appendChild(headingItem);
 };
-const addNewProjectButton = () => {
+const addNewProjectButton = function () {
   const newProjectButton = document.createElement('button');
   newProjectButton.classList.add('new-project-button');
   newProjectButton.textContent = 'New Project';
   newProjectButton.addEventListener('click', newProject);
   menuContainer.appendChild(newProjectButton);
 };
-const addProjectsHeading = () => {
+const addProjectsHeading = function () {
   const header = document.createElement('h2');
   header.textContent = 'Projects:';
   menuContainer.appendChild(header);
 };
-const addProjectIndexContainer = () => {
+const addProjectIndexContainer = function () {
   menuContainer.appendChild(projectIndexContainer);
 };
-const addProjectIndexView = () => {
+const addProjectIndexView = function () {
   const allProjects = projectStatic.all();
   clearContainer(projectIndexContainer);
   const render = indexView.render(allProjects);
   projectIndexContainer.appendChild(render);
 };
-const showDefaultProjectView = () => {
-  const defaultProject = projectStatic.all().find(project => project.name === 'Default');
+const showDefaultProjectView = function () {
+  const defaultProject = projectStatic.all().find(function (project) {
+    return project.name === 'Default';
+  });
   const render = show_showView.render(defaultProject);
   contentContainer.clearDomElement();
   contentContainer.appendRender(render);
 };
-const createLayout = () => {
+const createLayout = function () {
   addAppTitle();
   addNewProjectButton();
   addProjectsHeading();
@@ -1608,28 +1634,31 @@ const createLayout = () => {
 
 
 function createDefaultProject() {
-  const project = new Project('Default');
+  const project = new Project("Default");
   project.save();
 }
 if (projectStatic.load()) {
-  console.log('Projects in localStorage were loaded.');
+  console.log("Projects in localStorage were loaded.");
 } else {
-  console.log('No Projects found in localStorage. Creating Default project.');
+  console.log("No Projects found in localStorage. Creating Default project.");
   createDefaultProject();
 }
 if (todoStatic.load()) {
-  console.log('Todos in localStorage were loaded.');
+  console.log("Todos in localStorage were loaded.");
 } else {
-  console.log('No Todos found in localStorage.');
+  console.log("No Todos found in localStorage.");
   createDefaultProject();
 }
 if (taskStatic.load()) {
-  console.log('Tasks in localStorage were loaded.');
+  console.log("Tasks in localStorage were loaded.");
 } else {
-  console.log('No Tasks found in localStorage.');
+  console.log("No Tasks found in localStorage.");
   createDefaultProject();
 }
 createLayout();
+const hello = function () {
+  return console.log("hello world!");
+};
 
 /***/ }),
 
