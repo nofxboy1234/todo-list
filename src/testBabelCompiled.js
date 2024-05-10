@@ -1,22 +1,16 @@
 "use strict";
 
-var a = function a() {};
-var a = function a(b) {
-  return b;
-};
-var _double = [1, 2, 3].map(function (num) {
-  return num * 2;
-});
-console.log(_double); // [2,4,6]
+var a = () => {};
+var a = b => b;
+const double = [1, 2, 3].map(num => num * 2);
+console.log(double); // [2,4,6]
 
 var bob = {
   _name: "Bob",
   _friends: ["Sally", "Tom"],
-  printFriends: function printFriends() {
-    var _this = this;
-    this._friends.forEach(function (f) {
-      return console.log(_this._name + " knows " + f);
-    });
+  printFriends() {
+    this._friends.forEach(f => console.log(this._name + " knows " + f));
   }
 };
 console.log(bob.printFriends());
+const hello = () => console.log("hello world!");

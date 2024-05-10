@@ -25,7 +25,16 @@ module.exports = merge(common, {
         use: {
           loader: "babel-loader",
           options: {
-            presets: [["@babel/preset-env", { targets: "defaults" }]],
+            // presets: ["@babel/preset-env"],
+            presets: [
+              [
+                "@babel/preset-env",
+                // { debug: true },
+                // { debug: true, targets: {} },
+                // { debug: true, targets: { chrome: "123" } },
+                { debug: true, targets: "defaults" },
+              ],
+            ],
           },
         },
       },
